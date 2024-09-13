@@ -144,7 +144,7 @@
                         <div class="row g-4 align-items-center">
                             <div class="col-lg-7 animated fadeInLeft">
                                 <div class="text-sm-center text-md-start">
-                                    <h4 class="text-white text-uppercase fw-bold mb-4">Welcome To LifeSure</h4>
+                                    <h4 class="text-white text-uppercase fw-bold mb-4">Welcome To AptMan</h4>
                                     <h1 class="display-1 text-white mb-4">Life Insurance Makes You Happy</h1>
                                     <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy... 
                                     </p>
