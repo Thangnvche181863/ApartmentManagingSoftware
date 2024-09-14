@@ -66,9 +66,9 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-0 mx-lg-auto">
               <a href="Home.jsp" class="nav-item nav-link">Home</a>
-              <a href="about.jsp" class="nav-item nav-link">About</a>
-              <a href="service.jsp" class="nav-item nav-link active">Services</a>
-              <a href="contact.jsp" class="nav-item nav-link">Feedback</a>
+              <a href="About.jsp" class="nav-item nav-link">About</a>
+              <a href="Service.jsp" class="nav-item nav-link active">Services</a>
+              <a href="Feedback.jsp" class="nav-item nav-link">Feedback</a>
             </div>
           </div>
           <div class="d-none d-xl-flex flex-shrink-0 ps-4">
@@ -573,7 +573,7 @@
     <!-- Testimonial End -->
 
     <!-- Footer Start -->
-    <jsp:include page="footer.jsp"/>
+    <jsp:include page="Footer.jsp"/>
     <!-- Footer End -->
 
     <!-- Copyright End -->
