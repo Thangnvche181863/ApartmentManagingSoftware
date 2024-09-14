@@ -1,3 +1,10 @@
+<%-- 
+    Document   : newjsp
+    Created on : Sep 11, 2024, 9:39:14 PM
+    Author     : ADMIN
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,36 +51,7 @@
         <div class="container-fluid topbar px-0 px-lg-4 bg-light py-2 d-none d-lg-block">
             <div class="container">
                 <div class="row gx-0 align-items-center">
-                    <div class="col-lg-8 text-center text-lg-start mb-lg-0">
-                        <div class="d-flex flex-wrap">
-                            <div class="border-end border-primary pe-3">
-                                <a href="#" class="text-muted small"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
-                            </div>
-                            <div class="ps-3">
-                                <a href="mailto:example@gmail.com" class="text-muted small"><i class="fas fa-envelope text-primary me-2"></i>example@gmail.com</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 text-center text-lg-end">
-                        <div class="d-flex justify-content-end">
-                            <div class="d-flex border-end border-primary pe-3">
-                                <a class="btn p-0 text-primary me-3" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn p-0 text-primary me-3" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn p-0 text-primary me-3" href="#"><i class="fab fa-instagram"></i></a>
-                                <a class="btn p-0 text-primary me-0" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                            <div class="dropdown ms-3">
-                                <a href="#" class="dropdown-toggle text-dark" data-bs-toggle="dropdown"><small><i class="fas fa-globe-europe text-primary me-2"></i> English</small></a>
-                                <div class="dropdown-menu rounded">
-                                    <a href="#" class="dropdown-item">English</a>
-                                    <a href="#" class="dropdown-item">Bangla</a>
-                                    <a href="#" class="dropdown-item">French</a>
-                                    <a href="#" class="dropdown-item">Spanish</a>
-                                    <a href="#" class="dropdown-item">Arabic</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -84,7 +62,7 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light"> 
                     <a href="#" class="navbar-brand p-0">
-                        <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> LifeSure</h1>
+                        <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
                         <!-- <img src="img/logo.png" alt="Logo"> -->
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -92,8 +70,8 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-0 mx-lg-auto">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
-                            <a href="about.html" class="nav-item nav-link active">About</a>
+                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="about.html" class="nav-item nav-link">About</a>
                             <a href="service.html" class="nav-item nav-link">Services</a>
                             <a href="blog.html" class="nav-item nav-link">Blog</a>
                             <div class="nav-item dropdown">
@@ -109,23 +87,29 @@
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
-                            <div class="nav-btn px-3">
-                                <button class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                                <a href="#" class="btn btn-primary rounded-pill py-2 px-4 ms-3 flex-shrink-0"> Get a Quote</a>
-                            </div>
+                            <!--                            <div class="nav-btn px-3">
+                                                            <button class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
+                                                            <a href="#" class="btn btn-primary rounded-pill py-2 px-4 ms-3 flex-shrink-0"> Get a Quote</a>
+                                                        </div>-->
                         </div>
                     </div>
                     <div class="d-none d-xl-flex flex-shrink-0 ps-4">
-                        <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada" data-wow-delay=".9s">
-                            <i class="fa fa-phone-alt fa-2x"></i>
-                            <div class="position-absolute" style="top: 7px; right: 12px;">
-                                <span><i class="fa fa-comment-dots text-secondary"></i></span>
-                            </div>
-                        </a>
-                        <div class="d-flex flex-column ms-3">
-                            <span>Call to Our Experts</span>
-                            <a href="tel:+ 0123 456 7890"><span class="text-dark">Free: + 0123 456 7890</span></a>
+                        <!--                        <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada" data-wow-delay=".9s">
+                                                    <i class="fa fa-phone-alt fa-2x"></i>
+                                                    <div class="position-absolute" style="top: 7px; right: 12px;">
+                                                        <span><i class="fa fa-comment-dots text-secondary"></i></span>
+                                                    </div>
+                                                </a>-->
+                        <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
+                            <a href="login.jsp" class="btn btn-primary">
+                                <i class="fa-solid fa-user"></i> Login
+                            </a>
+
+                            <a href="register.jsp" class="btn btn-primary">
+                                <i class="fa-solid fa-user"></i> Sign Up
+                            </a>
                         </div>
+
                     </div>
                 </nav>
             </div>
@@ -149,21 +133,6 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Search End -->
-
-
-        <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">About Us</h4>
-                <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown" data-wow-delay="0.3s">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active text-primary">About</li>
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
 
 
         <!-- About Start -->
@@ -238,67 +207,10 @@
 
         
 
-        <!-- Feature Start -->
-        <div class="container-fluid feature bg-light pb-5">
-            <div class="container pb-5">
-                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Our Features</h4>
-                    <h1 class="display-4 mb-4">Insurance Provide you a Better Future</h1>
-                    <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
-                    </p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="feature-item p-4 pt-0">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="far fa-handshake fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Trusted Company</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="feature-item p-4 pt-0">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-dollar-sign fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Anytime Money Back</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="feature-item p-4 pt-0">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-bullseye fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="feature-item p-4 pt-0">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-headphones fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Feature End -->
+       
 
         <!-- Test Start -->
-        <section class="section">
+        <section class="section bg-light py-5" >
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -350,149 +262,11 @@
                                     </div><!-- end meta -->
                                 </div><!-- end blog-box -->
 
-                                <hr class="invis">
+                             
 
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_03.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
+                               
 
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Two brand new laptop models from ABC computer</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Development</a></small>
-                                        <small><a href="tech-single.html" title="">20 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 2313</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="row">
-                                    <div class="col-lg-10 offset-lg-1">
-                                        <div class="banner-spot clearfix">
-                                            <div class="banner-img">
-                                                <img src="upload/banner_02.jpg" alt="" class="img-fluid">
-                                            </div><!-- end banner-img -->
-                                        </div><!-- end banner -->
-                                    </div><!-- end col -->
-                                </div><!-- end row -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_04.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Applications for taking photos of nature in your mobile phones</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Design</a></small>
-                                        <small><a href="tech-single.html" title="">19 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 4441</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_05.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Say hello to colored strap models in smart hours</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Materials</a></small>
-                                        <small><a href="tech-single.html" title="">18 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 33312</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_06.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">How about evaluating your old mobile phones in different ways?</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small>
-                                        <small><a href="tech-single.html" title="">17 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 4440</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_07.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Drinking coffee at the computer rests the spirit</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Technology</a></small>
-                                        <small><a href="tech-single.html" title="">16 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 4412</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_08.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">If you are considering buying a new safe for your mobile phone, be sure to read this article</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Reviews</a></small>
-                                        <small><a href="tech-single.html" title="">15 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 44123</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
+                               
 
                                 <hr class="invis">
 
