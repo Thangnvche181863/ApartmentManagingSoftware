@@ -206,45 +206,47 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="far fa-handshake fa-3x"></i>
                             </div>
-                            <h4 class="mb-4">Trusted Company</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h5 class="mb-4">Information Management</h5>
+                            <p class="mb-4">General information about the apartment, apartment status, staff
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
+                            <br>
+                            <a class="btn btn-primary rounded-pill py-2 px-4 " href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-dollar-sign fa-3x"></i>
                             </div>
                             <h4 class="mb-4">Cost Management</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <p class="mb-4">Include basic fee and able to create more specific fee, detailed information on cost types
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-bullseye fa-3x"></i>
                             </div>
                             <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <p class="mb-4">Create tasks and assign tasks to employees, sending support easily
                             </p>
+                            <br>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-headphones fa-3x"></i>
                             </div>
-                            <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Manage Feedback</h4>
+                            <p class="mb-4">Manage citizen requests and complaints and process requests quickly through task assignment
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -257,46 +259,48 @@
                 </div>
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="far fa-handshake fa-3x"></i>
                             </div>
-                            <h4 class="mb-4">Trusted Company</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Updated News</h4>
+                            <p class="mb-4">Update the latest information about announcements, services, management, and events of the apartment building
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-dollar-sign fa-3x"></i>
                             </div>
-                            <h4 class="mb-4">Anytime Money Back</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Cost Lookup</h4>
+                            <p class="mb-4">View monthly expenses, service charges, incidental charges, and other fees
                             </p>
+                            <br>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-bullseye fa-3x"></i>
                             </div>
-                            <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Sign up for services and amenities</h4>
+                            <p class="mb-4">Register for external services, advanced services, use premium utilities
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="feature-item p-4 pt-0">
+                        <div class="feature-item p-4 pt-0" style="height: 360px;">
                             <div class="feature-icon p-4 mb-4">
                                 <i class="fa fa-headphones fa-3x"></i>
                             </div>
                             <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <p class="mb-4">Submit support/complaints, get support in a short time, clear information and costs
                             </p>
+                            <br>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
                     </div>
@@ -312,13 +316,13 @@
                     <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
                         <div class="about-item-content bg-white rounded p-5 h-100">
                             <h4 class="text-primary">About Our Company</h4>
-                            <h1 class="display-4 mb-4">High Range of Exploring Protection</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt debitis sint tempora. Corporis consequatur illo blanditiis voluptates aperiam quos aliquam totam aliquid rem explicabo,
+                            <h2 class="display-5 mb-4">High Quality Apartment Management System</h2>
+                            <p>At AtpMan, we specialize in delivering a high-quality apartment management system designed to streamline and elevate the management of residential properties. Our innovative platform offers comprehensive solutions for apartment owners, managers, and residents, ensuring efficient handling of leases, maintenance requests, financial transactions, and more.
                             </p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae praesentium recusandae eligendi modi hic
+                            <p> With a commitment to excellence and user-friendly design, our system enhances operational efficiency, improves resident satisfaction, and simplifies complex management tasks, setting a new standard in property management excellence.
                             </p>
                             <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>We can save your money.</p>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Production or trading of good</p>
+                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Improve management quality</p>
                             <p class="text-dark mb-4"><i class="fa fa-check text-primary me-3"></i>Our life insurance is flexible</p>
                             <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Information</a>
                         </div>
@@ -328,22 +332,22 @@
                             <div class="row g-4 justify-content-center">
                                 <div class="col-12">
                                     <div class="rounded bg-light">
-                                        <img src="img/about-1.png" class="img-fluid rounded w-100" alt="">
+                                        <img src="img/central.png" class="img-fluid rounded w-100" alt="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">129</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">75</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
-                                        <h4 class="mb-0 text-dark">Insurance Policies</h4>
+                                        <h4 class="mb-0 text-dark">Apartment Using</h4>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">99</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">9</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
                                         <h4 class="mb-0 text-dark">Awards WON</h4>
@@ -352,16 +356,16 @@
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">556</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">10</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
-                                        <h4 class="mb-0 text-dark">Skilled Agents</h4>
+                                        <h4 class="mb-0 text-dark">Year Warranty</h4>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">967</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">100</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
                                         <h4 class="mb-0 text-dark">Team Members</h4>
@@ -376,7 +380,7 @@
         <!-- About End -->
 
         <!-- Service Start -->
-        <div class="container-fluid service py-5">
+<!--        <div class="container-fluid service py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h4 class="text-primary">Our Services</h4>
@@ -458,7 +462,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- Service End -->
 
         <!-- FAQs Start -->
@@ -475,36 +479,36 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Q: What happens during Freshers' Week?
+                                            Q: What is the purpose of your apartment management system?
                                         </button>
                                     </h2>
                                     <div id="collapseOne" class="accordion-collapse collapse show active" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body rounded">
-                                            A: Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+                                            A: Our apartment management system is designed to streamline the management of residential properties. It offers a comprehensive suite of tools to handle leases, maintenance requests, financial transactions, and more, improving operational efficiency for property managers and enhancing the overall experience for residents.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingTwo">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Q: What is the transfer application process?
+                                            Q: Who can benefit from using your system?
                                         </button>
                                     </h2>
                                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            A: Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+                                            A: Our system is ideal for apartment owners, property managers, and residents. It provides tools for owners to manage multiple properties, enables property managers to handle administrative tasks efficiently, and offers residents a convenient platform for managing their rental agreements and service requests.
                                         </div>
                                     </div>
                                 </div>
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingThree">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Q: Why should I attend community college?
+                                            Q: How does your system improve property management?
                                         </button>
                                     </h2>
                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
-                                            A: Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
+                                            A: Our system enhances property management by automating routine tasks, providing real-time insights, and facilitating seamless communication between property managers and residents. This leads to increased efficiency, reduced administrative workload, and improved resident satisfaction.
                                         </div>
                                     </div>
                                 </div>
@@ -525,16 +529,16 @@
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h4 class="text-primary">From Blog</h4>
                     <h1 class="display-4 mb-4">News And Updates</h1>
-                    <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
+                    <p class="mb-0">New features and will be updated by us in the next versions of the system.
                     </p>
                 </div>
                 <div class="row g-4 justify-content-center">
                     <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-1.png" class="img-fluid rounded-top w-100" alt="">
+                                <img src="img/pay-bill.jpg" class="img-fluid rounded-top w-100 h-80" alt="">
                                 <div class="blog-categiry py-2 px-4">
-                                    <span>Business</span>
+                                    <span>Resident</span>
                                 </div>
                             </div>
                             <div class="blog-content p-4">
@@ -543,8 +547,8 @@
                                     <div class="small"><span class="fa fa-calendar text-primary"></span> 30 Dec 2025</div>
                                     <div class="small"><span class="fa fa-comment-alt text-primary"></span> 6 Comments</div>
                                 </div>
-                                <a href="#" class="h4 d-inline-block mb-3">Which allows you to pay down insurance bills</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
+                                <a href="#" class="h4 d-inline-block mb-3">Summary of bills to be paid</a>
+                                <p class="mb-3">Summarize bills to be paid easily and intuitively, don't miss any bills in the month or period.</p>
                                 <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -552,7 +556,7 @@
                     <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-2.png" class="img-fluid rounded-top w-100" alt="">
+                                <img src="img/Automated-Notifications.png" class="img-fluid rounded-top w-100" alt="">
                                 <div class="blog-categiry py-2 px-4">
                                     <span>Business</span>
                                 </div>
@@ -563,8 +567,8 @@
                                     <div class="small"><span class="fa fa-calendar text-primary"></span> 30 Dec 2025</div>
                                     <div class="small"><span class="fa fa-comment-alt text-primary"></span> 6 Comments</div>
                                 </div>
-                                <a href="#" class="h4 d-inline-block mb-3">Leverage agile frameworks to provide</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
+                                <a href="#" class="h4 d-inline-block mb-3">Automatically notify scheduled events</a>
+                                <p class="mb-3">Automatically notify scheduled events to residents, staff or certain predefined groups.</p>
                                 <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -583,8 +587,8 @@
                                     <div class="small"><span class="fa fa-calendar text-primary"></span> 30 Dec 2025</div>
                                     <div class="small"><span class="fa fa-comment-alt text-primary"></span> 6 Comments</div>
                                 </div>
-                                <a href="#" class="h4 d-inline-block mb-3">Leverage agile frameworks to provide</a>
-                                <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius libero soluta impedit eligendi? Quibusdam, laudantium.</p>
+                                <a href="#" class="h4 d-inline-block mb-3">Many utilities are integrated</a>
+                                <p class="mb-3">Integrate utilities to help people register online and manage utilities.</p>
                                 <a href="#" class="btn p-0">Read More  <i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
@@ -600,8 +604,7 @@
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h4 class="text-primary">Our Team</h4>
                     <h1 class="display-4 mb-4">Meet Our Expert Team Members</h1>
-                    <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
-                    </p>
+                    <p class="mb-0"></p>
                 </div>
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
