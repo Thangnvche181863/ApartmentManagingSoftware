@@ -70,23 +70,23 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-0 mx-lg-auto">
-                            <a href="Home.jsp" class="nav-item nav-link active">Home</a>
-                            <a href="about.jsp" class="nav-item nav-link">About</a>
-                            <a href="service.jsp" class="nav-item nav-link">Services</a>
-                            <a href="blog.jsp" class="nav-item nav-link">Blog</a>
+                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="about.html" class="nav-item nav-link">About</a>
+                            <a href="service.html" class="nav-item nav-link">Services</a>
+                            <a href="blog.html" class="nav-item nav-link">Blog</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link" data-bs-toggle="dropdown">
                                     <span class="dropdown-toggle">Pages</span>
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a href="feature.jsp" class="dropdown-item">Our Features</a>
-                                    <a href="team.jsp" class="dropdown-item">Our team</a>
-                                    <a href="testimonial.jsp" class="dropdown-item">Testimonial</a>
-                                    <a href="FAQ.jsp" class="dropdown-item">FAQs</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
+                                    <a href="feature.html" class="dropdown-item">Our Features</a>
+                                    <a href="team.html" class="dropdown-item">Our team</a>
+                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                    <a href="FAQ.html" class="dropdown-item">FAQs</a>
+                                    <a href="404.html" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
-                            <a href="contact.jsp" class="nav-item nav-link">Contact</a>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
                             <!--                            <div class="nav-btn px-3">
                                                             <button class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
                                                             <a href="#" class="btn btn-primary rounded-pill py-2 px-4 ms-3 flex-shrink-0"> Get a Quote</a>
@@ -777,7 +777,7 @@
                             <div class="row g-4">
                                 <div class="col-md-6 col-lg-6 col-xl-5">
                                     <div class="footer-item">
-                                        <a href="Home.jsp" class="p-0">
+                                        <a href="index.html" class="p-0">
                                             <h3 class="text-white"><i class="fab fa-slack me-3"></i> LifeSure</h3>
                                             <!-- <img src="img/logo.png" alt="Logo"> -->
                                         </a>
@@ -929,6 +929,24 @@
             </div>
         </div>
         <!-- Footer End -->
+
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright py-4">
+            <div class="container">
+                <div class="row g-4 align-items-center">
+                    <div class="col-md-6 text-center text-md-end mb-md-0">
+                        <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-6 text-center text-md-start text-body">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
 
 
         <!-- Back to Top -->
