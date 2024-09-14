@@ -1,0 +1,25 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.mail-api-2.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.servlet-api-6.1.0-M2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.8.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpclient-4.5.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.activation-api-2.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.servlet.jsp.jstl-api-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-io-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.mail-2.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jakarta.servlet.jsp.jstl-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/sqljdbc42.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/fluent-hc-4.5.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.10.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/tomcat-util-11.0.0-M21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jaxb-api-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpcore-4.4.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-fileupload-1.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
