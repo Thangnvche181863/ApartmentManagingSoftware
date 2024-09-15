@@ -202,12 +202,6 @@
                                     </div><!-- end meta -->
                                 </div><!-- end blog-box -->
 
-
-
-
-
-
-
                                 <hr class="invis">
 
                                 <div class="blog-box row">

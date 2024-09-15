@@ -32,30 +32,31 @@ public class UserLogin extends HttpServlet {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
-            if ("".equals(username) || "".equals(password)) {
-                request.setAttribute("loginerr", "Username or password is empty");
+//            if ("".equals(username) || "".equals(password)) {
+//                request.setAttribute("loginerr", "Username or password is empty");
+//                request.getRequestDispatcher("login.jsp").forward(request, response);
+//                return;
+//            }
+//
+//            if (!customerDAO.checkUsername(username)) {
+//                request.setAttribute("loginerr", "Username is incorrect.");
+//                request.getRequestDispatcher("login.jsp").forward(request, response);
+//                return;
+//            }
+            if (!customerDAO.checkAuthenticationUser(username, password)) {
+                request.setAttribute("loginerr", "Username or password is incorrect.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
-            if (!customerDAO.checkUsername(username)) {
-                request.setAttribute("loginerr", "Username is incorrect.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            }
+            if (!customerDAO.checkAuthenticationUser(username, password)) {
 
-            // Kiểm tra trực tiếp mật khẩu người dùng với hàm checkPassword
-            if (!customerDAO.checkPassword(username, password)) {
-                request.setAttribute("loginerr", "Password is incorrect.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
             }
-
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             session.setAttribute("role", 1); // admin : 0; cus : 1;
 
-            response.sendRedirect("Home.jsp");
+            response.sendRedirect("home");
         } catch (SQLException ex) {
             Logger.getLogger(UserLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
