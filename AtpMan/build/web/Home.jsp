@@ -55,49 +55,7 @@
                 </div>
             </div>
         </div>
-        <!-- Topbar End -->
-
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a href="#" class="navbar-brand p-0">
-            <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="fa fa-bars"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-0 mx-lg-auto">
-              <a href="Home.jsp" class="nav-item nav-link active">Home</a>
-              <a href="About.jsp" class="nav-item nav-link">About</a>
-              <a href="Service.jsp" class="nav-item nav-link">Services</a>
-              <a href="Feedback.jsp" class="nav-item nav-link">Feedback</a>
-            </div>
-          </div>
-          <div class="d-none d-xl-flex flex-shrink-0 ps-4">
-            <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada"
-               data-wow-delay=".9s">
-              <i class="fa fa-phone-alt fa-2x"></i>
-              <div class="position-absolute" style="top: 7px; right: 12px;">
-                <span><i class="fa fa-comment-dots text-secondary"></i></span>
-              </div>
-            </a>
-            <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-              <a href="login.jsp" class="btn btn-primary">
-                <i class="bi bi-box-arrow-in-right"></i> Login
-              </a>
-
-              <a href="register.jsp" class="btn btn-primary">
-                <i class="fab fa-slack me-2"></i> Sign Up
-              </a>
-            </div>
-
-          </div>
-        </nav>
-      </div>
-    </div>
-        <!-- Navbar & Hero End -->
+        <jsp:include page="header.jsp"/>
 
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -131,10 +89,10 @@
                                     <h1 class="display-1 text-white mb-4">Help Manage Costs And Services For Your Apartment</h1>
                                     <p class="mb-5 fs-5">Effective tool to interact with the Management Board and pay service fees anytime, anywhere.
                                     </p>
-<!--                                    <div class="d-flex justify-content-center justify-content-md-start flex-shrink-0 mb-4">
-                                        <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
-                                        <a class="btn btn-dark rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
-                                    </div>-->
+                                    <!--                                    <div class="d-flex justify-content-center justify-content-md-start flex-shrink-0 mb-4">
+                                                                            <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
+                                                                            <a class="btn btn-dark rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
+                                                                        </div>-->
                                 </div>
                             </div>
                             <div class="col-lg-5 animated fadeInRight">
@@ -161,10 +119,10 @@
                                     <h1 class="display-1 text-white mb-4">SMART APARTMENT MANAGEMENT SYSTEM</h1>
                                     <p class="mb-5 fs-5">Providing comprehensive solutions to address the needs of apartment management and operations and being a channel of interaction between the Management Board and residents.
                                     </p>
-<!--                                    <div class="d-flex justify-content-center justify-content-md-end flex-shrink-0 mb-4">
-                                        <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
-                                        <a class="btn btn-dark rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
-                                    </div>-->
+                                    <!--                                    <div class="d-flex justify-content-center justify-content-md-end flex-shrink-0 mb-4">
+                                                                            <a class="btn btn-light rounded-pill py-3 px-4 px-md-5 me-2" href="#"><i class="fas fa-play-circle me-2"></i> Watch Video</a>
+                                                                            <a class="btn btn-dark rounded-pill py-3 px-4 px-md-5 ms-2" href="#">Learn More</a>
+                                                                        </div>-->
                                 </div>
                             </div>
                         </div>
@@ -363,89 +321,89 @@
         <!-- About End -->
 
         <!-- Service Start -->
-<!--        <div class="container-fluid service py-5">
-            <div class="container py-5">
-                <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Our Services</h4>
-                    <h1 class="display-4 mb-4">We Provide Best Services</h1>
-                    <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
-                    </p>
-                </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/blog-1.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa fa-users fa-2x"></i>
+        <!--        <div class="container-fluid service py-5">
+                    <div class="container py-5">
+                        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
+                            <h4 class="text-primary">Our Services</h4>
+                            <h1 class="display-4 mb-4">We Provide Best Services</h1>
+                            <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur adipisci facilis cupiditate recusandae aperiam temporibus corporis itaque quis facere, numquam, ad culpa deserunt sint dolorem autem obcaecati, ipsam mollitia hic.
+                            </p>
+                        </div>
+                        <div class="row g-4 justify-content-center">
+                            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                                <div class="service-item">
+                                    <div class="service-img">
+                                        <img src="img/blog-1.png" class="img-fluid rounded-top w-100" alt="">
+                                        <div class="service-icon p-3">
+                                            <i class="fa fa-users fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-content p-4">
+                                        <div class="service-content-inner">
+                                            <a href="#" class="d-inline-block h4 mb-4">Life Insurance</a>
+                                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
+                                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Life Insurance</a>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
+                            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
+                                <div class="service-item">
+                                    <div class="service-img">
+                                        <img src="img/blog-2.png" class="img-fluid rounded-top w-100" alt="">
+                                        <div class="service-icon p-3">
+                                            <i class="fa fa-hospital fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-content p-4">
+                                        <div class="service-content-inner">
+                                            <a href="#" class="d-inline-block h4 mb-4">Health Insurance</a>
+                                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
+                                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
+                                <div class="service-item">
+                                    <div class="service-img">
+                                        <img src="img/blog-3.png" class="img-fluid rounded-top w-100" alt="">
+                                        <div class="service-icon p-3">
+                                            <i class="fa fa-car fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-content p-4">
+                                        <div class="service-content-inner">
+                                            <a href="#" class="d-inline-block h4 mb-4">Car Insurance</a>
+                                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
+                                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
+                                <div class="service-item">
+                                    <div class="service-img">
+                                        <img src="img/blog-4.png" class="img-fluid rounded-top w-100" alt="">
+                                        <div class="service-icon p-3">
+                                            <i class="fa fa-home fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="service-content p-4">
+                                        <div class="service-content-inner">
+                                            <a href="#" class="d-inline-block h4 mb-4">Home Insurance</a>
+                                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
+                                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
+                                <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Services</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/blog-2.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa fa-hospital fa-2x"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Health Insurance</a>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/blog-3.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa fa-car fa-2x"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Car Insurance</a>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="service-item">
-                            <div class="service-img">
-                                <img src="img/blog-4.png" class="img-fluid rounded-top w-100" alt="">
-                                <div class="service-icon p-3">
-                                    <i class="fa fa-home fa-2x"></i>
-                                </div>
-                            </div>
-                            <div class="service-content p-4">
-                                <div class="service-content-inner">
-                                    <a href="#" class="d-inline-block h4 mb-4">Home Insurance</a>
-                                    <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, eum!</p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
-                        <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Services</a>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+                </div>-->
         <!-- Service End -->
 
         <!-- FAQs Start -->
@@ -752,7 +710,7 @@
 
 
         <!-- Footer Start -->
-        <jsp:include page="Footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
         <!-- Footer End -->
 
 

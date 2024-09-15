@@ -55,52 +55,7 @@
                 </div>
             </div>
         </div>
-        <!-- Topbar End -->
-
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
-            <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a href="#" class="navbar-brand p-0">
-            <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="fa fa-bars"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-0 mx-lg-auto">
-              <a href="Home.jsp" class="nav-item nav-link">Home</a>
-              <a href="About.jsp" class="nav-item nav-link active">About</a>
-              <a href="Service.jsp" class="nav-item nav-link">Services</a>
-              <a href="Feedback.jsp" class="nav-item nav-link">Feedback</a>
-            </div>
-          </div>
-          <div class="d-none d-xl-flex flex-shrink-0 ps-4">
-            <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada"
-               data-wow-delay=".9s">
-              <i class="fa fa-phone-alt fa-2x"></i>
-              <div class="position-absolute" style="top: 7px; right: 12px;">
-                <span><i class="fa fa-comment-dots text-secondary"></i></span>
-              </div>
-            </a>
-            <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-              <a href="login.jsp" class="btn btn-primary">
-                <i class="bi bi-box-arrow-in-right"></i> Login
-              </a>
-
-              <a href="register.jsp" class="btn btn-primary">
-                <i class="fab fa-slack me-2"></i> Sign Up
-              </a>
-            </div>
-
-          </div>
-        </nav>
-      </div>
-    </div>
-        </div>
-        <!-- Navbar & Hero End -->
-
+      <jsp:include page="header.jsp"/>
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-fullscreen">
@@ -190,9 +145,9 @@
         </div>
         <!-- About End -->
 
-        
 
-       
+
+
 
         <!-- Test Start -->
         <section class="section bg-light py-5" >
@@ -247,11 +202,11 @@
                                     </div><!-- end meta -->
                                 </div><!-- end blog-box -->
 
-                             
 
-                               
 
-                               
+
+
+
 
                                 <hr class="invis">
 
@@ -327,9 +282,9 @@
                                 </div><!-- end banner -->
                             </div><!-- end widget -->
 
-                           
 
-                           
+
+
 
                             <div class="widget">
                                 <div class="banner-spot clearfix">
@@ -403,20 +358,20 @@
         <!-- FAQs End -->
 
 
-    
+
 
 
         <!-- Footer Start -->
-        <jsp:include page="Footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
         <!-- Footer End -->
-        
+
 
 
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
-        
+
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -426,7 +381,7 @@
         <script src="lib/counterup/counterup.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        
+
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
