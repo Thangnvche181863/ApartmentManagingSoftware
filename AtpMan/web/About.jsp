@@ -407,7 +407,7 @@
 
 
         <!-- Footer Start -->
-        <jsp:include page="Footer.jsp"/>
+        <jsp:include page="footer.jsp"/>
         <!-- Footer End -->
         
 
