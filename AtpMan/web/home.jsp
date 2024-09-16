@@ -47,15 +47,6 @@
         </div>
         <!-- Spinner End -->
 
-        <!-- Topbar Start -->
-        <div class="container-fluid topbar px-0 px-lg-4 bg-light py-2 d-none d-lg-block">
-            <div class="container">
-                <div class="row gx-0 align-items-center">
-
-                </div>
-            </div>
-        </div>
-        <!-- Topbar End -->
 
         <!-- Navbar & Hero Start -->
         <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
