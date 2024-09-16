@@ -287,7 +287,7 @@
         <!-- Contact End -->
 
 
-     <jsp:include page="Footer.jsp"></jsp:include>
+     <jsp:include page="footer.jsp"></jsp:include>
 
         <!-- Copyright Start -->
 
