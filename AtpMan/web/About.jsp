@@ -120,20 +120,20 @@
         </div>
 
 
-        <!-- About Start -->
-        <div class="container-fluid bg-light about py-5">
-            <div class="container py-5">
+       <!-- About Start -->
+        <div class="container-fluid bg-light about pb-5">
+            <div class="container pb-5">
                 <div class="row g-5">
                     <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
                         <div class="about-item-content bg-white rounded p-5 h-100">
-                            <h4 class="text-primary">About Our Apartment</h4>
-                            <h1 class="display-4 mb-4">High-end apartment building</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt debitis sint tempora. Corporis consequatur illo blanditiis voluptates aperiam quos aliquam totam aliquid rem explicabo,
+                            <h4 class="text-primary">About Our Company</h4>
+                            <h2 class="display-5 mb-4">High Quality Apartment Management System</h2>
+                            <p>At AtpMan, we specialize in delivering a high-quality apartment management system designed to streamline and elevate the management of residential properties. Our innovative platform offers comprehensive solutions for apartment owners, managers, and residents, ensuring efficient handling of leases, maintenance requests, financial transactions, and more.
                             </p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae praesentium recusandae eligendi modi hic
+                            <p> With a commitment to excellence and user-friendly design, our system enhances operational efficiency, improves resident satisfaction, and simplifies complex management tasks, setting a new standard in property management excellence.
                             </p>
                             <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>We can save your money.</p>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Production or trading of good</p>
+                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Improve management quality</p>
                             <p class="text-dark mb-4"><i class="fa fa-check text-primary me-3"></i>Our life insurance is flexible</p>
                             <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Information</a>
                         </div>
@@ -143,22 +143,22 @@
                             <div class="row g-4 justify-content-center">
                                 <div class="col-12">
                                     <div class="rounded bg-light">
-                                        <img src="img/about-1.png" class="img-fluid rounded w-100" alt="">
+                                        <img src="img/central.png" class="img-fluid rounded w-100" alt="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">129</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">75</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
-                                        <h4 class="mb-0 text-dark">Insurance Policies</h4>
+                                        <h4 class="mb-0 text-dark">Apartment Using</h4>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">99</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">9</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
                                         <h4 class="mb-0 text-dark">Awards WON</h4>
@@ -167,16 +167,16 @@
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">556</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">10</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
-                                        <h4 class="mb-0 text-dark">Skilled Agents</h4>
+                                        <h4 class="mb-0 text-dark">Year Warranty</h4>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="counter-item bg-light rounded p-3 h-100">
                                         <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">967</span>
+                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">100</span>
                                             <span class="h1 fw-bold text-primary">+</span>
                                         </div>
                                         <h4 class="mb-0 text-dark">Team Members</h4>
