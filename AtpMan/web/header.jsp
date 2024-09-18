@@ -3,8 +3,8 @@
     Created on : Sep 15, 2024, 3:58:19 PM
     Author     : WuanTun
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,14 +39,36 @@
                                 </div>
                             </a>
                             <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                                <a href="login.jsp" class="btn btn-primary">
-                                    <i class="bi bi-box-arrow-in-right"></i> Login
-                                </a>
+                                <!-- Hiển thị liên kết đăng nhập nếu người dùng chưa đăng nhập -->
+                                <c:if test="${sessionScope.user == null}">
+                                    <a href="login.jsp" class="btn btn-primary">
+                                        <i class="bi bi-box-arrow-in-right"></i>Login
+                                    </a>
+                                </c:if>
 
-                                <a href="register.jsp" class="btn btn-primary">
-                                    <i class="fab fa-slack me-2"></i> Sign Up
-                                </a>
+                                <!-- Hiển thị tên người dùng nếu đã đăng nhập -->
+                                <c:if test="${sessionScope.user != null}">
+                                    <a class="btn btn-primary">
+                                        <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
+                                    </a>
+                                </c:if>
+
+                                <c:if test="${sessionScope.user ==null}">
+                                    <!-- Liên kết đăng ký -->
+                                    <a href="register.jsp" class="btn btn-primary">
+                                        <i class="fab fa-slack me-2"></i> Sign up
+                                    </a>
+                                </c:if>
+
+                                <c:if test="${sessionScope.user !=null}">
+                               
+                                    <a href="logout" class="btn btn-primary">
+                                        <i class="fab fa-slack me-2"></i> Logout
+                                    </a>
+                                </c:if>
                             </div>
+
+
 
                         </div>
                     </nav>

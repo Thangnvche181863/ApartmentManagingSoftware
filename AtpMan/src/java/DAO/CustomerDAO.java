@@ -11,8 +11,10 @@ package DAO;
 import utils.DBContext;
 
 import java.sql.*;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Customer;
 import utils.UtilHashPass;
 
 public class CustomerDAO {
@@ -24,7 +26,7 @@ public class CustomerDAO {
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-                String sql = "SELECT * FROM customer WHERE username = ?";
+                String sql = "SELECT * FROM Customer WHERE username = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     try (ResultSet rs = ps.executeQuery()) {
@@ -43,7 +45,7 @@ public class CustomerDAO {
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-                String sql = "SELECT password FROM customer WHERE username = ?";
+                String sql = "SELECT password FROM Customer WHERE username = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     try (ResultSet rs = ps.executeQuery()) {
@@ -69,13 +71,13 @@ public class CustomerDAO {
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-                String sql = "SELECT password FROM customer WHERE username = ?";
+                String sql = "SELECT password FROM Customer WHERE username = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
-                            String storedPassword = rs.getString("password");
-                            
+                            String storedPassword = rs.getString("password"); //da ma hoa 
+
                             String hashedInputPassword = UtilHashPass.EncodePassword(password);
 
                             return storedPassword.equals(hashedInputPassword);
@@ -89,40 +91,74 @@ public class CustomerDAO {
         return false;
     }
 
-    public boolean existsByUsernameOrGmail(String username, String gmail) {
+    public Customer getAllInformationCustomer(String username, String password) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-                String sql = "SELECT * FROM customer WHERE username = ? OR gmail = ?";
+                String hashedInputPassword = UtilHashPass.EncodePassword(password);
+                String sql = "SELECT * FROM Customer WHERE username = ? and password = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
-                    ps.setString(2, gmail);
+                    ps.setString(2, hashedInputPassword);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            Customer customer = new Customer();
+                            customer.setUsername(rs.getString("username"));
+                            customer.setName(rs.getString("name"));
+                            customer.setEmail(rs.getString("email"));
+                            customer.setPhoneNumber(rs.getString("phoneNumber"));
+                            customer.setAge(rs.getInt("age"));
+                            customer.setRegistrationDate(rs.getDate("registrationDate"));
+                            customer.setIsOwner(rs.getInt("isOwner"));
+                            return customer;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return null;
+    }
+
+    public boolean existsByUsernameOrGmail(String username, String email) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Customer WHERE username = ? OR email = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, username);
+                    ps.setString(2, email);
                     try (ResultSet rs = ps.executeQuery()) {
                         return rs.next();
                     }
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error checking existence by username or gmail", e);
+            LOGGER.log(Level.SEVERE, "Error checking existence by username or email", e);
         }
         return false;
     }
 
-    public void createNewCustomer(String username, String email, String phone_number, String password) {
+    public void createNewCustomer(String username, String password, String name, String email, String phoneNumber, String age, String registrationDate, String isOwner) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-//                String hashedPassword = password != null ? UtilHashPass.EncodePassword(password) : null; // Encode password if not null
-                String sql = "INSERT INTO customer (username, password, phone_number, gmail) VALUES (?, ?, ?, ?)";
+                String hashedInputPassword = UtilHashPass.EncodePassword(password);
+                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, age, registrationDate, isOwner) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
-//                    ps.setString(2, hashedPassword); // Save hashed password, could be null
-                    ps.setString(2, password);
-                    ps.setString(3, phone_number);
+                    ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
+                    ps.setString(3, name);
                     ps.setString(4, email);
-
+                    ps.setString(5, phoneNumber);
+                    ps.setString(6, age);
+                    ps.setString(7, registrationDate);
+                    ps.setString(8, isOwner); // 1 for Resident, 0 for Owner
                     ps.executeUpdate();
                 }
             }
@@ -132,27 +168,61 @@ public class CustomerDAO {
             DBContext.closeConnection(conn);
         }
     }
-//    public Customer getCustomerByUsername(String username) {
-//        Connection conn = null;
-//        Customer customer = null;
-//        try {
-//            conn = DBContext.getConnection();
-//            if (conn != null) {
-//                String sql = "SELECT * FROM customer WHERE username = ?";
-//                try (PreparedStatement statement = conn.prepareStatement(sql)) {
-//                    statement.setString(1, username);
-//                    try (ResultSet resultSet = statement.executeQuery()) {
-//                        if (resultSet.next()) {
-//                            customer = getCustomer(resultSet.getInt("customer_id"));
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (SQLException | ClassNotFoundException e) {
-//            LOGGER.log(Level.SEVERE, "Error getting customer by username", e);
-//        } finally {
-//            DBContext.closeConnection(conn);
-//        }
-//        return customer;
+
+//    public static void main(String[] args) {
+//        CustomerDAO dao = new CustomerDAO();
+//        Customer c = dao.getAllInformationCustomer("nguyenquan", "sRY4rMY8/DtYD2+OQLAkTVClzcY=");
+//        System.out.println(c.getName());
 //    }
+    public Customer findCustomerByGmail(String gmail) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT customerID FROM Customer WHERE email = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, gmail);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            return getCustomer(rs.getInt("customerID"));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error finding customer by gmail", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return null;
+    }
+
+    public Customer getCustomer(int id) {
+        Connection conn = null;
+        Customer customer = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Customer WHERE customerID = ?";
+                try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                    statement.setInt(1, id);
+                    try (ResultSet resultSet = statement.executeQuery()) {
+                        if (resultSet.next()) {
+                            customer = new Customer(id,
+                                    resultSet.getString("username"),
+                                    resultSet.getString("name"),
+                                    resultSet.getString("email"),
+                                    resultSet.getString("phoneNumber"),
+                                    resultSet.getInt("age"),
+                                    resultSet.getDate("registrationDate"),
+                                    resultSet.getInt("isOwner"));
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting customer", e);
+        }
+        return customer;
+    }
 }
