@@ -20,7 +20,7 @@
       href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
 
@@ -38,6 +38,7 @@
   </head>
 
   <body>
+
     <jsp:include page="header.jsp"></jsp:include>
 
     <!-- Modal Search Start -->
@@ -165,10 +166,10 @@
               <div class="service-content p-4">
                 <div class="service-content-inner">
                   <a href="#" class="d-inline-block h4 mb-4"
-                    >Repair Services</a
+                    >Finance manager</a
                   >
                   <p class="mb-4">
-                    With repair services, we are always ready to serve you promptly to ensure convenience and efficiency.
+                    Apartment management services as well as monthly payment of additional fees.
                   </p>
                   <a class="btn btn-primary rounded-pill py-2 px-4" href="#"
                     >Read More</a
@@ -252,10 +253,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="far fa-handshake fa-3x"></i>
+                                <i class="bi bi-building-add" style="font-size:  2rem;"></i>
                             </div>
-                            <h4 class="mb-4">Trusted Company</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Public Facilities</h4>
+                            <p class="mb-4">Services for using swimming pool, gym, park, soccer field, multi-purpose house...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -263,10 +264,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-dollar-sign fa-3x"></i>
+                                <i class="bi bi-wifi" style="font-size: 2rem;"></i>
                             </div>
-                            <h4 class="mb-4">Anytime Money Back</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Network Settings</h4>
+                            <p class="mb-4">Use services with the best network operators today such as FPT, Viettel, VNPT...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -274,10 +275,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-bullseye fa-3x"></i>
+                                <i class="bi bi-building-check" style="font-size: 2rem"></i>
                             </div>
-                            <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Room Cleaning</h4>
+                            <p class="mb-4">Our team is always ready to clean your room, maintain space and air to ensure health...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -285,10 +286,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-headphones fa-3x"></i>
+                                <i class="bi bi-journal-check" style="font-size: 2rem;"></i>
                             </div>
-                            <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Savings Book</h4>
+                            <p class="mb-4">With this book will help you save small expenses so you can go to the market...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -300,10 +301,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="far fa-handshake fa-3x"></i>
+                                <i class="bi bi-activity" style="font-size: 2rem;"></i>
                             </div>
-                            <h4 class="mb-4">Trusted Company</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Health Care</h4>
+                            <p class="mb-4">Annual health check-up service helps people check their health status...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -311,10 +312,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-dollar-sign fa-3x"></i>
+                                <i class="bi bi-cash-coin" style="font-size: 2rem;"></i>
                             </div>
-                            <h4 class="mb-4">Anytime Money Back</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Borrow Money</h4>
+                            <p class="mb-4">Our service will provide you with loans that are valid for use in apartments...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -322,10 +323,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-bullseye fa-3x"></i>
+                                <i class="bi bi-currency-exchange" style="font-size: 2rem;"></i>
                             </div>
-                            <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Currency Exchange</h4>
+                            <p class="mb-4">Foreign currency exchange service with easy, convenient and fast form...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
@@ -333,10 +334,10 @@
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                         <div class="feature-item p-4 pt-0">
                             <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-headphones fa-3x"></i>
+                                <i class="bi bi-gear-fill" style="font-size: 2rem"></i>
                             </div>
-                            <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
+                            <h4 class="mb-4">Repair Services</h4>
+                            <p class="mb-4">With repair services, we are always ready to serve you promptly to ensure convenience and efficiency...
                             </p>
                             <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
