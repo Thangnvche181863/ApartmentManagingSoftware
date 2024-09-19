@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/login.jsp</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/UserLogin.java</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/WEB-INF/web.xml</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/utils/DBContext.java</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/CustomerDAO.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/service.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/ServiceContract.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/header.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/footer.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Service.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ApartmentDAO.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ServiceDAO.java</file>
         </group>
     </open-files>
 </project-private>

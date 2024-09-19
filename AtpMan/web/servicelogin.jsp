@@ -86,7 +86,7 @@
                 <div class="service-item">
                     <div class="service-img">
                         <img
-                            src="img/blog-1.png"/>
+                            src="img/blog-1.png"
                             class="img-fluid rounded-top w-100"
                             alt=""
                             />
@@ -100,9 +100,14 @@
                             <p class="mb-4">
                                 Our parking service is secured by smart monitoring equipment to make you satisfied and safe.
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
-                               >Read More</a
-                            >
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,9 +135,14 @@
                             <p class="mb-4">
                                 Apartment management services as well as monthly payment of additional fees.
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
-                               >Read More</a
-                            >
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,9 +168,14 @@
                             <p class="mb-4">
                                 We always have supervisors on duty 24/7 to ensure security and order
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
-                               >Read More</a
-                            >
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -186,9 +201,14 @@
                             <p class="mb-4">
                                 With a team of environmental workers working daily will help maintain a clean campus
                             </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
-                               >Read More</a
-                            >
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                                <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#"
+                                   >Read More</a
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -217,7 +237,7 @@
                         <h4 class="mb-4">Public Facilities</h4>
                         <p class="mb-4">Services for using swimming pool, gym, park, soccer field, multi-purpose house...
                         </p>
-                        <a a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
@@ -228,7 +248,7 @@
                         <h4 class="mb-4">Network Settings</h4>
                         <p class="mb-4">Use services with the best network operators today such as FPT, Viettel, VNPT...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
@@ -239,7 +259,7 @@
                         <h4 class="mb-4">Room Cleaning</h4>
                         <p class="mb-4">Our team is always ready to clean your room, maintain space and air to ensure health...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
@@ -250,7 +270,7 @@
                         <h4 class="mb-4">Savings Book</h4>
                         <p class="mb-4">With this book will help you save small expenses so you can go to the market...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -265,7 +285,7 @@
                         <h4 class="mb-4">Health Care</h4>
                         <p class="mb-4">Annual health check-up service helps people check their health status...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
@@ -276,7 +296,7 @@
                         <h4 class="mb-4">Borrow Money</h4>
                         <p class="mb-4">Our service will provide you with loans that are valid for use in apartments...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
@@ -287,7 +307,7 @@
                         <h4 class="mb-4">Currency Exchange</h4>
                         <p class="mb-4">Foreign currency exchange service with easy, convenient and fast form...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
@@ -298,7 +318,7 @@
                         <h4 class="mb-4">Repair Services</h4>
                         <p class="mb-4">With repair services, we are always ready to serve you promptly to ensure convenience and efficiency...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -313,7 +333,7 @@
                         <h4 class="mb-4">Trusted Company</h4>
                         <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
@@ -324,7 +344,7 @@
                         <h4 class="mb-4">Anytime Money Back</h4>
                         <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
@@ -335,7 +355,7 @@
                         <h4 class="mb-4">Flexible Plans</h4>
                         <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
@@ -346,7 +366,7 @@
                         <h4 class="mb-4">24/7 Fast Support</h4>
                         <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                         </p>
-                        <a class="btn btn-primary rounded-pill py-2 px-4" style="font-size: 14px" href="#">Learn More</a>
+                        <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                     </div>
                 </div>
             </div>
