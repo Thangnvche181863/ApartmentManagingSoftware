@@ -70,8 +70,8 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-0 mx-lg-auto">
-              <a href="Home.jsp" class="nav-item nav-link">Home</a>
-              <a href="About.jsp" class="nav-item nav-link active">About</a>
+              <a href="home.jsp" class="nav-item nav-link">Home</a>
+              <a href="about.jsp" class="nav-item nav-link active">About</a>
               <a href="service.jsp" class="nav-item nav-link">Services</a>
               <a href="feedback.jsp" class="nav-item nav-link">Feedback</a>
             </div>

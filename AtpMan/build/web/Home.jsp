@@ -59,7 +59,6 @@
 
         <!-- Navbar & Hero Start -->
         <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
-<<<<<<< Updated upstream
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light"> 
                     <a href="#" class="navbar-brand p-0">
@@ -71,10 +70,10 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-0 mx-lg-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="service.html" class="nav-item nav-link">Services</a>
-                            <a href="blog.html" class="nav-item nav-link">Blog</a>
+                            <a href="home.jsp" class="nav-item nav-link active">Home</a>
+                            <a href="about.jsp" class="nav-item nav-link">About</a>
+                            <a href="service.jsp" class="nav-item nav-link">Services</a>
+                            <a href="blog.jsp" class="nav-item nav-link">Blog</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link" data-bs-toggle="dropdown">
                                     <span class="dropdown-toggle">Pages</span>
@@ -105,36 +104,6 @@
                             <a href="login.jsp" class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> Login
                             </a>
-=======
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a href="#" class="navbar-brand p-0">
-            <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="fa fa-bars"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav mx-0 mx-lg-auto">
-              <a href="Home.jsp" class="nav-item nav-link active">Home</a>
-              <a href="About.jsp" class="nav-item nav-link">About</a>
-              <a href="service.jsp" class="nav-item nav-link">Services</a>
-              <a href="seedback.jsp" class="nav-item nav-link">Feedback</a>
-            </div>
-          </div>
-          <div class="d-none d-xl-flex flex-shrink-0 ps-4">
-            <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada"
-               data-wow-delay=".9s">
-              <i class="fa fa-phone-alt fa-2x"></i>
-              <div class="position-absolute" style="top: 7px; right: 12px;">
-                <span><i class="fa fa-comment-dots text-secondary"></i></span>
-              </div>
-            </a>
-            <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-              <a href="login.jsp" class="btn btn-primary">
-                <i class="bi bi-box-arrow-in-right"></i> Login
-              </a>
->>>>>>> Stashed changes
 
                             <a href="register.jsp" class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> Sign Up
@@ -800,7 +769,6 @@
 
 
         <!-- Footer Start -->
-<<<<<<< Updated upstream
         <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
             <div class="container py-5">
                 <div class="row g-5">
@@ -960,9 +928,6 @@
                 </div>
             </div>
         </div>
-=======
-        <jsp:include page="footer.jsp"/>
->>>>>>> Stashed changes
         <!-- Footer End -->
 
         <!-- Copyright Start -->
