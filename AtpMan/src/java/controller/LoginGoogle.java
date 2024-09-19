@@ -37,7 +37,6 @@ public class LoginGoogle extends HttpServlet {
         Customer customer = customerDAO.findCustomerByGmail(user.getEmail());
         
         if (customer == null) {
-           
             request.setAttribute("err", "Email not exist");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

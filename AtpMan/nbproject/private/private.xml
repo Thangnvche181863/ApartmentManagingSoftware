@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/CreateAccount.java</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/about.jsp</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/CustomerDAO.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/header.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/utils/Validation.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/GoogleAcc.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ChangePassword.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/Constant.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/changepassword.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/utils/UtilHashPass.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/Logout.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/changemail.jsp</file>
         </group>
     </open-files>
 </project-private>
