@@ -206,7 +206,7 @@
                                     </div><!-- end col -->
 
                                     <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Enjoy a summer with a colorful headset</a></h4>
+                                        <h4><a href="tech-single.html" title="">Enjoy a summer with a colorful headset.</a></h4>
                                         <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
                                         <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Technology</a></small>
                                         <small><a href="tech-single.html" title="">14 July, 2017</a></small>
