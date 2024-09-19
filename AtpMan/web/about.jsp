@@ -1,7 +1,7 @@
 <%-- 
-    Document   : newjsp
-    Created on : Sep 11, 2024, 9:39:14 PM
-    Author     : ADMIN
+    Document   : about
+    Created on : Sep 19, 2024, 9:48:56 AM
+    Author     : WuanTun
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
