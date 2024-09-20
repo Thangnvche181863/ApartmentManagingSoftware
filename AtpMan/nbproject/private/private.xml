@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Assignment.java</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/utils/DBContext.java</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/NewsCategoryDAO.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/CustomerDAO.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/NewsCategory.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Task.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/NewsServlet.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/NewsDAO.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/AssignmentDAO.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/about.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/testNews.jsp</file>
         </group>
     </open-files>
 </project-private>

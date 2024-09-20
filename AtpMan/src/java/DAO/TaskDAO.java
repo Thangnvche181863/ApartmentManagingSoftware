@@ -177,6 +177,45 @@ public class TaskDAO extends DBContext {
 
         return isDeleted;
     }
+    
+    public Task getTaskById(int taskID) {
+        Task task = null;
+        String sql = "SELECT * FROM Task WHERE taskID = ?";
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return task;
+            }
+
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            pre.setInt(1, taskID);
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                String taskName = rs.getString("taskName");
+                String description = rs.getString("description");
+                String taskType = rs.getString("taskType");
+
+                task = new Task(taskID, taskName, description, taskType);
+                LOGGER.log(Level.INFO, "Retrieved Task with ID: {0}", taskID);
+            } else {
+                LOGGER.log(Level.WARNING, "No Task found with ID: {0}", taskID);
+            }
+
+            // Close resources
+            rs.close();
+            pre.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error fetching task by ID.", e);
+        }
+
+        return task;
+    }
 
 
     public static void main(String[] args) {

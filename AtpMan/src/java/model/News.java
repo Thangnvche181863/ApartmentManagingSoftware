@@ -18,11 +18,12 @@ public class News {
     private String newsTitle;
     private String newsContent;
     private Date postDate;
+    private String newsImg;
 
     public News() {
     }
 
-    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate) {
+    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg) {
         this.newsID = newsID;
         this.staffID = staffID;
         this.taskID = taskID;
@@ -30,7 +31,18 @@ public class News {
         this.newsTitle = newsTitle;
         this.newsContent = newsContent;
         this.postDate = postDate;
+        this.newsImg = newsImg;
     }
+
+    public String getNewsImg() {
+        return newsImg;
+    }
+
+    public void setNewsImg(String newsImg) {
+        this.newsImg = newsImg;
+    }
+
+    
 
     public int getNewsID() {
         return newsID;
