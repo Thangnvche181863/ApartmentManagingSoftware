@@ -14,27 +14,21 @@ public class Service {
     private String type;
     private double fee;
     private String description;
+    private String img;
+    private String icon;
 
     public Service() {
     }
 
-    public Service(int serviceId, String name, String type, double fee, String description) {
+    public Service(int serviceId, String name, String type, double fee, String description, String img, String icon) {
         this.serviceId = serviceId;
         this.name = name;
         this.type = type;
         this.fee = fee;
         this.description = description;
+        this.img = img;
+        this.icon = icon;
     }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    
 
     public int getServiceId() {
         return serviceId;
@@ -68,11 +62,34 @@ public class Service {
         this.fee = fee;
     }
 
-    @Override
-    public String toString() {
-        return "Service{" + "serviceId=" + serviceId + ", name=" + name + ", type=" + type + ", fee=" + fee + ", description=" + description + '}';
+    public String getDescription() {
+        return description;
     }
 
-    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" + "serviceId=" + serviceId + ", name=" + name + ", type=" + type + ", fee=" + fee + ", description=" + description + ", img=" + img + ", icon=" + icon + '}';
+    }
+
     
 }

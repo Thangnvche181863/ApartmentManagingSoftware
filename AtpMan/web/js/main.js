@@ -102,3 +102,17 @@
 
 })(jQuery);
 
+document.querySelectorAll('.toggleBtn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        const textContent = this.previousElementSibling; // Lấy phần tử <p> ngay trước nút
+        if (textContent.classList.contains('short-text')) {
+            textContent.classList.remove('short-text');
+            textContent.classList.add('full-text');
+            this.textContent = 'Hide';
+        } else {
+            textContent.classList.remove('full-text');
+            textContent.classList.add('short-text');
+            this.textContent = 'Read More';
+        }
+    });
+});

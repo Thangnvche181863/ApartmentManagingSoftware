@@ -41,6 +41,8 @@
         <!-- Bootstrap JS (requires Popper.js as well) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+        
+        
 
     </head>
 
@@ -190,6 +192,14 @@
                             services. Thank you for followign our service.
                         </p>
                     </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     <div class="row g-4 justify-content-center">
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
@@ -208,12 +218,12 @@
                                 </div>
                                 <div class="service-content p-4">
                                     <div class="service-content-inner">
-                                        <a href="#" class="d-inline-block h4 mb-4">Car Service</a>
-                                        <p class="mb-4">
+                                        <a href="#" class="d-inline-block h4 mb-4">Parking Car</a>
+                                        <p class="mb-4 " style="max-width: 250px">
                                             Our parking service is secured by smart monitoring equipment to make you satisfied and safe.
                                         </p>
                                         <a class="btn btn-primary rounded-pill py-2 px-4" href="#"
-                                           >Read More</a
+                                           ></a
                                         >
                                     </div>
                                 </div>
@@ -285,7 +295,7 @@
                             <div class="service-item">
                                 <div class="service-img">
                                     <img
-                                        src="img/blog-4.png"
+                                        src="img/garbage.jpeg"
                                         class="img-fluid rounded-top w-100"
                                         alt=""
                                         />
@@ -306,6 +316,10 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        
+                        
+                        
                         <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
                             <a class="btn btn-primary rounded-pill py-3 px-5" href="#navigate"
                                >More Services</a
@@ -313,6 +327,8 @@
                         </div>
                     </div>
                 </div>
+                
+                
                 <div class="container-fluid feature bg-light py-5" id="navigate">
                     <div class="container py-5">
                         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
@@ -321,7 +337,11 @@
                             </p>
                         </div>
                         <!--part 1-->
-                        <div class="row g-4">
+                        
+                        
+                        
+                        
+                        <div class="row g-4 mt-3">
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
@@ -355,6 +375,8 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
+                            
+                            
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
@@ -366,7 +388,14 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
+                            
+                            
+                            
                         </div>
+                        
+                        
+                        
+                        
 
                         <!--part 2-->
                         <div class="row g-4 mt-3">
@@ -409,7 +438,7 @@
                                         <i class="bi bi-gear-fill" style="font-size: 2rem"></i>
                                     </div>
                                     <h4 class="mb-4">Repair Services</h4>
-                                    <p class="mb-4">With repair services, we are always ready to serve you promptly to ensure convenience and efficiency...
+                                    <p class="mb-4">We are always ready to serve you promptly to ensure convenience and efficiency...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
@@ -465,6 +494,10 @@
                         </div>
                     </div>
                 </div>
+                
+                
+                
+                
             </div>
             <!-- Service End -->
 

@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/service.jsp</file>
             <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/css/style.css</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Apartment.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Finance.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/serviceuser.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ServiceIntroServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/js/main.js</file>
         </group>
     </open-files>
 </project-private>
