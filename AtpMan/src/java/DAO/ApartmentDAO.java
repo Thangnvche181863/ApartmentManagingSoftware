@@ -26,7 +26,7 @@ public class ApartmentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new Apartment(rs.getInt("apartmentID"), rs.getInt("buildingID"), rs.getString("departmentType"), rs.getDouble("price"), rs.getInt("floor")));
+                list.add(new Apartment(rs.getInt("apartmentID"), rs.getInt("buildingID"), rs.getString("departmentType"), rs.getDouble("price"), rs.getInt("floor"), rs.getInt("area")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -34,9 +34,9 @@ public class ApartmentDAO extends DBContext {
         return list;
     }
 
-    public void insertApartment(int buildingId, String departmentType, double price, int floor) {
+    public void insertApartment(int buildingId, String departmentType, double price, int floor, int area) {
         try {
-            String sql = "Insert into Apartment(buildingID,departmentType,price,floor) values(?,?,?,?)";
+            String sql = "Insert into Apartment(buildingID,departmentType,price,floor,area) values(?,?,?,?,?)";
 
             PreparedStatement ps = connection.prepareStatement(sql);
 
@@ -44,6 +44,7 @@ public class ApartmentDAO extends DBContext {
             ps.setString(2, departmentType);
             ps.setDouble(3, price);
             ps.setInt(4, floor);
+            ps.setInt(5, area);
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -66,22 +67,24 @@ public class ApartmentDAO extends DBContext {
         }
     }
 
-    public void updateApartment(int apartmentId, int buildingId, String departmentType, double price, int floor) {
+    public void updateApartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area) {
         try {
             String sql = "UPDATE [dbo].[Apartment]\n"
                     + "   SET [buildingID] = ?\n"
                     + "      ,[departmentType] = ?\n"
                     + "      ,[price] = ?\n"
                     + "      ,[floor] = ?\n"
+                    + "      ,[area] = ?\n"
                     + " WHERE apartmentId = ?";
-            
+
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, buildingId);
             ps.setString(2, departmentType);
             ps.setDouble(3, price);
             ps.setInt(4, floor);
-            ps.setInt(5, apartmentId);
-            
+            ps.setInt(5, area);
+            ps.setInt(6, apartmentId);
+
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

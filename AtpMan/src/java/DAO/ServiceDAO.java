@@ -24,7 +24,7 @@ public class ServiceDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Service(rs.getInt("serviceID"), rs.getString("name"), rs.getString("type"), rs.getDouble("fee")));
+                list.add(new Service(rs.getInt("serviceID"), rs.getString("name"), rs.getString("type"), rs.getDouble("fee"), rs.getString("description")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -32,32 +32,35 @@ public class ServiceDAO extends DBContext {
         return list;
     }
 
-    public void insertService(String name, String type, double fee) {
+    public void insertService(String name, String type, double fee, String description) {
         try {
-            String sql = "Insert into Service(name,type,fee) values(?,?,?)";
+            String sql = "Insert into Service(name,type,fee,description) values(?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
             ps.setDouble(3, fee);
+            ps.setString(4, description);
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public void updateService(int serviceId, String name, String type, double fee) {
+    public void updateService(int serviceId, String name, String type, double fee, String description) {
         try {
             String sql = "UPDATE [dbo].[Service]\n"
                     + "   SET [name] = ?\n"
                     + "      ,[type] = ?\n"
                     + "      ,[fee] = ?\n"
+                    + "      ,[description] = ?\n"
                     + " WHERE serviceID = ?";
 
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
             ps.setDouble(3, fee);
-            ps.setInt(4, serviceId);
+            ps.setString(4, description);
+            ps.setInt(5, serviceId);
 
             ps.executeUpdate();
         } catch (Exception e) {

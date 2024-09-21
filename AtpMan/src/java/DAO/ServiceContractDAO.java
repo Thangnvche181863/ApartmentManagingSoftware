@@ -22,7 +22,7 @@ public class ServiceContractDAO extends DBContext{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new ServiceContract(rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getInt("status")));
+                list.add(new ServiceContract(rs.getInt("serviceContractID"),rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getDouble("amount")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -30,7 +30,7 @@ public class ServiceContractDAO extends DBContext{
         return list;
     }
     
-    public void insertServiceContract(int apartmentId, int serviceId, Date startDate, Date endDate, int status){
+    public void insertServiceContract(int apartmentId, int serviceId, Date startDate, Date endDate, double amount){
         try {
             String sql = "Insert into ServiceContract values(?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class ServiceContractDAO extends DBContext{
             ps.setInt(2, serviceId);
             ps.setDate(3, startDate);
             ps.setDate(4, endDate);
-            ps.setInt(5, status);
+            ps.setDouble(5, amount);
             
             ps.executeUpdate();
         } catch (Exception e) {

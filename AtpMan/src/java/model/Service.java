@@ -13,16 +13,28 @@ public class Service {
     private String name;
     private String type;
     private double fee;
+    private String description;
 
     public Service() {
     }
 
-    public Service(int serviceId, String name, String type, double fee) {
+    public Service(int serviceId, String name, String type, double fee, String description) {
         this.serviceId = serviceId;
         this.name = name;
         this.type = type;
         this.fee = fee;
+        this.description = description;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
 
     public int getServiceId() {
         return serviceId;
@@ -58,8 +70,9 @@ public class Service {
 
     @Override
     public String toString() {
-        return "Service{" + "serviceId=" + serviceId + ", name=" + name + ", type=" + type + ", fee=" + fee + '}';
+        return "Service{" + "serviceId=" + serviceId + ", name=" + name + ", type=" + type + ", fee=" + fee + ", description=" + description + '}';
     }
+
     
     
 }

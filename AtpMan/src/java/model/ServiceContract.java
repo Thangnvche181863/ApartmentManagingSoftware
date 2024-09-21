@@ -9,21 +9,31 @@ import java.sql.Date;
  * @author thang
  */
 public class ServiceContract {
+    private int serviceContractId;
     private int apartmentId;
     private int serviceId;
     private Date startDate;
     private Date endDate;
-    private int status;
+    private double amount;
 
     public ServiceContract() {
     }
 
-    public ServiceContract(int apartmentId, int serviceId, Date startDate, Date endDate, int status) {
+    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, double amount) {
+        this.serviceContractId = serviceContractId;
         this.apartmentId = apartmentId;
         this.serviceId = serviceId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.status = status;
+        this.amount = amount;
+    }
+
+    public int getServiceContractId() {
+        return serviceContractId;
+    }
+
+    public void setServiceContractId(int serviceContractId) {
+        this.serviceContractId = serviceContractId;
     }
 
     public int getApartmentId() {
@@ -58,18 +68,19 @@ public class ServiceContract {
         this.endDate = endDate;
     }
 
-    public int getStatus() {
-        return status;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
     public String toString() {
-        return "ServiceContract{" + "apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + '}';
+        return "ServiceContract{" + "serviceContractId=" + serviceContractId + ", apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + '}';
     }
+
     
     
     

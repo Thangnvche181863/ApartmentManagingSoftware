@@ -9,32 +9,32 @@ package model;
  */
 public class Finance {
     private int financeId;
-    private String financeType;
+    private int buildingId;
+    private int financeTypeId;
     private double amount;
-    private double incidentalCharges;
-    private double serviceFee;
-    private String providerName;
+    private int month;
+    
 
     public Finance() {
     }
 
-    public Finance(String financeType, double amount, double incidentalCharges, double serviceFee, String providerName) {
-        this.financeType = financeType;
+    public Finance(int financeId, int buildingId, int financeTypeId, double amount, int month) {
+        this.financeId = financeId;
+        this.buildingId = buildingId;
+        this.financeTypeId = financeTypeId;
         this.amount = amount;
-        this.incidentalCharges = incidentalCharges;
-        this.serviceFee = serviceFee;
-        this.providerName = providerName;
+        this.month = month;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     
-    public Finance(int financeId, String financeType, double amount, double incidentalCharges, double serviceFee, String providerName) {
-        this.financeId = financeId;
-        this.financeType = financeType;
-        this.amount = amount;
-        this.incidentalCharges = incidentalCharges;
-        this.serviceFee = serviceFee;
-        this.providerName = providerName;
-    }
 
     public int getFinanceId() {
         return financeId;
@@ -44,12 +44,20 @@ public class Finance {
         this.financeId = financeId;
     }
 
-    public String getFinanceType() {
-        return financeType;
+    public int getBuildingId() {
+        return buildingId;
     }
 
-    public void setFinanceType(String financeType) {
-        this.financeType = financeType;
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
+    }
+
+    public int getFinanceTypeId() {
+        return financeTypeId;
+    }
+
+    public void setFinanceTypeId(int financeTypeId) {
+        this.financeTypeId = financeTypeId;
     }
 
     public double getAmount() {
@@ -60,34 +68,11 @@ public class Finance {
         this.amount = amount;
     }
 
-    public double getIncidentalCharges() {
-        return incidentalCharges;
-    }
-
-    public void setIncidentalCharges(double incidentalCharges) {
-        this.incidentalCharges = incidentalCharges;
-    }
-
-    public double getServiceFee() {
-        return serviceFee;
-    }
-
-    public void setServiceFee(double serviceFee) {
-        this.serviceFee = serviceFee;
-    }
-
-    public String getProviderName() {
-        return providerName;
-    }
-
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
     @Override
     public String toString() {
-        return "Finance{" + "financeId=" + financeId + ", financeType=" + financeType + ", amount=" + amount + ", incidentalCharges=" + incidentalCharges + ", serviceFee=" + serviceFee + ", providerName=" + providerName + '}';
+        return "Finance{" + "financeId=" + financeId + ", buildingId=" + buildingId + ", financeTypeId=" + financeTypeId + ", amount=" + amount + ", month=" + month + '}';
     }
-    
+
+   
     
 }

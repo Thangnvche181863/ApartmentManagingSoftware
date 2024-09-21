@@ -16,27 +16,31 @@ public class Apartment {
     private String departmentType;
     private double price;
     private int floor;
+    private int area;
     
     private List<Invoice> invoices;
 
     public Apartment() {
     }
 
-    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor) {
+    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area) {
         this.apartmentId = apartmentId;
         this.buildingId = buildingId;
         this.departmentType = departmentType;
         this.price = price;
         this.floor = floor;
+        this.area = area;
     }
     
+    
 
-    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor, List<Invoice> invoices) {
+    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area, List<Invoice> invoices) {
         this.apartmentId = apartmentId;
         this.buildingId = buildingId;
         this.departmentType = departmentType;
         this.price = price;
         this.floor = floor;
+        this.area = area;
         this.invoices = invoices;
     }
 
@@ -80,6 +84,14 @@ public class Apartment {
         this.floor = floor;
     }
 
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
+
     public List<Invoice> getInvoices() {
         return invoices;
     }
@@ -90,8 +102,10 @@ public class Apartment {
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentId=" + apartmentId + ", buildingId=" + buildingId + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + ", invoices=" + invoices + '}';
+        return "Apartment{" + "apartmentId=" + apartmentId + ", buildingId=" + buildingId + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + ", area=" + area + ", invoices=" + invoices + '}';
     }
+
+    
     
     
 }
