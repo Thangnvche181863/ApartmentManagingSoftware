@@ -209,31 +209,35 @@
                     <div class="container-fluid">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <h1 class="h1 mb-0 text-gray-800"><b>Dashboard</b>  </h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800 text-primary">Billing information for one year</h1>
+                        </div>
+                        <!-- Billing information for one year -->
                         <div class="row">
-
-                            <!-- Earnings (Monthly) Card Example -->
+                            <!-- Billing information for one year -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Total Bill (Monthly)</div>
+                                                    Total Bill (in year)</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalBill} VNĐ</div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- End Billing information for one year -->
 
-                            <!-- Earnings (Monthly) Card Example -->
+                            <!--Current month's billing information-->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
@@ -288,9 +292,99 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Content Row -->
-                        <div class="row">
+                        <!-- End Billing information for one year -->
 
+                        <div class="row">
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary">Current month's billing information </h1>
+                            </div>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Total Bill (Monthly)</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.amount} VNĐ</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Issue Date</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.issueDate}</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Pending Requests Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                    Due Date</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.dueDate}</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pending Requests Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <c:if test="${requestScope.invoiceCurrent.status == 1}">
+                                    <c:set var="colorTab" value="primary"></c:set>
+                                    <c:set var="status" value="Paid"/>
+                                </c:if>
+                                <c:if test="${requestScope.invoiceCurrent.status == 0}">
+                                    <c:set var="colorTab" value="warning"></c:set>
+                                    <c:set var="status" value="UnPaid"/>
+                                </c:if>
+                                <div class="card border-left-${colorTab} shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
+                                                    Status</div>
+
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Current month's billing information-->
+
+                        <!-- Content Row -->
+
+                        <div class="row">
                             <!-- Area Chart -->
                             <div class="col-xl-8 col-lg-7">
                                 <div class="card shadow mb-4">
@@ -350,15 +444,7 @@
                                             <canvas id="myPieChart"></canvas>
                                         </div>
                                         <div class="mt-4 text-center small">
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-primary"></i> Direct
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-success"></i> Social
-                                            </span>
-                                            <span class="mr-2">
-                                                <i class="fas fa-circle text-info"></i> Referral
-                                            </span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -371,43 +457,40 @@
         <script src="vendor/chart.js/Chart.min.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script>
+
+            let d = new Date();
+            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+            let month = months.find((value, index) => {
+                if (d.getMonth()) {
+                    return index == d.getMonth() - 1;
+                } else {
+                    return index == 12;
+                }
+            });
+            console.log(month)
+
+            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+
+            // take data from servlet to js
             const amountList = [
             <c:forEach items="${requestScope.amoutMonth}" var="amountList">
-                <c:out value="${amountList}"/>,
+                ${amountList},
             </c:forEach>
             ];
+            const serviceList = [
+            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
+                "${serviceContract.getService().getName()}",
+            </c:forEach>
+            ];
+            const amountService = [
+            <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
+                <c:out value="${serviceContract.getAmount()}"/>,
+            </c:forEach>
+            ];
+            console.log(amountService);
 
-            // Pie Chart Example
-            var ctx = document.getElementById("myPieChart");
-            var myPieChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ["Direct", "Referral", "Social"],
-                    datasets: [{
-                            data: [55 / 100, 30 / 100, 15 / 100],
-                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                            hoverBorderColor: "rgba(234, 236, 244, 1)",
-                        }],
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    tooltips: {
-                        backgroundColor: "rgb(255,255,255)",
-                        bodyFontColor: "#858796",
-                        borderColor: '#dddfeb',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        caretPadding: 10,
-                    },
-                    legend: {
-                        display: false
-                    },
-                    cutoutPercentage: 80,
-                },
-            });
+
             function number_format(number, decimals, dec_point, thousands_sep) {
                 // *     example: number_format(1234.56, 2, ',', ' ');
                 // *     return: '1 234,56'
@@ -432,6 +515,49 @@
                 }
                 return s.join(dec);
             }
+            // Pie Chart Example
+            var ctx = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: serviceList,
+                    datasets: [{
+                            data: amountService,
+                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
+                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                            hoverBorderColor: "rgba(234, 236, 244, 1)",
+                        }],
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfeb',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function (tooltipItem, data) {
+                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                                return value + ' VNĐ';
+                            }
+                        }
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom', // Hoặc 'top', 'left', 'right'
+                        labels: {
+                            boxWidth: 10, // Kích thước của hộp màu
+                            padding: 10 // Khoảng cách giữa các mục
+                        }
+                    },
+                    cutoutPercentage: 60,
+                },
+            });
+
 
             // Area Chart Example
             var ctx = document.getElementById("myAreaChart");
@@ -440,7 +566,7 @@
                 data: {
                     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                     datasets: [{
-                            label: "Earnings",
+                            label: "Amount",
                             lineTension: 0.3,
                             backgroundColor: "rgba(78, 115, 223, 0.05)",
                             borderColor: "rgba(78, 115, 223, 1)",
@@ -484,7 +610,7 @@
                                     padding: 10,
                                     // Include a dollar sign in the ticks
                                     callback: function (value, index, values) {
-                                        return '$' + number_format(value);
+                                        return number_format(value) + ' VNĐ';
                                     }
                                 },
                                 gridLines: {
@@ -516,7 +642,7 @@
                         callbacks: {
                             label: function (tooltipItem, chart) {
                                 var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
                             }
                         }
                     }

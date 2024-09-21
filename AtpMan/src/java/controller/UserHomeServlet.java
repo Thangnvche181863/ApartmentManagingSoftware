@@ -66,22 +66,35 @@ public class UserHomeServlet extends HttpServlet {
 //        processRequest(request, response);
         PrintWriter out = response.getWriter();
         InvoiceDAO invoiceDAO = new InvoiceDAO();
-        List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(2);
+        
+        List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
+        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(1, 9);
 
+        List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
+        
         double total = totalAmount(iList);
+        // parameter for current year
         int numOfInvoice = iList.size();
         double paid = paidAmount(iList);
         double unpaid = unPaidAmount(iList);
         
+        // parameter for chart
+        // area chart
         List<Double> amoutMonth = listAmountByMonth(iList);
-        
         request.setAttribute("amoutMonth", amoutMonth);
+        
         request.setAttribute("totalBill", total);
         request.setAttribute("numOfInvoice", numOfInvoice);
         request.setAttribute("paid", paid);
         request.setAttribute("unpaid", unpaid);
+        
+        request.setAttribute("invoiceCurrent", invoiceCurrent);
+        request.setAttribute("serviceList", serviceList);
+        
+        
         request.getRequestDispatcher("userhome.jsp").forward(request, response);
     }
+    
 
     protected double totalAmount(List<Invoice> list) {
         double total = 0;
@@ -90,6 +103,7 @@ public class UserHomeServlet extends HttpServlet {
         }
         return total;
     }
+    
 
     protected double paidAmount(List<Invoice> list) {
         double total = 0;

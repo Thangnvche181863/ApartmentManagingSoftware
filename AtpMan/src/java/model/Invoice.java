@@ -5,6 +5,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -18,11 +19,12 @@ public class Invoice {
     private Date dueDate;
     private int status;
     private Date transactionDate;
+    private List<ServiceContract> serviceContractList;
 
     public Invoice() {
     }
 
-    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
+    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, List<ServiceContract> serviceContractList) {
         this.invoiceID = invoiceID;
         this.apartmentID = apartmentID;
         this.amount = amount;
@@ -30,6 +32,7 @@ public class Invoice {
         this.dueDate = dueDate;
         this.status = status;
         this.transactionDate = transactionDate;
+        this.serviceContractList = serviceContractList;
     }
 
     public int getInvoiceID() {
@@ -88,10 +91,17 @@ public class Invoice {
         this.transactionDate = transactionDate;
     }
 
+    public List<ServiceContract> getServiceContractList() {
+        return serviceContractList;
+    }
+
+    public void setServiceContractList(List<ServiceContract> serviceContractList) {
+        this.serviceContractList = serviceContractList;
+    }
+
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceID=" + invoiceID + ", apartmentID=" + apartmentID + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + '}';
+        return "Invoice{" + "invoiceID=" + invoiceID + ", apartmentID=" + apartmentID + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
     }
-    
     
 }
