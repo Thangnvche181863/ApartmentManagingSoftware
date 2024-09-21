@@ -71,7 +71,7 @@
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <div class="navbar-nav mx-0 mx-lg-auto">
                                 <a href="home.jsp" class="nav-item nav-link">Home</a>
-                                <a href="about.jsp" class="nav-item nav-link active">About</a>
+                                <a href="News" class="nav-item nav-link active">News</a>
                                 <a href="service.jsp" class="nav-item nav-link">Services</a>
                                 <a href="feedback.jsp" class="nav-item nav-link">Feedback</a>
                             </div>
@@ -120,129 +120,132 @@
         </div>
 
         <!-- News Carousel -->
-<div class="row justify-content-center">
-    <div class="col-md-10">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <a href="https://www.w3schools.com/">   
-                        <img class="d-block w-100" src="img/news_banner.jpg" alt="First slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 style="color:#FFFF00;">First Slide Title</h5>
-                            <p style="color:#FFFF00;">Some description or subtitle for the first slide.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="https://www.w3schools.com/">   
+                                <img class="d-block w-100" src="img/news_banner.jpg" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="color:#FFFF00;">First Slide Title</h5>
+                                    <p style="color:#FFFF00;">Some description or subtitle for the first slide.</p>
+                                </div>
+                            </a>
                         </div>
+                        <div class="carousel-item">
+                            <a href="https://www.w3schools.com/">  
+                                <img class="d-block w-100" src="img/test_ap.jpg" alt="Second slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="color:#FFFF00;">Second Slide Title</h5>
+                                    <p style="color:#FFFF00;">Some description or subtitle for the second slide.</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="carousel-item">
+                            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ/">  
+                                <img class="d-block w-100" src="img/rick.jpeg" alt="Third slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 style="color:#FFFF00;">Third Slide Title</h5>
+                                    <p style="color:#FFFF00;">Some description or subtitle for the third slide.</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
                     </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="https://www.w3schools.com/">  
-                        <img class="d-block w-100" src="img/test_ap.jpg" alt="Second slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 style="color:#FFFF00;">Second Slide Title</h5>
-                            <p style="color:#FFFF00;">Some description or subtitle for the second slide.</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="carousel-item">
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ/">  
-                        <img class="d-block w-100" src="img/rick.jpeg" alt="Third slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 style="color:#FFFF00;">Third Slide Title</h5>
-                            <p style="color:#FFFF00;">Some description or subtitle for the third slide.</p>
-                        </div>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
                     </a>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-    </div>
-</div>
-<!-- News Carousel End -->
+        <!-- News Carousel End -->
 
 
         <!-- Recent News Section Start -->
-<section    class="section bg-light py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                <div class="page-wrapper">
-                    <div class="blog-top clearfix">
-                        <h4 class="pull-left">Recent News <a href="#"><i class="fa fa-rss"></i></a></h4>
-                    </div><!-- end blog-top -->
-
-                    <div class="blog-list clearfix">
-                        <!-- Loop through the news list -->
-                        <c:forEach  items="${news}" var="newsItem">
-                            <div class="blog-box row">
-                                <div class="col-md-4">
-                                    <div class="post-media">
-                                        <a href="news-details.jsp?id=${newsItem.newsID}" title="">
-                                            <img src="${newsItem.newsImg}" alt="" class="img-fluid">
-                                            <div class="hovereffect"></div>
-                                        </a>
-                                    </div><!-- end media -->
-                                </div><!-- end col -->
-
-                                <div class="blog-meta big-meta col-md-8">
-                                    <h4><a href="news-details.jsp?id=${newsItem.newsID}" title="">
-                                        ${newsItem.newsTitle}
-                                    </a></h4>
-                                    <p>${newsItem.newsContent}</p>
-                                    <small class="firstsmall"><a class="bg-orange" href="#" title="">News Category</a></small>
-                                    <small>${newsItem.postDate}</small>
-                                </div><!-- end meta -->
-                            </div><!-- end blog-box -->
-
-                            <hr class="invis">
-                        </c:forEach>
-                    </div><!-- end blog-list -->
-                </div><!-- end page-wrapper -->
-
-                <!-- Pagination -->
+        <section    class="section bg-light py-5">
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-start">
-                                <c:if test="${currentPage > 1}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="News?page=${currentPage - 1}">Previous</a>
-                                    </li>
-                                </c:if>
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-top clearfix">
+                                <h4 class="pull-left">Recent News <a href="#"><i class="fa fa-rss"></i></a></h4>
+                            </div><!-- end blog-top -->
 
-                                <c:forEach var="i" begin="1" end="${totalPages}">
-                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                        <a class="page-link" href="News?page=${i}">${i}</a>
-                                    </li>
+                            <div class="blog-list clearfix">
+                                <!-- Loop through the news list -->
+                                <c:forEach  items="${news}" var="newsItem">
+                                    <div class="blog-box row">
+                                        <div class="col-md-4">
+                                            <div class="post-media">
+                                                <a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                    <img src="${newsItem.newsImg}" alt="" class="img-fluid">
+                                                    <div class="hovereffect"></div>
+                                                </a>
+                                            </div><!-- end media -->
+                                        </div><!-- end col -->
+                                        
+                                        <div class="blog-meta big-meta col-md-8">
+                                            <h4><a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                    ${newsItem.newsTitle}
+                                                </a></h4>
+                                            <p>${newsItem.newsContent}</p>
+                                            <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
+                                            <small>
+                                                <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />
+                                            </small>
+                                            <small>  by ${newsItem.staffName}</small>
+                                        </div><!-- end meta -->
+                                    </div><!-- end blog-box -->
+
+                                    <hr class="invis">
                                 </c:forEach>
+                            </div><!-- end blog-list -->
+                        </div><!-- end page-wrapper -->
 
-                                <c:if test="${currentPage < totalPages}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="News?page=${currentPage + 1}">Next</a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </nav>
+                        <!-- Pagination -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                        <c:if test="${currentPage > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="News?page=${currentPage - 1}">Previous</a>
+                                            </li>
+                                        </c:if>
+
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                <a class="page-link" href="News?page=${i}">${i}</a>
+                                            </li>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="News?page=${currentPage + 1}">Next</a>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
                     </div><!-- end col -->
                 </div><!-- end row -->
-            </div><!-- end col -->
-        </div><!-- end row -->
-    </div><!-- end container -->
-</section>
-<!-- Recent News Section End -->
+            </div><!-- end container -->
+        </section>
+        <!-- Recent News Section End -->
 
 
-       
+
 
 
         <!-- Footer Start -->

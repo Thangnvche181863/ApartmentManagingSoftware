@@ -11,7 +11,8 @@ import java.util.Date;
  * @author PC
  */
 public class News {
-     private int newsID;
+
+    private int newsID;
     private int staffID;
     private int taskID;
     private int newsCategoryID;
@@ -19,6 +20,8 @@ public class News {
     private String newsContent;
     private Date postDate;
     private String newsImg;
+    private String newsCategoryName;
+    private String staffName;
 
     public News() {
     }
@@ -34,6 +37,56 @@ public class News {
         this.newsImg = newsImg;
     }
 
+    public News(int newsID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName) {
+        this.newsID = newsID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.postDate = postDate;
+        this.newsImg = newsImg;
+        this.newsCategoryName = newsCategoryName;
+    }
+
+    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName) {
+        this.newsID = newsID;
+        this.staffID = staffID;
+        this.taskID = taskID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.postDate = postDate;
+        this.newsImg = newsImg;
+        this.newsCategoryName = newsCategoryName;
+    }
+
+    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName, String staffName) {
+        this.newsID = newsID;
+        this.staffID = staffID;
+        this.taskID = taskID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.postDate = postDate;
+        this.newsImg = newsImg;
+        this.newsCategoryName = newsCategoryName;
+        this.staffName = staffName;
+    }
+
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getNewsCategoryName() {
+        return newsCategoryName;
+    }
+
+    public void setNewsCategoryName(String newsCategoryName) {
+        this.newsCategoryName = newsCategoryName;
+    }
+
     public String getNewsImg() {
         return newsImg;
     }
@@ -41,8 +94,6 @@ public class News {
     public void setNewsImg(String newsImg) {
         this.newsImg = newsImg;
     }
-
-    
 
     public int getNewsID() {
         return newsID;
@@ -99,6 +150,5 @@ public class News {
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
-    
-    
+
 }
