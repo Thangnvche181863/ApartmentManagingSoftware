@@ -3,49 +3,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
 import java.sql.Date;
-
 /**
  *
- * @author ADMIN
+ * @author thang
  */
 public class Invoice {
-    private int invoiceID;
-    private int apartmentID;
+    private int invoiceId;
+    private int apartmentId;
     private double amount;
     private Date issueDate;
-    private Date dueDate;
+    private Date duDate;
     private int status;
     private Date transactionDate;
 
     public Invoice() {
     }
 
-    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
-        this.invoiceID = invoiceID;
-        this.apartmentID = apartmentID;
+    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date duDate, int status, Date transactionDate) {
+        this.invoiceId = invoiceId;
+        this.apartmentId = apartmentId;
         this.amount = amount;
         this.issueDate = issueDate;
-        this.dueDate = dueDate;
+        this.duDate = duDate;
         this.status = status;
         this.transactionDate = transactionDate;
     }
 
-    public int getInvoiceID() {
-        return invoiceID;
+    public int getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoiceID(int invoiceID) {
-        this.invoiceID = invoiceID;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public int getApartmentID() {
-        return apartmentID;
+    public int getApartmentId() {
+        return apartmentId;
     }
 
-    public void setApartmentID(int apartmentID) {
-        this.apartmentID = apartmentID;
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
     public double getAmount() {
@@ -64,12 +62,12 @@ public class Invoice {
         this.issueDate = issueDate;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public Date getDuDate() {
+        return duDate;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDuDate(Date duDate) {
+        this.duDate = duDate;
     }
 
     public int getStatus() {
@@ -90,7 +88,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceID=" + invoiceID + ", apartmentID=" + apartmentID + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + '}';
+        return "Invoice{" + "invoiceId=" + invoiceId + ", apartmentId=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", duDate=" + duDate + ", status=" + status + ", transactionDate=" + transactionDate + '}';
     }
     
     
