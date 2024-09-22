@@ -43,8 +43,9 @@ public class NewsServlet extends HttpServlet {
 
         // Get the news items for the current page
         List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
-
+        List<News> bannerList = newsDAO.getNewsForBanner();
         // Set news and pagination attributes
+        request.setAttribute("newsBanner", bannerList);
         request.setAttribute("news", newsList);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
