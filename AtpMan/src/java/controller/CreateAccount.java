@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import DAO.CustomerDAO;
@@ -67,12 +66,12 @@ public class CreateAccount extends HttpServlet {
         try {
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
+//            String password = request.getParameter("password");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phoneNumber");
-            String age = request.getParameter("age");
-            String registrationDate = request.getParameter("registrationDate");
+//            String age = request.getParameter("age");
+//            String registrationDate = request.getParameter("registrationDate");
             String userType = request.getParameter("userType");
 
             String isOwner = null;
@@ -90,11 +89,13 @@ public class CreateAccount extends HttpServlet {
                 return;
             }
 
-            
-            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
+//            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
+//            request.setAttribute("successCreate", "Create account successfully");
+//            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+
+            customerDAO.createNewCustomer(username, name, email, phoneNumber, isOwner);
             request.setAttribute("successCreate", "Create account successfully");
             request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-            
         } catch (Exception e) {
         }
     }

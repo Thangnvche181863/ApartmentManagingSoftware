@@ -143,22 +143,46 @@ public class CustomerDAO {
         return false;
     }
 
-    public void createNewCustomer(String username, String password, String name, String email, String phoneNumber, String age, String registrationDate, String isOwner) {
+//    public void createNewCustomer(String username, String password, String name, String email, String phoneNumber, String age, String registrationDate, String isOwner) {
+//        Connection conn = null;
+//        try {
+//            conn = DBContext.getConnection();
+//            if (conn != null) {
+//                String hashedInputPassword = UtilHashPass.EncodePassword(password);
+//                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, age, registrationDate, isOwner) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+//                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//                    ps.setString(1, username);
+//                    ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
+//                    ps.setString(3, name);
+//                    ps.setString(4, email);
+//                    ps.setString(5, phoneNumber);
+//                    ps.setString(6, age);
+//                    ps.setString(7, registrationDate);
+//                    ps.setString(8, isOwner); // 1 for Resident, 0 for Owner
+//                    ps.executeUpdate();
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            LOGGER.log(Level.SEVERE, "Error creating new customer", e);
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//    }
+    
+    public void createNewCustomer(String username, String name, String email, String phoneNumber, String isOwner) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
-                String hashedInputPassword = UtilHashPass.EncodePassword(password);
-                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, age, registrationDate, isOwner) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+//                String hashedInputPassword = UtilHashPass.EncodePassword(password);
+                String sql = "INSERT INTO Customer (username, name, email, phoneNumber, isOwner) VALUES (?, ?, ?, ?, ?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
-                    ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
-                    ps.setString(3, name);
-                    ps.setString(4, email);
-                    ps.setString(5, phoneNumber);
-                    ps.setString(6, age);
-                    ps.setString(7, registrationDate);
-                    ps.setString(8, isOwner); // 1 for Resident, 0 for Owner
+//                    ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
+                    ps.setString(2, name);
+                    ps.setString(3, email);
+                    ps.setString(4, phoneNumber);
+                    ps.setString(5, isOwner); // 1 for Resident, 0 for Owner
                     ps.executeUpdate();
                 }
             }
@@ -168,6 +192,7 @@ public class CustomerDAO {
             DBContext.closeConnection(conn);
         }
     }
+    
 
 //    public static void main(String[] args) {
 //        CustomerDAO dao = new CustomerDAO();

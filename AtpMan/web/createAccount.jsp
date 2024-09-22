@@ -75,58 +75,83 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="username">Username</label>
-                                            <input type="text" id="username" class="form-control form-control-lg" name="username"/>
+                                            <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
                                             <small class="text-danger" id="usernameError"></small>
                                         </div>
 
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="password">Password</label>
-                                            <input type="password" id="password" class="form-control form-control-lg" name="password" />
-                                            <small class="text-danger" id="passwordError"></small>
+                                            <label class="form-label" for="name">Name</label>
+                                            <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
                                         </div>
+                                        <!--                                        <div class="col-md-6 mb-4">
+                                                                                    <label class="form-label" for="password">Password</label>
+                                                                                    <input type="password" id="password" class="form-control form-control-lg" name="password" />
+                                                                                    <small class="text-danger" id="passwordError"></small>
+                                                                                </div>-->
+
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="name">Name</label>
-                                            <input type="text" id="name" class="form-control form-control-lg" name="name"/>
-                                        </div>
+                                        <!--                                        <div class="col-md-6 mb-4">
+                                                                                    <label class="form-label" for="name">Name</label>
+                                                                                    <input type="text" id="name" class="form-control form-control-lg" name="name"/>
+                                                                                </div>-->
 
                                         <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
+                                            <small class="text-danger" id="phoneNumberError"></small>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
                                             <label class="form-label" for="email">Email</label>
-                                            <input type="text" id="email" class="form-control form-control-lg" name="email"/>
+                                            <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
                                             <small class="text-danger" id="emailError"></small>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="phoneNumber">Phone Number</label>
-                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber"/>
-                                            <small class="text-danger" id="phoneNumberError"></small>
+                                            <label class="form-label select-label">Building</label>
+                                            <select class="select form-control-lg" name="building" required>
+                                                <option value="" selected>Choose building</option>
+                                                
+                                            </select>
+                                            <small class="text-danger" id="buildingError"></small>
                                         </div>
 
+
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="age">Age</label>
-                                            <input type="text" id="age" class="form-control form-control-lg" name="age" />
-                                            <small class="text-danger" id="ageError"></small>
+                                            <label class="form-label select-label">Apartment</label>
+                                            <select class="select form-control-lg" name="apartment" required>
+                                                <option value="" selected>Choose apartment</option>
+                                                
+                                            </select>
+                                            <small class="text-danger" id="apartmentError"></small>
                                         </div>
+
+
+                                        <!--                                        <div class="col-md-6 mb-4">
+                                                                                    <label class="form-label" for="age">Age</label>
+                                                                                    <input type="text" id="age" class="form-control form-control-lg" name="age" />
+                                                                                    <small class="text-danger" id="ageError"></small>
+                                                                                </div>-->
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="regDate">Registration Date</label>
-                                            <input type="date" id="regDate" class="form-control form-control-lg" name="registrationDate" />
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="row">
+                                                                            <div class="col-md-6 mb-4">
+                                                                                <label class="form-label" for="regDate">Registration Date</label>
+                                                                                <input type="date" id="regDate" class="form-control form-control-lg" name="registrationDate" />
+                                                                            </div>
+                                                                        </div>-->
 
                                     <div class="row">
                                         <div class="col-12 mb-4">
                                             <label class="form-label select-label">Type</label>
-                                            <select class="select form-control-lg" name="userType">
+                                            <select class="select form-control-lg" name="userType" required>
                                                 <option value="" selected>Choose option</option>
                                                 <option value="2">Resident</option>
                                                 <option value="3">Owner</option>
                                             </select>
+                                            <small class="text-danger" id="userTypeError"></small>
                                         </div>
                                     </div>
 
@@ -254,10 +279,10 @@
 
             // Attach the validate functions to the input fields
             document.getElementById("username").addEventListener("input", validateUsername);
-            document.getElementById("password").addEventListener("input", validatePassword);
+//            document.getElementById("password").addEventListener("input", validatePassword);
             document.getElementById("email").addEventListener("input", validateEmail);
             document.getElementById("phoneNumber").addEventListener("input", validatePhone);
-            document.getElementById("age").addEventListener("input", validateAge);
+//            document.getElementById("age").addEventListener("input", validateAge);
         </script>
 
 
