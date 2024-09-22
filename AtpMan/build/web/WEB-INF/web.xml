@@ -23,6 +23,35 @@
     <servlet>
         <servlet-name>NewsDetail</servlet-name>
         <servlet-class>controller.NewsDetail</servlet-class>
+        <servlet-name>UserHomeServlet</servlet-name>
+        <servlet-class>controller.UserHomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+<!--<<<<<<< HEAD-->
+        <servlet-name>ServiceIntroServlet</servlet-name>
+        <servlet-class>controller.ServiceIntroServlet</servlet-class>
+<!--=======-->
+    </servlet>
+    <servlet>
+        <servlet-name>CreateAccount</servlet-name>
+        <servlet-class>controller.CreateAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginGoogle</servlet-name>
+        <servlet-class>controller.LoginGoogle</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePassword</servlet-name>
+        <servlet-class>model.ChangePassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeEmail</servlet-name>
+        <servlet-class>model.ChangeEmail</servlet-class>
+<!-->>>>>>> origin/quannguyen_iter1-->
     </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
@@ -47,6 +76,35 @@
     <servlet-mapping>
         <servlet-name>NewsDetail</servlet-name>
         <url-pattern>/NewsDetail</url-pattern>
+        <servlet-name>UserHomeServlet</servlet-name>
+        <url-pattern>/userhome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+<!--<<<<<<< HEAD-->
+        <servlet-name>ServiceIntroServlet</servlet-name>
+        <url-pattern>/serviceintro</url-pattern>
+<!--=======-->
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAccount</servlet-name>
+        <url-pattern>/createaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginGoogle</servlet-name>
+        <url-pattern>/logingoogle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassword</servlet-name>
+        <url-pattern>/changepassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeEmail</servlet-name>
+        <url-pattern>/changeemail</url-pattern>
+<!-->>>>>>> origin/quannguyen_iter1-->
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
