@@ -4,100 +4,80 @@
  */
 package DAO;
 
+import java.sql.Date;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Vector;
 import model.Apartment;
+import utils.DBContext;
 
 /**
  *
- * @author thang
+ * @author Admin
  */
-public class ApartmentDAO extends DBContext {
+public class ApartmentDAO {
 
-    public List<Apartment> getAll() {
-        List<Apartment> list = new ArrayList<>();
-
+    public Vector<Apartment> getAllApartment() {
+        Connection conn = null;
+        Vector<Apartment> vector = new Vector<>();
+        String sql = "select * from Apartment";
         try {
-            String sql = "Select * from Apartment";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                list.add(new Apartment(rs.getInt("apartmentID"), rs.getInt("buildingID"), rs.getString("departmentType"), rs.getDouble("price"), rs.getInt("floor"), rs.getInt("area")));
+                int apartmentID = rs.getInt(1);
+                int buildingID = rs.getInt(2);
+                String departmentType = rs.getString(3);
+                double price = rs.getDouble(4);
+                int floor = rs.getInt(5);
+                int area = rs.getInt(6);
+                Apartment apartment = new Apartment(apartmentID, buildingID, departmentType, price, floor, area);
+                vector.add(apartment);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        return list;
+        return vector;
     }
 
-    public void insertApartment(int buildingId, String departmentType, double price, int floor, int area) {
+    public Vector<Apartment> getAllApartmentByID(int buildingID) {
+        Connection conn = null;
+        Vector<Apartment> vector = new Vector<>();
+        String sql = "select * from Apartment where buildingID = ?";
         try {
-            String sql = "Insert into Apartment(buildingID,departmentType,price,floor,area) values(?,?,?,?,?)";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-
-            ps.setInt(1, buildingId);
-            ps.setString(2, departmentType);
-            ps.setDouble(3, price);
-            ps.setInt(4, floor);
-            ps.setInt(5, area);
-
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, buildingID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int apartmentID = rs.getInt(1);
+                String departmentType = rs.getString(3);
+                double price = rs.getDouble(4);
+                int floor = rs.getInt(5);
+                int area = rs.getInt(6);
+                Apartment apartment = new Apartment(apartmentID, buildingID, departmentType, price, floor, area);
+                vector.add(apartment);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
+        return vector;
     }
 
-    public void deleteApartment(int apartmentId) {
-        try {
-            String sql = "DELETE FROM [dbo].[Apartment]\n"
-                    + "      WHERE apartmentId = ? ";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, apartmentId);
-
-            ps.executeUpdate();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void updateApartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area) {
-        try {
-            String sql = "UPDATE [dbo].[Apartment]\n"
-                    + "   SET [buildingID] = ?\n"
-                    + "      ,[departmentType] = ?\n"
-                    + "      ,[price] = ?\n"
-                    + "      ,[floor] = ?\n"
-                    + "      ,[area] = ?\n"
-                    + " WHERE apartmentId = ?";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, buildingId);
-            ps.setString(2, departmentType);
-            ps.setDouble(3, price);
-            ps.setInt(4, floor);
-            ps.setInt(5, area);
-            ps.setInt(6, apartmentId);
-
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public int getAmountOfApartment() {
+        ApartmentDAO dao = new ApartmentDAO();
+        Vector<Apartment> vector = dao.getAllApartment();
+        return vector.size();
     }
 
     public static void main(String[] args) {
-        ApartmentDAO adao = new ApartmentDAO();
-//        adao.insertApartment(1,"Living Room",0,1);
-//        adao.deleteApartment(1);
-//        adao.updateApartment(5, 2, "Bad Room", 1.00, 2);
-//        adao.deleteApartment(6);
-        System.out.println(adao.getAll());
+        Apartment a = new Apartment();
+        ApartmentDAO dao = new ApartmentDAO();
+        Vector<Apartment> vector = dao.getAllApartmentByID(1);
+        System.out.println(vector.size());
 
     }
 }

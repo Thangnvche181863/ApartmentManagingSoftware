@@ -4,93 +4,54 @@
  */
 package DAO;
 
+import java.sql.Date;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.Vector;
 import model.Building;
+import utils.DBContext;
 
 /**
  *
- * @author thang
+ * @author Admin
  */
-public class BuildingDAO extends DBContext {
+public class BuildingDAO {
 
-    public List<Building> getAll() {
-        List<Building> list = new ArrayList<>();
-
+    public Vector<Building> getAllBuilding() {
+        Connection conn = null;
+        Vector<Building> vector = new Vector<>();
+        String sql = "select * from Building";
         try {
-            String sql = "Select * from Building";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                list.add(new Building(rs.getInt("buildingID"), rs.getString("name"), rs.getInt("numFloor"), rs.getInt("numApartment"), rs.getString("address")));
+                int buildingID = rs.getInt(1);
+                String name = rs.getString(2);
+                int numFloor = rs.getInt(3);
+                int numApartment = rs.getInt(4);
+                String address = rs.getString(5);
+                Building building = new Building(buildingID, name, numFloor, numApartment, address);
+                vector.add(building);
             }
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
-        return list;
+        return vector;
     }
-
-    public void insertBuilding(String name, int numFloor, int numApartment, String address) {
-        try {
-            String sql = "Insert into Building(name,numFloor,numApartment,address) values(?,?,?,?)";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-
-            ps.setString(1, name);
-            ps.setInt(2, numFloor);
-            ps.setInt(3, numApartment);
-            ps.setString(4, address);
-
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public int getAmountOfBuilding(){
+        Building building = new Building();
+        BuildingDAO dao = new BuildingDAO();
+        Vector<Building> vector = dao.getAllBuilding();
+        return vector.size();
     }
-
-    public void deleteBuilding(int buildingId) {
-        try {
-            String sql = "DELETE FROM [dbo].[Building]\n"
-                    + "      WHERE buildingId = ?";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, buildingId);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public void updateBuilding(int buildingId, String name, int numFloor, int numApartment, String address) {
-        try {
-            String sql = "UPDATE [dbo].[Building]\n"
-                    + "   SET [name] = ?\n"
-                    + "      ,[numFloor] = ?\n"
-                    + "      ,[numApartment] = ?\n"
-                    + "      ,[address] = ?\n"
-                    + " WHERE buildingId = ?";
-            
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(2, name);
-            ps.setInt(2, numFloor);
-            ps.setInt(3, numApartment);
-            ps.setString(4, address);
-            ps.setInt(5, buildingId);
-            
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
     public static void main(String[] args) {
-        BuildingDAO bdao = new BuildingDAO();
-//        bdao.insertBuilding("FTelecom", 4, 40, "Hoa Lac");
-//        bdao.deleteBuilding(2);
-        System.out.println(bdao.getAll());
+        Building building = new Building();
+        BuildingDAO dao = new BuildingDAO();
+        Vector<Building> vector = dao.getAllBuilding();
+        System.out.println(vector.size());
     }
 
 }

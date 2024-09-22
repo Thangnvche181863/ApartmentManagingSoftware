@@ -4,21 +4,6 @@
  */
 package model;
 
-<<<<<<< HEAD
-/**
- *
- * @author ADMIN
- */
-public class Customer {
-    private String username;
-    private String email;
-    private String phone;
-
-    public Customer() {
-    }    
-    
-    
-=======
 import java.util.Date;
 
 /**
@@ -37,6 +22,7 @@ public class Customer {
     private int isOwner;
 
     public Customer() {
+
     }
 
     public Customer(int customerID, String username, String name, String email, String phoneNumber, int age, Date registrationDate, int isOwner) {
@@ -58,7 +44,6 @@ public class Customer {
         this.customerID = customerID;
     }
 
->>>>>>> origin/quannguyen_iter1
     public String getUsername() {
         return username;
     }
@@ -67,8 +52,6 @@ public class Customer {
         this.username = username;
     }
 
-<<<<<<< HEAD
-=======
     public String getName() {
         return name;
     }
@@ -77,7 +60,6 @@ public class Customer {
         this.name = name;
     }
 
->>>>>>> origin/quannguyen_iter1
     public String getEmail() {
         return email;
     }
@@ -86,24 +68,9 @@ public class Customer {
         this.email = email;
     }
 
-<<<<<<< HEAD
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-     @Override
-    public String toString() {
-        return "Customer{" + "username=" + username + ", email=" + email + ", phone=" + phone + '}';
-    }
-    
-    
-=======
     public String getPhoneNumber() {
         return phoneNumber;
+
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -139,5 +106,4 @@ public class Customer {
         return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", age=" + age + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + '}';
     }
 
->>>>>>> origin/quannguyen_iter1
 }

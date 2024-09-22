@@ -4,60 +4,58 @@
  */
 package model;
 
-import java.util.List;
 
 /**
  *
- * @author thang
+ * @author Admin
  */
 public class Apartment {
-    private int apartmentId;
-    private int buildingId;
+
+    private int apartmentID;
+    private int buildingID;
+
     private String departmentType;
     private double price;
     private int floor;
     private int area;
-    
-    private List<Invoice> invoices;
+
 
     public Apartment() {
     }
+    public Apartment(int apartmentID, int buildingID, String departmentType, double price, int floor, int area) {
+        this.apartmentID = apartmentID;
+        this.buildingID = buildingID;
 
-    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area) {
-        this.apartmentId = apartmentId;
-        this.buildingId = buildingId;
         this.departmentType = departmentType;
         this.price = price;
         this.floor = floor;
         this.area = area;
     }
-    
-    
 
-    public Apartment(int apartmentId, int buildingId, String departmentType, double price, int floor, int area, List<Invoice> invoices) {
-        this.apartmentId = apartmentId;
-        this.buildingId = buildingId;
-        this.departmentType = departmentType;
-        this.price = price;
-        this.floor = floor;
+
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
         this.area = area;
-        this.invoices = invoices;
     }
 
-    public int getApartmentId() {
-        return apartmentId;
+    public int getApartmentID() {
+        return apartmentID;
     }
 
-    public void setApartmentId(int apartmentId) {
-        this.apartmentId = apartmentId;
+    public void setApartmentID(int apartmentID) {
+        this.apartmentID = apartmentID;
     }
 
-    public int getBuildingId() {
-        return buildingId;
+    public int getBuildingID() {
+        return buildingID;
     }
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
+    public void setBuildingID(int buildingID) {
+        this.buildingID = buildingID;
+
     }
 
     public String getDepartmentType() {
@@ -84,28 +82,11 @@ public class Apartment {
         this.floor = floor;
     }
 
-    public int getArea() {
-        return area;
-    }
-
-    public void setArea(int area) {
-        this.area = area;
-    }
-
-    public List<Invoice> getInvoices() {
-        return invoices;
-    }
-
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
-    }
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentId=" + apartmentId + ", buildingId=" + buildingId + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + ", area=" + area + ", invoices=" + invoices + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + '}';
     }
 
-    
-    
-    
+
 }

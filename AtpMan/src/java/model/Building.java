@@ -4,48 +4,42 @@
  */
 package model;
 
-import java.util.List;
 
 /**
  *
- * @author thang
+ * @author Admin
  */
 public class Building {
-    private int buildingId;
+
+    private int buildingID;
+
     private String name;
     private int numFloor;
     private int numApartment;
     private String address;
-    
-    private List<Apartment> apartments;
+
 
     public Building() {
     }
 
-    public Building(int buildingId, String name, int numFloor, int numApartment, String address) {
-        this.buildingId = buildingId;
+
+    public Building(int buildingID, String name, int numFloor, int numApartment, String address) {
+        this.buildingID = buildingID;
+
         this.name = name;
         this.numFloor = numFloor;
         this.numApartment = numApartment;
         this.address = address;
     }
 
-    
-    public Building(int buildingId, String name, int numFloor, int numApartment, String address, List<Apartment> apartments) {
-        this.buildingId = buildingId;
-        this.name = name;
-        this.numFloor = numFloor;
-        this.numApartment = numApartment;
-        this.address = address;
-        this.apartments = apartments;
+
+    public int getBuildingID() {
+        return buildingID;
     }
 
-    public int getBuildingId() {
-        return buildingId;
-    }
+    public void setBuildingID(int buildingID) {
+        this.buildingID = buildingID;
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
     }
 
     public String getName() {
@@ -80,18 +74,10 @@ public class Building {
         this.address = address;
     }
 
-    public List<Apartment> getApartments() {
-        return apartments;
-    }
-
-    public void setApartments(List<Apartment> apartments) {
-        this.apartments = apartments;
-    }
 
     @Override
     public String toString() {
-        return "Building{" + "buildingId=" + buildingId + ", name=" + name + ", numFloor=" + numFloor + ", numApartment=" + numApartment + ", address=" + address + ", apartments=" + apartments + '}';
+        return "Building{" + "buildingID=" + buildingID + ", name=" + name + ", numFloor=" + numFloor + ", numApartment=" + numApartment + ", address=" + address + '}';
     }
-    
     
 }

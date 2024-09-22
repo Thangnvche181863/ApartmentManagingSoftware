@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/service.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/css/style.css</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/serviceuser.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ServiceIntroServlet.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/js/main.js</file>
+
+            <file>file:/D:/Project%20SWP/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ManagerPageController.java</file>
+            <file>file:/D:/Project%20SWP/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/BuildingDAO.java</file>
+            <file>file:/D:/Project%20SWP/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/managerHomePage.jsp</file>
+            <file>file:/D:/Project%20SWP/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ApartmentDAO.java</file>
+
         </group>
     </open-files>
 </project-private>
