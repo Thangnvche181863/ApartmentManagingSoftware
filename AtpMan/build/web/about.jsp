@@ -5,12 +5,21 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
-
+    <style>
+        #carouselExampleIndicators .carousel-item img {
+            max-height: 500px; /* Adjust the maximum height as needed */
+            width: auto;
+            margin: auto;
+        }
+    </style>
     <head>
         <meta charset="utf-8">
-        <title>LifeSure - Life Insurance Website Template</title>
+        <title>AptMan - News</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -39,7 +48,7 @@
 
     <body>
 
-        <jsp:include page="header.jsp"></jsp:include>
+       <jsp:include page="header.jsp"></jsp:include>
 
         <!-- Modal Search Start -->
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,83 +68,44 @@
             </div>
         </div>
 
-
-        <!-- About Start -->
-        <div class="container-fluid bg-light about py-5">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
-                        <div class="about-item-content bg-white rounded p-5 h-100">
-                            <h4 class="text-primary">About Our Apartment</h4>
-                            <h1 class="display-4 mb-4">High-end apartment building</h1>
-                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt debitis sint tempora. Corporis consequatur illo blanditiis voluptates aperiam quos aliquam totam aliquid rem explicabo,
-                            </p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae praesentium recusandae eligendi modi hic
-                            </p>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>We can save your money.</p>
-                            <p class="text-dark"><i class="fa fa-check text-primary me-3"></i>Production or trading of good</p>
-                            <p class="text-dark mb-4"><i class="fa fa-check text-primary me-3"></i>Our life insurance is flexible</p>
-                            <a class="btn btn-primary rounded-pill py-3 px-5" href="#">More Information</a>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
-                        <div class="bg-white rounded p-5 h-100">
-                            <div class="row g-4 justify-content-center">
-                                <div class="col-12">
-                                    <div class="rounded bg-light">
-                                        <img src="img/about-1.png" class="img-fluid rounded w-100" alt="">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">129</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Insurance Policies</h4>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">99</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Awards WON</h4>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">556</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Skilled Agents</h4>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="counter-item bg-light rounded p-3 h-100">
-                                        <div class="counter-counting">
-                                            <span class="text-primary fs-2 fw-bold" data-toggle="counter-up">967</span>
-                                            <span class="h1 fw-bold text-primary">+</span>
-                                        </div>
-                                        <h4 class="mb-0 text-dark">Team Members</h4>
-                                    </div>
-                                </div>
+        <!-- News Carousel -->
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <c:forEach var="news" items="${newsList}" varStatus="status">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="${status.index}" class="${status.first ? 'active' : ''}"></li>
+                </c:forEach>
+            </ol>
+            <div class="carousel-inner">
+                <c:forEach var="banner" items="${newsBanner}" varStatus="status">
+                    <div class="carousel-item ${status.first ? 'active' : ''}">
+                        <a href="<c:out value='NewsDetail?id=${banner.newsID}'/>">   
+                            <img class="d-block w-100" src="<c:out value='${banner.newsImg}'/>" alt="Slide ${status.index + 1}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5 style="color:#FFFF00;"><c:out value='${banner.newsTitle}'/></h5>
+                                <p style="color:#FFFF00;"><c:out value='${banner.newsContent}'/></p>
                             </div>
-                        </div>
+                        </a>
                     </div>
-                </div>
+                </c:forEach>
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <!-- About End -->
+    </div>
+</div>
+<!-- News Carousel End -->
 
-        
 
-       
-
-        <!-- Test Start -->
-        <section class="section bg-light py-5" >
+        <!-- Recent News Section Start -->
+        <section    class="section bg-light py-5">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
@@ -145,218 +115,83 @@
                             </div><!-- end blog-top -->
 
                             <div class="blog-list clearfix">
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="img/nao.gif" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
+                                <!-- Loop through the news list -->
+                                <c:forEach  items="${news}" var="newsItem">
+                                    <div class="blog-box row">
+                                        <div class="col-md-4">
+                                            <div class="post-media">
+                                                <a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                    <img src="${newsItem.newsImg}" alt="" class="img-fluid">
+                                                    <div class="hovereffect"></div>
+                                                </a>
+                                            </div><!-- end media -->
+                                        </div><!-- end col -->
+                                        
+                                        <div class="blog-meta big-meta col-md-8">
+                                            <h4><a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                    ${newsItem.newsTitle}
+                                                </a></h4>
+                                            <p>${newsItem.newsContent}</p>
+                                            <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
+                                            <small>
+                                                <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />
+                                            </small>
+                                            <small>  by ${newsItem.staffName}</small>
+                                        </div><!-- end meta -->
+                                    </div><!-- end blog-box -->
 
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Top 10 phone applications and 2017 mobile design awards</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small>
-                                        <small><a href="tech-single.html" title="">21 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 1114</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="img/toothless-toothless-dragon.gif" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">A device you can use both headphones and usb</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Technology</a></small>
-                                        <small><a href="tech-single.html" title="">21 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 4412</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                             
-
-                               
-
-                               
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_09.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Enjoy a summer with a colorful headset</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Technology</a></small>
-                                        <small><a href="tech-single.html" title="">14 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 2214</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
-
-                                <hr class="invis">
-
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_blog_10.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="tech-single.html" title="">Google has developed a brand new algorithm. Forget all your knowledge!</a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small>
-                                        <small><a href="tech-single.html" title="">13 July, 2017</a></small>
-                                        <small><a href="tech-author.html" title="">by Matilda</a></small>
-                                        <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> 3331</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box -->
+                                    <hr class="invis">
+                                </c:forEach>
                             </div><!-- end blog-list -->
                         </div><!-- end page-wrapper -->
 
-                        <hr class="invis">
-
+                        <!-- Pagination -->
                         <div class="row">
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-start">
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
+                                        <c:if test="${currentPage > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="News?page=${currentPage - 1}">Previous</a>
+                                            </li>
+                                        </c:if>
+
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                <a class="page-link" href="News?page=${i}">${i}</a>
+                                            </li>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="News?page=${currentPage + 1}">Next</a>
+                                            </li>
+                                        </c:if>
                                     </ul>
                                 </nav>
                             </div><!-- end col -->
                         </div><!-- end row -->
                     </div><!-- end col -->
-
-                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                        <div class="sidebar">
-                            <div class="widget">
-                                <div class="banner-spot clearfix">
-                                    <div class="banner-img">
-                                        <img src="upload/banner_07.jpg" alt="" class="img-fluid">
-                                    </div><!-- end banner-img -->
-                                </div><!-- end banner -->
-                            </div><!-- end widget -->
-
-                           
-
-                           
-
-                            <div class="widget">
-                                <div class="banner-spot clearfix">
-                                    <div class="banner-img">
-                                        <img src="upload/banner_03.jpg" alt="" class="img-fluid">
-                                    </div><!-- end banner-img -->
-                                </div><!-- end banner -->
-                            </div><!-- end widget -->
-                        </div><!-- end sidebar -->
-                    </div><!-- end col -->
                 </div><!-- end row -->
             </div><!-- end container -->
         </section>
-
-        <!-- FAQs Start -->
-        <div class="container-fluid faq-section bg-light pb-5">
-            <div class="container pb-5">
-                <div class="row g-5 align-items-center">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
-                        <div class="h-100">
-                            <div class="mb-5">
-                                <h4 class="text-primary">Some Important FAQ's</h4>
-                                <h1 class="display-4 mb-0">Common Frequently Asked Questions</h1>
-                            </div>
-                            <div class="accordion" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Q: What is the purpose of the Apartment Expense Management Software?
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show active" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body rounded">
-                                            A: The software is designed to assist the apartment building management team with expense tracking and service provision, while enabling residents to conveniently pay their apartment fees.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Q: Is it neccessary for everyone living in the apartment building using this software?
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            A: No, but it's recommened that atleast one person in each apartment uses the software to ensure that all residents are kept up-to-date with the latest information.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Q: Can I pay apartment fees without using the software?
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            A: No, all apartment fees must be paid through the software to ensure that all payments are recorded and accounted for.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.4s">
-                        <img src="img/carousel-2.png" class="img-fluid w-100" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- FAQs End -->
+        <!-- Recent News Section End -->
 
 
-    
+
 
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"/>
         <!-- Footer End -->
-        
+
 
 
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
-        
+
         <!-- JavaScript Libraries -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -366,9 +201,13 @@
         <script src="lib/counterup/counterup.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        
+
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
+
 </html>
