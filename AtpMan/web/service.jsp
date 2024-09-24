@@ -106,9 +106,7 @@
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
-                                <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Manage</a></li>
-                                <li class="breadcrumb-item active text-primary">Service</li>
+                                <li class="breadcrumb-item"><a href="#navigate" class="active text-primary">More</a></li>
                             </ol>
                         </div>
                     </div>
@@ -120,14 +118,14 @@
                                 >
                                 Marry Christmas
                             </h4>
-                            <ol
+<!--                            <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
                                 <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Manage</a></li>
                                 <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>
+                            </ol>-->
                         </div>
                     </div>
                     <div class="bg-breadcrumb carousel-item third" data-bs-interval="5000">
@@ -138,14 +136,14 @@
                                 >
                                 Affected by Storm
                             </h4>
-                            <ol
+<!--                            <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
                                 <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Manage</a></li>
                                 <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>
+                            </ol>-->
                         </div>
                     </div>
                 </div>
@@ -223,7 +221,7 @@
                                             Our parking service is secured by smart monitoring equipment to make you satisfied and safe.
                                         </p>
                                         <a class="btn btn-primary rounded-pill py-2 px-4" href="#"
-                                           ></a
+                                           >Read More</a
                                         >
                                     </div>
                                 </div>
@@ -450,9 +448,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="far fa-handshake fa-3x"></i>
+                                        <i class="bi bi-inboxes fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">Trusted Company</h4>
+                                    <h4 class="mb-4">Laundry Service</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -461,9 +459,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-dollar-sign fa-3x"></i>
+                                        <i class="bi bi-box2-heart fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">Anytime Money Back</h4>
+                                    <h4 class="mb-4">Delivery Services</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -472,9 +470,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-bullseye fa-3x"></i>
+                                       <i class="fa fa-headphones fa-3x"></i>
                                     </div>
-                                    <h4 class="mb-4">Flexible Plans</h4>
+                                    <h4 class="mb-4">Concierge Services</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -483,9 +481,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-headphones fa-3x"></i>
+                                        <i class="bi bi-backpack3 fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">24/7 Fast Support</h4>
+                                    <h4 class="mb-4">Pet Care</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -509,14 +507,7 @@
                         data-wow-delay="0.2s"
                         style="max-width: 800px"
                         >
-                        <h4 class="text-primary">Testimonial</h4>
-                        <h1 class="display-4 mb-4">What Our Customers Are Saying</h1>
-                        <p class="mb-0">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-                            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-                            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-                            obcaecati, ipsam mollitia hic.
-                        </p>
+                        <h1 class="display-5 mb-4">Customer reviews about us</h1>
                     </div>
                     <div
                         class="owl-carousel testimonial-carousel wow fadeInUp"
@@ -527,7 +518,7 @@
                                 <div class="col-4 col-lg-4 col-xl-3">
                                     <div class="h-100">
                                         <img
-                                            src="img/testimonial-1.jpg"
+                                            src="img/deptrai.jpg"
                                             class="img-fluid h-100 rounded"
                                             style="object-fit: cover"
                                             alt=""
@@ -536,8 +527,8 @@
                                 </div>
                                 <div class="col-8 col-lg-8 col-xl-9">
                                     <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
+                                        <h4 class="text-dark mb-0">Nguyen Van Cuong Thang</h4>
+                                        <p class="mb-3">Professor</p>
                                         <div class="d-flex text-primary mb-3">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -546,9 +537,37 @@
                                             <i class="fas fa-star"></i>
                                         </div>
                                         <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
+                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-item bg-light rounded">
+                            <div class="row g-0">
+                                <div class="col-4 col-lg-4 col-xl-3">
+                                    <div class="h-100">
+                                        <img
+                                            src="img/Nghia.jpeg"
+                                            class="img-fluid h-100 rounded"
+                                            style="object-fit: cover"
+                                            alt=""
+                                            />
+                                    </div>
+                                </div>
+                                <div class="col-8 col-lg-8 col-xl-9">
+                                    <div class="d-flex flex-column my-auto text-start p-4">
+                                        <h4 class="text-dark mb-0">Le Tuan Nghia</h4>
+                                        <p class="mb-3">Professor</p>
+                                        <div class="d-flex text-primary mb-3">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <p class="mb-0">
+                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
                                         </p>
                                     </div>
                                 </div>
@@ -568,51 +587,17 @@
                                 </div>
                                 <div class="col-8 col-lg-8 col-xl-9">
                                     <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
+                                        <h4 class="text-dark mb-0">Nguyen Van Cuong Thang</h4>
+                                        <p class="mb-3">Professor</p>
                                         <div class="d-flex text-primary mb-3">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
-                                            <i class="fas fa-star text-body"></i>
+                                            <i class="fas fa-star"></i>
                                         </div>
                                         <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/testimonial-3.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star text-body"></i>
-                                            <i class="fas fa-star text-body"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
+                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
                                         </p>
                                     </div>
                                 </div>
