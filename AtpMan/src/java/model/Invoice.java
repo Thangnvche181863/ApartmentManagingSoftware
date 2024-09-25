@@ -24,8 +24,8 @@ public class Invoice {
     }
 
     public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, List<ServiceContract> serviceContractList) {
-        this.invoiceID = invoiceID;
-        this.apartmentID = apartmentID;
+        this.invoiceId = invoiceID;
+        this.apartmentId = apartmentID;
         this.amount = amount;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
@@ -66,12 +66,12 @@ public class Invoice {
         this.issueDate = issueDate;
     }
 
-    public Date getDuDate() {
-        return duDate;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setDuDate(Date duDate) {
-        this.duDate = duDate;
+    public void setDueDate(Date duDate) {
+        this.dueDate = duDate;
     }
 
     public int getStatus() {
@@ -100,7 +100,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceID=" + invoiceID + ", apartmentID=" + apartmentID + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
+        return "Invoice{" + "invoiceID=" + invoiceId + ", apartmentID=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
 
     }
     

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.*;
 import DAO.InvoiceDAO;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
@@ -67,6 +68,10 @@ public class UserHomeServlet extends HttpServlet {
 //        processRequest(request, response);
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
+        
+        // get session resident account
+        HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute("user");
 
         // get current date for user first access
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;

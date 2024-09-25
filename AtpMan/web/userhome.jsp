@@ -33,53 +33,6 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
     <body>
-
-        <!-- Topbar Start -->
-        <!--        <div class="container-fluid topbar px-0 px-lg-4 bg-light ">
-                    <div class="container">
-                        <nav class="navbar navbar-expand-lg navbar-light"> 
-                            <a href="#" class="navbar-brand p-0">
-                                <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
-                                 <img src="img/logo.png" alt="Logo"> 
-                            </a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                                <span class="fa fa-bars"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarCollapse">
-                                <div class="navbar-nav mx-0 mx-lg-auto">
-                                    <a href="home.jsp" class="nav-item nav-link active">Home</a>
-                                    <a href="about.jsp" class="nav-item nav-link">About</a>
-                                    <a href="service.jsp" class="nav-item nav-link">Services</a>
-                                    <a href="blog.jsp" class="nav-item nav-link">Blog</a>
-                                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                                                                <div class="nav-btn px-3">
-                                                                    <button class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
-                                                                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4 ms-3 flex-shrink-0"> Get a Quote</a>
-                                                                </div>
-                                </div>
-                            </div>
-                            <div class="d-none d-xl-flex flex-shrink-0 ps-4">
-                                                        <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada" data-wow-delay=".9s">
-                                                            <i class="fa fa-phone-alt fa-2x"></i>
-                                                            <div class="position-absolute" style="top: 7px; right: 12px;">
-                                                                <span><i class="fa fa-comment-dots text-secondary"></i></span>
-                                                            </div>
-                                                        </a>
-                                <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                                    <a href="login.jsp" class="btn btn-primary">
-                                        <i class="fa-solid fa-user"></i> Login
-                                    </a>
-        
-                                    <a href="register.jsp" class="btn btn-primary">
-                                        <i class="fa-solid fa-user"></i> Sign Up
-                                    </a>
-                                </div>
-        
-                            </div>
-                        </nav>
-                    </div>
-                </div>-->
-        <!-- Topbar End -->
         <div id="wrapper">
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -198,7 +151,7 @@
 
             </ul>
             <!-- End of Sidebar -->
-            <div id="content-wrapper" class="d-flex flex-column container fluid">
+            <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -748,8 +701,6 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
         <script>
                                             function submitMonth() {
                                                 document.getElementById('chooseMonthYear').submit();

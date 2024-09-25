@@ -4,12 +4,13 @@
  */
 package DAO;
 
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.ServiceContract;
+import model.*;
 
 /**
  *
@@ -27,14 +28,14 @@ public class ServiceContractDAO extends DBContext {
                 ServiceContract serviceContract = new ServiceContract();
                 Service service = new Service();
 
-                service.setServiceID(rs.getInt("serviceID"));
+                service.setServiceId(rs.getInt("serviceID"));
                 service.setName(rs.getString("name"));
                 service.setType(rs.getString("type"));
                 service.setDescription(rs.getString("description"));
                 service.setFee(rs.getDouble("fee"));
 
-                serviceContract.setServiceContractID(rs.getInt("serviceContractID"));
-                serviceContract.setApartmentID(rs.getInt("apartmentID"));
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
                 serviceContract.setService(service);
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
@@ -42,7 +43,7 @@ public class ServiceContractDAO extends DBContext {
 
                 list.add(serviceContract);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
         }
         return list;
     }
@@ -55,7 +56,7 @@ public class ServiceContractDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new ServiceContract(rs.getInt("serviceContractID"),rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getDouble("amount")));
+                list.add(new ServiceContract(rs.getInt("serviceContractID"),rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getDouble("amount"), null));
             }
         } catch (Exception e) {
             System.out.println(e);

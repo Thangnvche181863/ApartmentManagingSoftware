@@ -4,11 +4,12 @@
  */
 package DAO;
 
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.Service;
+import model.*;
 
 /**
  *
@@ -25,14 +26,14 @@ public class ServiceDAO extends DBContext {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Service service = new Service();
-                service.setServiceID(rs.getInt(1));
+                service.setServiceId(rs.getInt(1));
                 service.setName(rs.getString(2));
                 service.setType(rs.getString(3));
                 service.setDescription(rs.getString(4));
                 service.setFee(rs.getDouble(5));
                 list.add(service);
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
         }
         return list;
     }

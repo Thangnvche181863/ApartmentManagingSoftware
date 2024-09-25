@@ -5,12 +5,12 @@
 package DAO;
 
 import java.time.LocalDate;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.Invoice;
+import utils.DBContext;
+import model.*;
 
 /**
  *
@@ -22,7 +22,7 @@ public class InvoiceDAO {
 
     public List<Invoice> getAllInvoiceByApartmentID(int apartmentID) {
         List<Invoice> list = new ArrayList<>();
-
+        String sql = "select * from Invoice where apartmentID = ?";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -30,8 +30,8 @@ public class InvoiceDAO {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Invoice invoice = new Invoice();
-                invoice.setInvoiceID(rs.getInt(1));
-                invoice.setApartmentID(rs.getInt(2));
+                invoice.setInvoiceId(rs.getInt(1));
+                invoice.setApartmentId(rs.getInt(2));
                 invoice.setAmount(rs.getDouble(3));
                 invoice.setIssueDate(rs.getDate(4));
                 invoice.setDueDate(rs.getDate(5));
@@ -39,7 +39,7 @@ public class InvoiceDAO {
                 invoice.setTransactionDate(rs.getDate(7));
                 list.add(invoice);
             }
-        } catch (Exception e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
         }
         return list;
@@ -72,7 +72,7 @@ public class InvoiceDAO {
                 // declare service object
                 Service service = new Service();
 
-                service.setServiceID(rs.getInt("serviceID"));
+                service.setServiceId(rs.getInt("serviceID"));
                 service.setName(rs.getString("name"));
                 service.setType(rs.getString("type"));
                 service.setDescription(rs.getString("description"));
@@ -81,8 +81,8 @@ public class InvoiceDAO {
                 // declare serviceContract object
                 ServiceContract serviceContract = new ServiceContract();
 
-                serviceContract.setServiceContractID(rs.getInt("serviceContractID"));
-                serviceContract.setApartmentID(rs.getInt("apartmentID"));
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
                 serviceContract.setService(service);
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
@@ -91,8 +91,8 @@ public class InvoiceDAO {
                 serviceList.add(serviceContract);
 
                 // set data for invoice
-                invoice.setInvoiceID(rs.getInt(1));
-                invoice.setApartmentID(rs.getInt(3));
+                invoice.setInvoiceId(rs.getInt(1));
+                invoice.setApartmentId(rs.getInt(3));
                 invoice.setAmount(rs.getDouble(4));
                 invoice.setIssueDate(rs.getDate(5));
                 invoice.setDueDate(rs.getDate(6));
@@ -146,35 +146,29 @@ public class InvoiceDAO {
     //         Date transactionDate) {
     //     try {
     //         String sql = "insert into Invoice(apartmentId,amount,issueDate,dueDate,status,transactionDate) values(?,?,?,?,?,?)";
-
     //         PreparedStatement ps = connection.prepareStatement(sql);
-
     //         ps.setInt(1, apartmentId);
     //         ps.setDouble(2, amount);
     //         ps.setDate(3, issueDate);
     //         ps.setDate(4, dueDate);
     //         ps.setInt(5, status);
     //         ps.setDate(6, transactionDate);
-
     //         ps.executeUpdate();
     //     } catch (Exception e) {
     //         System.out.println(e);
     //     }
     // }
-
     // public void deleteInvoice(int invoiceId) {
     //     try {
     //         String sql = "DELETE FROM [dbo].[Invoice]\n"
     //                 + "      WHERE invoiceId = ?";
     //         PreparedStatement ps = connection.prepareStatement(sql);
     //         ps.setInt(1, invoiceId);
-
     //         ps.executeUpdate();
     //     } catch (Exception e) {
     //         System.out.println(e);
     //     }
     // }
-
     // public void updateInvoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status,
     //         Date transactionDate) {
     //     try {
@@ -186,7 +180,6 @@ public class InvoiceDAO {
     //                 + "      ,[status] = ?\n"
     //                 + "      ,[transactionDate] = ?\n"
     //                 + " WHERE invoiceId = ?";
-
     //         PreparedStatement ps = connection.prepareStatement(sql);
     //         ps.setInt(1, apartmentId);
     //         ps.setDouble(2, amount);
@@ -195,14 +188,11 @@ public class InvoiceDAO {
     //         ps.setInt(5, status);
     //         ps.setDate(6, transactionDate);
     //         ps.setInt(7, invoiceId);
-
     //         ps.executeUpdate();
-
     //     } catch (Exception e) {
     //         System.out.println(e);
     //     }
     // }
-
     public static void main(String[] args) {
         InvoiceDAO dao = new InvoiceDAO();
         List<Invoice> list = dao.getAllInvoiceByApartmentID(1);
