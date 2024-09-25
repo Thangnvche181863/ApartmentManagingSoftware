@@ -78,7 +78,7 @@ public class UserHomeServlet extends HttpServlet {
             } catch (NumberFormatException e) {
             }
         }
-        if(year_raw != null){
+        if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
             } catch (NumberFormatException e) {
@@ -96,8 +96,8 @@ public class UserHomeServlet extends HttpServlet {
 
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
 
-        double total = totalAmount(iList);
         // parameter for current year
+        double total = totalAmount(iList);
         int numOfInvoice = iList.size();
         double paid = paidAmount(iList);
         double unpaid = unPaidAmount(iList);
