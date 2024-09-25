@@ -16,8 +16,10 @@ import model.Service;
  */
 public class ServiceDAO extends DBContext {
 
+    public  static List<Service> list = new ArrayList<>();
+    
     public List<Service> getAll() {
-        List<Service> list = new ArrayList<>();
+        
         try {
 
             String sql = "Select * from Service";
@@ -30,6 +32,37 @@ public class ServiceDAO extends DBContext {
             System.out.println(e);
         }
         return list;
+    }
+    
+    public Service findById(int id){
+        for (Service service : list) {
+            if(service.getServiceId() == id) return service;
+        }
+        return null;
+    }
+    
+    public int update(Service service){
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getServiceId() == service.getServiceId()){
+                list.set(i, service);
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    public int save(Service service){
+        list.add(service);
+        return 1;
+    }
+    
+    public int delete(int id){
+        Service service = findById(id);
+        if(service!=null){
+            list.remove(service);
+            return 1;
+        }
+        return 0;
     }
 
     public void insertService(String name, String type, double fee, String description, String img, String icon) {
