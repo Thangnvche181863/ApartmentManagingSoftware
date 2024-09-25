@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.time.Month;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -64,37 +65,81 @@ public class UserHomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        PrintWriter out = response.getWriter();
+        String month_raw = request.getParameter("selectMonth");
+        String year_raw = request.getParameter("selectYear");
+
+        // get current date for user first access
+        int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
+        int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
+
+        if (month_raw != null) {
+            try {
+                month = Integer.parseInt(month_raw);
+            } catch (NumberFormatException e) {
+            }
+        }
+        if(year_raw != null){
+            try {
+                year = Integer.parseInt(year_raw);
+            } catch (NumberFormatException e) {
+            }
+        }
+
         InvoiceDAO invoiceDAO = new InvoiceDAO();
-        
+
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
-        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(1, 9);
+        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(1);
+        LinkedHashSet<Integer> listOfYear = listOfYear(dList);
+        LinkedHashSet<Date> listOfMonth = listOfMonth(dList, year);
+
+        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(1, month, year);
 
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
-        
+
         double total = totalAmount(iList);
         // parameter for current year
         int numOfInvoice = iList.size();
         double paid = paidAmount(iList);
         double unpaid = unPaidAmount(iList);
-        
+
         // parameter for chart
         // area chart
-        List<Double> amoutMonth = listAmountByMonth(iList);
+        List<Double> amoutMonth = listAmountByMonth(iList, year);
         request.setAttribute("amoutMonth", amoutMonth);
-        
+
+        request.setAttribute("dateList", listOfMonth);
+        request.setAttribute("currentMonth", month);
+        request.setAttribute("currentYear", year);
+        request.setAttribute("listOfYear", listOfYear);
+
         request.setAttribute("totalBill", total);
         request.setAttribute("numOfInvoice", numOfInvoice);
         request.setAttribute("paid", paid);
         request.setAttribute("unpaid", unpaid);
-        
+
         request.setAttribute("invoiceCurrent", invoiceCurrent);
         request.setAttribute("serviceList", serviceList);
-        
-        
+
         request.getRequestDispatcher("userhome.jsp").forward(request, response);
     }
-    
+
+    protected LinkedHashSet<Integer> listOfYear(List<Date> list) {
+        LinkedHashSet<Integer> yList = new LinkedHashSet<>();
+        for (Date date : list) {
+            yList.add(date.toLocalDate().getYear());
+        }
+        return yList;
+    }
+
+    protected LinkedHashSet<Date> listOfMonth(List<Date> list, int year) {
+        LinkedHashSet<Date> yList = new LinkedHashSet<>();
+        for (Date date : list) {
+            if (date.toLocalDate().getYear() == year) {
+                yList.add(date);
+            }
+        }
+        return yList;
+    }
 
     protected double totalAmount(List<Invoice> list) {
         double total = 0;
@@ -103,7 +148,6 @@ public class UserHomeServlet extends HttpServlet {
         }
         return total;
     }
-    
 
     protected double paidAmount(List<Invoice> list) {
         double total = 0;
@@ -131,51 +175,53 @@ public class UserHomeServlet extends HttpServlet {
         return total;
     }
 
-    protected List<Double> listAmountByMonth(List<Invoice> list) {
+    protected List<Double> listAmountByMonth(List<Invoice> list, int year) {
         double init = 0;
         List<Double> amountList = new ArrayList<>(Arrays.asList(init, init, init, init, init, init, init, init, init, init, init, init));
         for (Invoice invoice : list) {
-            int month = invoice.getIssueDate().toLocalDate().getMonthValue();
-            switch (month - 1) {
-                case 0:
-                    amountList.add(month - 1,amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 1:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 2:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 3:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 4:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 5:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 6:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 7:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 8:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 9:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 10:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
-                case 11:
-                    amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                    break;
+            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
+                int month = invoice.getIssueDate().toLocalDate().getMonthValue();
+                switch (month - 1) {
+                    case 0:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 1:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 2:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 3:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 4:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 5:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 6:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 7:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 8:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 9:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 10:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
+                    case 11:
+                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
+                        break;
 
-                default:
-                    throw new AssertionError();
+                    default:
+                        throw new AssertionError();
+                }
             }
         }
         return amountList;
@@ -192,7 +238,10 @@ public class UserHomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String month = request.getParameter("selectMonth");
+        PrintWriter out = response.getWriter();
+        out.print(month);
     }
 
     /**

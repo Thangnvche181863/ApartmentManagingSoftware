@@ -13,21 +13,23 @@ import java.sql.Date;
 public class ServiceContract {
     private int serviceContractID;
     private int apartmentID;
-    private Service service;
+    private int serviceID;
     private Date startDate;
     private Date endDate;
     private double amount;
+    private Service service;
 
     public ServiceContract() {
     }
 
-    public ServiceContract(int serviceContractID, int apartmentID, Service service, Date startDate, Date endDate, double amount) {
+    public ServiceContract(int serviceContractID, int apartmentID, int serviceID, Date startDate, Date endDate, double amount, Service service) {
         this.serviceContractID = serviceContractID;
         this.apartmentID = apartmentID;
-        this.service = service;
+        this.serviceID = serviceID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+        this.service = service;
     }
 
     public int getServiceContractID() {
@@ -46,6 +48,14 @@ public class ServiceContract {
         this.apartmentID = apartmentID;
     }
 
+    public int getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(int serviceID) {
+        this.serviceID = serviceID;
+    }
+    
     public Service getService() {
         return service;
     }

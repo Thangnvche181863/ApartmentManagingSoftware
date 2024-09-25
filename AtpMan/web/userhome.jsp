@@ -4,8 +4,9 @@
     Author     : ADMIN
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -195,17 +196,213 @@
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
 
-                <!-- Sidebar Message -->
-                <div class="sidebar-card d-none d-lg-flex">
-                    <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                    <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                    <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-                </div>
-
             </ul>
             <!-- End of Sidebar -->
             <div id="content-wrapper" class="d-flex flex-column container fluid">
                 <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+
+                        <!-- Topbar Search -->
+                        <form
+                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                     aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                   placeholder="Search for..." aria-label="Search"
+                                                   aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+
+                            <!-- Nav Item - Alerts -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <!-- Counter - Alerts -->
+                                    <span class="badge badge-danger badge-counter">3+</span>
+                                </a>
+                                <!-- Dropdown - Alerts -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header">
+                                        Alerts Center
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-primary">
+                                                <i class="fas fa-file-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 12, 2019</div>
+                                            <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-success">
+                                                <i class="fas fa-donate text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 7, 2019</div>
+                                            $290.29 has been deposited into your account!
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-warning">
+                                                <i class="fas fa-exclamation-triangle text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">December 2, 2019</div>
+                                            Spending Alert: We've noticed unusually high spending for your account.
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                </div>
+                            </li>
+
+                            <!-- Nav Item - Messages -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <!-- Counter - Messages -->
+                                    <span class="badge badge-danger badge-counter">7</span>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="messagesDropdown">
+                                    <h6 class="dropdown-header">
+                                        Message Center
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                                 alt="...">
+                                            <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div class="font-weight-bold">
+                                            <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                                problem I've been having.</div>
+                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                                 alt="...">
+                                            <div class="status-indicator"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">I have the photos that you ordered last month, how
+                                                would you like them sent to you?</div>
+                                            <div class="small text-gray-500">Jae Chun · 1d</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                                 alt="...">
+                                            <div class="status-indicator bg-warning"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">Last month's report looks great, I am very happy with
+                                                the progress so far, keep up the good work!</div>
+                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                                 alt="...">
+                                            <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                                told me that people say this to all dogs, even if they aren't good...</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                </div>
+                            </li>
+
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">AdminName</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="img/undraw_profile.svg">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="profile.jsp">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Settings
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Activity Log
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </nav>
+                    <!-- End of Topbar -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -218,7 +415,7 @@
                         </div>
                         <!-- Billing information for one year -->
                         <div class="row">
-                            <!-- Billing information for one year -->
+                            <!-- Total information for one year -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
@@ -237,7 +434,7 @@
                             </div>
                             <!-- End Billing information for one year -->
 
-                            <!--Current month's billing information-->
+                            <!--Paid amount billing information year-->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
@@ -254,9 +451,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--Paid amount billing information year-->
 
-
-                            <!-- Pending Requests Card Example -->
+                            <!-- UnPaid amount billing information year -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-warning shadow h-100 py-2">
                                     <div class="card-body">
@@ -273,7 +470,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--UnPaid amount billing information year-->
                             <!-- Pending Requests Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-info shadow h-100 py-2">
@@ -294,9 +491,40 @@
                         </div>
                         <!-- End Billing information for one year -->
 
+                        <!--Billing information for month-->
                         <div class="row">
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary">Current month's billing information </h1>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary col-xl-5 col-md-5">Current month's billing information</h1>
+
+                                <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
+                                    <div class="col-xl-6 col-md-6">
+                                        <label for="month" class="form-label">Select Month</label>
+                                        <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
+                                            <c:forEach items="${requestScope.dateList}" var="dList">
+                                                <fmt:formatDate value="${dList}" pattern="M" var="month"/>
+                                                <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
+                                                    <fmt:setLocale value="en_US"/>
+                                                    <fmt:formatDate value="${dList}" pattern="MM"></fmt:formatDate>
+                                                        -
+                                                    <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
+                                                    </option>
+                                            </c:forEach>
+                                            <c:if test="${count == 0}">
+                                                <option selected value="">No data</option>
+                                            </c:if>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6">
+                                        <label for="year" class="form-label">Select Year</label>
+                                        <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
+                                            <c:forEach items="${requestScope.listOfYear}" var="yList">
+                                                <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
+                                                    ${yList}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
@@ -306,7 +534,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     Total Bill (Monthly)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.amount} VNĐ</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.amount  != 0 ? requestScope.invoiceCurrent.amount : 'unavailable'} VNĐ</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-money-bill fa-2x text-gray-300"></i>
@@ -315,7 +543,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                                            
                             <!-- Earnings (Monthly) Card Example -->
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-success shadow h-100 py-2">
@@ -324,7 +552,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                     Issue Date</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.issueDate}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.issueDate != null ? requestScope.invoiceCurrent.issueDate : 'unavailable'}</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -343,7 +571,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                     Due Date</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.dueDate}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.dueDate != null ? requestScope.invoiceCurrent.dueDate : 'unavailable'}</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -456,198 +684,203 @@
         </div>
         <script src="vendor/chart.js/Chart.min.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="js/sb-admin-2.min.js"></script>
+
         <script>
+                                            function submitMonth() {
+                                                document.getElementById('chooseMonthYear').submit();
+                                            }
 
-            let d = new Date();
-            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                            let d = new Date();
+                                            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-            let month = months.find((value, index) => {
-                if (d.getMonth()) {
-                    return index == d.getMonth() - 1;
-                } else {
-                    return index == 12;
-                }
-            });
-            console.log(month)
+                                            let month = months.find((value, index) => {
+                                                if (d.getMonth()) {
+                                                    return index == d.getMonth() - 1;
+                                                } else {
+                                                    return index == 12;
+                                                }
+                                            });
+                                            console.log(month)
 
-            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+//            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
 
-            // take data from servlet to js
-            const amountList = [
+                                            // take data from servlet to js
+                                            const amountList = [
             <c:forEach items="${requestScope.amoutMonth}" var="amountList">
                 ${amountList},
             </c:forEach>
-            ];
-            const serviceList = [
+                                            ];
+                                            const serviceList = [
             <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                "${serviceContract.getService().getName()}",
+                                                "${serviceContract.getService().getName()}",
             </c:forEach>
-            ];
-            const amountService = [
+                                            ];
+                                            const amountService = [
             <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
                 <c:out value="${serviceContract.getAmount()}"/>,
             </c:forEach>
-            ];
-            console.log(amountService);
+                                            ];
+                                            console.log(amountService);
 
 
-            function number_format(number, decimals, dec_point, thousands_sep) {
-                // *     example: number_format(1234.56, 2, ',', ' ');
-                // *     return: '1 234,56'
-                number = (number + '').replace(',', '').replace(' ', '');
-                var n = !isFinite(+number) ? 0 : +number,
-                        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                        s = '',
-                        toFixedFix = function (n, prec) {
-                            var k = Math.pow(10, prec);
-                            return '' + Math.round(n * k) / k;
-                        };
-                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                if (s[0].length > 3) {
-                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-                }
-                if ((s[1] || '').length < prec) {
-                    s[1] = s[1] || '';
-                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                }
-                return s.join(dec);
-            }
-            // Pie Chart Example
-            var ctx = document.getElementById("myPieChart");
-            var myPieChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: serviceList,
-                    datasets: [{
-                            data: amountService,
-                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
-                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                            hoverBorderColor: "rgba(234, 236, 244, 1)",
-                        }],
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    tooltips: {
-                        backgroundColor: "rgb(255,255,255)",
-                        bodyFontColor: "#858796",
-                        borderColor: '#dddfeb',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        caretPadding: 10,
-                        callbacks: {
-                            label: function (tooltipItem, data) {
-                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
-                                return value + ' VNĐ';
-                            }
-                        }
-                    },
-                    legend: {
-                        display: true,
-                        position: 'bottom', // Hoặc 'top', 'left', 'right'
-                        labels: {
-                            boxWidth: 10, // Kích thước của hộp màu
-                            padding: 10 // Khoảng cách giữa các mục
-                        }
-                    },
-                    cutoutPercentage: 60,
-                },
-            });
+                                            function number_format(number, decimals, dec_point, thousands_sep) {
+                                                // *     example: number_format(1234.56, 2, ',', ' ');
+                                                // *     return: '1 234,56'
+                                                number = (number + '').replace(',', '').replace(' ', '');
+                                                var n = !isFinite(+number) ? 0 : +number,
+                                                        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                                                        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                                                        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                                                        s = '',
+                                                        toFixedFix = function (n, prec) {
+                                                            var k = Math.pow(10, prec);
+                                                            return '' + Math.round(n * k) / k;
+                                                        };
+                                                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                                                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                                if (s[0].length > 3) {
+                                                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                                }
+                                                if ((s[1] || '').length < prec) {
+                                                    s[1] = s[1] || '';
+                                                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                                                }
+                                                return s.join(dec);
+                                            }
+                                            // Pie Chart Example
+                                            var ctx = document.getElementById("myPieChart");
+                                            var myPieChart = new Chart(ctx, {
+                                                type: 'doughnut',
+                                                data: {
+                                                    labels: serviceList,
+                                                    datasets: [{
+                                                            data: amountService,
+                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
+                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                        }],
+                                                },
+                                                options: {
+                                                    maintainAspectRatio: false,
+                                                    tooltips: {
+                                                        backgroundColor: "rgb(255,255,255)",
+                                                        bodyFontColor: "#858796",
+                                                        borderColor: '#dddfeb',
+                                                        borderWidth: 1,
+                                                        xPadding: 15,
+                                                        yPadding: 15,
+                                                        displayColors: false,
+                                                        caretPadding: 10,
+                                                        callbacks: {
+                                                            label: function (tooltipItem, data) {
+                                                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                                                                return value + ' VNĐ';
+                                                            }
+                                                        }
+                                                    },
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'bottom', // Hoặc 'top', 'left', 'right'
+                                                        labels: {
+                                                            boxWidth: 10, // Kích thước của hộp màu
+                                                            padding: 10 // Khoảng cách giữa các mục
+                                                        }
+                                                    },
+                                                    cutoutPercentage: 60,
+                                                },
+                                            });
 
 
-            // Area Chart Example
-            var ctx = document.getElementById("myAreaChart");
-            var myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [{
-                            label: "Amount",
-                            lineTension: 0.3,
-                            backgroundColor: "rgba(78, 115, 223, 0.05)",
-                            borderColor: "rgba(78, 115, 223, 1)",
-                            pointRadius: 3,
-                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                            pointBorderColor: "rgba(78, 115, 223, 1)",
-                            pointHoverRadius: 3,
-                            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                            pointHitRadius: 10,
-                            pointBorderWidth: 2,
-                            data: amountList,
-                        }],
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            left: 10,
-                            right: 25,
-                            top: 25,
-                            bottom: 0
-                        }
-                    },
-                    scales: {
-                        xAxes: [{
-                                time: {
-                                    unit: 'date'
-                                },
-                                gridLines: {
-                                    display: false,
-                                    drawBorder: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 7
-                                }
-                            }],
-                        yAxes: [{
-                                ticks: {
-                                    maxTicksLimit: 5,
-                                    padding: 10,
-                                    // Include a dollar sign in the ticks
-                                    callback: function (value, index, values) {
-                                        return number_format(value) + ' VNĐ';
-                                    }
-                                },
-                                gridLines: {
-                                    color: "rgb(234, 236, 244)",
-                                    zeroLineColor: "rgb(234, 236, 244)",
-                                    drawBorder: false,
-                                    borderDash: [2],
-                                    zeroLineBorderDash: [2]
-                                }
-                            }],
-                    },
-                    legend: {
-                        display: false
-                    },
-                    tooltips: {
-                        backgroundColor: "rgb(255,255,255)",
-                        bodyFontColor: "#858796",
-                        titleMarginBottom: 10,
-                        titleFontColor: '#6e707e',
-                        titleFontSize: 14,
-                        borderColor: '#dddfeb',
-                        borderWidth: 1,
-                        xPadding: 15,
-                        yPadding: 15,
-                        displayColors: false,
-                        intersect: false,
-                        mode: 'index',
-                        caretPadding: 10,
-                        callbacks: {
-                            label: function (tooltipItem, chart) {
-                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
-                            }
-                        }
-                    }
-                }
-            });
+                                            // Area Chart Example
+                                            var ctx = document.getElementById("myAreaChart");
+                                            var myLineChart = new Chart(ctx, {
+                                                type: 'line',
+                                                data: {
+                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                    datasets: [{
+                                                            label: "Amount",
+                                                            lineTension: 0.3,
+                                                            backgroundColor: "rgba(78, 115, 223, 0.05)",
+                                                            borderColor: "rgba(78, 115, 223, 1)",
+                                                            pointRadius: 3,
+                                                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                            pointBorderColor: "rgba(78, 115, 223, 1)",
+                                                            pointHoverRadius: 3,
+                                                            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                                                            pointHitRadius: 10,
+                                                            pointBorderWidth: 2,
+                                                            data: amountList,
+                                                        }],
+                                                },
+                                                options: {
+                                                    maintainAspectRatio: false,
+                                                    layout: {
+                                                        padding: {
+                                                            left: 10,
+                                                            right: 25,
+                                                            top: 25,
+                                                            bottom: 0
+                                                        }
+                                                    },
+                                                    scales: {
+                                                        xAxes: [{
+                                                                time: {
+                                                                    unit: 'date'
+                                                                },
+                                                                gridLines: {
+                                                                    display: false,
+                                                                    drawBorder: false
+                                                                },
+                                                                ticks: {
+                                                                    maxTicksLimit: 7
+                                                                }
+                                                            }],
+                                                        yAxes: [{
+                                                                ticks: {
+                                                                    maxTicksLimit: 5,
+                                                                    padding: 10,
+                                                                    // Include a dollar sign in the ticks
+                                                                    callback: function (value, index, values) {
+                                                                        return number_format(value) + ' VNĐ';
+                                                                    }
+                                                                },
+                                                                gridLines: {
+                                                                    color: "rgb(234, 236, 244)",
+                                                                    zeroLineColor: "rgb(234, 236, 244)",
+                                                                    drawBorder: false,
+                                                                    borderDash: [2],
+                                                                    zeroLineBorderDash: [2]
+                                                                }
+                                                            }],
+                                                    },
+                                                    legend: {
+                                                        display: false
+                                                    },
+                                                    tooltips: {
+                                                        backgroundColor: "rgb(255,255,255)",
+                                                        bodyFontColor: "#858796",
+                                                        titleMarginBottom: 10,
+                                                        titleFontColor: '#6e707e',
+                                                        titleFontSize: 14,
+                                                        borderColor: '#dddfeb',
+                                                        borderWidth: 1,
+                                                        xPadding: 15,
+                                                        yPadding: 15,
+                                                        displayColors: false,
+                                                        intersect: false,
+                                                        mode: 'index',
+                                                        caretPadding: 10,
+                                                        callbacks: {
+                                                            label: function (tooltipItem, chart) {
+                                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            });
         </script>
     </body>
 </html>
