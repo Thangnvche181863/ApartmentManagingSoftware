@@ -6,6 +6,8 @@ package controller;
 
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
+import DAO.CustomerDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -34,16 +37,23 @@ public class ManagerPageController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            //lay so luong building
+            HttpSession session = request.getSession();
+            String staffName = (String) session.getAttribute("staffName");
+
+            request.setAttribute("staffName", staffName);
             BuildingDAO buildingDAO = new BuildingDAO();
             int amountBuilding = buildingDAO.getAmountOfBuilding();
-            
             request.setAttribute("amountBuilding", amountBuilding);
-            
+            // lay so luong apartment
             ApartmentDAO apartmentDAO = new ApartmentDAO();
             int amountApartment = apartmentDAO.getAmountOfApartment();
             request.setAttribute("amountApartment", amountApartment);
             
-            
+            //lay so luong nguoi o 
+            LivingDAO livingdao = new LivingDAO();
+            int amountResident = livingdao.getAmountOfResident();
+            request.setAttribute("amountResident", amountResident);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }

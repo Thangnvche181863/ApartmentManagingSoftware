@@ -38,7 +38,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="managerHomePage.jsp">
+                    <a class="nav-link" href="managerPage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -108,7 +108,7 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="register.jsp">
+                    <a class="nav-link" href="createAccount.jsp">
                         <i class="fas fa-fw fa-user-plus"></i>
                         <span>Create new account</span></a>
                 </li>

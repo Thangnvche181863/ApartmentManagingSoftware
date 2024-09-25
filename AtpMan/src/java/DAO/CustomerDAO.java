@@ -8,10 +8,10 @@ package DAO;
  *
  * @author WuanTun
  */
-
 import utils.DBContext;
-
+ import java.util.Date;
 import java.sql.*;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
@@ -197,6 +197,39 @@ public class CustomerDAO {
         return null;
     }
 
+    public Vector<Customer> getAllCustomer() {
+        Connection conn = null;
+        Vector<Customer> vector = new Vector<>();
+        String sql = "select * from Customer";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int customerID = rs.getInt(1);
+                String username = rs.getString(2);
+                String name = rs.getString(3);
+                String email = rs.getString(4);
+                String phoneNumber = rs.getString(5);
+                int age = rs.getInt(6);
+                Date registrationDate = rs.getDate(7);
+                int isOwner = rs.getInt(8);
+                Customer customer = new Customer(customerID, username, name, email, phoneNumber, age, registrationDate, isOwner);
+                vector.add(customer);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return vector;
+    }
+
+    public int getAmountOfCustomer() {
+        CustomerDAO dao = new CustomerDAO();
+        Vector<Customer> vector = dao.getAllCustomer();
+        
+        return vector.size();
+    }
+
     public Customer getCustomer(int id) {
         Connection conn = null;
         Customer customer = null;
@@ -225,4 +258,5 @@ public class CustomerDAO {
         }
         return customer;
     }
+
 }

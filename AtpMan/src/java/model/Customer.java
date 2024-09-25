@@ -22,6 +22,7 @@ public class Customer {
     private int isOwner;
 
     public Customer() {
+
     }
 
     public Customer(int customerID, String username, String name, String email, String phoneNumber, int age, Date registrationDate, int isOwner) {
@@ -69,6 +70,7 @@ public class Customer {
 
     public String getPhoneNumber() {
         return phoneNumber;
+
     }
 
     public void setPhoneNumber(String phoneNumber) {

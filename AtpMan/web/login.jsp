@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,22 +29,47 @@
 
                                 <div class="mb-md-5 mt-md-4 pb-5">
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                    <p class="text-white-50 mb-5">Please enter your login and password!</p>
+
                                     <form action="userlogin" method="post">
+                                        <div class="row">
+                                            <div class="col-12 mb-4">
+                                                <label class="form-label select-label" style="color : white">Login as</label>
+                                                <select class="select form-control-lg" name="userType">
+                                                    <option value="" selected>Choose option</option>
+                                                    <option value="2">Resident</option>
+                                                    <option value="3">Manage</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <!-- Phần hiển thị lỗi nếu có -->
+                                        <div class="text-danger mb-3">
+                                            <c:if test="${not empty loginerr}">
+                                                <p>${loginerr}</p>
+                                            </c:if>
+                                            <c:if test="${not empty err}">
+                                                <p>${err}</p>
+                                            </c:if>
+
+                                        </div>
+
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                                            <input type="name" id="typeNameX" class="form-control form-control-lg" name="username"/>
+                                            <input type="text" id="typeNameX" class="form-control form-control-lg" name="username" />
                                             <label class="form-label" for="typeNameX">Username</label>
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
-                                            <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password"/>
+                                            <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password" />
                                             <label class="form-label" for="typePasswordX">Password</label>
                                         </div>
 
-                                        <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
+                                        <p class="small mb-5 pb-lg-2">
+                                            <a class="text-white-50" href="#!">Forgot password?</a>
+                                        </p>
 
                                         <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                                     </form>
+
 
                                     <div class="d-flex justify-content-center text-center mt-4 pt-1">
                                         <!--                                        <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>-->
@@ -65,10 +91,14 @@
             </div>
         </section>
 
+
         <!-- MDBootstrap JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js">
+
+        </script>
+        <script>
             document.getElementById("googleLoginBtn").onclick = function () {
-                window.location.href = "https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/SWP391_Project/logingg&response_type=code&client_id=454396997334-76vne6juqskdfl83nhkpoc0uusbinadd.apps.googleusercontent.com&approval_prompt=force";
+                window.location.href = "https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/AtpMan/logingoogle&response_type=code&client_id=568289174347-2i2rujrr6nrul944und4erc72c158p07.apps.googleusercontent.com&approval_prompt=force";
             };
         </script>
     </body>
@@ -112,4 +142,5 @@
         }
     </style>
 </html>
+
 

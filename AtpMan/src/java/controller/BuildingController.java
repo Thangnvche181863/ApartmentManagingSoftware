@@ -38,8 +38,9 @@ public class BuildingController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             BuildingDAO dao = new BuildingDAO();
             Vector<Building> vector = dao.getAllBuilding();
+            Vector<Integer> vector1 = dao.getApartmentAvailable();
             
-            
+            request.setAttribute("availableApartment", vector1);
             request.setAttribute("listBuilding", vector);
             request.getRequestDispatcher("building.jsp").forward(request, response);
             

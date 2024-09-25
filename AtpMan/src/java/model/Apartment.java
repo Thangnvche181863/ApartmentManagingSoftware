@@ -4,6 +4,7 @@
  */
 package model;
 
+
 /**
  *
  * @author Admin
@@ -12,21 +13,25 @@ public class Apartment {
 
     private int apartmentID;
     private int buildingID;
+
     private String departmentType;
     private double price;
     private int floor;
     private int area;
+
 
     public Apartment() {
     }
     public Apartment(int apartmentID, int buildingID, String departmentType, double price, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
+
         this.departmentType = departmentType;
         this.price = price;
         this.floor = floor;
         this.area = area;
     }
+
 
     public int getArea() {
         return area;
@@ -50,6 +55,7 @@ public class Apartment {
 
     public void setBuildingID(int buildingID) {
         this.buildingID = buildingID;
+
     }
 
     public String getDepartmentType() {
@@ -76,9 +82,11 @@ public class Apartment {
         this.floor = floor;
     }
 
+
     @Override
     public String toString() {
         return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + '}';
     }
+
 
 }

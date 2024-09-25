@@ -5,8 +5,8 @@
 package utils;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -17,7 +17,9 @@ public class DBContext {
     private static final Logger LOGGER = Logger.getLogger(DBContext.class.getName());
 
     public static Connection connection;
+
     private static final String url = "jdbc:sqlserver://localhost:1433;databaseName=AptMan";
+
     private static final String username = "sa";
     private static final String password = "123456";
 

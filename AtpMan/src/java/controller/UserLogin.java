@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.CustomerDAO;
+import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Customer;
+import model.Staff;
 import utils.UtilHashPass;
 
 /**
@@ -28,39 +31,52 @@ public class UserLogin extends HttpServlet {
             throws ServletException, IOException {
         try {
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+            StaffDAO staffDAO = WebManager.getInstance().staffDAO;
 
             String username = request.getParameter("username");
             String password = request.getParameter("password");
+            String userType = request.getParameter("userType");
 
             if ("".equals(username) || "".equals(password)) {
                 request.setAttribute("loginerr", "Username or password is empty");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-
-            if (!customerDAO.checkUsername(username)) {
-                request.setAttribute("loginerr", "Username is incorrect.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            }
-
-            // Kiểm tra trực tiếp mật khẩu người dùng với hàm checkPassword
-            if (!customerDAO.checkPassword(username, password)) {
-                request.setAttribute("loginerr", "Password is incorrect.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            }
-
             HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            session.setAttribute("role", 1); // admin : 0; cus : 1;
 
-            response.sendRedirect("Home.jsp");
+            if ("2".equals(userType)) { // Resident
+                Customer customer = customerDAO.getAllInformationCustomer(username, password);
+
+                if (customer == null) {
+                    request.setAttribute("loginerr", "Username or password is incorrect for Resident.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                }
+
+                session.setAttribute("user", customer);
+                response.sendRedirect("home");
+
+            } else if ("3".equals(userType)) { // Manage
+                Staff staff = staffDAO.getAllInformationstaff(username, password);
+                if (staff == null) {
+                    request.setAttribute("loginerr", "Username or password is incorrect for Manage.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                }
+                String staffName = staff.getName();
+                session.setAttribute("user", staff);
+                session.setAttribute("staffName", staffName);
+                response.sendRedirect("managerPage");
+
+            } else {
+
+                request.setAttribute("loginerr", "Please choose a valid option.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UserLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

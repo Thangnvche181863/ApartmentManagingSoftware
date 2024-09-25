@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -77,5 +78,6 @@ public class ApartmentDAO {
         ApartmentDAO dao = new ApartmentDAO();
         Vector<Apartment> vector = dao.getAllApartmentByID(1);
         System.out.println(vector.size());
+
     }
 }

@@ -4,6 +4,7 @@
  */
 package model;
 
+
 /**
  *
  * @author Admin
@@ -11,21 +12,26 @@ package model;
 public class Building {
 
     private int buildingID;
+
     private String name;
     private int numFloor;
     private int numApartment;
     private String address;
 
+
     public Building() {
     }
 
+
     public Building(int buildingID, String name, int numFloor, int numApartment, String address) {
         this.buildingID = buildingID;
+
         this.name = name;
         this.numFloor = numFloor;
         this.numApartment = numApartment;
         this.address = address;
     }
+
 
     public int getBuildingID() {
         return buildingID;
@@ -33,6 +39,7 @@ public class Building {
 
     public void setBuildingID(int buildingID) {
         this.buildingID = buildingID;
+
     }
 
     public String getName() {
@@ -66,6 +73,7 @@ public class Building {
     public void setAddress(String address) {
         this.address = address;
     }
+
 
     @Override
     public String toString() {
