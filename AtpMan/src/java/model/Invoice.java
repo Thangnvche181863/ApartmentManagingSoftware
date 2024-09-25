@@ -3,17 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
 import java.sql.Date;
 import java.util.List;
 
 /**
  *
- * @author ADMIN
+ * @author thang
  */
 public class Invoice {
-    private int invoiceID;
-    private int apartmentID;
+    private int invoiceId;
+    private int apartmentId;
     private double amount;
     private Date issueDate;
     private Date dueDate;
@@ -35,20 +34,20 @@ public class Invoice {
         this.serviceContractList = serviceContractList;
     }
 
-    public int getInvoiceID() {
-        return invoiceID;
+    public int getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoiceID(int invoiceID) {
-        this.invoiceID = invoiceID;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public int getApartmentID() {
-        return apartmentID;
+    public int getApartmentId() {
+        return apartmentId;
     }
 
-    public void setApartmentID(int apartmentID) {
-        this.apartmentID = apartmentID;
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
     public double getAmount() {
@@ -67,12 +66,12 @@ public class Invoice {
         this.issueDate = issueDate;
     }
 
-    public Date getDueDate() {
-        return dueDate;
+    public Date getDuDate() {
+        return duDate;
     }
 
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
+    public void setDuDate(Date duDate) {
+        this.duDate = duDate;
     }
 
     public int getStatus() {
@@ -102,6 +101,7 @@ public class Invoice {
     @Override
     public String toString() {
         return "Invoice{" + "invoiceID=" + invoiceID + ", apartmentID=" + apartmentID + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
+
     }
     
 }

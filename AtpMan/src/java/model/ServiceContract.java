@@ -3,17 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
 import java.sql.Date;
-
 /**
  *
- * @author ADMIN
+ * @author thang
  */
 public class ServiceContract {
-    private int serviceContractID;
-    private int apartmentID;
-    private int serviceID;
+    private int serviceContractId;
+    private int apartmentId;
+    private int serviceId;
     private Date startDate;
     private Date endDate;
     private double amount;
@@ -22,46 +20,38 @@ public class ServiceContract {
     public ServiceContract() {
     }
 
-    public ServiceContract(int serviceContractID, int apartmentID, int serviceID, Date startDate, Date endDate, double amount, Service service) {
-        this.serviceContractID = serviceContractID;
-        this.apartmentID = apartmentID;
-        this.serviceID = serviceID;
+    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, double amount, Service service) {
+        this.serviceContractId = serviceContractId;
+        this.apartmentId = apartmentId;
+        this.serviceId = serviceId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
         this.service = service;
     }
 
-    public int getServiceContractID() {
-        return serviceContractID;
+    public int getServiceContractId() {
+        return serviceContractId;
     }
 
-    public void setServiceContractID(int serviceContractID) {
-        this.serviceContractID = serviceContractID;
-    }    
-
-    public int getApartmentID() {
-        return apartmentID;
+    public void setServiceContractId(int serviceContractId) {
+        this.serviceContractId = serviceContractId;
     }
 
-    public void setApartmentID(int apartmentID) {
-        this.apartmentID = apartmentID;
+    public int getApartmentId() {
+        return apartmentId;
     }
 
-    public int getServiceID() {
-        return serviceID;
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
-    public void setServiceID(int serviceID) {
-        this.serviceID = serviceID;
-    }
-    
-    public Service getService() {
-        return service;
+    public int getServiceId() {
+        return serviceId;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 
     public Date getStartDate() {
@@ -87,12 +77,16 @@ public class ServiceContract {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     @Override
     public String toString() {
-        return "ServiceContract{" + "apartmentID=" + apartmentID + ", service=" + service + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + '}';
+        return "ServiceContract{" + "serviceContractId=" + serviceContractId + ", apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + '}';
     }
-
-    
-    
 }

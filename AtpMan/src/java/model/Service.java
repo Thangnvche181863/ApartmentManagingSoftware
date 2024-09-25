@@ -6,32 +6,36 @@ package model;
 
 /**
  *
- * @author ADMIN
+ * @author thang
  */
 public class Service {
-    private int serviceID;
+    private int serviceId;
     private String name;
     private String type;
-    private String description;
     private double fee;
+    private String description;
+    private String img;
+    private String icon;
 
     public Service() {
     }
 
-    public Service(int serviceID, String name, String type, String description, double fee) {
-        this.serviceID = serviceID;
+    public Service(int serviceId, String name, String type, double fee, String description, String img, String icon) {
+        this.serviceId = serviceId;
         this.name = name;
         this.type = type;
-        this.description = description;
         this.fee = fee;
+        this.description = description;
+        this.img = img;
+        this.icon = icon;
     }
 
-    public int getServiceID() {
-        return serviceID;
+    public int getServiceId() {
+        return serviceId;
     }
 
-    public void setServiceID(int serviceID) {
-        this.serviceID = serviceID;
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 
     public String getName() {
@@ -50,14 +54,6 @@ public class Service {
         this.type = type;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getFee() {
         return fee;
     }
@@ -66,10 +62,34 @@ public class Service {
         this.fee = fee;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     @Override
     public String toString() {
-        return "ServiceContract{" + "serviceID=" + serviceID + ", name=" + name + ", type=" + type + ", fee=" + fee + '}';
+        return "Service{" + "serviceId=" + serviceId + ", name=" + name + ", type=" + type + ", fee=" + fee + ", description=" + description + ", img=" + img + ", icon=" + icon + '}';
     }
-    
+
     
 }

@@ -6,39 +6,40 @@ package model;
 
 /**
  *
- * @author ADMIN
+ * @author thang
  */
 public class InvoiceService {
-    private Invoice invoice;
-    private ServiceContract serviceContract;
+    private int invoiceId;
+    private int serviceContractId;
 
     public InvoiceService() {
     }
 
-    public InvoiceService(Invoice invoice, ServiceContract serviceContract) {
-        this.invoice = invoice;
-        this.serviceContract = serviceContract;
+    public InvoiceService(int invoiceId, int serviceContractId) {
+        this.invoiceId = invoiceId;
+        this.serviceContractId = serviceContractId;
     }
 
-    public Invoice getInvoice() {
-        return invoice;
+    public int getInvoiceId() {
+        return invoiceId;
     }
 
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setInvoiceId(int invoiceId) {
+        this.invoiceId = invoiceId;
     }
 
-    public ServiceContract getServiceContract() {
-        return serviceContract;
+    public int getServiceContractId() {
+        return serviceContractId;
     }
 
-    public void setServiceContract(ServiceContract serviceContract) {
-        this.serviceContract = serviceContract;
+    public void setServiceContractId(int serviceContractId) {
+        this.serviceContractId = serviceContractId;
     }
 
     @Override
     public String toString() {
-        return "InvoiceService{" + "invoice=" + invoice + ", serviceContract=" + serviceContract + '}';
+        return "InvoiceService{" + "invoiceId=" + invoiceId + ", serviceContractId=" + serviceContractId + '}';
     }
+    
     
 }
