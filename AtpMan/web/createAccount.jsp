@@ -72,6 +72,7 @@
                                 </c:if>
                                 <form action="createaccount" method="post">
 
+                                    <!-- Username và Name -->
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="username">Username</label>
@@ -83,19 +84,10 @@
                                             <label class="form-label" for="name">Name</label>
                                             <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
                                         </div>
-                                        <!--                                        <div class="col-md-6 mb-4">
-                                                                                    <label class="form-label" for="password">Password</label>
-                                                                                    <input type="password" id="password" class="form-control form-control-lg" name="password" />
-                                                                                    <small class="text-danger" id="passwordError"></small>
-                                                                                </div>-->
-
                                     </div>
-                                    <div class="row">
-                                        <!--                                        <div class="col-md-6 mb-4">
-                                                                                    <label class="form-label" for="name">Name</label>
-                                                                                    <input type="text" id="name" class="form-control form-control-lg" name="name"/>
-                                                                                </div>-->
 
+                                    <!-- Phone Number và Email -->
+                                    <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="phoneNumber">Phone Number</label>
                                             <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
@@ -108,41 +100,32 @@
                                         </div>
                                     </div>
 
+                                    <!-- Building và Apartment -->
                                     <div class="row">
+                                        <!-- Danh sách Building -->
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label select-label">Building</label>
-                                            <select class="select form-control-lg" name="building" required>
+                                            <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
                                                 <option value="" selected>Choose building</option>
-                                                
+                                                <!-- Lặp qua danh sách Building từ servlet -->
+                                                <c:forEach var="building" items="${buildings}">
+                                                    <option value="${building.id}">${building.name}</option>
+                                                </c:forEach>
                                             </select>
                                             <small class="text-danger" id="buildingError"></small>
                                         </div>
 
-
+                                        <!-- Danh sách Apartment sẽ được nạp qua AJAX -->
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label select-label">Apartment</label>
-                                            <select class="select form-control-lg" name="apartment" required>
+                                            <select class="select form-control-lg" name="apartment" id="apartment" required>
                                                 <option value="" selected>Choose apartment</option>
-                                                
                                             </select>
                                             <small class="text-danger" id="apartmentError"></small>
                                         </div>
-
-
-                                        <!--                                        <div class="col-md-6 mb-4">
-                                                                                    <label class="form-label" for="age">Age</label>
-                                                                                    <input type="text" id="age" class="form-control form-control-lg" name="age" />
-                                                                                    <small class="text-danger" id="ageError"></small>
-                                                                                </div>-->
                                     </div>
 
-                                    <!--                                    <div class="row">
-                                                                            <div class="col-md-6 mb-4">
-                                                                                <label class="form-label" for="regDate">Registration Date</label>
-                                                                                <input type="date" id="regDate" class="form-control form-control-lg" name="registrationDate" />
-                                                                            </div>
-                                                                        </div>-->
-
+                                    <!-- Loại tài khoản -->
                                     <div class="row">
                                         <div class="col-12 mb-4">
                                             <label class="form-label select-label">Type</label>
@@ -155,7 +138,7 @@
                                         </div>
                                     </div>
 
-
+                                    <!-- Nút tạo tài khoản -->
                                     <div class="mt-4 pt-2">
                                         <div>
                                             <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
@@ -283,6 +266,21 @@
             document.getElementById("email").addEventListener("input", validateEmail);
             document.getElementById("phoneNumber").addEventListener("input", validatePhone);
 //            document.getElementById("age").addEventListener("input", validateAge);
+
+            function loadApartments() {
+                var buildingId = document.getElementById("building").value;
+
+                if (buildingId !== "") {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == 4 && xhr.status == 200) {
+                            document.getElementById("apartment").innerHTML = xhr.responseText;
+                        }
+                    };
+                    xhr.send();
+                }
+            }
         </script>
 
 

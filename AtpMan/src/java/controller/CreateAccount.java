@@ -4,6 +4,8 @@
  */
 package controller;
 
+import DAO.ApartmentDAO;
+import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +13,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Apartment;
+import model.Building;
 
 /**
  *
@@ -56,7 +64,37 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            ApartmentDAO apartmentDAO = WebManager.getInstance().apartmentDAO;
+            BuildingDAO buildingDAO = WebManager.getInstance().buildingDAO;
+            // Kiểm tra nếu có tham số buildingId, tức là yêu cầu AJAX để lấy danh sách Apartment
+            String buildingId = request.getParameter("buildingId");
+            if (buildingId != null && !buildingId.isEmpty()) {
+                // Trả về danh sách Apartment dựa trên buildingId
+                List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(Integer.parseInt(buildingId));
+                response.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = response.getWriter();
+
+                // Gửi danh sách apartment dưới dạng option cho select
+                out.println("<option value=''>Choose apartment</option>");
+                for (Apartment apartment : apartments) {
+                    out.println("<option value='" + apartment.getApartmentID() + "'>" + "</option>");
+                }
+                out.close();
+                return;
+            }
+
+            // Nếu không có buildingId, tải trang lần đầu và nạp danh sách Building
+            List<Building> buildings = buildingDAO.getAllBuildings();
+            request.setAttribute("buildings", buildings);
+
+            // Forward dữ liệu sang JSP để hiển thị form
+            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -71,7 +109,9 @@ public class CreateAccount extends HttpServlet {
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phoneNumber");
 //            String age = request.getParameter("age");
-//            String registrationDate = request.getParameter("registrationDate");
+//            String registrationDate = request.getParameter("registrationDate");   
+            String buildingId = request.getParameter("building");
+            String apartmentId = request.getParameter("apartment");
             String userType = request.getParameter("userType");
 
             String isOwner = null;
@@ -92,7 +132,6 @@ public class CreateAccount extends HttpServlet {
 //            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
 //            request.setAttribute("successCreate", "Create account successfully");
 //            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-
             customerDAO.createNewCustomer(username, name, email, phoneNumber, isOwner);
             request.setAttribute("successCreate", "Create account successfully");
             request.getRequestDispatcher("createAccount.jsp").forward(request, response);
