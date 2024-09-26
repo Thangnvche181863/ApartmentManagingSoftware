@@ -21,7 +21,9 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-                <!-- Icon Font Stylesheet -->
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Icon Font Stylesheet -->
         <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -112,25 +114,7 @@
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
+
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
@@ -372,36 +356,99 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Service List</h1>
-                            <p>
-                                <a class="btn btn-primary" href="servicecrud?action=AddOrEdit">ADD SERVICE</a>
-                            </p>
+                            <h1 class="h3 mb-0 text-gray-800">Service Detail</h1>
+
                         </div>
 
-                        <div class="row">
+                        <div class="row d-flex">
 
                             <!-- Earnings (Monthly) Card Example -->
-                            <a href=""></a>
-                            <c:forEach items="${listservice}" var="ls">
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <a href="servicedetail?id=${ls.serviceId}">
-                                        <div class="card border-left-primary shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            ${ls.name}</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${ls.fee} VND</div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="${ls.icon} text-gray-300"></i>
-                                                    </div>
+
+
+                            <div class="col-xl-8 col-md-8 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-5 position-relative">
+
+                                    <div class="icon-container" style="position: absolute; top: 58px; right: 30px;">
+                                        <i class="${service.icon}" style="font-size: 3rem;"></i>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-start"> 
+                                            <div class="col mr-2">
+
+                                                <div class="text-lg font-weight-bold text-primary text-uppercase mb-3">
+                                                    ${service.name}
                                                 </div>
+
+
+                                                <table style="width: 100%;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="padding-right: 10px; padding-bottom: 20px">
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    <span style="color: #22EE5B;">Type:</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="padding-bottom: 20px">
+                                                                    ${service.type}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-right: 10px;padding-bottom: 20px">
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    <span style="color: #22EE5B;">Fee:</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="padding-bottom: 20px">
+                                                                    ${service.fee} VND
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding-right: 10px;padding-bottom: 20px">
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                                    <span style="color: #22EE5B;">Description:</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="padding-bottom: 20px">
+                                                                    ${service.description}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${service.serviceId}" style="height: 30px; width: 60px; margin-right: 20px; border-radius: 10px">Edit</a>
+                                        <a class="btn btn-danger btn-sm text-center" href="servicedelete?id=${service.serviceId}" style="height: 30px; width: 60px; margin-right: 20px; border-radius: 10px">Delete</a>
+                                    </div>
                                 </div>
-                            </c:forEach>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-5 mb">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                                    </div>
+                                    <!-- Card Body -->
+                                    <div class="card-body">
+                                        <div class="chart-pie pt-4">
+                                            <canvas id="myPieChart"></canvas>
+                                        </div>
+                                        <hr>
+                                        Styling for the donut chart can be found in the
+                                        <code>/js/demo/chart-pie-demo.js</code> file.
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -446,15 +493,23 @@
             </div>
         </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script>
 
     </body>
 

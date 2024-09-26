@@ -21,7 +21,7 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-                <!-- Icon Font Stylesheet -->
+        <!-- Icon Font Stylesheet -->
         <link
             rel="stylesheet"
             href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
@@ -30,6 +30,7 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
             />
+
 
     </head>
 
@@ -372,38 +373,63 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Service List</h1>
-                            <p>
-                                <a class="btn btn-primary" href="servicecrud?action=AddOrEdit">ADD SERVICE</a>
-                            </p>
+                            <h1 class="h3 mb-0 text-gray-800">Edit Service</h1>
                         </div>
 
-                        <div class="row">
 
-                            <!-- Earnings (Monthly) Card Example -->
-                            <a href=""></a>
-                            <c:forEach items="${listservice}" var="ls">
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <a href="servicedetail?id=${ls.serviceId}">
-                                        <div class="card border-left-primary shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                            ${ls.name}</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${ls.fee} VND</div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="${ls.icon} text-gray-300"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
+
+
+
+                        <div class="row"
+                             style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
+                            <form action="serviceedit" method="post" >
+                                <div class="row g-0"> 
+
+                                    <div class="col-md-5">
+                                        <div class="form-group mb-4">
+                                            <label for="name" class="form-label">Name:</label>
+                                            <input type="hidden" name="id" value="${service.serviceId}">
+                                            <input type="text" class="form-control w-100" name="name" id="name" value="${service.name}">
                                         </div>
-                                    </a>
+                                        <div class="form-group mb-4">
+                                            <label for="type" class="form-label">Type:</label>
+                                            <input type="text" class="form-control w-100" name="type" id="type" value="${service.type}">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="fee" class="form-label">Fee:</label>
+                                            <input type="number" class="form-control w-100" name="fee" id="fee" value="${service.fee}">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="img" class="form-label">URL img:</label>
+                                            <input type="file" class="form-control w-100" name="img" id="img" value="${service.img}">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-7">
+                                        <div class="form-group mb-4">
+                                            <label for="icon" class="form-label" style="width: ">URL icon:</label>
+                                            <input type="text" class="form-control w-100" name="icon" id="icon" value="${service.icon}">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label for="description" class="form-label">Description:</label>
+                                            <textarea class="form-control w-100" name="description" id="description" rows="9">${service.description}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </c:forEach>
+
+
+                                <div class="text-center mt-4 d-flex">
+                                    <input type="submit" class="btn btn-primary btn-block" value="Save"  style="width: 80px; margin: 0 auto"/>
+                                    <a class="btn btn-primary" href="servicedetail?id=${service.serviceId}" style="margin-right: 150px">Turn Back</a>
+                                </div>
+                            </form>
 
                         </div>
+
+
+
+
 
 
 
@@ -445,7 +471,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="js/main.js"></script>
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -17,7 +17,7 @@ import model.Service;
  *
  * @author thang
  */
-public class CRUDService extends HttpServlet {
+public class ServiceDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,34 +32,11 @@ public class CRUDService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String action = request.getParameter("action");
-            String id;
-            Service service;
-            String name = null;
-//            String type;
-//            double fee;
-//            String description;
-
+            String id = request.getParameter("id");
             ServiceDAO sdao = new ServiceDAO();
-            if (action == null || action.equals("")) {
-                request.setAttribute("listservice", sdao.getAll());
-                request.getRequestDispatcher("view-infor-service.jsp").forward(request, response);
-                return;
-            }
-            switch (action) {
-                case "AddOrEdit":
-                    id = request.getParameter("id");
-                    service = sdao.findById(Integer.parseInt(id));
-                    if (service == null) {
-                        request.setAttribute("service", new Service(0, "", "", 0, "", "", ""));
-                    }
-                    request.setAttribute("service", service);
-                    request.setAttribute("ACTION", "SaveOrUpdate");
-                    request.getRequestDispatcher("infor.jsp").forward(request, response);
-
-                    break;
-            }
+            Service service = sdao.findById(Integer.parseInt(id));
+            request.setAttribute("service", service);
+            request.getRequestDispatcher("serviceinfordetail.jsp").forward(request, response);
         }
     }
 
