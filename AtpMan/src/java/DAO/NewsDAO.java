@@ -120,7 +120,7 @@ public class NewsDAO extends DBContext {
         return list;
     }
 
-    //get new for banner
+    //get news for banner
    public List<News> getNewsForBanner() {
     List<News> list = new ArrayList<>();
     String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
@@ -273,9 +273,9 @@ public class NewsDAO extends DBContext {
         pre.setInt(3, news.getNewsCategoryID());
         pre.setString(4, news.getNewsTitle());
         
-        // Replacing new line characters in newsContent with <br> tags
-        String contentWithLineBreaks = news.getNewsContent().replace("\n", "<br>");
-        pre.setString(5, contentWithLineBreaks);
+        //formatting newsContent, replace new line -> <br> #2
+        String updatedNewsContent = news.getNewsContent().replace("\n", "<br>");
+        pre.setString(5, updatedNewsContent);
         
         pre.setDate(6, new java.sql.Date(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
         pre.setString(7, news.getNewsImg());

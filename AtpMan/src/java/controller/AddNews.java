@@ -49,7 +49,7 @@ public class AddNews extends HttpServlet {
 
         
         int staffID = 1;
-        int taskID = 12;
+        int taskID = 1;
         int newsCategoryID = 11;
 
         //format the newsContent 
@@ -60,7 +60,7 @@ public class AddNews extends HttpServlet {
 
         
         NewsDAO dao = new NewsDAO();
-        boolean isAdded = dao.addNews(news); // Implement the DAO to insert news into the database
+        boolean isAdded = dao.addNews(news); 
 
         
         if (isAdded) {
