@@ -67,7 +67,7 @@ public class NewsDAO extends DBContext {
 
         return list;
     }
-
+//news by page
     public List<News> getNewsByPage(int page, int recordsPerPage) {
         List<News> list = new ArrayList<>();
         String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
@@ -77,7 +77,7 @@ public class NewsDAO extends DBContext {
             + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
-            // Initialize the connection
+           
             DBContext.getConnection();
 
             if (DBContext.connection == null || DBContext.connection.isClosed()) {
@@ -107,7 +107,7 @@ public class NewsDAO extends DBContext {
                 list.add(news);
             }
 
-            // Close resources
+           
             rs.close();
             pre.close();
 
@@ -131,7 +131,7 @@ public class NewsDAO extends DBContext {
                + "OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
 
     try {
-        // Initialize the connection
+       
         DBContext.getConnection();
 
         if (DBContext.connection == null || DBContext.connection.isClosed()) {
@@ -159,7 +159,7 @@ public class NewsDAO extends DBContext {
             list.add(news);
         }
 
-        // Close resources
+      
         rs.close();
         pre.close();
 
@@ -178,7 +178,7 @@ public class NewsDAO extends DBContext {
         int count = 0;
 
         try {
-            // Initialize the connection
+            
             DBContext.getConnection();
 
             if (DBContext.connection == null || DBContext.connection.isClosed()) {
@@ -252,6 +252,60 @@ public class NewsDAO extends DBContext {
 
         return news;
     }
+    
+    public boolean addNews(News news) {
+    String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    boolean isAdded = false;
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return isAdded;
+        }
+
+        // Prepare the SQL statement with generated keys
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+        pre.setInt(1, news.getStaffID());
+        pre.setInt(2, news.getTaskID());
+        pre.setInt(3, news.getNewsCategoryID());
+        pre.setString(4, news.getNewsTitle());
+        
+        // Replacing new line characters in newsContent with <br> tags
+        String contentWithLineBreaks = news.getNewsContent().replace("\n", "<br>");
+        pre.setString(5, contentWithLineBreaks);
+        
+        pre.setDate(6, new java.sql.Date(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
+        pre.setString(7, news.getNewsImg());
+
+        // Execute the update
+        int rowsAffected = pre.executeUpdate();
+
+        if (rowsAffected > 0) {
+            try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    news.setNewsID(generatedKeys.getInt(1)); // Set the auto-generated News ID
+                    LOGGER.log(Level.INFO, "Added News with ID: {0}", news.getNewsID());
+                    isAdded = true;
+                } else {
+                    throw new SQLException("Adding news failed, no ID obtained.");
+                }
+            }
+        } else {
+            LOGGER.log(Level.WARNING, "No news was added.");
+        }
+
+        // Close resources
+        pre.close();
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error adding news.", e);
+    }
+
+    return isAdded;
+}
 
     public static void main(String[] args) {
         NewsDAO dao = new NewsDAO();

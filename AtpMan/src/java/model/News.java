@@ -46,6 +46,20 @@ public class News {
         this.newsCategoryName = newsCategoryName;
     }
 
+    public News(int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName, String staffName) {
+        this.staffID = staffID;
+        this.taskID = taskID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.postDate = postDate;
+        this.newsImg = newsImg;
+        this.newsCategoryName = newsCategoryName;
+        this.staffName = staffName;
+    }
+    
+    
+
     public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName) {
         this.newsID = newsID;
         this.staffID = staffID;
