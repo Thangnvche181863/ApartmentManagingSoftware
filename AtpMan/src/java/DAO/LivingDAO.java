@@ -21,7 +21,7 @@ import model.*;
  * @author ADMIN
  */
 public class LivingDAO {
-
+    
     public List<Living> getAllResident() {
         Connection connection = null;
         List<Living> list = new ArrayList<>();
@@ -42,17 +42,17 @@ public class LivingDAO {
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {
-
+            
         }
         return list;
     }
-
+    
     public int getAmountOfResident() {
         LivingDAO dao = new LivingDAO();
         List<Living> list = dao.getAllResident();
         return list.size();
     }
-
+    
     public List<String> getNameOfResident(int apartmentID) {
         List<String> list = new ArrayList<>();
         String sql = " SELECT c.name FROM Customer c\n"
@@ -74,6 +74,7 @@ public class LivingDAO {
         }
         return list;
     }
+    
     public List<Integer> getAgeOfResident(int apartmentID) {
         List<Integer> list = new ArrayList<>();
         String sql = " SELECT c.age FROM Customer c\n"
@@ -95,12 +96,37 @@ public class LivingDAO {
         }
         return list;
     }
- 
+    
+    public List<Living> getAllResidentByApartmentID(int apartmentid) {
+        List<Living> list = new ArrayList<>();
+        Connection conn = null;
+        String sql = "select * from Living where apartmentID = ?";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, apartmentid);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int livingID = rs.getInt(1);
+                int customerID = rs.getInt(2);
+                int apartmentID = rs.getInt(3);
+                Date startDate = rs.getDate(4),
+                endDate = rs.getDate(5);
+                Living living = new Living(livingID, customerID, apartmentID, startDate, endDate);
+                list.add(living);                
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        return list;
+    }
+    
     public static void main(String[] args) {
         LivingDAO dao = new LivingDAO();
-        List<Living> list = dao.getAllResident();
+        List<Living> list = dao.getAllResidentByApartmentID(1);
         for (Living living : list) {
-            System.out.println(""+living.toString());
+            System.out.println("" + living.toString());
         }
         
     }

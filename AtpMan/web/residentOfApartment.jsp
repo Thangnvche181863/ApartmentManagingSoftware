@@ -10,8 +10,8 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Dashboard</title>
-
+        <title>RESIDENT</title>
+        
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -101,16 +101,12 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
-
-
                 </div>
             </div>
         </div>
+
+
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

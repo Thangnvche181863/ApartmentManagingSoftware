@@ -38,8 +38,9 @@ public class residentOfApartment extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             LivingDAO dao = new LivingDAO();
-            List<Living> list = dao.getAllResident();
+            
             int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
+            List<Living> list = dao.getAllResidentByApartmentID(apartmentID);
             List<String> listResidentName = dao.getNameOfResident(apartmentID);
             List<Integer> listResidentAge = dao.getAgeOfResident(apartmentID);
             
