@@ -12,7 +12,6 @@ package model;
 public class Building {
 
     private int buildingID;
-
     private String name;
     private int numFloor;
     private int numApartment;

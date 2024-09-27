@@ -359,27 +359,118 @@
                     <div class="container-fluid">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h1 mb-0 text-gray-800"><b>Dashboard</b>  </h1>
+                            <h1 class="h1 mb-0 text-gray-800"><b>Trang chủ</b>  </h1>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800 text-primary">Billing information for one year</h1>
-                        </div>
-                        <!-- Billing information for one year -->
-                        <div class="row">
-                            <!-- Total information for one year -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="row">
+                                <div class="card border-left-success shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Total Bill (in year)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalBill} VNĐ</div>
+                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                    Căn hộ
+                                                </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                    ${requestScope.apartment.departmentType} - Tầng ${requestScope.apartment.floor} - Diện tích ${requestScope.apartment.area} m2   
+                                                </div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                                                <i class="fas fa-home fa-2x text-gray-300"></i>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800 text-primary">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
+                        </div>
+                        <div class="row">
+                            <!-- Billing information for one year -->
+                            <div class="row">
+                                <!-- Total information for one year -->
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        Tổng hóa đơn (${requestScope.currentYear})
+                                                    </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatNumber value="${requestScope.totalBill}" type="number" maxFractionDigits="0"></fmt:formatNumber>
+                                                            VNĐ
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Billing information for one year -->
+
+                                    <!--Paid amount billing information year-->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                            Tổng đã thanh toán
+                                                        </div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatNumber value="${requestScope.paid} " type="number" maxFractionDigits="0"></fmt:formatNumber>
+                                                            VNĐ
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Paid amount billing information year-->
+
+                                    <!-- UnPaid amount billing information year -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-warning shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                            Chưa thanh toán
+                                                        </div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatNumber value="${requestScope.unpaid} " type="number" maxFractionDigits="0"></fmt:formatNumber>
+                                                            VNĐ
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--UnPaid amount billing information year-->
+                                    <!-- Pending Requests Card Example -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-info shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                            Tổng số hóa đơn</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.numOfInvoice}</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -387,515 +478,466 @@
                             </div>
                             <!-- End Billing information for one year -->
 
-                            <!--Paid amount billing information year-->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Paid Amount</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.paid} VNĐ</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Paid amount billing information year-->
+                            <!--Billing information for month-->
+                            <div class="row">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary col-xl-5 col-md-5">Thông tin hóa đơn trong tháng</h1>
 
-                            <!-- UnPaid amount billing information year -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    UnPaid Amount</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.unpaid} VNĐ</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
+                                    <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
+                                        <div class="col-xl-6 col-md-6">
+                                            <label for="month" class="form-label">Chọn Tháng</label>
+                                            <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
+                                                <c:forEach items="${requestScope.dateList}" var="dList">
+                                                    <fmt:formatDate value="${dList}" pattern="M" var="month"/>
+                                                    <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
+                                                        <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
+                                                        </option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--UnPaid amount billing information year-->
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                    Total Invoice</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.numOfInvoice}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Billing information for one year -->
-
-                        <!--Billing information for month-->
-                        <div class="row">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary col-xl-5 col-md-5">Current month's billing information</h1>
-
-                                <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
-                                    <div class="col-xl-6 col-md-6">
-                                        <label for="month" class="form-label">Select Month</label>
-                                        <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
-                                            <c:forEach items="${requestScope.dateList}" var="dList">
-                                                <fmt:formatDate value="${dList}" pattern="M" var="month"/>
-                                                <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
-                                                    <fmt:setLocale value="en_US"/>
-                                                    <fmt:formatDate value="${dList}" pattern="MM"></fmt:formatDate>
-                                                        -
-                                                    <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
+                                        <div class="col-xl-6 col-md-6">
+                                            <label for="year" class="form-label">Chọn Năm</label>
+                                            <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
+                                                <c:forEach items="${requestScope.listOfYear}" var="yList">
+                                                    <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
+                                                        ${yList}
                                                     </option>
-                                            </c:forEach>
-                                            <c:if test="${count == 0}">
-                                                <option selected value="">No data</option>
-                                            </c:if>
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                        <label for="year" class="form-label">Select Year</label>
-                                        <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
-                                            <c:forEach items="${requestScope.listOfYear}" var="yList">
-                                                <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
-                                                    ${yList}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Total Bill (Monthly)</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.amount  != 0 ? requestScope.invoiceCurrent.amount : 'unavailable'} VNĐ</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
-                                            </div>
+                                                </c:forEach>
+                                            </select>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </div>
-
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Issue Date</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.issueDate != null ? requestScope.invoiceCurrent.issueDate : 'unavailable'}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                    Due Date</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.invoiceCurrent.dueDate != null ? requestScope.invoiceCurrent.dueDate : 'unavailable'}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <c:if test="${requestScope.invoiceCurrent.status == 1}">
-                                    <c:set var="colorTab" value="primary"></c:set>
-                                    <c:set var="status" value="Paid"/>
-                                </c:if>
-                                <c:if test="${requestScope.invoiceCurrent.status == 0}">
-                                    <c:set var="colorTab" value="warning"></c:set>
-                                    <c:set var="status" value="UnPaid"/>
-                                </c:if>
-                                <div class="card border-left-${colorTab} shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
-                                                    Status</div>
-
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--End Current month's billing information-->
-
-                        <!-- Content Row -->
-
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="chart-tab" data-toggle="tab" href="#chart" role="tab">Chart</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab">Table</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <br>
-                            <div class="tab-pane fade show active" id="chart" role="tabpanel">
-                                <!-- chart here -->
-                                <div class="row">
-                                    <!-- Area Chart -->
-                                    <div class="col-xl-8 col-lg-7">
-                                        <div class="card shadow mb-4">
-                                            <!-- Card Header - Dropdown -->
-                                            <div
-                                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-primary">Invoice Overview</h6>
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                         aria-labelledby="dropdownMenuLink">
-                                                        <div class="dropdown-header">Dropdown Header:</div>
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                <!-- Earnings (Monthly) Card Example -->
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        Tổng hóa đơn trong tháng</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatNumber value="${requestScope.invoiceCurrent.amount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-money-bill fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Card Body -->
-                                            <div class="card-body">
-                                                <div class="chart-area">
-                                                    <canvas id="myAreaChart"></canvas>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- Pie Chart -->
-                                    <div class="col-xl-4 col-lg-5">
-                                        <div class="card shadow mb-4">
-                                            <!-- Card Header - Dropdown -->
-                                            <div
-                                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                <h6 class="m-0 font-weight-bold text-primary">Invoice Sources</h6>
-                                                <div class="dropdown no-arrow">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                         aria-labelledby="dropdownMenuLink">
-                                                        <div class="dropdown-header">Dropdown Header:</div>
-                                                        <a class="dropdown-item" href="#">Action</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    <!-- Earnings (Monthly) Card Example -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                            Ngày phát hành</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.issueDate}"></fmt:formatDate>
+                                                        <c:if test="${requestScope.invoiceCurrent.issueDate == null}">không khả dụng</c:if>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Card Body -->
-                                            <div class="card-body">
-                                                <div class="chart-pie pt-4 pb-2">
-                                                    <canvas id="myPieChart"></canvas>
-                                                </div>
-                                                <div class="mt-4 text-center small">
+                                        </div>
+                                    </div>
 
+
+                                    <!-- Pending Requests Card Example -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-warning shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                            Ngày hết hạn</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.dueDate}"></fmt:formatDate>
+                                                        <c:if test="${requestScope.invoiceCurrent.dueDate == null}">không khả dụng</c:if>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>   
-                            </div>
-                            <div class="tab-pane fade" id="table" role="tabpanel">
-                                <!-- table here -->
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Service List</h6>
+
+                                    <!-- Pending Requests Card Example -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                    <c:if test="${requestScope.invoiceCurrent.status == 1}">
+                                        <c:set var="colorTab" value="success"></c:set>
+                                        <c:set var="status" value="Đã thanh toán"/>
+                                    </c:if>
+                                    <c:if test="${requestScope.invoiceCurrent.status == 0}">
+                                        <c:set var="colorTab" value="danger"></c:set>
+                                        <c:set var="status" value="Chưa thanh toán"/>
+                                    </c:if>
+                                    <c:if test="${requestScope.invoiceCurrent.dueDate == null}">
+                                        <c:set var="colorTab" value="secondary"></c:set>
+                                        <c:set var="status" value="Không khả dụng"/>
+                                    </c:if>
+                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
+                                                        Trạng thái
+                                                    </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Name</th>
-                                                        <th>Type</th>
-                                                        <th>Registration Date</th>
-                                                        <th>Expiration Date</th>
-                                                        <th>Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
-                                                        <tr>
-                                                            <td>${serviceContract.getService().getName()}</td>
-                                                            <td>${serviceContract.getService().getType()}</td>
-                                                            <td>${serviceContract.getStartDate()}</td>
-                                                            <td>${serviceContract.getEndDate()}</td>
-                                                            <td>${serviceContract.getAmount()} VNĐ</td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                </div>
+                            </div>
+                            <!--End Current month's billing information-->
+
+                            <!-- Content Row -->
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="chart-tab" data-toggle="tab" href="#chart" role="tab">Biều đồ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab">Bảng dịch vụ</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <br>
+                                <div class="tab-pane fade show active" id="chart" role="tabpanel">
+                                    <!-- chart here -->
+                                    <div class="row">
+                                        <!-- Area Chart -->
+                                        <div class="col-xl-8 col-lg-7">
+                                            <div class="card shadow mb-4">
+                                                <!-- Card Header - Dropdown -->
+                                                <div
+                                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                    <h6 class="m-0 font-weight-bold text-primary">Biểu đồ hóa đơn trong 12 tháng</h6>
+                                                    <div class="dropdown no-arrow">
+                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                             aria-labelledby="dropdownMenuLink">
+                                                            <div class="dropdown-header">Dropdown Header:</div>
+                                                            <a class="dropdown-item" href="#">Action</a>
+                                                            <a class="dropdown-item" href="#">Another action</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="#">Something else here</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Card Body -->
+                                                <div class="card-body">
+                                                    <div class="chart-area">
+                                                        <canvas id="myAreaChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Pie Chart -->
+                                        <div class="col-xl-4 col-lg-5">
+                                            <div class="card shadow mb-4">
+                                                <!-- Card Header - Dropdown -->
+                                                <div
+                                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                    <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tỉ lệ dịch vụ trong hóa đơn</h6>
+                                                    <div class="dropdown no-arrow">
+                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                             aria-labelledby="dropdownMenuLink">
+                                                            <div class="dropdown-header">Dropdown Header:</div>
+                                                            <a class="dropdown-item" href="#">Action</a>
+                                                            <a class="dropdown-item" href="#">Another action</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="#">Something else here</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Card Body -->
+                                                <div class="card-body">
+                                                    <div class="chart-pie pt-4 pb-2">
+                                                        <canvas id="myPieChart"></canvas>
+                                                    </div>
+                                                    <div class="mt-4 text-center small">
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>   
+                                </div>
+                                <div class="tab-pane fade" id="table" role="tabpanel">
+                                    <!-- table here -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-primary">Danh sách dịch vụ trong hóa đơn</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Tên</th>
+                                                            <th>Loại dịch vụ</th>
+                                                            <th>Ngày đăng kí</th>
+                                                            <th>Ngày kết thúc</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tỉ lệ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
+                                                            <tr>
+                                                                <td>${serviceContract.getService().getName()}</td>
+                                                                <td>${serviceContract.getService().getType()}</td>
+                                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
+                                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
+                                                                <td data-order="${serviceContract.getAmount()}"><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
+                                                                <td data-order="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}"><fmt:formatNumber value="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}" type="percent" maxFractionDigits="0"></fmt:formatNumber></td>
+                                                                </tr>
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>   
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="vendor/chart.js/Chart.min.js"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
+            <!-- Core plugin JavaScript-->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
 
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
-        <script>
-                                            function submitMonth() {
-                                                document.getElementById('chooseMonthYear').submit();
-                                            }
-
-                                            let d = new Date();
-                                            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-                                            let month = months.find((value, index) => {
-                                                if (d.getMonth()) {
-                                                    return index == d.getMonth() - 1;
-                                                } else {
-                                                    return index == 12;
+            <!-- Page level custom scripts -->
+            <script src="js/demo/datatables-demo.js"></script>
+            <script>
+                                                function submitMonth() {
+                                                    document.getElementById('chooseMonthYear').submit();
                                                 }
-                                            });
-                                            console.log(month)
 
-//            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+                                                let d = new Date();
+                                                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-                                            // take data from servlet to js
-                                            const amountList = [
-            <c:forEach items="${requestScope.amoutMonth}" var="amountList">
-                ${amountList},
-            </c:forEach>
-                                            ];
-                                            const serviceList = [
-            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                                                "${serviceContract.getService().getName()}",
-            </c:forEach>
-                                            ];
-                                            const amountService = [
-            <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
-                <c:out value="${serviceContract.getAmount()}"/>,
-            </c:forEach>
-                                            ];
-                                            console.log(amountService);
+                                                let month = months.find((value, index) => {
+                                                    if (d.getMonth()) {
+                                                        return index == d.getMonth() - 1;
+                                                    } else {
+                                                        return index == 12;
+                                                    }
+                                                });
+                                                console.log(month)
+
+                                                //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+
+                                                // take data from servlet to js
+                                                const amountList = [
+                <c:forEach items="${requestScope.amoutMonth}" var="amountList">
+                    ${amountList},
+                </c:forEach>
+                                                ];
+                                                const serviceList = [
+                <c:forEach items="${requestScope.serviceList}" var="serviceContract">
+                                                    "${serviceContract.getService().getName()}",
+                </c:forEach>
+                                                ];
+                                                const amountService = [
+                <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
+                    <c:out value="${serviceContract.getAmount()}"/>,
+                </c:forEach>
+                                                ];
+                                                console.log(amountService);
 
 
-                                            function number_format(number, decimals, dec_point, thousands_sep) {
-                                                // *     example: number_format(1234.56, 2, ',', ' ');
-                                                // *     return: '1 234,56'
-                                                number = (number + '').replace(',', '').replace(' ', '');
-                                                var n = !isFinite(+number) ? 0 : +number,
-                                                        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                                                        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                                                        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                                                        s = '',
-                                                        toFixedFix = function (n, prec) {
-                                                            var k = Math.pow(10, prec);
-                                                            return '' + Math.round(n * k) / k;
-                                                        };
-                                                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                                                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                                                if (s[0].length > 3) {
-                                                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                                function number_format(number, decimals, dec_point, thousands_sep) {
+                                                    // *     example: number_format(1234.56, 2, ',', ' ');
+                                                    // *     return: '1 234,56'
+                                                    number = (number + '').replace(',', '').replace(' ', '');
+                                                    var n = !isFinite(+number) ? 0 : +number,
+                                                            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                                                            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                                                            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                                                            s = '',
+                                                            toFixedFix = function (n, prec) {
+                                                                var k = Math.pow(10, prec);
+                                                                return '' + Math.round(n * k) / k;
+                                                            };
+                                                    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                                                    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                                    if (s[0].length > 3) {
+                                                        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                                    }
+                                                    if ((s[1] || '').length < prec) {
+                                                        s[1] = s[1] || '';
+                                                        s[1] += new Array(prec - s[1].length + 1).join('0');
+                                                    }
+                                                    return s.join(dec);
                                                 }
-                                                if ((s[1] || '').length < prec) {
-                                                    s[1] = s[1] || '';
-                                                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                                                }
-                                                return s.join(dec);
-                                            }
-                                            // Pie Chart Example
-                                            var ctx = document.getElementById("myPieChart");
-                                            var myPieChart = new Chart(ctx, {
-                                                type: 'doughnut',
-                                                data: {
-                                                    labels: serviceList,
-                                                    datasets: [{
-                                                            data: amountService,
-                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
-                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
-                                                        }],
-                                                },
-                                                options: {
-                                                    maintainAspectRatio: false,
-                                                    tooltips: {
-                                                        backgroundColor: "rgb(255,255,255)",
-                                                        bodyFontColor: "#858796",
-                                                        borderColor: '#dddfeb',
-                                                        borderWidth: 1,
-                                                        xPadding: 15,
-                                                        yPadding: 15,
-                                                        displayColors: false,
-                                                        caretPadding: 10,
-                                                        callbacks: {
-                                                            label: function (tooltipItem, data) {
-                                                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
-                                                                return value + ' VNĐ';
+                                                // Pie Chart Example
+                                                var ctx = document.getElementById("myPieChart");
+                                                var myPieChart = new Chart(ctx, {
+                                                    type: 'doughnut',
+                                                    data: {
+                                                        labels: serviceList,
+                                                        datasets: [{
+                                                                data: amountService,
+                                                                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
+                                                                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                                                                hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                            }],
+                                                    },
+                                                    options: {
+                                                        maintainAspectRatio: false,
+                                                        tooltips: {
+                                                            backgroundColor: "rgb(255,255,255)",
+                                                            bodyFontColor: "#858796",
+                                                            borderColor: '#dddfeb',
+                                                            borderWidth: 1,
+                                                            xPadding: 15,
+                                                            yPadding: 15,
+                                                            displayColors: false,
+                                                            caretPadding: 10,
+                                                            callbacks: {
+                                                                label: function (tooltipItem, data) {
+                                                                    var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                                                                    return value + ' VNĐ';
+                                                                }
                                                             }
-                                                        }
+                                                        },
+                                                        legend: {
+                                                            display: true,
+                                                            position: 'bottom', // Hoặc 'top', 'left', 'right'
+                                                            labels: {
+                                                                boxWidth: 10, // Kích thước của hộp màu
+                                                                padding: 10 // Khoảng cách giữa các mục
+                                                            }
+                                                        },
+                                                        cutoutPercentage: 60,
                                                     },
-                                                    legend: {
-                                                        display: true,
-                                                        position: 'bottom', // Hoặc 'top', 'left', 'right'
-                                                        labels: {
-                                                            boxWidth: 10, // Kích thước của hộp màu
-                                                            padding: 10 // Khoảng cách giữa các mục
-                                                        }
-                                                    },
-                                                    cutoutPercentage: 60,
-                                                },
-                                            });
+                                                });
 
 
-                                            // Area Chart Example
-                                            var ctx = document.getElementById("myAreaChart");
-                                            var myLineChart = new Chart(ctx, {
-                                                type: 'line',
-                                                data: {
-                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                    datasets: [{
-                                                            label: "Amount",
-                                                            lineTension: 0.3,
-                                                            backgroundColor: "rgba(78, 115, 223, 0.05)",
-                                                            borderColor: "rgba(78, 115, 223, 1)",
-                                                            pointRadius: 3,
-                                                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                            pointBorderColor: "rgba(78, 115, 223, 1)",
-                                                            pointHoverRadius: 3,
-                                                            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                                                            pointHitRadius: 10,
-                                                            pointBorderWidth: 2,
-                                                            data: amountList,
-                                                        }],
-                                                },
-                                                options: {
-                                                    maintainAspectRatio: false,
-                                                    layout: {
-                                                        padding: {
-                                                            left: 10,
-                                                            right: 25,
-                                                            top: 25,
-                                                            bottom: 0
-                                                        }
-                                                    },
-                                                    scales: {
-                                                        xAxes: [{
-                                                                time: {
-                                                                    unit: 'date'
-                                                                },
-                                                                gridLines: {
-                                                                    display: false,
-                                                                    drawBorder: false
-                                                                },
-                                                                ticks: {
-                                                                    maxTicksLimit: 7
-                                                                }
+                                                // Area Chart Example
+                                                var ctx = document.getElementById("myAreaChart");
+                                                var myLineChart = new Chart(ctx, {
+                                                    type: 'line',
+                                                    data: {
+                                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                        datasets: [{
+                                                                label: "Amount",
+                                                                lineTension: 0.3,
+                                                                backgroundColor: "rgba(78, 115, 223, 0.05)",
+                                                                borderColor: "rgba(78, 115, 223, 1)",
+                                                                pointRadius: 3,
+                                                                pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                pointBorderColor: "rgba(78, 115, 223, 1)",
+                                                                pointHoverRadius: 3,
+                                                                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                                                                pointHitRadius: 10,
+                                                                pointBorderWidth: 2,
+                                                                data: amountList,
                                                             }],
-                                                        yAxes: [{
-                                                                ticks: {
-                                                                    maxTicksLimit: 5,
-                                                                    padding: 10,
-                                                                    // Include a dollar sign in the ticks
-                                                                    callback: function (value, index, values) {
-                                                                        return number_format(value) + ' VNĐ';
+                                                    },
+                                                    options: {
+                                                        maintainAspectRatio: false,
+                                                        layout: {
+                                                            padding: {
+                                                                left: 10,
+                                                                right: 25,
+                                                                top: 25,
+                                                                bottom: 0
+                                                            }
+                                                        },
+                                                        scales: {
+                                                            xAxes: [{
+                                                                    time: {
+                                                                        unit: 'date'
+                                                                    },
+                                                                    gridLines: {
+                                                                        display: false,
+                                                                        drawBorder: false
+                                                                    },
+                                                                    ticks: {
+                                                                        maxTicksLimit: 7
                                                                     }
-                                                                },
-                                                                gridLines: {
-                                                                    color: "rgb(234, 236, 244)",
-                                                                    zeroLineColor: "rgb(234, 236, 244)",
-                                                                    drawBorder: false,
-                                                                    borderDash: [2],
-                                                                    zeroLineBorderDash: [2]
+                                                                }],
+                                                            yAxes: [{
+                                                                    ticks: {
+                                                                        maxTicksLimit: 5,
+                                                                        padding: 10,
+                                                                        // Include a dollar sign in the ticks
+                                                                        callback: function (value, index, values) {
+                                                                            return number_format(value) + ' VNĐ';
+                                                                        }
+                                                                    },
+                                                                    gridLines: {
+                                                                        color: "rgb(234, 236, 244)",
+                                                                        zeroLineColor: "rgb(234, 236, 244)",
+                                                                        drawBorder: false,
+                                                                        borderDash: [2],
+                                                                        zeroLineBorderDash: [2]
+                                                                    }
+                                                                }],
+                                                        },
+                                                        legend: {
+                                                            display: false
+                                                        },
+                                                        tooltips: {
+                                                            backgroundColor: "rgb(255,255,255)",
+                                                            bodyFontColor: "#858796",
+                                                            titleMarginBottom: 10,
+                                                            titleFontColor: '#6e707e',
+                                                            titleFontSize: 14,
+                                                            borderColor: '#dddfeb',
+                                                            borderWidth: 1,
+                                                            xPadding: 15,
+                                                            yPadding: 15,
+                                                            displayColors: false,
+                                                            intersect: false,
+                                                            mode: 'index',
+                                                            caretPadding: 10,
+                                                            callbacks: {
+                                                                label: function (tooltipItem, chart) {
+                                                                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
                                                                 }
-                                                            }],
-                                                    },
-                                                    legend: {
-                                                        display: false
-                                                    },
-                                                    tooltips: {
-                                                        backgroundColor: "rgb(255,255,255)",
-                                                        bodyFontColor: "#858796",
-                                                        titleMarginBottom: 10,
-                                                        titleFontColor: '#6e707e',
-                                                        titleFontSize: 14,
-                                                        borderColor: '#dddfeb',
-                                                        borderWidth: 1,
-                                                        xPadding: 15,
-                                                        yPadding: 15,
-                                                        displayColors: false,
-                                                        intersect: false,
-                                                        mode: 'index',
-                                                        caretPadding: 10,
-                                                        callbacks: {
-                                                            label: function (tooltipItem, chart) {
-                                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
                                                             }
                                                         }
                                                     }
-                                                }
-                                            });
-        </script>
+                                                });
+            </script>
     </body>
 </html>

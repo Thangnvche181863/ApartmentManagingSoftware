@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.*;
-import DAO.InvoiceDAO;
+import DAO.*;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.sql.Date;
 import java.time.Month;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 
 /**
@@ -53,26 +54,26 @@ public class UserHomeServlet extends HttpServlet {
         }
     }
 
-   // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-   /**
-    * Handles the HTTP <code>GET</code> method.
-    *
-    * @param request servlet request
-    * @param response servlet response
-    * @throws ServletException if a servlet-specific error occurs
-    * @throws IOException if an I/O error occurs
-    */
-   @Override
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-           throws ServletException, IOException {
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 //        processRequest(request, response);
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
-        
+
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
-
+        
         // get current date for user first access
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
@@ -91,7 +92,10 @@ public class UserHomeServlet extends HttpServlet {
         }
 
         InvoiceDAO invoiceDAO = new InvoiceDAO();
-
+        ApartmentDAO apartmentDAO = new ApartmentDAO();
+        
+//        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
+        
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
         List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(1);
         LinkedHashSet<Integer> listOfYear = listOfYear(dList);
@@ -102,10 +106,10 @@ public class UserHomeServlet extends HttpServlet {
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
 
         // parameter for current year
-        double total = totalAmount(iList);
-        int numOfInvoice = iList.size();
-        double paid = paidAmount(iList);
-        double unpaid = unPaidAmount(iList);
+        double total = totalAmount(iList, year);
+        int numOfInvoice = numInvoiceInYear(iList, year);
+        double paid = paidAmount(iList, year);
+        double unpaid = unPaidAmount(iList, year);
 
         // parameter for chart
         // area chart
@@ -125,7 +129,19 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("invoiceCurrent", invoiceCurrent);
         request.setAttribute("serviceList", serviceList);
 
+//        request.setAttribute("apartment", apartment);
+        
         request.getRequestDispatcher("userhome.jsp").forward(request, response);
+    }
+    
+    protected int numInvoiceInYear(List<Invoice> list, int year){
+        int count = 0;
+        for (Invoice invoice : list) {
+            if(invoice.getIssueDate().toLocalDate().getYear() == year){
+                count += 1;
+            }
+        }
+        return count;
     }
 
     protected LinkedHashSet<Integer> listOfYear(List<Date> list) {
@@ -146,34 +162,36 @@ public class UserHomeServlet extends HttpServlet {
         return yList;
     }
 
-    protected double totalAmount(List<Invoice> list) {
+    protected double totalAmount(List<Invoice> list, int year) {
         double total = 0;
         for (Invoice invoice : list) {
-            total += invoice.getAmount();
-        }
-        return total;
-    }
-
-    protected double paidAmount(List<Invoice> list) {
-        double total = 0;
-        for (Invoice invoice : list) {
-            // check if invoice is paid or not
-            // status = 1 => paid
-            // status = 0 => unpaid
-            if (invoice.getStatus() == 1) {
+            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
                 total += invoice.getAmount();
             }
         }
         return total;
     }
 
-    protected double unPaidAmount(List<Invoice> list) {
+    protected double paidAmount(List<Invoice> list, int year) {
         double total = 0;
         for (Invoice invoice : list) {
             // check if invoice is paid or not
             // status = 1 => paid
             // status = 0 => unpaid
-            if (invoice.getStatus() == 0) {
+            if (invoice.getStatus() == 1 && invoice.getIssueDate().toLocalDate().getYear() == year) {
+                total += invoice.getAmount();
+            }
+        }
+        return total;
+    }
+
+    protected double unPaidAmount(List<Invoice> list, int year) {
+        double total = 0;
+        for (Invoice invoice : list) {
+            // check if invoice is paid or not
+            // status = 1 => paid
+            // status = 0 => unpaid
+            if (invoice.getStatus() == 0 && invoice.getIssueDate().toLocalDate().getYear() == year) {
                 total += invoice.getAmount();
             }
         }
