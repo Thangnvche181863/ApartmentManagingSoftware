@@ -32,7 +32,7 @@ public class ServiceContractDAO extends DBContext {
                 service.setName(rs.getString("name"));
                 service.setType(rs.getString("type"));
                 service.setDescription(rs.getString("description"));
-                service.setFee(rs.getDouble("fee"));
+                service.setFee(rs.getBigDecimal("fee"));
 
                 serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
                 serviceContract.setApartmentId(rs.getInt("apartmentID"));

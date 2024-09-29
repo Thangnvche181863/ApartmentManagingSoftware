@@ -41,8 +41,8 @@
         <!-- Bootstrap JS (requires Popper.js as well) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-        
-        
+
+
 
     </head>
 
@@ -51,44 +51,44 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <!-- Modal Search Start -->
-                        <div
-                            class="modal fade"
-                            id="searchModal"
-                            tabindex="9"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                            >
-                            <div class="modal-dialog modal-fullscreen">
-                                <div class="modal-content rounded-0">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            Search by keyword
-                                        </h5>
-                                        <button
-                                            type="button"
-                                            class="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close"
-                                            ></button>
-                                    </div>
-                                    <div class="modal-body d-flex align-items-center bg-primary">
-                                        <div class="input-group w-75 mx-auto d-flex">
-                                            <input
-                                                type="search"
-                                                class="form-control p-3"
-                                                placeholder="keywords"
-                                                aria-describedby="search-icon-1"
-                                                />
-                                            <span
-                                                id="search-icon-1"
-                                                class="btn bg-light border nput-group-text p-3"
-                                                ><i class="fa fa-search"></i
-                                                ></span>
-                                        </div>
-                                    </div>
-                                </div>
+            <div
+                class="modal fade"
+                id="searchModal"
+                tabindex="9"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                >
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                Search by keyword
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                ></button>
+                        </div>
+                        <div class="modal-body d-flex align-items-center bg-primary">
+                            <div class="input-group w-75 mx-auto d-flex">
+                                <input
+                                    type="search"
+                                    class="form-control p-3"
+                                    placeholder="keywords"
+                                    aria-describedby="search-icon-1"
+                                    />
+                                <span
+                                    id="search-icon-1"
+                                    class="btn bg-light border nput-group-text p-3"
+                                    ><i class="fa fa-search"></i
+                                    ></span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal Search End -->
 
             <!-- Header Start -->
@@ -106,9 +106,7 @@
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
-                                <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Manage</a></li>
-                                <li class="breadcrumb-item active text-primary">Service</li>
+                                <li class="breadcrumb-item"><a href="#navigate" class="active text-primary">More</a></li>
                             </ol>
                         </div>
                     </div>
@@ -120,14 +118,14 @@
                                 >
                                 Marry Christmas
                             </h4>
-                            <ol
+<!--                            <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
                                 <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Manage</a></li>
                                 <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>
+                            </ol>-->
                         </div>
                     </div>
                     <div class="bg-breadcrumb carousel-item third" data-bs-interval="5000">
@@ -138,14 +136,14 @@
                                 >
                                 Affected by Storm
                             </h4>
-                            <ol
+<!--                            <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
                                 <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Manage</a></li>
                                 <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>
+                            </ol>-->
                         </div>
                     </div>
                 </div>
@@ -178,28 +176,28 @@
 
             <!-- Service Start -->
             <div class="container-fluid service py-5">
-                <div class="container py-5">
+                <div class="container py-4">
                     <div
                         class="text-center mx-auto pb-5 wow fadeInUp"
                         data-wow-delay="0.2s"
                         style="max-width: 800px"
                         >
                         <h4 class="text-primary">Our Services</h4>
-                        <h1 class="display-4 mb-4">We Provide Best Services</h1>
-                        <p class="mb-0">
-                            The following service are provide by the building management and
-                            related parties. We believe that will provide you with the best
-                            services. Thank you for followign our service.
-                        </p>
+                        <!--                        <h1 class="display-4 mb-4">We Provide Best Services</h1>
+                                                <p class="mb-0">
+                                                    The following service are provide by the building management and
+                                                    related parties. We believe that will provide you with the best
+                                                    services. Thank you for followign our service.
+                                                </p>-->
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
+
+
                     <div class="row g-4 justify-content-center">
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
@@ -223,13 +221,13 @@
                                             Our parking service is secured by smart monitoring equipment to make you satisfied and safe.
                                         </p>
                                         <a class="btn btn-primary rounded-pill py-2 px-4" href="#"
-                                           ></a
+                                           >Read More</a
                                         >
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
                             data-wow-delay="0.4s"
@@ -316,10 +314,10 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
                         <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
                             <a class="btn btn-primary rounded-pill py-3 px-5" href="#navigate"
                                >More Services</a
@@ -327,8 +325,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="container-fluid feature bg-light py-5" id="navigate">
                     <div class="container py-5">
                         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
@@ -337,10 +335,10 @@
                             </p>
                         </div>
                         <!--part 1-->
-                        
-                        
-                        
-                        
+
+
+
+
                         <div class="row g-4 mt-3">
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="feature-item p-4 pt-0">
@@ -375,8 +373,8 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
@@ -388,14 +386,14 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
 
                         <!--part 2-->
                         <div class="row g-4 mt-3">
@@ -450,9 +448,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="far fa-handshake fa-3x"></i>
+                                        <i class="bi bi-inboxes fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">Trusted Company</h4>
+                                    <h4 class="mb-4">Laundry Service</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -461,9 +459,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-dollar-sign fa-3x"></i>
+                                        <i class="bi bi-box2-heart fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">Anytime Money Back</h4>
+                                    <h4 class="mb-4">Delivery Services</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -472,9 +470,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-bullseye fa-3x"></i>
+                                       <i class="fa fa-headphones fa-3x"></i>
                                     </div>
-                                    <h4 class="mb-4">Flexible Plans</h4>
+                                    <h4 class="mb-4">Concierge Services</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -483,9 +481,9 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                        <i class="fa fa-headphones fa-3x"></i>
+                                        <i class="bi bi-backpack3 fa-2x"></i>
                                     </div>
-                                    <h4 class="mb-4">24/7 Fast Support</h4>
+                                    <h4 class="mb-4">Pet Care</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
@@ -494,134 +492,13 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
-                
+
+
+
+
             </div>
             <!-- Service End -->
 
-            <!-- Testimonial Start -->
-            <div class="container-fluid testimonial pb-5">
-                <div class="container pb-5">
-                    <div
-                        class="text-center mx-auto pb-5 wow fadeInUp"
-                        data-wow-delay="0.2s"
-                        style="max-width: 800px"
-                        >
-                        <h4 class="text-primary">Testimonial</h4>
-                        <h1 class="display-4 mb-4">What Our Customers Are Saying</h1>
-                        <p class="mb-0">
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-                            adipisci facilis cupiditate recusandae aperiam temporibus corporis
-                            itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-                            obcaecati, ipsam mollitia hic.
-                        </p>
-                    </div>
-                    <div
-                        class="owl-carousel testimonial-carousel wow fadeInUp"
-                        data-wow-delay="0.2s"
-                        >
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/testimonial-1.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/testimonial-2.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star text-body"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/testimonial-3.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Client Name</h4>
-                                        <p class="mb-3">Profession</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star text-body"></i>
-                                            <i class="fas fa-star text-body"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                            Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                            incidunt temporibus quisquam,
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial End -->
 
             <!-- Footer Start -->
         <jsp:include page="footer.jsp"/>
