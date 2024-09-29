@@ -31,6 +31,12 @@
             rel="stylesheet"
             />
 
+        <style>
+            .is-invalid {
+                border-color: red;
+                background-color: #f8d7da;
+            }
+        </style>
 
     </head>
 
@@ -142,7 +148,7 @@
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
-                    <a class="nav-link" href="servicecrud">
+                    <a class="nav-link" href="servicelist">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Service List</span></a>
                 </li>
@@ -382,7 +388,7 @@
 
                         <div class="row"
                              style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
-                            <form action="serviceedit" method="post" >
+                            <form action="serviceedit" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data">
                                 <div class="row g-0"> 
 
                                     <div class="col-md-5">
@@ -396,17 +402,20 @@
                                             <input type="text" class="form-control w-100" name="type" id="type" value="${service.type}">
                                         </div>
                                         <div class="form-group mb-4">
-                                            <label for="fee" class="form-label">Fee:</label>
-                                            <input type="number" class="form-control w-100" name="fee" id="fee" value="${service.fee}">
-                                        </div>
-                                        <div class="form-group mb-4">
                                             <label for="img" class="form-label">URL img:</label>
-                                            <input type="file" class="form-control w-100" name="img" id="img" value="${service.img}">
+                                            <input type="file" class="form-control w-100" name="img" id="img" value="${service.img}" onchange="previewImg(event)">
+                                            <img src="${service.img}" id="after" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
+                                            <img src="" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px; display: none"/>
                                         </div>
                                     </div>
 
 
                                     <div class="col-md-7">
+                                        <div class="form-group mb-4">
+                                            <label for="fee" class="form-label">Fee:</label>
+                                            <input type="text" class="form-control w-100" name="fee" id="fee" value="${service.fee}">
+                                            <div id="feeError" class="text-danger" style="display: none;"></div>
+                                        </div>
                                         <div class="form-group mb-4">
                                             <label for="icon" class="form-label" style="width: ">URL icon:</label>
                                             <input type="text" class="form-control w-100" name="icon" id="icon" value="${service.icon}">
@@ -421,7 +430,7 @@
 
                                 <div class="text-center mt-4 d-flex">
                                     <input type="submit" class="btn btn-primary btn-block" value="Save"  style="width: 80px; margin: 0 auto"/>
-                                    <a class="btn btn-primary" href="servicedetail?id=${service.serviceId}" style="margin-right: 150px">Turn Back</a>
+                                    <a class="btn btn-primary" href="servicelist?id=${service.serviceId}" style="margin-right: 150px">Cancel</a>
                                 </div>
                             </form>
 
@@ -481,6 +490,8 @@
 
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/main1.js"></script>
 
     </body>
 

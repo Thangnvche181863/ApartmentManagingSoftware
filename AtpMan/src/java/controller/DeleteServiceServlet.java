@@ -61,7 +61,7 @@ public class DeleteServiceServlet extends HttpServlet {
         ServiceDAO sdao = new ServiceDAO();
         sdao.deleteService(Integer.parseInt(id));
         request.setAttribute("listservice", sdao.getAll());
-        request.getRequestDispatcher("view-infor-service.jsp").forward(request, response);
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 
     /**

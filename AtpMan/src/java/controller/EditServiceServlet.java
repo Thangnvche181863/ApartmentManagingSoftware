@@ -8,17 +8,24 @@ import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import model.Service;
 
 /**
  *
  * @author thang
  */
+@MultipartConfig
 public class EditServiceServlet extends HttpServlet {
+
+    private static final String UPLOAD_DIR = "uploadFile";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -72,30 +79,40 @@ public class EditServiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String type = request.getParameter("type");
         String fee = request.getParameter("fee");
         String description = request.getParameter("description");
-//        String img = request.getParameter("img");
         String icon = request.getParameter("icon");
 
-        Service service = new Service(Integer.parseInt(id), name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description, "", icon);
+        // pick file upload form
+        Part filePart = request.getPart("img"); // "img" is name in input of form
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên file gốc
+
+        // Đường dẫn lưu trữ file
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
+
+//         Tạo thư mục nếu chưa tồn tại
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+//
+//        // Đường dẫn đầy đủ của file sẽ được lưu
+        String filePath = uploadPath + File.separator + fileName;
+//
+        filePart.write(filePath);
+//
+        String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
 
         ServiceDAO sdao = new ServiceDAO();
-        sdao.updateService(Integer.parseInt(id), name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description, id, icon);
+        sdao.updateService(Integer.parseInt(id), name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
         request.setAttribute("listservice", sdao.getAll());
-        request.getRequestDispatcher("view-infor-service.jsp").forward(request, response);
-//        PrintWriter out = response.getWriter();
-//        out.print(id);
-//        out.print(name);
-//        out.print(type);
-//        out.print(fee);
-//        out.print(description);
-//        out.print(img);
-//        out.print(icon);
-
-
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+//        out.print(uploadPath);
     }
 
     /**

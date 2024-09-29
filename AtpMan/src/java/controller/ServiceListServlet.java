@@ -34,21 +34,15 @@ public class ServiceListServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String action = request.getParameter("action");
-            String id;
-            Service service;
-            String name = null;
-//            String type;
-//            double fee;
-//            String description;
-
-            ServiceDAO sdao = new ServiceDAO();
-            if (action == null || action.equals("")) {
-                request.setAttribute("listservice", sdao.getAll());
-                request.getRequestDispatcher("view-infor-service.jsp").forward(request, response);
-                return;
-            }
-
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ServiceAddServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ServiceAddServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -64,7 +58,9 @@ public class ServiceListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ServiceDAO sdao = new ServiceDAO();
+        request.setAttribute("listservice", sdao.getAll());
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 
     /**
