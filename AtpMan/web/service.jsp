@@ -41,8 +41,8 @@
         <!-- Bootstrap JS (requires Popper.js as well) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-        
-        
+
+
 
     </head>
 
@@ -51,44 +51,44 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <!-- Modal Search Start -->
-                        <div
-                            class="modal fade"
-                            id="searchModal"
-                            tabindex="9"
-                            aria-labelledby="exampleModalLabel"
-                            aria-hidden="true"
-                            >
-                            <div class="modal-dialog modal-fullscreen">
-                                <div class="modal-content rounded-0">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">
-                                            Search by keyword
-                                        </h5>
-                                        <button
-                                            type="button"
-                                            class="btn-close"
-                                            data-bs-dismiss="modal"
-                                            aria-label="Close"
-                                            ></button>
-                                    </div>
-                                    <div class="modal-body d-flex align-items-center bg-primary">
-                                        <div class="input-group w-75 mx-auto d-flex">
-                                            <input
-                                                type="search"
-                                                class="form-control p-3"
-                                                placeholder="keywords"
-                                                aria-describedby="search-icon-1"
-                                                />
-                                            <span
-                                                id="search-icon-1"
-                                                class="btn bg-light border nput-group-text p-3"
-                                                ><i class="fa fa-search"></i
-                                                ></span>
-                                        </div>
-                                    </div>
-                                </div>
+            <div
+                class="modal fade"
+                id="searchModal"
+                tabindex="9"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+                >
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                Search by keyword
+                            </h5>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                ></button>
+                        </div>
+                        <div class="modal-body d-flex align-items-center bg-primary">
+                            <div class="input-group w-75 mx-auto d-flex">
+                                <input
+                                    type="search"
+                                    class="form-control p-3"
+                                    placeholder="keywords"
+                                    aria-describedby="search-icon-1"
+                                    />
+                                <span
+                                    id="search-icon-1"
+                                    class="btn bg-light border nput-group-text p-3"
+                                    ><i class="fa fa-search"></i
+                                    ></span>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal Search End -->
 
             <!-- Header Start -->
@@ -176,28 +176,28 @@
 
             <!-- Service Start -->
             <div class="container-fluid service py-5">
-                <div class="container py-5">
+                <div class="container py-4">
                     <div
                         class="text-center mx-auto pb-5 wow fadeInUp"
                         data-wow-delay="0.2s"
                         style="max-width: 800px"
                         >
                         <h4 class="text-primary">Our Services</h4>
-                        <h1 class="display-4 mb-4">We Provide Best Services</h1>
-                        <p class="mb-0">
-                            The following service are provide by the building management and
-                            related parties. We believe that will provide you with the best
-                            services. Thank you for followign our service.
-                        </p>
+                        <!--                        <h1 class="display-4 mb-4">We Provide Best Services</h1>
+                                                <p class="mb-0">
+                                                    The following service are provide by the building management and
+                                                    related parties. We believe that will provide you with the best
+                                                    services. Thank you for followign our service.
+                                                </p>-->
                     </div>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
+
+
                     <div class="row g-4 justify-content-center">
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
@@ -227,7 +227,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
                             data-wow-delay="0.4s"
@@ -314,10 +314,10 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
                         <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
                             <a class="btn btn-primary rounded-pill py-3 px-5" href="#navigate"
                                >More Services</a
@@ -325,8 +325,8 @@
                         </div>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="container-fluid feature bg-light py-5" id="navigate">
                     <div class="container py-5">
                         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
@@ -335,10 +335,10 @@
                             </p>
                         </div>
                         <!--part 1-->
-                        
-                        
-                        
-                        
+
+
+
+
                         <div class="row g-4 mt-3">
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="feature-item p-4 pt-0">
@@ -373,8 +373,8 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
-                            
-                            
+
+
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
@@ -386,14 +386,14 @@
                                     <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                         </div>
-                        
-                        
-                        
-                        
+
+
+
+
 
                         <!--part 2-->
                         <div class="row g-4 mt-3">
@@ -492,121 +492,13 @@
                         </div>
                     </div>
                 </div>
-                
-                
-                
-                
+
+
+
+
             </div>
             <!-- Service End -->
 
-            <!-- Testimonial Start -->
-            <div class="container-fluid testimonial pb-5">
-                <div class="container pb-5">
-                    <div
-                        class="text-center mx-auto pb-5 wow fadeInUp"
-                        data-wow-delay="0.2s"
-                        style="max-width: 800px"
-                        >
-                        <h1 class="display-5 mb-4">Customer reviews about us</h1>
-                    </div>
-                    <div
-                        class="owl-carousel testimonial-carousel wow fadeInUp"
-                        data-wow-delay="0.2s"
-                        >
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/deptrai.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Nguyen Van Cuong Thang</h4>
-                                        <p class="mb-3">Professor</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/Nghia.jpeg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Le Tuan Nghia</h4>
-                                        <p class="mb-3">Professor</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-item bg-light rounded">
-                            <div class="row g-0">
-                                <div class="col-4 col-lg-4 col-xl-3">
-                                    <div class="h-100">
-                                        <img
-                                            src="img/testimonial-2.jpg"
-                                            class="img-fluid h-100 rounded"
-                                            style="object-fit: cover"
-                                            alt=""
-                                            />
-                                    </div>
-                                </div>
-                                <div class="col-8 col-lg-8 col-xl-9">
-                                    <div class="d-flex flex-column my-auto text-start p-4">
-                                        <h4 class="text-dark mb-0">Nguyen Van Cuong Thang</h4>
-                                        <p class="mb-3">Professor</p>
-                                        <div class="d-flex text-primary mb-3">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                        <p class="mb-0">
-                                            The application is still very new but will definitely be old in the future. Some functions are being formed and developed.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Testimonial End -->
 
             <!-- Footer Start -->
         <jsp:include page="footer.jsp"/>
