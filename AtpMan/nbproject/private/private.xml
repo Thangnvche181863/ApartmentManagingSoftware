@@ -3,24 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Service.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/InvoiceDAO.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Ownership.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/RequestComplaint.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/UserHomeServlet.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/Home.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/utils/Validation.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/NewServlet.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Invoice.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ServiceDAO.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/ServiceContract.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/Living.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/InvoiceServiceDAO.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/userhome.jsp</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/RequestComplaintDAO.java</file>
-
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/servicelist.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/service.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/serviceadd.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/EditServiceServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ServiceAddServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/serviceedit.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/ServiceIntroServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/js/main.js</file>
         </group>
     </open-files>
 </project-private>

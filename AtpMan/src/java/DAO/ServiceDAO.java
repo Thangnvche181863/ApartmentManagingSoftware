@@ -5,6 +5,7 @@
 package DAO;
 
 import java.sql.*;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class ServiceDAO extends DBContext {
         return list;
     }
 
+    
     public List<Service> getAll() {
         List<Service> list = new ArrayList<>();
         try {
@@ -46,22 +48,42 @@ public class ServiceDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Service(rs.getInt("serviceID"), rs.getString("name"), rs.getString("type"),
-                        rs.getDouble("fee"), rs.getString("description"), rs.getString("img"), rs.getString("icon")));
+                list.add(new Service(rs.getInt("serviceID"), rs.getString("name"), rs.getString("type"), rs.getBigDecimal("fee"), rs.getString("description"), rs.getString("img"), rs.getString("icon")));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
         return list;
     }
+    
+    public Service findById(int id){
+        List<Service> list = getAll();
+        for (Service service : list) {
+            if(service.getServiceId() == id) return service;
+        }
+        return null;
+    }
+    
+    public int update(Service service){
+        List<Service> list = getAll();
+        for(int i=0;i<list.size();i++){
+            if(list.get(i).getServiceId() == service.getServiceId()){
+                list.set(i, service);
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    
 
-    public void insertService(String name, String type, double fee, String description, String img, String icon) {
+    public void insertService(String name, String type, BigDecimal fee, String description, String img, String icon) {
         try {
             String sql = "Insert into Service(name,type,fee,description,img,icon) values(?,?,?,?,?,?)";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
-            ps.setDouble(3, fee);
+            ps.setBigDecimal(3, fee);
             ps.setString(4, description);
             ps.setString(5, img);
             ps.setString(6, icon);
@@ -71,8 +93,7 @@ public class ServiceDAO extends DBContext {
         }
     }
 
-    public void updateService(int serviceId, String name, String type, double fee, String description, String img,
-            String icon) {
+    public void updateService(int serviceId, String name, String type, BigDecimal fee, String description,String img, String icon) {
         try {
             String sql = "UPDATE [dbo].[Service]\n"
                     + "   SET [name] = ?\n"
@@ -86,7 +107,7 @@ public class ServiceDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
-            ps.setDouble(3, fee);
+            ps.setBigDecimal(3, fee);
             ps.setString(4, description);
             ps.setString(5, img);
             ps.setString(6, icon);
