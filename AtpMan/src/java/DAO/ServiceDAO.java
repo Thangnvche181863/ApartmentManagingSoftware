@@ -31,7 +31,7 @@ public class ServiceDAO extends DBContext {
                 service.setName(rs.getString(2));
                 service.setType(rs.getString(3));
                 service.setDescription(rs.getString(4));
-                service.setFee(rs.getDouble(5));
+                service.setFee(rs.getBigDecimal(5));
                 list.add(service);
             }
         } catch (SQLException e) {
