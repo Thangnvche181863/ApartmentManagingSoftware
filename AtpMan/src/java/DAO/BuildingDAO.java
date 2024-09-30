@@ -58,6 +58,9 @@ public class BuildingDAO {
 //        BuildingDAO dao = new BuildingDAO();
 //        Vector<Building> vector = dao.getAllBuilding();
 //        System.out.println(vector.size());
+//        for(Building building1 : vector){
+//            System.out.println();
+//        }
 //    }
     ////////////////////////////////QUAN///////////////////////////////////////
     private static final Logger LOGGER = Logger.getLogger(BuildingDAO.class.getName());
@@ -80,13 +83,16 @@ public class BuildingDAO {
                         Building building = new Building();
                         building.setBuildingID(rs.getInt("buildingID"));
                         building.setName(rs.getString("name"));
-                        buildings.add(building);  
+                        building.setNumFloor(rs.getInt("numFloor"));
+                        building.setNumApartment(rs.getInt("numApartment"));
+                        building.setAddress(rs.getString("address"));
+                        buildings.add(building);
                     }
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {
             LOGGER.log(Level.SEVERE, "Error retrieving buildings", ex);
-            ex.printStackTrace();  
+            ex.printStackTrace();
         } finally {
             if (conn != null) {
                 try {
@@ -96,20 +102,23 @@ public class BuildingDAO {
                 }
             }
         }
-        return buildings;  
+        return buildings;
     }
 
-    public static void main(String[] args) {
-        
-        BuildingDAO buildingDAO = new BuildingDAO();       
-        List<Building> buildings = buildingDAO.getAllBuildings(); 
-        if (buildings != null && !buildings.isEmpty()) {           
-            for (Building building : buildings) {
-                System.out.println("Building ID: " + building.getBuildingID() + ", Name: " + building.getName());
-            }
-        } else {
-            System.out.println("No buildings found or an error occurred.");
-        }
-    }
-
+//    public static void main(String[] args) {
+//        
+//        BuildingDAO buildingDAO = new BuildingDAO();       
+//        List<Building> buildings = buildingDAO.getAllBuildings(); 
+//        if (buildings != null && !buildings.isEmpty()) {           
+//            for (Building building : buildings) {
+//                System.out.println("Building ID: " + building.getBuildingID() 
+//                        + ", Name: " + building.getName() 
+//                        + ", Floor " + building.getNumFloor() 
+//                        + ", Apartment " + building.getNumApartment()
+//                        + ", Address " + building.getAddress());
+//            }
+//        } else {
+//            System.out.println("No buildings found or an error occurred.");
+//        }
+//    }
 }

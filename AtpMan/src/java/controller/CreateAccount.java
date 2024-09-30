@@ -7,6 +7,7 @@ package controller;
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Apartment;
 import model.Building;
+import utils.EmailHandle;
+import utils.GeneratePassword;
 
 /**
  *
@@ -64,80 +67,95 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            ApartmentDAO apartmentDAO = WebManager.getInstance().apartmentDAO;
-            BuildingDAO buildingDAO = WebManager.getInstance().buildingDAO;
-            // Kiểm tra nếu có tham số buildingId, tức là yêu cầu AJAX để lấy danh sách Apartment
-            String buildingId = request.getParameter("buildingId");
-            if (buildingId != null && !buildingId.isEmpty()) {
-                // Trả về danh sách Apartment dựa trên buildingId
-                List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(Integer.parseInt(buildingId));
-                response.setContentType("text/html;charset=UTF-8");
-                PrintWriter out = response.getWriter();
+        // Check if buildingID parameter is present for loading apartments via AJAX
+        String buildingIDStr = request.getParameter("buildingId"); // Get from AJAX request
 
-                // Gửi danh sách apartment dưới dạng option cho select
-                out.println("<option value=''>Choose apartment</option>");
-                for (Apartment apartment : apartments) {
-                    out.println("<option value='" + apartment.getApartmentID() + "'>" + "</option>");
-                }
-                out.close();
-                return;
+        if (buildingIDStr != null && !buildingIDStr.isEmpty()) {
+            int buildingID = Integer.parseInt(buildingIDStr);
+
+            // Fetch the apartments for the selected building
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
+            List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingID);
+
+            // Return apartment options as HTML to be inserted into the select box
+            StringBuilder apartmentOptions = new StringBuilder();
+            for (Apartment apartment : apartments) {
+                apartmentOptions.append("<option value='")
+                        .append(apartment.getApartmentID())
+                        .append("'>")
+                        .append(apartment.getDepartmentType())
+                        .append(" - Floor: ")
+                        .append(apartment.getFloor())
+                        .append("</option>");
             }
 
-            // Nếu không có buildingId, tải trang lần đầu và nạp danh sách Building
-            List<Building> buildings = buildingDAO.getAllBuildings();
-            request.setAttribute("buildings", buildings);
+            // Send the HTML back to the AJAX response
+            response.setContentType("text/html");
+            response.getWriter().write(apartmentOptions.toString());
+        } else {
+            // Fetch buildings for initial page load
+            BuildingDAO buildingDAO = new BuildingDAO();
+            List<Building> listBuilding = buildingDAO.getAllBuildings();
+            request.setAttribute("listBuildings", listBuilding);
 
-            // Forward dữ liệu sang JSP để hiển thị form
             request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CreateAccount.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
 
-        try {
-            CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
-            String username = request.getParameter("username");
-//            String password = request.getParameter("password");
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-//            String age = request.getParameter("age");
-//            String registrationDate = request.getParameter("registrationDate");   
-            String buildingId = request.getParameter("building");
-            String apartmentId = request.getParameter("apartment");
-            String userType = request.getParameter("userType");
+    try {
+        CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+        LivingDAO livingDAO = WebManager.getInstance().livingDAO;
 
-            String isOwner = null;
-            if ("2".equals(userType)) {
-                isOwner = "1"; // Resident -> isOwner = 1
-            } else if ("3".equals(userType)) {
-                isOwner = "0"; // Owner -> isOwner = 0
-            }
+        String username = request.getParameter("username");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String buildingId = request.getParameter("building");
+        String apartmentId = request.getParameter("apartment");
+        String userType = request.getParameter("userType");
 
-            boolean hasError = false;
-
-            if (customerDAO.existsByUsernameOrGmail(username, email)) {
-                request.setAttribute("messExist", "Username or email already exists");
-                request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-                return;
-            }
-
-//            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
-//            request.setAttribute("successCreate", "Create account successfully");
-//            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-            customerDAO.createNewCustomer(username, name, email, phoneNumber, isOwner);
-            request.setAttribute("successCreate", "Create account successfully");
-            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-        } catch (Exception e) {
+        String isOwner = null;
+        if ("2".equals(userType)) {
+            isOwner = "1"; // Resident -> isOwner = 1
+        } else if ("3".equals(userType)) {
+            isOwner = "0"; // Owner -> isOwner = 0
         }
+
+        boolean hasError = false;
+
+        if (customerDAO.existsByUsernameOrGmail(username, email)) {
+            request.setAttribute("messExist", "Username or email already exists");
+            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+            return;
+        }
+        String password = GeneratePassword.generatePass();
+        customerDAO.createNewCustomer(username,password, name, email, phoneNumber, isOwner);         
+        int customerID = customerDAO.getCustomerIDByUsername(username);
+        
+        System.out.println("Customer ID: " + customerID);
+
+        if (customerID > 0) {
+            int apartmentID = Integer.parseInt(apartmentId);
+            livingDAO.insertResident(customerID, apartmentID);
+        }
+
+        
+        String subject = "Tai khoan va mat khau";
+        String body = "Dear " + name + ",\nTai khoan va mat khau cua ban: " +"\nTai khoan: "+ username + "\nMat khau: " + password + "\n";
+        EmailHandle.sendEmail(email, subject, body);
+
+        request.setAttribute("successCreate", "Create account successfully");
+        request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+
+    } catch (Exception e) {
+        e.printStackTrace(); 
     }
+}
+
 
     @Override
     public String getServletInfo() {

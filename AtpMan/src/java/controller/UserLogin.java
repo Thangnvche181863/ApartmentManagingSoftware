@@ -25,7 +25,12 @@ import utils.UtilHashPass;
  * @author WuanTun
  */
 public class UserLogin extends HttpServlet {
-
+    
+    @Override
+    protected  void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,7 +71,7 @@ public class UserLogin extends HttpServlet {
 
                 session.setAttribute("user", staff);
 
-                response.sendRedirect("createAccount.jsp");
+                response.sendRedirect("createaccount");
 
             } else {
 

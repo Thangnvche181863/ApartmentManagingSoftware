@@ -22,8 +22,8 @@ public class EmailHandle {
 
     public static void sendEmail(String toEmail, String subject, String body) {
         // Sender's email and password
-        String fromEmail = "anhquan27900@gmail.com";//replace mail
-        String password = "cxxd ncbq oytk cwhy";//replace password
+        String fromEmail = "managingsystemapartment@gmail.com";//replace mail
+        String password = "fxco mubm qupg foed";//replace password
 
         // SMTP server properties
         Properties properties = new Properties();

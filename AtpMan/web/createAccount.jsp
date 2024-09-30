@@ -108,8 +108,8 @@
                                             <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
                                                 <option value="" selected>Choose building</option>
                                                 <!-- Lặp qua danh sách Building từ servlet -->
-                                                <c:forEach var="building" items="${buildings}">
-                                                    <option value="${building.id}">${building.name}</option>
+                                                <c:forEach items="${listBuildings}" var="b">
+                                                    <option value="${b.buildingID}">${b.name}</option>
                                                 </c:forEach>
                                             </select>
                                             <small class="text-danger" id="buildingError"></small>
@@ -215,7 +215,8 @@
 
             function validateEmail() {
                 const email = document.getElementById("email").value;
-                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
+                // Updated email pattern to allow general emails (like gmail.com) and .edu.vn
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu)(\.vn)?$/;
                 const emailError = document.getElementById('emailError');
 
                 if (!emailPattern.test(email)) {
@@ -228,6 +229,7 @@
                     emailError.classList.add('text-success');
                 }
             }
+
 
             function validatePhone() {
                 const phone = document.getElementById("phoneNumber").value;
@@ -272,15 +274,17 @@
 
                 if (buildingId !== "") {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true); // Update the URL to match your servlet mapping
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
+                            // Replace apartment select box options with the response from the server
                             document.getElementById("apartment").innerHTML = xhr.responseText;
                         }
                     };
                     xhr.send();
                 }
             }
+
         </script>
 
 

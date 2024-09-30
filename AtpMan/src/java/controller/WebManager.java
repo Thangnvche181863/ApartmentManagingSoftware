@@ -7,6 +7,15 @@ package controller;
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
+import DAO.FinanceDAO;
+import DAO.FinanceTypeDAO;
+import DAO.InvoiceDAO;
+import DAO.InvoiceServiceDAO;
+import DAO.LivingDAO;
+import DAO.OwnershipDAO;
+import DAO.RequestComplaintDAO;
+import DAO.ServiceContractDAO;
+import DAO.ServiceDAO;
 import DAO.StaffDAO;
 
 
@@ -21,6 +30,16 @@ public class WebManager {
     public StaffDAO staffDAO;
     public ApartmentDAO apartmentDAO;
     public BuildingDAO buildingDAO;
+    public LivingDAO livingDAO;
+    public ServiceDAO serviceDAO;
+    public ServiceContractDAO serviceContractDAO;
+    public InvoiceDAO invoiceDAO;
+    public InvoiceServiceDAO invoiceServiceDAO;
+    public FinanceDAO financeDAO;
+    public FinanceTypeDAO financeTypeDAO;
+    public OwnershipDAO ownershipDAO;
+    public RequestComplaintDAO requestComplaintDAO;
+    
     private static WebManager instance;
      private WebManager() throws SQLException, ClassNotFoundException {
         
@@ -28,6 +47,15 @@ public class WebManager {
         staffDAO = new StaffDAO();
         apartmentDAO = new ApartmentDAO();
         buildingDAO = new BuildingDAO();
+        livingDAO = new LivingDAO();
+        serviceDAO = new ServiceDAO();
+        serviceContractDAO = new ServiceContractDAO();
+        invoiceDAO = new InvoiceDAO();
+        invoiceServiceDAO = new InvoiceServiceDAO();
+        financeDAO = new FinanceDAO();
+        financeTypeDAO = new FinanceTypeDAO();
+        ownershipDAO = new OwnershipDAO();
+        requestComplaintDAO = new RequestComplaintDAO();
     }
 
     public static WebManager getInstance() throws SQLException, ClassNotFoundException {

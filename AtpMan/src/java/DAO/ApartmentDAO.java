@@ -104,16 +104,21 @@ public class ApartmentDAO {
                         while (rs.next()) {
                             Apartment apartment = new Apartment();
                             apartment.setApartmentID(rs.getInt("apartmentID"));
+                            apartment.setBuildingID(rs.getInt("buildingID"));
+                            apartment.setDepartmentType(rs.getString("departmentType"));
+                            apartment.setPrice(rs.getDouble("price"));
+                            apartment.setFloor(rs.getInt("floor"));
+                            apartment.setArea(rs.getInt("area"));
                             apartments.add(apartment);
                         }
                     }
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            // Ghi log lỗi nếu có vấn đề xảy ra
+           
             LOGGER.log(Level.SEVERE, "Error retrieving apartments", ex);
         } finally {
-            // Đảm bảo đóng kết nối khi hoàn thành
+            
             if (conn != null) {
                 try {
                     conn.close();
@@ -122,26 +127,20 @@ public class ApartmentDAO {
                 }
             }
         }
-        // Trả về danh sách các Apartment
+        
         return apartments;
     }
-
+    
+    
     public static void main(String[] args) {
-        // Tạo instance của lớp ApartmentDAO
         ApartmentDAO apartmentDAO = new ApartmentDAO();
-
-        // Giả sử bạn có một buildingID hợp lệ, ví dụ là 1
-        int buildingId = 1; // Thay đổi giá trị này thành ID tòa nhà bạn muốn kiểm tra
-
-        // Gọi phương thức getApartmentsByBuilding() để lấy danh sách các căn hộ
+        int buildingId = 1;
         List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingId);
-
-        // Kiểm tra nếu danh sách không rỗng
         if (apartments != null && !apartments.isEmpty()) {
-            // In ra danh sách các căn hộ
+
             for (Apartment apartment : apartments) {
                 System.out.println("Apartment ID: " + apartment.getApartmentID());
-                // Bạn có thể in thêm các thông tin khác của apartment nếu có
+
             }
         } else {
             System.out.println("No apartments found for building ID: " + buildingId);

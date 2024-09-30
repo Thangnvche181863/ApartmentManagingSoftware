@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/DAO/CustomerDAO.java</file>
             <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/controller/CreateAccount.java</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/model/Building.java</file>
             <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/DAO/ApartmentDAO.java</file>
-            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/DAO/BuildingDAO.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/web/WEB-INF/web.xml</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/controller/UserLogin.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/web/createAccount.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone2/ATPMAN/ApartmentManagingSoftware/AtpMan/src/java/DAO/LivingDAO.java</file>
         </group>
     </open-files>
 </project-private>

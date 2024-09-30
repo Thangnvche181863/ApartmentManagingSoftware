@@ -49,14 +49,14 @@
                         </div>
                     </a>
                     <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                        <!-- Hiá»n thá» liÃªn káº¿t ÄÄng nháº­p náº¿u ngÆ°á»i dÃ¹ng chÆ°a ÄÄng nháº­p -->
+                        
                         <c:if test="${sessionScope.user == null}">
-                            <a href="login.jsp" class="btn btn-primary">
+                            <a href="userlogin" class="btn btn-primary">
                                 <i class="bi bi-box-arrow-in-right"></i>Login
                             </a>
                         </c:if>
 
-                        <!-- Hiá»n thá» tÃªn ngÆ°á»i dÃ¹ng náº¿u ÄÃ£ ÄÄng nháº­p -->
+                       
                         <c:if test="${sessionScope.user != null}">
                             <a class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
@@ -64,7 +64,7 @@
                         </c:if>
 
                         <c:if test="${sessionScope.user ==null}">
-                            <!-- LiÃªn káº¿t ÄÄng kÃ½ -->
+                         
                             <a href="register.jsp" class="btn btn-primary">
                                 <i class="fab fa-slack me-2"></i> Sign up
                             </a>
