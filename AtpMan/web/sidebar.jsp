@@ -110,7 +110,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="createAccount.jsp">
                         <i class="fas fa-fw fa-user-plus"></i>
-                        <span>Create new account</span></a>
+                        <span>Create new resident</span></a>
                 </li>
 
                 <!-- Nav Item - Tables -->

@@ -21,7 +21,7 @@ import model.*;
  * @author ADMIN
  */
 public class LivingDAO {
-    
+
     public List<Living> getAllResident() {
         Connection connection = null;
         List<Living> list = new ArrayList<>();
@@ -42,17 +42,17 @@ public class LivingDAO {
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            
+
         }
         return list;
     }
-    
+
     public int getAmountOfResident() {
         LivingDAO dao = new LivingDAO();
         List<Living> list = dao.getAllResident();
         return list.size();
     }
-    
+
     public List<String> getNameOfResident(int apartmentID) {
         List<String> list = new ArrayList<>();
         String sql = " SELECT c.name FROM Customer c\n"
@@ -66,7 +66,7 @@ public class LivingDAO {
             pre.setInt(1, apartmentID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                
+
                 list.add(rs.getString(1));
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -74,7 +74,7 @@ public class LivingDAO {
         }
         return list;
     }
-    
+
     public List<Integer> getAgeOfResident(int apartmentID) {
         List<Integer> list = new ArrayList<>();
         String sql = " SELECT c.age FROM Customer c\n"
@@ -88,7 +88,7 @@ public class LivingDAO {
             pre.setInt(1, apartmentID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                
+
                 list.add(rs.getInt(1));
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -96,7 +96,7 @@ public class LivingDAO {
         }
         return list;
     }
-    
+
     public List<Living> getAllResidentByApartmentID(int apartmentid) {
         List<Living> list = new ArrayList<>();
         Connection conn = null;
@@ -111,23 +111,45 @@ public class LivingDAO {
                 int customerID = rs.getInt(2);
                 int apartmentID = rs.getInt(3);
                 Date startDate = rs.getDate(4),
-                endDate = rs.getDate(5);
+                        endDate = rs.getDate(5);
                 Living living = new Living(livingID, customerID, apartmentID, startDate, endDate);
-                list.add(living);                
+                list.add(living);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        
+
         return list;
     }
-    
+
+    public List<Integer> getAmountOfResidentOfApartment(int buildingID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = " SELECT  A.apartmentID ,\n"
+                + "COUNT(L.livingID) AS numberOfPeople FROM  Apartment A LEFT JOIN   Living L ON A.apartmentID = L.apartmentID where buildingID = ?\n"
+                + "GROUP BY   A.apartmentID;";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, buildingID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getInt(2));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+
     public static void main(String[] args) {
         LivingDAO dao = new LivingDAO();
-        List<Living> list = dao.getAllResidentByApartmentID(1);
-        for (Living living : list) {
-            System.out.println("" + living.toString());
+        List<Integer> list = dao.getAmountOfResidentOfApartment(2);
+        for (Integer amount : list) {
+            System.out.println("" + amount.toString());
         }
-        
+
     }
 }

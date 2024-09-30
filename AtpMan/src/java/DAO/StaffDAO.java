@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Staff;
@@ -120,5 +123,77 @@ public class StaffDAO {
             DBContext.closeConnection(conn);
         }
         return null;
+    }
+
+    public List<Staff> getAllStaff() {
+        List<Staff> list = new ArrayList<>();
+        Connection conn = null;
+        String sql = "select * from Staff";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int staffID = rs.getInt(1);
+                int roleID = rs.getInt(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(6);
+                String phoneNumber = rs.getString(7);
+                String name = rs.getString(5);
+                Date hireDate = rs.getDate(8);
+                Staff staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate);
+                list.add(staff);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public List<String> getRoleNameByID() {
+
+        String sql = "Select R.role_name from Role R join Staff S on s.roleID = r.roleID ";
+        List<String> list = new ArrayList<>();
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getString(1));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public int dismissStaff(int staffID) {
+        int n = 0;
+        String sql = "DELETE FROM Staff\n"
+                + "WHERE staffID = ?";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, staffID);
+            
+            n = pre.executeUpdate();
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+
+    }
+
+    public static void main(String[] args) {
+
+        StaffDAO dao = new StaffDAO();
+        int n = dao.dismissStaff(4);
+        System.out.println("Húp" +n);
+
     }
 }

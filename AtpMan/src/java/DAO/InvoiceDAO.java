@@ -4,9 +4,11 @@
  */
 package DAO;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Invoice;
@@ -68,7 +70,7 @@ public class InvoiceDAO extends DBContext {
         }
     }
 
-    public void updateInvoice(int invoiceId,int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
+    public void updateInvoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
         try {
             String sql = "UPDATE [dbo].[Invoice]\n"
                     + "   SET [apartmentID] = ?\n"
@@ -78,7 +80,7 @@ public class InvoiceDAO extends DBContext {
                     + "      ,[status] = ?\n"
                     + "      ,[transactionDate] = ?\n"
                     + " WHERE invoiceId = ?";
-            
+
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, apartmentId);
             ps.setDouble(2, amount);
@@ -87,12 +89,34 @@ public class InvoiceDAO extends DBContext {
             ps.setInt(5, status);
             ps.setDate(6, transactionDate);
             ps.setInt(7, invoiceId);
-            
+
             ps.executeUpdate();
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public List<Integer> getNumOfUnpaidInvoice(int buildingID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = " SELECT a.apartmentID, COUNT(i.invoiceID) AS unpaid_invoice_count\n"
+                + "FROM Apartment a\n"
+                + "LEFT JOIN Invoice i ON a.apartmentID = i.apartmentID AND i.status = 0 where buildingID = ?\n"
+                + "GROUP BY a.apartmentID;";
+        Connection conn = null;
+        try {
+            conn = utils.DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, buildingID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getInt(2));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
     }
 
     public static void main(String[] args) {

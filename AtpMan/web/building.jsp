@@ -63,7 +63,7 @@
                                                     ${o.name}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">No. of floor: ${o.numFloor}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">No. of apartment: ${o.numApartment}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Available: ${countList.get(pageScope.count)}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-danger">Available: ${countList.get(pageScope.count)}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Address: ${o.address}</div>
 
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">

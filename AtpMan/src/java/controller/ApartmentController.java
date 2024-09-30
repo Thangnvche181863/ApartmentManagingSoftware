@@ -5,6 +5,8 @@
 package controller;
 
 import DAO.ApartmentDAO;
+import DAO.InvoiceDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Vector;
 import model.Apartment;
 
@@ -40,8 +43,16 @@ public class ApartmentController extends HttpServlet {
            ApartmentDAO dao = new ApartmentDAO();
            Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
            
+           //get list amount Of unpaid Invoice
+           InvoiceDAO invoicedao = new InvoiceDAO();
+           List<Integer> listInvoice = invoicedao.getNumOfUnpaidInvoice(buildingID);
+           
+           LivingDAO livingdao = new LivingDAO();
+           List<Integer> list = livingdao.getAmountOfResidentOfApartment(buildingID);
            
            
+           request.setAttribute("listInvoice", listInvoice);
+           request.setAttribute("list", list);
            request.setAttribute("listApartment", vector);
            request.getRequestDispatcher("apartment.jsp").forward(request, response);
         }

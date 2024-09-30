@@ -15,12 +15,24 @@ public class Staff {
     private int staffID;
     private int roleID;
     private String username;
+    private String password;
     private String email;
     private String phoneNumber;
     private String name;
     private Date hireDate;
 
     public Staff() {
+    }
+
+    public Staff(int staffID, int roleID, String username, String password, String email, String phoneNumber, String name, Date hireDate) {
+        this.staffID = staffID;
+        this.roleID = roleID;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+        this.hireDate = hireDate;
     }
 
     public Staff(int staffID, int roleID, String username, String email, String phoneNumber, String name, Date hireDate) {
@@ -59,6 +71,14 @@ public class Staff {
 
     public String getUsername() {
         return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setUsername(String username) {
