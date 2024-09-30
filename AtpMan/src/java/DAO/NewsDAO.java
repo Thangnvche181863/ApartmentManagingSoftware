@@ -68,16 +68,17 @@ public class NewsDAO extends DBContext {
         return list;
     }
 //news by page
+
     public List<News> getNewsByPage(int page, int recordsPerPage) {
         List<News> list = new ArrayList<>();
         String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-            + "FROM News n "
-            + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-            + "JOIN Staff s ON n.staffID = s.staffID "
-            + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "FROM News n "
+                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+                + "JOIN Staff s ON n.staffID = s.staffID "
+                + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {
-           
+
             DBContext.getConnection();
 
             if (DBContext.connection == null || DBContext.connection.isClosed()) {
@@ -107,7 +108,6 @@ public class NewsDAO extends DBContext {
                 list.add(news);
             }
 
-           
             rs.close();
             pre.close();
 
@@ -121,64 +121,62 @@ public class NewsDAO extends DBContext {
     }
 
     //get news for banner
-   public List<News> getNewsForBanner() {
-    List<News> list = new ArrayList<>();
-    String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-               + "FROM News n "
-               + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-               + "JOIN Staff s ON n.staffID = s.staffID "
-               + "ORDER BY n.postDate DESC "
-               + "OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
+    public List<News> getNewsForBanner() {
+        List<News> list = new ArrayList<>();
+        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
+                + "FROM News n "
+                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+                + "JOIN Staff s ON n.staffID = s.staffID "
+                + "ORDER BY n.postDate DESC "
+                + "OFFSET 0 ROWS FETCH NEXT 3 ROWS ONLY";
 
-    try {
-       
-        DBContext.getConnection();
+        try {
 
-        if (DBContext.connection == null || DBContext.connection.isClosed()) {
-            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-            return list;
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return list;
+            }
+
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int newsID = rs.getInt("newsID");
+                int staffID = rs.getInt("staffID");
+                int taskID = rs.getInt("taskID");
+                int newsCategoryID = rs.getInt("newsCategoryID");
+                String newsTitle = rs.getString("newsTitle");
+                String newsContent = rs.getString("newsContent");
+                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+                Date postDate = new Date(sqlPostDate.getTime());
+                String newsImg = rs.getString("newsImg");
+                String newsCategoryName = rs.getString("newsCategoryName");
+                String staffName = rs.getString("staffName");
+
+                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+                list.add(news);
+            }
+
+            rs.close();
+            pre.close();
+
+            LOGGER.log(Level.INFO, "Successfully retrieved {0} news records for the banner.", list.size());
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error fetching news for the banner.", e);
         }
 
-        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-        ResultSet rs = pre.executeQuery();
-
-        while (rs.next()) {
-            int newsID = rs.getInt("newsID");
-            int staffID = rs.getInt("staffID");
-            int taskID = rs.getInt("taskID");
-            int newsCategoryID = rs.getInt("newsCategoryID");
-            String newsTitle = rs.getString("newsTitle");
-            String newsContent = rs.getString("newsContent");
-            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
-            Date postDate = new Date(sqlPostDate.getTime());
-            String newsImg = rs.getString("newsImg");
-            String newsCategoryName = rs.getString("newsCategoryName");
-            String staffName = rs.getString("staffName");
-
-            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
-            list.add(news);
-        }
-
-      
-        rs.close();
-        pre.close();
-
-        LOGGER.log(Level.INFO, "Successfully retrieved {0} news records for the banner.", list.size());
-
-    } catch (SQLException | ClassNotFoundException e) {
-        LOGGER.log(Level.SEVERE, "Error fetching news for the banner.", e);
+        return list;
     }
 
-    return list;
-}
-   
-   
     public int getNumberOfRows() {
         String sql = "SELECT COUNT(*) FROM News";
         int count = 0;
 
         try {
-            
+
             DBContext.getConnection();
 
             if (DBContext.connection == null || DBContext.connection.isClosed()) {
@@ -209,10 +207,10 @@ public class NewsDAO extends DBContext {
     public News getNewsById(int newsID) {
         News news = null;
         String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-            + "FROM News n "
-            + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-            + "JOIN Staff s ON n.staffID = s.staffID "
-            + "WHERE n.newsID = ?";
+                + "FROM News n "
+                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+                + "JOIN Staff s ON n.staffID = s.staffID "
+                + "WHERE n.newsID = ?";
 
         try {
             // Initialize the connection
@@ -252,60 +250,98 @@ public class NewsDAO extends DBContext {
 
         return news;
     }
-    
+
     public boolean addNews(News news) {
-    String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    boolean isAdded = false;
+        String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        boolean isAdded = false;
 
-    try {
-        // Initialize the connection
-        DBContext.getConnection();
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
 
-        if (DBContext.connection == null || DBContext.connection.isClosed()) {
-            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-            return isAdded;
-        }
-
-        // Prepare the SQL statement with generated keys
-        PreparedStatement pre = DBContext.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-        pre.setInt(1, news.getStaffID());
-        pre.setInt(2, news.getTaskID());
-        pre.setInt(3, news.getNewsCategoryID());
-        pre.setString(4, news.getNewsTitle());
-        
-        //formatting newsContent, replace new line -> <br> #2
-        String updatedNewsContent = news.getNewsContent().replace("\n", "<br>");
-        pre.setString(5, updatedNewsContent);
-        
-        pre.setDate(6, new java.sql.Date(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
-        pre.setString(7, news.getNewsImg());
-
-        // Execute the update
-        int rowsAffected = pre.executeUpdate();
-
-        if (rowsAffected > 0) {
-            try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    news.setNewsID(generatedKeys.getInt(1)); // Set the auto-generated News ID
-                    LOGGER.log(Level.INFO, "Added News with ID: {0}", news.getNewsID());
-                    isAdded = true;
-                } else {
-                    throw new SQLException("Adding news failed, no ID obtained.");
-                }
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return isAdded;
             }
-        } else {
-            LOGGER.log(Level.WARNING, "No news was added.");
+
+            // Prepare the SQL statement with generated keys
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            pre.setInt(1, news.getStaffID());
+            pre.setInt(2, news.getTaskID());
+            pre.setInt(3, news.getNewsCategoryID());
+            pre.setString(4, news.getNewsTitle());
+
+            //formatting newsContent, replace new line -> <br> #2
+            String updatedNewsContent = news.getNewsContent().replace("\n", "<br>");
+            pre.setString(5, updatedNewsContent);
+
+            pre.setDate(6, new java.sql.Date(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
+            pre.setString(7, news.getNewsImg());
+
+            // Execute the update
+            int rowsAffected = pre.executeUpdate();
+
+            if (rowsAffected > 0) {
+                try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        news.setNewsID(generatedKeys.getInt(1)); // Set the auto-generated News ID
+                        LOGGER.log(Level.INFO, "Added News with ID: {0}", news.getNewsID());
+                        isAdded = true;
+                    } else {
+                        throw new SQLException("Adding news failed, no ID obtained.");
+                    }
+                }
+            } else {
+                LOGGER.log(Level.WARNING, "No news was added.");
+            }
+
+            // Close resources
+            pre.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error adding news.", e);
         }
 
-        // Close resources
-        pre.close();
-
-    } catch (SQLException | ClassNotFoundException e) {
-        LOGGER.log(Level.SEVERE, "Error adding news.", e);
+        return isAdded;
     }
 
-    return isAdded;
-}
+    public boolean deleteByNewsID(int newsID) {
+        String sql = "DELETE FROM News WHERE newsID = ?";
+        boolean isDeleted = false;
+
+        try {
+            // Get a connection from DBContext
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return isDeleted;
+            }
+
+            // Create a prepared statement
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            pre.setInt(1, newsID);
+
+            // Execute the deletion
+            int rowsAffected = pre.executeUpdate();
+
+            if (rowsAffected > 0) {
+                isDeleted = true;
+                LOGGER.log(Level.INFO, "Successfully deleted News with ID: {0}", newsID);
+            } else {
+                LOGGER.log(Level.WARNING, "No News found with ID: {0}", newsID);
+            }
+
+            // Close the prepared statement
+            pre.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting News with ID: {0}", newsID);
+            e.printStackTrace();
+        }
+
+        return isDeleted;
+    }
 
     public static void main(String[] args) {
         NewsDAO dao = new NewsDAO();
@@ -325,7 +361,7 @@ public class NewsDAO extends DBContext {
 //        System.out.println("Failed to add News.");
 //    }
         //test get all
-        List<News> newsList = dao.getAll();
+//        List<News> newsList = dao.getAll();
 //        if (!newsList.isEmpty()) {
 //            for (News news : newsList) {
 //                System.out.println("ID: " + news.getNewsID()
@@ -339,29 +375,41 @@ public class NewsDAO extends DBContext {
 //        }
 
         // Test getNumberOfRows
-        int totalRows = dao.getNumberOfRows();
-        System.out.println("Total number of news records: " + totalRows);
+//        int totalRows = dao.getNumberOfRows();
+//        System.out.println("Total number of news records: " + totalRows);
+//
+//        // Determine number of pages
+//        int recordsPerPage = 5;
+//        int totalPages = (int) Math.ceil((double) totalRows / recordsPerPage);
+//        System.out.println("Total number of pages: " + totalPages);
+//
+//        // Test getNewsByPage for page 1
+//        int pageToTest = 1; // You can change this to test different pages
+//        System.out.println("Fetching news for page " + pageToTest);
+//        List<News> paginatedNews = dao.getNewsByPage(pageToTest, recordsPerPage);
+//
+//        if (!paginatedNews.isEmpty()) {
+//            for (News news : paginatedNews) {
+//                System.out.println("ID: " + news.getNewsID()
+//                        + ", Title: " + news.getNewsTitle()
+//                        + ", Content: " + news.getNewsContent()
+//                        + ", Post Date: " + news.getPostDate()
+//                        + ", Image URL: " + news.getNewsImg());
+//            }
+//        } else {
+//            System.out.println("No news records found for page " + pageToTest);
+//        }
 
-        // Determine number of pages
-        int recordsPerPage = 5;
-        int totalPages = (int) Math.ceil((double) totalRows / recordsPerPage);
-        System.out.println("Total number of pages: " + totalPages);
+        //test delete
+//        int testNewsID = 31;  // Replace with a valid newsID that exists in your database for testing
+//
+//        boolean isDeleted = dao.deleteByNewsID(testNewsID);
+//
+//        if (isDeleted) {
+//            System.out.println("Test passed! News with ID " + testNewsID + " was deleted successfully.");
+//        } else {
+//            System.out.println("Test failed! News with ID " + testNewsID + " was not found or couldn't be deleted.");
+//        }
 
-        // Test getNewsByPage for page 1
-        int pageToTest = 1; // You can change this to test different pages
-        System.out.println("Fetching news for page " + pageToTest);
-        List<News> paginatedNews = dao.getNewsByPage(pageToTest, recordsPerPage);
-
-        if (!paginatedNews.isEmpty()) {
-            for (News news : paginatedNews) {
-                System.out.println("ID: " + news.getNewsID()
-                        + ", Title: " + news.getNewsTitle()
-                        + ", Content: " + news.getNewsContent()
-                        + ", Post Date: " + news.getPostDate()
-                        + ", Image URL: " + news.getNewsImg());
-            }
-        } else {
-            System.out.println("No news records found for page " + pageToTest);
-        }
     }
-}
+}   

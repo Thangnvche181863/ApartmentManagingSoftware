@@ -56,6 +56,14 @@
         <servlet-name>AddNewsServlet</servlet-name>
         <servlet-class>controller.AddNews</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewsManager</servlet-name>
+        <servlet-class>controller.NewsManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsDelete</servlet-name>
+        <servlet-class>controller.NewsDelete</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
         <url-pattern>/NewServlet</url-pattern>
@@ -111,6 +119,14 @@
     <servlet-mapping>
         <servlet-name>AddNewsServlet</servlet-name>
         <url-pattern>/AddNews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsManager</servlet-name>
+        <url-pattern>/newsmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsDelete</servlet-name>
+        <url-pattern>/newsdelete</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
