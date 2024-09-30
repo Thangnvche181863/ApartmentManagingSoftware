@@ -9,8 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Apartment;
+import model.Building;
 import utils.DBContext;
 
 /**
@@ -73,11 +78,73 @@ public class ApartmentDAO {
         return vector.size();
     }
 
-    public static void main(String[] args) {
-        Apartment a = new Apartment();
-        ApartmentDAO dao = new ApartmentDAO();
-        Vector<Apartment> vector = dao.getAllApartmentByID(1);
-        System.out.println(vector.size());
+//    public static void main(String[] args) {
+//        Apartment a = new Apartment();
+//        ApartmentDAO dao = new ApartmentDAO();
+//        Vector<Apartment> vector = dao.getAllApartmentByID(1);
+//        System.out.println(vector.size());
+//
+//    }
+    ////////////////////////////////QUAN///////////////////////////////////////
+    private static final Logger LOGGER = Logger.getLogger(ApartmentDAO.class.getName());
 
+    public List<Apartment> getApartmentsByBuilding(int buildingId) {
+        Connection conn = null;
+        List<Apartment> apartments = new ArrayList<>();
+        try {
+
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Apartment WHERE buildingID = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, buildingId);
+                    try (ResultSet rs = ps.executeQuery()) {
+
+                        while (rs.next()) {
+                            Apartment apartment = new Apartment();
+                            apartment.setApartmentID(rs.getInt("apartmentID"));
+                            apartment.setBuildingID(rs.getInt("buildingID"));
+                            apartment.setDepartmentType(rs.getString("departmentType"));
+                            apartment.setPrice(rs.getDouble("price"));
+                            apartment.setFloor(rs.getInt("floor"));
+                            apartment.setArea(rs.getInt("area"));
+                            apartments.add(apartment);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+           
+            LOGGER.log(Level.SEVERE, "Error retrieving apartments", ex);
+        } finally {
+            
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error closing connection", ex);
+                }
+            }
+        }
+        
+        return apartments;
     }
+    
+    
+    public static void main(String[] args) {
+        ApartmentDAO apartmentDAO = new ApartmentDAO();
+        int buildingId = 1;
+        List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingId);
+        if (apartments != null && !apartments.isEmpty()) {
+
+            for (Apartment apartment : apartments) {
+                System.out.println("Apartment ID: " + apartment.getApartmentID());
+
+            }
+        } else {
+            System.out.println("No apartments found for building ID: " + buildingId);
+        }
+    }
+
 }

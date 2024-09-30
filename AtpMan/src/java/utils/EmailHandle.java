@@ -22,8 +22,8 @@ public class EmailHandle {
 
     public static void sendEmail(String toEmail, String subject, String body) {
         // Sender's email and password
-        String fromEmail = "";//replace mail
-        String password = "";//replace password
+        String fromEmail = "managingsystemapartment@gmail.com";//replace mail
+        String password = "fxco mubm qupg foed";//replace password
 
         // SMTP server properties
         Properties properties = new Properties();
@@ -65,11 +65,11 @@ public class EmailHandle {
             e.printStackTrace();
         }
     }
-    //    public static void main(String[] args) {
+//        public static void main(String[] args) {
 //        // Sample usage
-//        String toEmail = "anhquan27900@gmail.com";
+//        String toEmail = "Mebongda22@gmail.com";
 //        String subject = "Test Email";
-//        String body = "This is a test email sent using Jakarta Mail.";
+//        String body = "fk u Nghia.";
 //        sendEmail(toEmail, subject, body);
 //    }
 

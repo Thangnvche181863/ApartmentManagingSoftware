@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Vector;
 import model.Building;
 
@@ -59,7 +60,13 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        BuildingDAO buildingDAO = new BuildingDAO();
+        List<Building> listBuilding = buildingDAO.getAllBuildings();
+
+        System.out.println(listBuilding);  // Kiểm tra danh sách Building có lấy được không
+
+        request.setAttribute("listBuildings", listBuilding);
+        request.getRequestDispatcher("createAccount.jsp").forward(request, response);
     }
 
     /**
