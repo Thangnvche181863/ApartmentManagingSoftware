@@ -120,6 +120,61 @@ public class NewsDAO extends DBContext {
         return list;
     }
 
+    //get by title with pagination
+    public List<News> getNewsByPageAndTitle(String search, int page, int recordsPerPage) {
+        List<News> list = new ArrayList<>();
+        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
+                + "FROM News n "
+                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+                + "JOIN Staff s ON n.staffID = s.staffID "
+                + "WHERE n.newsTitle LIKE ? "
+                + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try {
+
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return list;
+            }
+
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            String searchTitle = "%" + search + "%";
+            pre.setString(1, searchTitle);
+            pre.setInt(2, (page - 1) * recordsPerPage); // Calculate offset
+            pre.setInt(3, recordsPerPage);              // Set the limit
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int newsID = rs.getInt("newsID");
+                int staffID = rs.getInt("staffID");
+                int taskID = rs.getInt("taskID");
+                int newsCategoryID = rs.getInt("newsCategoryID");
+                String newsTitle = rs.getString("newsTitle");
+                String newsContent = rs.getString("newsContent");
+                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+                Date postDate = new Date(sqlPostDate.getTime());
+                String newsImg = rs.getString("newsImg");
+                String newsCategoryName = rs.getString("newsCategoryName");
+                String staffName = rs.getString("staffName");
+
+                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+                list.add(news);
+            }
+
+            rs.close();
+            pre.close();
+
+            LOGGER.log(Level.INFO, "Successfully retrieved {0} news records for page {1}.", new Object[]{list.size(), page});
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error fetching paginated news records.", e);
+        }
+
+        return list;
+    }
+
     //get news for banner
     public List<News> getNewsForBanner() {
         List<News> list = new ArrayList<>();
@@ -199,6 +254,44 @@ public class NewsDAO extends DBContext {
 
         } catch (SQLException | ClassNotFoundException e) {
             LOGGER.log(Level.SEVERE, "Error getting the number of news records.", e);
+        }
+
+        return count;
+    }
+
+    public int getNumberOfRowsByTitle(String title) {
+        String sql = "SELECT COUNT(*) FROM News WHERE newsTitle LIKE ?";
+        int count = 0;
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return count;
+            }
+
+            // Prepare the SQL statement
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            pre.setString(1, "%" + title + "%"); // Use wildcard search for the title
+
+            // Execute the query
+            ResultSet rs = pre.executeQuery();
+
+            // Get the count of matching rows
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+            // Close resources
+            rs.close();
+            pre.close();
+
+            LOGGER.log(Level.INFO, "Total number of news records matching title '{0}': {1}", new Object[]{title, count});
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting the number of news records by title.", e);
         }
 
         return count;
@@ -346,6 +439,24 @@ public class NewsDAO extends DBContext {
     public static void main(String[] args) {
         NewsDAO dao = new NewsDAO();
         News newNews = new News();
+        
+        //test search by title
+        String searchTerm = "maintenance"; 
+        int page = 1; 
+        int recordsPerPage = 5; 
+        List<News> newsList = dao.getNewsByPageAndTitle(searchTerm, page, recordsPerPage);
+
+        if (newsList.isEmpty()) {
+            System.out.println("No news records found for the search term: " + searchTerm);
+        } else {
+            System.out.println("Retrieved news records for page " + page + " with search term '" + searchTerm + "':");
+            for (News news : newsList) {
+                System.out.println("News ID: " + news.getNewsID()
+                        + ", Title: " + news.getNewsTitle()
+                        + ", Posted Date: " + news.getPostDate());
+            }
+        }
+
 //        newNews.setStaffID(1); // Assuming staffID 1 exists
 //        newNews.setTaskID(1); // Assuming taskID 1 exists
 //        newNews.setNewsCategoryID(1); // Assuming newsCategoryID 1 exists
@@ -373,7 +484,6 @@ public class NewsDAO extends DBContext {
 //        } else {
 //            System.out.println("No news records found.");
 //        }
-
         // Test getNumberOfRows
 //        int totalRows = dao.getNumberOfRows();
 //        System.out.println("Total number of news records: " + totalRows);
@@ -399,7 +509,6 @@ public class NewsDAO extends DBContext {
 //        } else {
 //            System.out.println("No news records found for page " + pageToTest);
 //        }
-
         //test delete
 //        int testNewsID = 31;  // Replace with a valid newsID that exists in your database for testing
 //
@@ -410,6 +519,5 @@ public class NewsDAO extends DBContext {
 //        } else {
 //            System.out.println("Test failed! News with ID " + testNewsID + " was not found or couldn't be deleted.");
 //        }
-
     }
-}   
+}

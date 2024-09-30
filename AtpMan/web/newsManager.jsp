@@ -179,13 +179,13 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form
-                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" 
+                              action="newsmanage" method="get"> <!-- Specify the action and method -->
                             <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <input type="text" name="search" class="form-control bg-light border-0 small" 
+                                       placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">
+                                    <button class="btn btn-primary" type="submit"> <!-- Change to submit -->
                                         <i class="fas fa-search fa-sm"></i>
                                     </button>
                                 </div>
@@ -439,32 +439,7 @@
                                 </div>
                             </c:forEach>
 
-                            <!-- Pagination -->
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination justify-content-start">
-                                            <c:if test="${currentPage > 1}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="newsmanage?page=${currentPage - 1}">Previous</a>
-                                                </li>
-                                            </c:if>
 
-                                            <c:forEach var="i" begin="1" end="${totalPages}">
-                                                <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                    <a class="page-link" href="newsmanage?page=${i}">${i}</a>
-                                                </li>
-                                            </c:forEach>
-
-                                            <c:if test="${currentPage < totalPages}">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="newsmanage?page=${currentPage + 1}">Next</a>
-                                                </li>
-                                            </c:if>
-                                        </ul>
-                                    </nav>
-                                </div><!-- end col -->
-                            </div><!-- end row/pagination -->
 
 
 
@@ -473,6 +448,32 @@
 
 
                         </div>
+                        <!-- Pagination -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                        <c:if test="${currentPage > 1}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="newsmanage?page=${currentPage - 1}&search=${param.search}">Previous</a>
+                                            </li>
+                                        </c:if>
+
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                <a class="page-link" href="newsmanage?page=${i}&search=${param.search}">${i}</a>
+                                            </li>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages}">
+                                            <li class="page-item">
+                                                <a class="page-link" href="newsmanage?page=${currentPage + 1}&search=${param.search}">Next</a>
+                                            </li>
+                                        </c:if>
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row/pagination -->
 
                     </div>
                     <!-- /.container-fluid -->
@@ -531,9 +532,9 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script>
-            function confirmDelete() {
-                return confirm("Do you want to delete this news?");
-            }
+                                                        function confirmDelete() {
+                                                            return confirm("Do you want to delete this news?");
+                                                        }
         </script>
     </body>
 
