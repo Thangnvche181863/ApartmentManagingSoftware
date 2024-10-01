@@ -60,13 +60,7 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BuildingDAO buildingDAO = new BuildingDAO();
-        List<Building> listBuilding = buildingDAO.getAllBuildings();
-
-        System.out.println(listBuilding);  // Kiểm tra danh sách Building có lấy được không
-
-        request.setAttribute("listBuildings", listBuilding);
-        request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+        
     }
 
     /**

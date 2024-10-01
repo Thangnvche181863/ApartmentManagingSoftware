@@ -49,22 +49,22 @@
                         </div>
                     </a>
                     <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                        
+
                         <c:if test="${sessionScope.user == null}">
                             <a href="userlogin" class="btn btn-primary">
                                 <i class="bi bi-box-arrow-in-right"></i>Login
                             </a>
                         </c:if>
 
-                       
+
                         <c:if test="${sessionScope.user != null}">
                             <a class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
-                            </a>
+                            </a>    
                         </c:if>
 
                         <c:if test="${sessionScope.user ==null}">
-                         
+
                             <a href="register.jsp" class="btn btn-primary">
                                 <i class="fab fa-slack me-2"></i> Sign up
                             </a>

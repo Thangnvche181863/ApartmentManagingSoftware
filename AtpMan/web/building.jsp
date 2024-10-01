@@ -264,7 +264,7 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">No. of apartment: ${o.numApartment}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Available : </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Address: ${o.address}</div>
-                                                
+
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
                                                     <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >View all apartment</a></div>
                                             </div>

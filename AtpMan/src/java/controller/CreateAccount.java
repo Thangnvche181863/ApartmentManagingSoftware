@@ -89,7 +89,7 @@ public class CreateAccount extends HttpServlet {
                         .append("</option>");
             }
 
-            // Send the HTML back to the AJAX response
+            
             response.setContentType("text/html");
             response.getWriter().write(apartmentOptions.toString());
         } else {
@@ -133,7 +133,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             return;
         }
         String password = GeneratePassword.generatePass();
-        customerDAO.createNewCustomer(username,password, name, email, phoneNumber, isOwner);         
+        customerDAO.createNewCustomer(username, password, name, email, phoneNumber, isOwner);         
         int customerID = customerDAO.getCustomerIDByUsername(username);
         
         System.out.println("Customer ID: " + customerID);

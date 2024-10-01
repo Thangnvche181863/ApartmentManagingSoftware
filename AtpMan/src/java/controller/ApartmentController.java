@@ -61,12 +61,7 @@ public class ApartmentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            ApartmentDAO apartmentDAO = new ApartmentDAO();
-            int buildingID = Integer.parseInt(request.getParameter("buildingID"));
-            List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingID);
-            
-            request.setAttribute("listApartments", apartments);
-            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+           
     }
 
     /**

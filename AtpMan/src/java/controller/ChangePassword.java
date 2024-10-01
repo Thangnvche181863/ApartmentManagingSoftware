@@ -94,7 +94,7 @@ public class ChangePassword extends HttpServlet {
                 return;
 
             }
-            boolean passwordChange = customerDAO.updatePassword(customerID, newPassword, cfPassword);
+            boolean passwordChange = customerDAO.updatePassword(customerID, newPassword);
             if (passwordChange) {
                 request.setAttribute("changepwdsuccess", "Doi mat khau thanh cong.");
                 request.getRequestDispatcher("changepass.jsp").forward(request, response);
