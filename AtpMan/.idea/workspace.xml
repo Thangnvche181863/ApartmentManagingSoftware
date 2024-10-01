@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30780cf5-fa27-4560-be8e-997e8b958ca4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AtpMan.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AtpMan.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/img/testimonial-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/web/img/testimonial-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/service.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/service.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/serviceuser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/serviceuser.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,13 +43,18 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;TomEE Server.AtpMan.executor&quot;: &quot;Run&quot;,
     &quot;Tomcat Server.Tomcat 10.1.25.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;thang&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;khangpm&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29195088&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -139,8 +143,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
       </set>
     </attachedChunks>
   </component>
@@ -155,6 +159,19 @@
       <workItem from="1726201017792" duration="5000" />
       <workItem from="1727184776116" duration="1283000" />
       <workItem from="1727186083995" duration="730000" />
+      <workItem from="1727770736187" duration="177000" />
+      <workItem from="1727770932370" duration="28000" />
+      <workItem from="1727770966659" duration="303000" />
+      <workItem from="1727772035525" duration="3000" />
+      <workItem from="1727772130841" duration="9000" />
+      <workItem from="1727779673125" duration="79000" />
+      <workItem from="1727779772124" duration="66000" />
+      <workItem from="1727779846079" duration="207000" />
+      <workItem from="1727780073163" duration="267000" />
+      <workItem from="1727780350595" duration="14000" />
+      <workItem from="1727780372427" duration="453000" />
+      <workItem from="1727780867010" duration="6000" />
+      <workItem from="1727783047930" duration="669000" />
     </task>
     <servers />
   </component>

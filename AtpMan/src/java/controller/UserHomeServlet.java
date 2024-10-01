@@ -28,6 +28,8 @@ import java.util.LinkedHashSet;
  */
 public class UserHomeServlet extends HttpServlet {
 
+    private static final int RECORDS_PER_PAGE = 5;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -69,7 +71,7 @@ public class UserHomeServlet extends HttpServlet {
 //        processRequest(request, response);
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
-
+        
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
@@ -110,7 +112,24 @@ public class UserHomeServlet extends HttpServlet {
         double paid = paidAmount(iList, year);
         double unpaid = unPaidAmount(iList, year);
 
-        // parameter for chart
+        NewsDAO newsDAO = new NewsDAO();
+
+        //get current page from the request
+        String pageParam = request.getParameter("page");
+        int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+
+        int totalRows = newsDAO.getNumberOfRows();
+        //calculate totalPages
+        int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
+
+        List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
+        List<News> bannerList = newsDAO.getNewsForBanner();
+
+        request.setAttribute("newsBanner", bannerList);
+        request.setAttribute("news", newsList);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+        
         // area chart
         List<Double> amoutMonth = listAmountByMonth(iList, year);
         request.setAttribute("amoutMonth", amoutMonth);

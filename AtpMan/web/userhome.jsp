@@ -725,6 +725,130 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h3 mb-0 text-gray-800 text-primary">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
                         </div>
+                        <!-- Modal Search Start -->
+                        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-fullscreen">
+                                <div class="modal-content rounded-0">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body d-flex align-items-center bg-primary">
+                                        <div class="input-group w-75 mx-auto d-flex">
+                                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                            <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- News Carousel -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-10">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <c:forEach var="news" items="${newsList}" varStatus="status">
+                                            <li data-target="#carouselExampleIndicators" data-slide-to="${status.index}" class="${status.first ? 'active' : ''}"></li>
+                                            </c:forEach>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <c:forEach var="banner" items="${newsBanner}" varStatus="status">
+                                            <div class="carousel-item ${status.first ? 'active' : ''}">
+                                                <a href="<c:out value='NewsDetail?id=${banner.newsID}'/>">   
+                                                    <img class="d-block w-100" src="<c:out value='${banner.newsImg}'/>" alt="Slide ${status.index + 1}">
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h5 style="color:#FFFF00;"><c:out value='${banner.newsTitle}'/></h5>
+                                                        <p style="color:#FFFF00;"><c:out value='${banner.newsContent}'/></p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </c:forEach>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- News Carousel End -->
+
+
+                        <!-- Recent News Section Start -->
+                        <section    class="section bg-light py-5">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="page-wrapper">
+                                            <div class="blog-top clearfix">
+                                                <h4 class="pull-left">Recent News <a href="#"><i class="fa fa-rss"></i></a></h4>
+                                            </div><!-- end blog-top -->
+
+                                            <div class="blog-list clearfix">
+                                                <!-- Loop through the news list -->
+                                                <c:forEach  items="${news}" var="newsItem">
+                                                    <div class="blog-box row">
+                                                        <div class="col-md-4">
+                                                            <div class="post-media">
+                                                                <a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                                    <img src="${newsItem.newsImg}" alt="" class="img-fluid">
+                                                                    <div class="hovereffect"></div>
+                                                                </a>
+                                                            </div><!-- end media -->
+                                                        </div><!-- end col -->
+
+                                                        <div class="blog-meta big-meta col-md-8">
+                                                            <h4><a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                                    ${newsItem.newsTitle}
+                                                                </a></h4>
+                                                            <p>${newsItem.newsContent}</p>
+                                                            <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
+                                                            <small>
+                                                                <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />
+                                                            </small>
+                                                            <small>  by ${newsItem.staffName}</small>
+                                                        </div><!-- end meta -->
+                                                    </div><!-- end blog-box -->
+
+                                                    <hr class="invis">
+                                                </c:forEach>
+                                            </div><!-- end blog-list -->
+                                        </div><!-- end page-wrapper -->
+                                        <!-- Pagination -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <nav aria-label="Page navigation">
+                                                    <ul class="pagination justify-content-start">
+                                                        <c:if test="${currentPage > 1}">
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage - 1}">Previous</a>
+                                                            </li>
+                                                        </c:if>
+
+                                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${i}">${i}</a>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                        <c:if test="${currentPage < totalPages}">
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage + 1}">Next</a>
+                                                            </li>
+                                                        </c:if>
+                                                    </ul>
+                                                </nav>
+                                            </div><!-- end col -->
+                                        </div><!-- end row -->
+                                    </div><!-- end col -->
+                                </div><!-- end row -->
+                            </div><!-- end container -->
+                        </section>
                     </div>
                 </div>
             </div>
