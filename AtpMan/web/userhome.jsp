@@ -722,6 +722,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800 text-primary">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
+                        </div>
                     </div>
                 </div>
             </div>

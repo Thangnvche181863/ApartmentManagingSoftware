@@ -73,7 +73,7 @@ public class UserHomeServlet extends HttpServlet {
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
-        
+
         // get current date for user first access
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
@@ -93,9 +93,8 @@ public class UserHomeServlet extends HttpServlet {
 
         InvoiceDAO invoiceDAO = new InvoiceDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
-        
+
 //        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
-        
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
         List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(1);
         LinkedHashSet<Integer> listOfYear = listOfYear(dList);
@@ -130,14 +129,13 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("serviceList", serviceList);
 
 //        request.setAttribute("apartment", apartment);
-        
         request.getRequestDispatcher("userhome.jsp").forward(request, response);
     }
-    
-    protected int numInvoiceInYear(List<Invoice> list, int year){
+
+    protected int numInvoiceInYear(List<Invoice> list, int year) {
         int count = 0;
         for (Invoice invoice : list) {
-            if(invoice.getIssueDate().toLocalDate().getYear() == year){
+            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
                 count += 1;
             }
         }
@@ -204,47 +202,7 @@ public class UserHomeServlet extends HttpServlet {
         for (Invoice invoice : list) {
             if (invoice.getIssueDate().toLocalDate().getYear() == year) {
                 int month = invoice.getIssueDate().toLocalDate().getMonthValue();
-                switch (month - 1) {
-                    case 0:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 1:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 2:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 3:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 4:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 5:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 6:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 7:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 8:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 9:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 10:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-                    case 11:
-                        amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-                        break;
-
-                    default:
-                        throw new AssertionError();
-                }
+                amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
             }
         }
         return amountList;
