@@ -77,7 +77,6 @@ public class CreateAccount extends HttpServlet {
             ApartmentDAO apartmentDAO = new ApartmentDAO();
             List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingID);
 
-            // Return apartment options as HTML to be inserted into the select box
             StringBuilder apartmentOptions = new StringBuilder();
             for (Apartment apartment : apartments) {
                 apartmentOptions.append("<option value='")
@@ -88,8 +87,6 @@ public class CreateAccount extends HttpServlet {
                         .append(apartment.getFloor())
                         .append("</option>");
             }
-
-            
             response.setContentType("text/html");
             response.getWriter().write(apartmentOptions.toString());
         } else {
