@@ -69,7 +69,7 @@ public class EmailHandle {
 //        // Sample usage
 //        String toEmail = "Mebongda22@gmail.com";
 //        String subject = "Test Email";
-//        String body = "fk u Nghia.";
+//        String body = "123.";
 //        sendEmail(toEmail, subject, body);
 //    }
 
