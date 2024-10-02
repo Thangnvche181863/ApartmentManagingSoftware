@@ -114,7 +114,7 @@ public class ServiceAddServlet extends HttpServlet {
 
         String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
         ServiceDAO sdao = new ServiceDAO();
-        sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
+        sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replace("\n", "<br>"), fileURL, icon);
         request.setAttribute("listservice", sdao.getAll());
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
 

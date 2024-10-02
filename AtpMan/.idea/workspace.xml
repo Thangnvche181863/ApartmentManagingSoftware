@@ -6,10 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="30780cf5-fa27-4560-be8e-997e8b958ca4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/AtpMan.war" beforeDir="false" afterPath="$PROJECT_DIR$/dist/AtpMan.war" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/img/testimonial-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/web/img/testimonial-2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ServiceAddServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ServiceAddServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/header.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/service.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/service.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/serviceuser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/serviceuser.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/sidebar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/sidebar.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/userhome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/userhome.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +39,9 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -39,22 +51,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;TomEE Server.AtpMan.executor&quot;: &quot;Run&quot;,
-    &quot;Tomcat Server.Tomcat 10.1.25.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;thang&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "TomEE Server.AtpMan.executor": "Run",
+    "Tomcat Server.Tomcat 10.1.25.executor": "Run",
+    "git-widget-placeholder": "thang",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/thang/OneDrive/Máy tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="AtpMan" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 10.1.25" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -155,6 +168,10 @@
       <workItem from="1726201017792" duration="5000" />
       <workItem from="1727184776116" duration="1283000" />
       <workItem from="1727186083995" duration="730000" />
+      <workItem from="1727709196197" duration="5246000" />
+      <workItem from="1727748181341" duration="6000" />
+      <workItem from="1727753389390" duration="129000" />
+      <workItem from="1727753719192" duration="2230000" />
     </task>
     <servers />
   </component>

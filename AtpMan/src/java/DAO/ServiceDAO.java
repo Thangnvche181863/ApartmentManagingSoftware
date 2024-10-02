@@ -35,6 +35,7 @@ public class ServiceDAO extends DBContext {
                 list.add(service);
             }
         } catch (SQLException e) {
+            System.out.println(e);
         }
         return list;
     }

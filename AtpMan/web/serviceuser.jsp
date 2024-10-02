@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -50,44 +51,7 @@
         <jsp:include page="header.jsp"></jsp:include>
 
             <!-- Modal Search Start -->
-            <div
-                class="modal fade"
-                id="searchModal"
-                tabindex="9"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-                >
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">
-                                Search by keyword
-                            </h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                                ></button>
-                        </div>
-                        <div class="modal-body d-flex align-items-center bg-primary">
-                            <div class="input-group w-75 mx-auto d-flex">
-                                <input
-                                    type="search"
-                                    class="form-control p-3"
-                                    placeholder="keywords"
-                                    aria-describedby="search-icon-1"
-                                    />
-                                <span
-                                    id="search-icon-1"
-                                    class="btn bg-light border nput-group-text p-3"
-                                    ><i class="fa fa-search"></i
-                                    ></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <!-- Modal Search End -->
 
             <!-- Header Start -->
@@ -99,15 +63,15 @@
                                 class="text-white display-4 mb-4 wow fadeInDown"
                                 data-wow-delay="0.2s"
                                 >
-                                Our Services
+                                Dịch vụ
                             </h4>
                             <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
                                 data-wow-delay="0.3s"
                                 >
-                                <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Manage</a></li>
-                                <li class="breadcrumb-item active text-primary">Service</li>
+                                <li class="breadcrumb-item"><a href="home.jsp">Nhà</a></li>
+                                <li class="breadcrumb-item"><a href="#">Quản lí</a></li>
+                                <li class="breadcrumb-item active text-primary">Dịch vụ</li>
                             </ol>
                         </div>
                     </div>
@@ -117,7 +81,7 @@
                                 class="text-white display-4 mb-4 wow fadeInDown"
                                 data-wow-delay="0.2s"
                                 >
-                                Marry Christmas
+                                Chúc mừng giáng sinh
                             </h4>
                             <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
@@ -135,7 +99,7 @@
                                 class="text-white display-4 mb-4 wow fadeInDown"
                                 data-wow-delay="0.2s"
                                 >
-                                Affected by Storm
+                                Ảnh hưởng bởi bão
                             </h4>
                             <ol
                                 class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
@@ -162,40 +126,21 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             <!-- Service Start -->
-            <div class="container-fluid service py-5">
+<!--             <div class="container-fluid service py-5">
                 <div class="container py-5">
                     <div
                         class="text-center mx-auto pb-5 wow fadeInUp"
                         data-wow-delay="0.2s"
                         style="max-width: 800px"
                         >
-                        <h4 class="text-primary">Our Services</h4>
-                        <h1 class="display-4 mb-4">We Provide Best Services</h1>
-                        <p class="mb-0">
-                            The following service are provide by the building management and
-                            related parties. We believe that will provide you with the best
-                            services. Thank you for followign our service.
-                        </p>
+                        <h4 class="text-primary">Căn hộ của chúng tôi có gì ?</h4>
                     </div>
 
 
 
 
-                    <div class="row g-4 justify-content-center">
+                   <div class="row g-4 justify-content-center">
                         <div
                             class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp"
                             data-wow-delay="0.2s"
@@ -320,18 +265,18 @@
                             >
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
 
 
 
-                <div class="container-fluid feature bg-light py-5" id="navigate">
+                <div class="container-fluid feature bg-light pb-5" id="navigate">
                     <div class="container py-5">
                         <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                            <h1 class="display-4 mb-4">Registered Service</h1>
-                            <p class="mb-0">Extension services are services provided by third parties, by reputable and experienced service providers. We guarantee that you will be satisfied when using the service.
-                            </p>
+                            <h2 class="text-primary">Giới thiệu dịch vụ</h2>
+<!--                            <p class="mb-0">Extension services are services provided by third parties, by reputable and experienced service providers. We guarantee that you will be satisfied when using the service.
+                            </p>-->
                         </div>
 
 
@@ -347,24 +292,25 @@
                                     <h4 class="mb-4 ">${ls.name}</h4>
                                     <p class="mb-4 short-text" id="textContent">${ls.description}
                                     </p>
-                                    <a class="btn btn-primary rounded-pill py-2 px-4 toggleBtn">Read More</a>
+                                    <!--toggleBtn-->
+                                    <a class="btn btn-primary rounded-pill py-2 px-4 " href="serviceuserdetail?id=${ls.serviceId}">Chi tiết</a>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
 
                 </div>
-                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
+<!--                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
                     <a class="btn btn-primary rounded-pill py-3 px-5" href="#navigate1"
                        >More Services</a
                     >
-                </div>
+                </div>-->
             </div>
-        </div>
+        <!--</div>-->
         <!-- Service End -->
 
         <!-- Testimonial Start -->
-        <div class="container-fluid feature1 py-5"  id="navigate1">
+<!--        <div class="container-fluid feature1 py-5"  id="navigate1">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
                     <h1 class="display-4 mb-4">Unregistered Service</h1>
@@ -374,7 +320,7 @@
 
 
 
-                <!--part 1-->
+                part 1
                 <div class="row g-4">
                     <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp " data-wow-delay="0.2s">
                         <div class="feature-item1 p-4 pt-0 bg-light">
@@ -390,130 +336,10 @@
                 </div>
 
             </div>
-        </div>
+        </div>-->
         <!-- Testimonial End -->
 
-        <!-- Testimonial Start -->
-        <div class="container-fluid testimonial pb-5">
-            <div class="container pb-5">
-                <div
-                    class="text-center mx-auto pb-5 wow fadeInUp"
-                    data-wow-delay="0.2s"
-                    style="max-width: 800px"
-                    >
-                    <h4 class="text-primary">Testimonial</h4>
-                    <h1 class="display-4 mb-4">What Our Customers Are Saying</h1>
-                    <p class="mb-0">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur
-                        adipisci facilis cupiditate recusandae aperiam temporibus corporis
-                        itaque quis facere, numquam, ad culpa deserunt sint dolorem autem
-                        obcaecati, ipsam mollitia hic.
-                    </p>
-                </div>
-                <div
-                    class="owl-carousel testimonial-carousel wow fadeInUp"
-                    data-wow-delay="0.2s"
-                    >
-                    <div class="testimonial-item bg-light rounded">
-                        <div class="row g-0">
-                            <div class="col-4 col-lg-4 col-xl-3">
-                                <div class="h-100">
-                                    <img
-                                        src="img/testimonial-1.jpg"
-                                        class="img-fluid h-100 rounded"
-                                        style="object-fit: cover"
-                                        alt=""
-                                        />
-                                </div>
-                            </div>
-                            <div class="col-8 col-lg-8 col-xl-9">
-                                <div class="d-flex flex-column my-auto text-start p-4">
-                                    <h4 class="text-dark mb-0">Client Name</h4>
-                                    <p class="mb-3">Profession</p>
-                                    <div class="d-flex text-primary mb-3">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                    <p class="mb-0">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                        incidunt temporibus quisquam,
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded">
-                        <div class="row g-0">
-                            <div class="col-4 col-lg-4 col-xl-3">
-                                <div class="h-100">
-                                    <img
-                                        src="img/testimonial-2.jpg"
-                                        class="img-fluid h-100 rounded"
-                                        style="object-fit: cover"
-                                        alt=""
-                                        />
-                                </div>
-                            </div>
-                            <div class="col-8 col-lg-8 col-xl-9">
-                                <div class="d-flex flex-column my-auto text-start p-4">
-                                    <h4 class="text-dark mb-0">Client Name</h4>
-                                    <p class="mb-3">Profession</p>
-                                    <div class="d-flex text-primary mb-3">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star text-body"></i>
-                                    </div>
-                                    <p class="mb-0">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                        incidunt temporibus quisquam,
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded">
-                        <div class="row g-0">
-                            <div class="col-4 col-lg-4 col-xl-3">
-                                <div class="h-100">
-                                    <img
-                                        src="img/testimonial-3.jpg"
-                                        class="img-fluid h-100 rounded"
-                                        style="object-fit: cover"
-                                        alt=""
-                                        />
-                                </div>
-                            </div>
-                            <div class="col-8 col-lg-8 col-xl-9">
-                                <div class="d-flex flex-column my-auto text-start p-4">
-                                    <h4 class="text-dark mb-0">Client Name</h4>
-                                    <p class="mb-3">Profession</p>
-                                    <div class="d-flex text-primary mb-3">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star text-body"></i>
-                                        <i class="fas fa-star text-body"></i>
-                                    </div>
-                                    <p class="mb-0">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                        Enim error molestiae aut modi corrupti fugit eaque rem nulla
-                                        incidunt temporibus quisquam,
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
+
 
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"/>
