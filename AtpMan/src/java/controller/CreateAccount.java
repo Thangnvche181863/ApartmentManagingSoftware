@@ -77,7 +77,6 @@ public class CreateAccount extends HttpServlet {
             ApartmentDAO apartmentDAO = new ApartmentDAO();
             List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingID);
 
-            // Return apartment options as HTML to be inserted into the select box
             StringBuilder apartmentOptions = new StringBuilder();
             for (Apartment apartment : apartments) {
                 apartmentOptions.append("<option value='")
@@ -88,8 +87,6 @@ public class CreateAccount extends HttpServlet {
                         .append(apartment.getFloor())
                         .append("</option>");
             }
-
-            // Send the HTML back to the AJAX response
             response.setContentType("text/html");
             response.getWriter().write(apartmentOptions.toString());
         } else {
@@ -133,7 +130,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
             return;
         }
         String password = GeneratePassword.generatePass();
-        customerDAO.createNewCustomer(username,password, name, email, phoneNumber, isOwner);         
+        customerDAO.createNewCustomer(username, password, name, email, phoneNumber, isOwner);         
         int customerID = customerDAO.getCustomerIDByUsername(username);
         
         System.out.println("Customer ID: " + customerID);

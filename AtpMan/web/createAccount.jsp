@@ -274,7 +274,7 @@
 
                 if (buildingId !== "") {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true); // Update the URL to match your servlet mapping
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true); 
                     xhr.onreadystatechange = function () {
                         if (xhr.readyState == 4 && xhr.status == 200) {
                             // Replace apartment select box options with the response from the server
