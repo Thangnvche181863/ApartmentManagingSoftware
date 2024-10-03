@@ -107,6 +107,7 @@ public class CustomerDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Customer customer = new Customer();
+                            customer.setCustomerID(rs.getInt(1));
                             customer.setUsername(rs.getString("username"));
                             customer.setName(rs.getString("name"));
                             customer.setEmail(rs.getString("email"));

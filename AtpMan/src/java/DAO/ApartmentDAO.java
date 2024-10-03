@@ -130,6 +130,29 @@ public class ApartmentDAO {
         
         return apartments;
     }
+    public Apartment getApartmentByCustomerId(int customerId) {
+        Connection connection = null;
+        Apartment apartment = new Apartment();
+        String sql = "select a.* from Apartment a\n"
+                + "inner join Living l on a.apartmentID = l.apartmentID\n"
+                + "where l.customerID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                apartment.setApartmentID(rs.getInt(1));
+                apartment.setBuildingID(rs.getInt(2));
+                apartment.setDepartmentType(rs.getString(3));
+                apartment.setPrice(rs.getDouble(4));
+                apartment.setFloor(rs.getInt(5));
+                apartment.setArea(rs.getInt(6));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return apartment;
+    }
     
     
     public static void main(String[] args) {

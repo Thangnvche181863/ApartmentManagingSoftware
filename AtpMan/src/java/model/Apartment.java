@@ -13,7 +13,6 @@ public class Apartment {
 
     private int apartmentID;
     private int buildingID;
-
     private String departmentType;
     private double price;
     private int floor;
