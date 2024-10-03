@@ -71,7 +71,7 @@ public class UserHomeServlet extends HttpServlet {
 //        processRequest(request, response);
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
-        
+
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
@@ -80,12 +80,6 @@ public class UserHomeServlet extends HttpServlet {
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
 
-        if (month_raw != null) {
-            try {
-                month = Integer.parseInt(month_raw);
-            } catch (NumberFormatException e) {
-            }
-        }
         if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
@@ -102,6 +96,22 @@ public class UserHomeServlet extends HttpServlet {
         LinkedHashSet<Integer> listOfYear = listOfYear(dList);
         LinkedHashSet<Date> listOfMonth = listOfMonth(dList, year);
 
+        if (month_raw != null) {
+            try {
+                boolean contain = false;
+                month = Integer.parseInt(month_raw);
+                for (Date date : listOfMonth) {
+                    if (date.toLocalDate().getMonthValue() == month) {
+                        contain = true;
+                    }
+                }
+                if (!contain) {
+                    month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
+                }
+            } catch (NumberFormatException e) {
+            }
+        }
+
         Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(1, month, year);
 
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
@@ -116,7 +126,16 @@ public class UserHomeServlet extends HttpServlet {
 
         //get current page from the request
         String pageParam = request.getParameter("page");
-        int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+        int currentPage;
+        if (pageParam != null) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e) {
+                currentPage = 1;
+            }
+        } else {
+            currentPage = 1;
+        }
 
         int totalRows = newsDAO.getNumberOfRows();
         //calculate totalPages
@@ -129,7 +148,7 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("news", newsList);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
-        
+
         // area chart
         List<Double> amoutMonth = listAmountByMonth(iList, year);
         request.setAttribute("amoutMonth", amoutMonth);
@@ -170,13 +189,13 @@ public class UserHomeServlet extends HttpServlet {
     }
 
     protected LinkedHashSet<Date> listOfMonth(List<Date> list, int year) {
-        LinkedHashSet<Date> yList = new LinkedHashSet<>();
+        LinkedHashSet<Date> mList = new LinkedHashSet<>();
         for (Date date : list) {
             if (date.toLocalDate().getYear() == year) {
-                yList.add(date);
+                mList.add(date);
             }
         }
-        return yList;
+        return mList;
     }
 
     protected double totalAmount(List<Invoice> list, int year) {

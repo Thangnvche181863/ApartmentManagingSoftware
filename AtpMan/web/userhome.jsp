@@ -485,6 +485,7 @@
 
                                     <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
                                         <div class="col-xl-6 col-md-6">
+                                            <input type="hidden" name="page" value="${requestScope.currentPage}" />
                                             <label for="month" class="form-label">Chọn Tháng</label>
                                             <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
                                                 <c:forEach items="${requestScope.dateList}" var="dList">
@@ -722,8 +723,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- News -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800 text-primary">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
+                            <h1 class="h3 mb-0 text-gray-800 text-primary">Thông tin cập nhật</h1>
                         </div>
                         <!-- Modal Search Start -->
                         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -742,6 +745,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <!-- News Carousel -->
                         <div class="row justify-content-center">
@@ -782,7 +786,7 @@
                         <!-- Recent News Section Start -->
                         <section    class="section bg-light py-5">
                             <div class="container">
-                                <div class="row">
+                                <div id="newsContent" class="row">
                                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                                         <div class="page-wrapper">
                                             <div class="blog-top clearfix">
@@ -826,19 +830,22 @@
                                                     <ul class="pagination justify-content-start">
                                                         <c:if test="${currentPage > 1}">
                                                             <li class="page-item">
-                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage - 1}">Previous</a>
+                                                                <!--<a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage - 1}">Previous</a>-->
+                                                                <button class="page-link" value="${currentPage - 1}" onclick="paging(this)">Previous</button>
                                                             </li>
                                                         </c:if>
 
                                                         <c:forEach var="i" begin="1" end="${totalPages}">
                                                             <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${i}">${i}</a>
+                                                                <!--<a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${i}">${i}</a>-->
+                                                                <button class="page-link" value="${i}" onclick="paging(this)">${i}</button>
                                                             </li>
                                                         </c:forEach>
 
                                                         <c:if test="${currentPage < totalPages}">
                                                             <li class="page-item">
-                                                                <a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage + 1}">Next</a>
+                                                                <!--<a class="page-link" href="userhome?${pageContext.request.getQueryString()}&page=${currentPage + 1}">Next</a>-->
+                                                                <button class="page-link" value="${currentPage + 1}" onclick="paging(this)">Previous</button>
                                                             </li>
                                                         </c:if>
                                                     </ul>
@@ -870,7 +877,28 @@
 
             <!-- Page level custom scripts -->
             <script src="js/demo/datatables-demo.js"></script>
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
             <script>
+                                                function paging(param) {
+                                                    let pageChoose = param.value;
+                                                    $.ajax({
+                                                        url: "/AtpMan/userhomenews",
+                                                        type: "post", //send it through post method
+                                                        data: {
+                                                            page: pageChoose
+                                                        },
+                                                        success: function (data) {
+                                                            $("#newsContent").html(data);
+//                                                            generate.innerHTML = data;
+                                                        },
+                                                        error: function (   xhr) {
+                                                            //Do Something to handle error
+                                                        }
+                                                    });
+                                                }
+                                                
                                                 function submitMonth() {
                                                     document.getElementById('chooseMonthYear').submit();
                                                 }
