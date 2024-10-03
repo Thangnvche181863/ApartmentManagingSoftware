@@ -88,7 +88,7 @@ public class UserHomeServlet extends HttpServlet {
         }
 
         InvoiceDAO invoiceDAO = new InvoiceDAO();
-        ApartmentDAO apartmentDAO = new ApartmentDAO();
+        ApartmentDAO apartmentDAO = new ApartmentDAO(); 
 
 //        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
