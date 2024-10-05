@@ -46,7 +46,6 @@ public class UserLogin extends HttpServlet {
 
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);
-
                 if (customer == null) {
                     request.setAttribute("loginerr", "Username or password is incorrect for Resident.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -54,8 +53,10 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", customer);
+                //phan loai nguoi dung: user
+                session.setAttribute("userType", userType);
                 response.sendRedirect("home");
-
+                
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
                 if (staff == null) {
@@ -66,6 +67,8 @@ public class UserLogin extends HttpServlet {
                 String staffName = staff.getName();
                 session.setAttribute("user", staff);
                 session.setAttribute("staffName", staffName);
+                //phan loai nguoi dung: staff
+                session.setAttribute("userType", userType);
                 response.sendRedirect("managerPage");
 
             } else {

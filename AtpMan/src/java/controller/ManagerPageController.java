@@ -8,6 +8,7 @@ import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import DAO.LivingDAO;
+import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -50,10 +51,10 @@ public class ManagerPageController extends HttpServlet {
             int amountApartment = apartmentDAO.getAmountOfApartment();
             request.setAttribute("amountApartment", amountApartment);
             
-            //lay so luong nguoi o 
-            LivingDAO livingdao = new LivingDAO();
-            int amountResident = livingdao.getAmountOfResident();
-            request.setAttribute("amountResident", amountResident);
+            //lay so luong nhan vien
+            StaffDAO staffdao = new StaffDAO();
+            int amountStaff = staffdao.getAmountOfStaff();
+            request.setAttribute("amountStaff", amountStaff);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }

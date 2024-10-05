@@ -180,7 +180,7 @@ public class StaffDAO {
             conn = DBContext.getConnection();
             PreparedStatement pre = conn.prepareStatement(sql);
             pre.setInt(1, staffID);
-            
+
             n = pre.executeUpdate();
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -189,11 +189,40 @@ public class StaffDAO {
 
     }
 
+    public int getAmountOfStaff() {
+        StaffDAO dao = new StaffDAO();
+        List<Staff> list = dao.getAllStaff();
+        int amountStaff = list.size();
+        return amountStaff;
+    }
+
+    public int UpdateStaffInfo(String name, String phoneNumber, int staffID) {
+        int n = 0;
+        String sql = "UPDATE Staff\n"
+                + "SET name = ?, \n"
+                + "    phoneNumber = ?\n"
+                + "WHERE staffID = ?;";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setString(1, name);
+            pre.setString(2, phoneNumber);
+
+            pre.setInt(3, staffID);
+            n = pre.executeUpdate();
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return n;
+    }
+
     public static void main(String[] args) {
 
         StaffDAO dao = new StaffDAO();
         int n = dao.dismissStaff(4);
-        System.out.println("Húp" +n);
+        System.out.println("Húp" + n);
 
     }
 }

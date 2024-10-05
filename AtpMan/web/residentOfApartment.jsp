@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+    <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     <head>
 
         <meta charset="utf-8">
@@ -11,7 +11,7 @@
         <meta name="author" content="">
 
         <title>RESIDENT</title>
-        
+
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -68,7 +68,7 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Start: ${o.startDate}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
                                             </div>
                                             <div class="col-auto">

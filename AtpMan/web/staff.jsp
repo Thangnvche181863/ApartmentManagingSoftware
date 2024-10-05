@@ -2,6 +2,7 @@
 <html lang="en">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
     <head>
 
         <meta charset="utf-8">
@@ -78,12 +79,38 @@
                                             </div>
 
                                         </div>
-                                        <form action="staff?service=dismiss&staffId=${o.staffID}" method="post" class="position-absolute" style="bottom: 10px; left: 10px;">
-                                            <input type="hidden" name="staffID" value="${o.staffID}"/>
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                Dismiss
-                                            </button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dismissModal">
+                                            Dismiss
+                                        </button>
+                                        <!--  Dismiss -->
+
+
+                                        <!-- Modal xac nhan -->
+                                        <form action="staff" method="post" class="d-inline">
+                                            <div class="modal fade" id="dismissModal" tabindex="-1" role="dialog" aria-labelledby="dismissModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="dismissModalLabel">Confirm</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure want to dismiss this staff?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nope</button>
+
+                                                            <input type="hidden" name="staffID" value="${o.staffID}"/>
+                                                            <input type="hidden" name="service" value="dismiss"/>
+                                                            <button type="submit" class="btn btn-danger">Dismiss</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +132,7 @@
                                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                                 <div class="modal-footer">
                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                    <a class="btn btn-primary" href="login.html">Logout</a>
+                                    <a class="btn btn-primary" href="home.jsp">Logout</a>
                                 </div>
                             </div>
                         </div>

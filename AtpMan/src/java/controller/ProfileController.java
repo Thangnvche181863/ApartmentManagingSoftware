@@ -12,15 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import model.Customer;
 import model.Staff;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "StaffController", urlPatterns = {"/staff"})
-public class StaffController extends HttpServlet {
+@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,14 +37,34 @@ public class StaffController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            StaffDAO dao = new StaffDAO();
-            List<Staff> list = dao.getAllStaff();
-            // get roleName by ID
-            List<String> listRoleName = dao.getRoleNameByID();
+            HttpSession session = request.getSession();
+            String userType = (String) session.getAttribute("userType");
+            if(userType.equals("2")){
+                Customer customer = (Customer) request.getAttribute("user");
+                
+                request.setAttribute("user", customer);
+                request.setAttribute("userType", userType);
+                session.setAttribute("user", customer);
+            }
+            if(userType.equals("3")){
+                Staff staff = (Staff) request.getAttribute("user");
+                request.setAttribute("user", staff);
+                request.setAttribute("userType", userType);
+                
+                
+                
+                
+                //update profile
+                String name = (String) request.getAttribute("name");
+                String phoneNumber = (String) request.getAttribute("phoneNumber");
+                StaffDAO dao = new StaffDAO();
+                int n = dao.UpdateStaffInfo(name, phoneNumber, staff.getStaffID());
+                
+            }
             
-            request.setAttribute("listRoleName", listRoleName);
-            request.setAttribute("listStaff", list);
-            request.getRequestDispatcher("staff.jsp").forward(request, response);
+            
+            
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
         }
     }
 
@@ -73,14 +94,7 @@ public class StaffController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        StaffDAO dao = new StaffDAO();
-        String service = request.getParameter("service");
-        if(service.equals("dismiss")){
-                int staffID = Integer.parseInt(request.getParameter("staffID"));
-                int n = dao.dismissStaff(staffID);
-            }
-                response.sendRedirect("staff");
+        processRequest(request, response);
     }
 
     /**
