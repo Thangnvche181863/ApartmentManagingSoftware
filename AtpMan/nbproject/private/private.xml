@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/addnews.jsp</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/AddNews.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/NewsServlet.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/newsManager.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/NewsManager.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/NewsDetail.java</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/NewsDAO.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/header.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/about.jsp</file>
         </group>
     </open-files>
