@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>CustomerPermissionFilter</filter-name>
+        <filter-class>utils.filter.CustomerPermissionFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>StaffPermissionFilter</filter-name>
+        <filter-class>utils.filter.StaffPermissionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CustomerPermissionFilter</filter-name>
+        <url-pattern>/userhome</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>StaffPermissionFilter</filter-name>
+        <url-pattern>/managerPage</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>UserLogin</servlet-name>
         <servlet-class>controller.UserLogin</servlet-class>
