@@ -54,7 +54,7 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", customer);
-                response.sendRedirect("home");
+                response.sendRedirect("userhome");
 
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
@@ -65,8 +65,7 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", staff);
-
-                response.sendRedirect("createAccount.jsp");
+                response.sendRedirect("managerHomePage.jsp");
 
             } else {
 

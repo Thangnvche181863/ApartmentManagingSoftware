@@ -20,19 +20,6 @@
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!-- cai nay cua table -->
 
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">

@@ -4,6 +4,8 @@
  */
 package model;
 import java.sql.Date;
+import java.util.List;
+
 /**
  *
  * @author thang
@@ -13,21 +15,23 @@ public class Invoice {
     private int apartmentId;
     private double amount;
     private Date issueDate;
-    private Date duDate;
+    private Date dueDate;
     private int status;
     private Date transactionDate;
+    private List<ServiceContract> serviceContractList;
 
     public Invoice() {
     }
 
-    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date duDate, int status, Date transactionDate) {
-        this.invoiceId = invoiceId;
-        this.apartmentId = apartmentId;
+    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, List<ServiceContract> serviceContractList) {
+        this.invoiceId = invoiceID;
+        this.apartmentId = apartmentID;
         this.amount = amount;
         this.issueDate = issueDate;
-        this.duDate = duDate;
+        this.dueDate = dueDate;
         this.status = status;
         this.transactionDate = transactionDate;
+        this.serviceContractList = serviceContractList;
     }
 
     public int getInvoiceId() {
@@ -62,12 +66,12 @@ public class Invoice {
         this.issueDate = issueDate;
     }
 
-    public Date getDuDate() {
-        return duDate;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setDuDate(Date duDate) {
-        this.duDate = duDate;
+    public void setDueDate(Date duDate) {
+        this.dueDate = duDate;
     }
 
     public int getStatus() {
@@ -86,10 +90,18 @@ public class Invoice {
         this.transactionDate = transactionDate;
     }
 
+    public List<ServiceContract> getServiceContractList() {
+        return serviceContractList;
+    }
+
+    public void setServiceContractList(List<ServiceContract> serviceContractList) {
+        this.serviceContractList = serviceContractList;
+    }
+
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceId=" + invoiceId + ", apartmentId=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", duDate=" + duDate + ", status=" + status + ", transactionDate=" + transactionDate + '}';
+        return "Invoice{" + "invoiceID=" + invoiceId + ", apartmentID=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
+
     }
-    
     
 }
