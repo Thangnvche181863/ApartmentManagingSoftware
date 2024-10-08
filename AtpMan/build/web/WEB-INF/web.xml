@@ -25,10 +25,6 @@
         <servlet-class>controller.UserRegister</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.Home</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>News</servlet-name>
         <servlet-class>controller.NewsServlet</servlet-class>
     </servlet>
@@ -100,6 +96,10 @@
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.UserhomeNewsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controller.Home</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -107,10 +107,6 @@
     <servlet-mapping>
         <servlet-name>UserRegister</servlet-name>
         <url-pattern>/userregister</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>News</servlet-name>
@@ -183,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>NewsDelete</servlet-name>
         <url-pattern>/newsdelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
