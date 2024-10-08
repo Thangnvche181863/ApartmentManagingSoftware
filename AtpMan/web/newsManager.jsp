@@ -379,6 +379,10 @@
 
                         <!-- Page Heading -->
                         <h1 class="h3 mb-4 text-gray-800">News Manager</h1>
+                        <div>
+                            <a href="./addnews.jsp" class="btn btn-outline-primary">Add New</a>
+
+                        </div>
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>
@@ -423,12 +427,26 @@
                                         </div>
                                         <!-- Card Body -->
                                         <div class="card-body">
+                                            <c:set var="textOnly" value="${newsItem.newsContent}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<br>', ' ')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<p>', ' ')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</p>', ' ')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<strong>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</strong>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<em>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</em>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<a>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</a>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<span>', '')}" />
+                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</span>', '')}" />
+
                                             <c:choose>
-                                                <c:when test="${fn:length(newsItem.newsContent) > 200}">
-                                                    ${fn:substring(newsItem.newsContent, 0, 200)}...
+                                                <c:when test="${fn:length(textOnly) > 100}">
+                                                    <c:set var="trimmedContent" value="${fn:substring(textOnly, 0, 100)}..." />
+                                                    ${trimmedContent} <a href="NewsDetail?id=${newsItem.newsID}">Read More</a>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    ${newsItem.newsContent}
+                                                    ${textOnly}
                                                 </c:otherwise>
                                             </c:choose>
                                         </div>
