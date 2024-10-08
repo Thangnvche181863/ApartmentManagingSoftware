@@ -25,6 +25,18 @@
         <servlet-class>controller.UserRegister</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controller.Home</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>News</servlet-name>
+        <servlet-class>controller.NewsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsDetail</servlet-name>
+        <servlet-class>controller.NewsDetail</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>UserHomeServlet</servlet-name>
         <servlet-class>controller.UserHomeServlet</servlet-class>
     </servlet>
@@ -53,6 +65,18 @@
         <servlet-class>model.ChangeEmail</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AddNewsServlet</servlet-name>
+        <servlet-class>controller.AddNews</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsManager</servlet-name>
+        <servlet-class>controller.NewsManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsDelete</servlet-name>
+        <servlet-class>controller.NewsDelete</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CRUDService</servlet-name>
         <servlet-class>controller.ServiceListServlet</servlet-class>
     </servlet>
@@ -73,10 +97,6 @@
         <servlet-class>controller.ServiceAddServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.Home</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.UserhomeNewsServlet</servlet-class>
     </servlet>
@@ -87,6 +107,18 @@
     <servlet-mapping>
         <servlet-name>UserRegister</servlet-name>
         <url-pattern>/userregister</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>News</servlet-name>
+        <url-pattern>/News</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsDetail</servlet-name>
+        <url-pattern>/NewsDetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserHomeServlet</servlet-name>
@@ -137,12 +169,20 @@
         <url-pattern>/serviceadd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/home</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <url-pattern>/userhomenews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewsServlet</servlet-name>
+        <url-pattern>/AddNews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsManager</servlet-name>
+        <url-pattern>/newsmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsDelete</servlet-name>
+        <url-pattern>/newsdelete</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
