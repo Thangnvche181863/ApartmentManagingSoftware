@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.user;
 
 import DAO.NewsDAO;
 import java.io.IOException;
@@ -76,7 +76,7 @@ public class UserhomeNewsServlet extends HttpServlet {
                     + "     <div class=\"col-md-4\">\n"
                     + "        <div class=\"post-media\">\n"
                     + "           <a href=\"NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
-                    + "              <img src=\"" + news.getNewsImg() + "\" alt=\"\" class=\"img-fluid\">\n"
+                    + "              <img src=\"../" + news.getNewsImg() + "\" alt=\"\" class=\"img-fluid\">\n"
                     + "                  <div class=\"hovereffect\"></div>\n"
                     + "           </a>\n"
                     + "        </div><!-- end media -->\n"

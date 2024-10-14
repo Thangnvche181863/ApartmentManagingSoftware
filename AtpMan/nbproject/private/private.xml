@@ -3,17 +3,46 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/userhome.jsp</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/ApartmentController.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/DBContext.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/Home.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/NewsDAO.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/EmailHandle.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/filter/StaffPermissionFilter.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Ownership.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/guest/NewsServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/BuildingController.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/AddNews.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/guest/Home.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/user/UserHomeServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceIntroServlet.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/LoginGoogle.java</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/home.jsp</file>
-            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/UserhomeNewsServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/Constant.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceListServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/user/userhome.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Role.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/RequestComplaint.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/UserHomeUtil.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/createAccount.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/filter/CustomerPermissionFilter.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/testNews.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/NewsDetail.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/NewsCategory.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/CreateAccount.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/WebManager.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Living.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/news-detail.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/UserLogin.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/ApartmentController.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/DeleteServiceServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/ApartmentDAO.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/forbiddenpage.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/RequestComplaintDAO.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Assignment.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/user/UserhomeNewsServlet.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/NewsDAO.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/EmailHandle.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/home.jsp</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Task.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Apartment.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/ServiceAddServlet.java</file>
         </group>
     </open-files>
 </project-private>

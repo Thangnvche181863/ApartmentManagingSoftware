@@ -16,7 +16,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:slnt,wght@-10..0,100..900&display=swap" rel="stylesheet">
 
-        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="${requestScope.url}css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
         <style>
@@ -24,7 +24,6 @@
                 font-family: Arial, sans-serif;
                 background-color: #ffffff;
                 text-align: center;
-                padding: 50px;
             }
             .container {
                 max-width: 600px;
@@ -64,8 +63,8 @@
         </style>
     </head>
     <body>
-        <div class="container-fluid">
-            <img src="img/403page.jpg" width="500px" height="1000px" alt="403 error Forbidden image"/>
+        <div>
+            <img src="${requestScope.url}img/403page.jpg" width="500px" height="1000px" alt="403 error Forbidden image"/>
             <h1>403 Forbidden</h1>
             <h4>We’re sorry, but you don’t have permission to access this page.</h4>
             <h4>If you believe this is an error, please contact support.</h4>

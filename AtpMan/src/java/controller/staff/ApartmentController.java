@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.staff;
 
-import DAO.BuildingDAO;
+import DAO.ApartmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Vector;
-import model.Building;
+import model.Apartment;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "BuildingController", urlPatterns = {"/building"})
-public class BuildingController extends HttpServlet {
+@WebServlet(name = "ApartmentController", urlPatterns = {"/apartment"})
+public class ApartmentController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,14 +36,14 @@ public class BuildingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            BuildingDAO dao = new BuildingDAO();
-            Vector<Building> vector = dao.getAllBuilding();
-            
-            
-            request.setAttribute("listBuilding", vector);
-            request.getRequestDispatcher("building.jsp").forward(request, response);
-            
-            
+           int buildingID = Integer.parseInt(request.getParameter("buildingID"));
+           ApartmentDAO dao = new ApartmentDAO();
+           Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
+           
+           
+           
+           request.setAttribute("listApartment", vector);
+           request.getRequestDispatcher("apartment.jsp").forward(request, response);
         }
     }
 

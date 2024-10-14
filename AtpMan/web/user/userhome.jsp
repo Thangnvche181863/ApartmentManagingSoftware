@@ -26,11 +26,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
-        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
         <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
+        <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <style>
+            .chooseApt:focus li{
+                background-color: #198754;
+            }
+            .chooseApt:focus .card1, .chooseApt:focus .card2{
+                color: white !important;
+            }
+        </style>
     </head>
     <body>
         <div id="wrapper">
@@ -327,7 +336,7 @@
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">AdminName</span>
                                     <img class="img-profile rounded-circle"
-                                         src="img/undraw_profile.svg">
+                                         src="../img/undraw_profile.svg">
                                 </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -359,28 +368,62 @@
                     <div class="container-fluid">
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h1 mb-0 text-gray-800"><b>Trang chủ</b>  </h1>
+                            <h1 class="h1 mb-0 text-gray-800"><b>Trang chủ</b></h1>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                         </div>
+                        <!-- Split dropend button -->
+
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="row">
                                 <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Căn hộ
+                                    <div class="btn-group dropend">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                        Căn hộ
+                                                    </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        ${requestScope.apartment.apartmentType} - Tầng ${requestScope.apartment.floor} - Diện tích ${requestScope.apartment.area} m2   
+                                                    </div>
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    ${requestScope.apartment.departmentType} - Tầng ${requestScope.apartment.floor} - Diện tích ${requestScope.apartment.area} m2   
-                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-home fa-2x text-gray-300"></i>
+                                                </div> 
                                             </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-home fa-2x text-gray-300"></i>
-                                            </div> 
                                         </div>
+                                        <c:if test="${requestScope.apartmentList.size() > 1}">
+                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="visually-hidden">Toggle Dropright</span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <!-- Dropdown menu links -->
+                                                <c:forEach items="${requestScope.apartmentList}" var="apartment">
+                                                    <a class="chooseApt" href="userhome?apartmentID=${apartment.apartmentID}" style="text-decoration: none">
+                                                        <li>
+                                                            <div class="card-body">
+                                                                <div class="row no-gutters align-items-center">
+                                                                    <div class="col mr-2">
+                                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1 card1">
+                                                                            Căn hộ
+                                                                        </div>
+                                                                        <div class="h5 mb-0 font-weight-bold text-gray-800 card2">
+                                                                            ${apartment.apartmentType} - Tầng ${apartment.floor} - Diện tích ${apartment.area} m2   
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <i class="fas fa-home fa-2x text-gray-300"></i>
+                                                                    </div> 
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </a>
+                                                </c:forEach>
+                                            </ul>
+                                        </c:if>
                                     </div>
+
                                 </div>
                             </div>
                         </div> 
@@ -485,7 +528,7 @@
 
                                     <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
                                         <div class="col-xl-6 col-md-6">
-                                            <input type="hidden" name="page" value="${requestScope.currentPage}" />
+                                            <input type="hidden" name="apartmentID" value="${requestScope.apartment.apartmentID}" />
                                             <label for="month" class="form-label">Chọn Tháng</label>
                                             <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
                                                 <c:forEach items="${requestScope.dateList}" var="dList">
@@ -760,7 +803,7 @@
                                         <c:forEach var="banner" items="${newsBanner}" varStatus="status">
                                             <div class="carousel-item ${status.first ? 'active' : ''}">
                                                 <a href="<c:out value='NewsDetail?id=${banner.newsID}'/>">   
-                                                    <img class="d-block w-100" src="<c:out value='${banner.newsImg}'/>" alt="Slide ${status.index + 1}">
+                                                    <img class="d-block w-100" src="../<c:out value='${banner.newsImg}'/>" alt="Slide ${status.index + 1}">
                                                     <div class="carousel-caption d-none d-md-block">
                                                         <h5 style="color:#FFFF00;"><c:out value='${banner.newsTitle}'/></h5>
                                                         <p style="color:#FFFF00;"><c:out value='${banner.newsContent}'/></p>
@@ -800,7 +843,7 @@
                                                         <div class="col-md-4">
                                                             <div class="post-media">
                                                                 <a href="NewsDetail?id=${newsItem.newsID}" title="">
-                                                                    <img src="${newsItem.newsImg}" alt="" class="img-fluid">
+                                                                    <img src="../${newsItem.newsImg}" alt="" class="img-fluid">
                                                                     <div class="hovereffect"></div>
                                                                 </a>
                                                             </div><!-- end media -->
@@ -861,238 +904,240 @@
             </div>
 
             <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="vendor/chart.js/Chart.min.js"></script>
+            <script src="../vendor/jquery/jquery.min.js"></script>
+            <script src="../"></script>
+            <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+            <script src="../vendor/chart.js/Chart.min.js"></script>
 
             <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+            <script src="../js/sb-admin-2.min.js"></script>
 
             <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
+            <script src="../vendor/jquery-easing/jquery.easing.min.js"></script> 
 
             <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
             <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
+            <script src="../js/demo/datatables-demo.js"></script>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
             <script>
-                                                function paging(param) {
-                                                    let pageChoose = param.value;
-                                                    $.ajax({
-                                                        url: "/AtpMan/userhomenews",
-                                                        type: "post", //send it through post method
-                                                        data: {
-                                                            page: pageChoose
-                                                        },
-                                                        success: function (data) {
-                                                            $("#newsContent").html(data);
+                                                                    function paging(param) {
+                                                                        let pageChoose = param.value;
+                                                                        $.ajax({
+                                                                            url: "/AtpMan/userhomenews",
+                                                                            type: "post", //send it through post method
+                                                                            data: {
+                                                                                page: pageChoose
+                                                                            },
+                                                                            success: function (data) {
+                                                                                $("#newsContent").html(data);
 //                                                            generate.innerHTML = data;
-                                                        },
-                                                        error: function (   xhr) {
-                                                            //Do Something to handle error
-                                                        }
-                                                    });
-                                                }
-                                                
-                                                function submitMonth() {
-                                                    document.getElementById('chooseMonthYear').submit();
-                                                }
+                                                                            },
+                                                                            error: function (xhr) {
+                                                                                //Do Something to handle error
+                                                                            }
+                                                                        });
+                                                                    }
 
-                                                let d = new Date();
-                                                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                                                    function submitMonth() {
+                                                                        document.getElementById('chooseMonthYear').submit();
+                                                                    }
 
-                                                let month = months.find((value, index) => {
-                                                    if (d.getMonth()) {
-                                                        return index == d.getMonth() - 1;
-                                                    } else {
-                                                        return index == 12;
-                                                    }
-                                                });
-                                                console.log(month)
+                                                                    let d = new Date();
+                                                                    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-                                                //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+                                                                    let month = months.find((value, index) => {
+                                                                        if (d.getMonth()) {
+                                                                            return index == d.getMonth() - 1;
+                                                                        } else {
+                                                                            return index == 12;
+                                                                        }
+                                                                    });
+                                                                    console.log(month)
 
-                                                // take data from servlet to js
-                                                const amountList = [
+                                                                    //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+
+                                                                    // take data from servlet to js
+                                                                    const amountList = [
                 <c:forEach items="${requestScope.amoutMonth}" var="amountList">
                     ${amountList},
                 </c:forEach>
-                                                ];
-                                                const serviceList = [
+                                                                    ];
+                                                                    const serviceList = [
                 <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                                                    "${serviceContract.getService().getName()}",
+                                                                        "${serviceContract.getService().getName()}",
                 </c:forEach>
-                                                ];
-                                                const amountService = [
+                                                                    ];
+                                                                    const amountService = [
                 <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
                     <c:out value="${serviceContract.getAmount()}"/>,
                 </c:forEach>
-                                                ];
-                                                console.log(amountService);
+                                                                    ];
+                                                                    console.log(amountService);
 
 
-                                                function number_format(number, decimals, dec_point, thousands_sep) {
-                                                    // *     example: number_format(1234.56, 2, ',', ' ');
-                                                    // *     return: '1 234,56'
-                                                    number = (number + '').replace(',', '').replace(' ', '');
-                                                    var n = !isFinite(+number) ? 0 : +number,
-                                                            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                                                            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                                                            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                                                            s = '',
-                                                            toFixedFix = function (n, prec) {
-                                                                var k = Math.pow(10, prec);
-                                                                return '' + Math.round(n * k) / k;
-                                                            };
-                                                    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                                                    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                                                    if (s[0].length > 3) {
-                                                        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-                                                    }
-                                                    if ((s[1] || '').length < prec) {
-                                                        s[1] = s[1] || '';
-                                                        s[1] += new Array(prec - s[1].length + 1).join('0');
-                                                    }
-                                                    return s.join(dec);
-                                                }
-                                                // Pie Chart Example
-                                                var ctx = document.getElementById("myPieChart");
-                                                var myPieChart = new Chart(ctx, {
-                                                    type: 'doughnut',
-                                                    data: {
-                                                        labels: serviceList,
-                                                        datasets: [{
-                                                                data: amountService,
-                                                                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
-                                                                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                                                                hoverBorderColor: "rgba(234, 236, 244, 1)",
-                                                            }],
-                                                    },
-                                                    options: {
-                                                        maintainAspectRatio: false,
-                                                        tooltips: {
-                                                            backgroundColor: "rgb(255,255,255)",
-                                                            bodyFontColor: "#858796",
-                                                            borderColor: '#dddfeb',
-                                                            borderWidth: 1,
-                                                            xPadding: 15,
-                                                            yPadding: 15,
-                                                            displayColors: false,
-                                                            caretPadding: 10,
-                                                            callbacks: {
-                                                                label: function (tooltipItem, data) {
-                                                                    var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
-                                                                    return value + ' VNĐ';
-                                                                }
-                                                            }
-                                                        },
-                                                        legend: {
-                                                            display: true,
-                                                            position: 'bottom', // Hoặc 'top', 'left', 'right'
-                                                            labels: {
-                                                                boxWidth: 10, // Kích thước của hộp màu
-                                                                padding: 10 // Khoảng cách giữa các mục
-                                                            }
-                                                        },
-                                                        cutoutPercentage: 60,
-                                                    },
-                                                });
-
-
-                                                // Area Chart Example
-                                                var ctx = document.getElementById("myAreaChart");
-                                                var myLineChart = new Chart(ctx, {
-                                                    type: 'line',
-                                                    data: {
-                                                        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                        datasets: [{
-                                                                label: "Amount",
-                                                                lineTension: 0.3,
-                                                                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                                                                borderColor: "rgba(78, 115, 223, 1)",
-                                                                pointRadius: 3,
-                                                                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                                pointBorderColor: "rgba(78, 115, 223, 1)",
-                                                                pointHoverRadius: 3,
-                                                                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                                                                pointHitRadius: 10,
-                                                                pointBorderWidth: 2,
-                                                                data: amountList,
-                                                            }],
-                                                    },
-                                                    options: {
-                                                        maintainAspectRatio: false,
-                                                        layout: {
-                                                            padding: {
-                                                                left: 10,
-                                                                right: 25,
-                                                                top: 25,
-                                                                bottom: 0
-                                                            }
-                                                        },
-                                                        scales: {
-                                                            xAxes: [{
-                                                                    time: {
-                                                                        unit: 'date'
-                                                                    },
-                                                                    gridLines: {
-                                                                        display: false,
-                                                                        drawBorder: false
-                                                                    },
-                                                                    ticks: {
-                                                                        maxTicksLimit: 7
-                                                                    }
-                                                                }],
-                                                            yAxes: [{
-                                                                    ticks: {
-                                                                        maxTicksLimit: 5,
-                                                                        padding: 10,
-                                                                        // Include a dollar sign in the ticks
-                                                                        callback: function (value, index, values) {
-                                                                            return number_format(value) + ' VNĐ';
+                                                                    function number_format(number, decimals, dec_point, thousands_sep) {
+                                                                        // *     example: number_format(1234.56, 2, ',', ' ');
+                                                                        // *     return: '1 234,56'
+                                                                        number = (number + '').replace(',', '').replace(' ', '');
+                                                                        var n = !isFinite(+number) ? 0 : +number,
+                                                                                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                                                                                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                                                                                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                                                                                s = '',
+                                                                                toFixedFix = function (n, prec) {
+                                                                                    var k = Math.pow(10, prec);
+                                                                                    return '' + Math.round(n * k) / k;
+                                                                                };
+                                                                        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                                                                        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                                                        if (s[0].length > 3) {
+                                                                            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
                                                                         }
-                                                                    },
-                                                                    gridLines: {
-                                                                        color: "rgb(234, 236, 244)",
-                                                                        zeroLineColor: "rgb(234, 236, 244)",
-                                                                        drawBorder: false,
-                                                                        borderDash: [2],
-                                                                        zeroLineBorderDash: [2]
+                                                                        if ((s[1] || '').length < prec) {
+                                                                            s[1] = s[1] || '';
+                                                                            s[1] += new Array(prec - s[1].length + 1).join('0');
+                                                                        }
+                                                                        return s.join(dec);
                                                                     }
-                                                                }],
-                                                        },
-                                                        legend: {
-                                                            display: false
-                                                        },
-                                                        tooltips: {
-                                                            backgroundColor: "rgb(255,255,255)",
-                                                            bodyFontColor: "#858796",
-                                                            titleMarginBottom: 10,
-                                                            titleFontColor: '#6e707e',
-                                                            titleFontSize: 14,
-                                                            borderColor: '#dddfeb',
-                                                            borderWidth: 1,
-                                                            xPadding: 15,
-                                                            yPadding: 15,
-                                                            displayColors: false,
-                                                            intersect: false,
-                                                            mode: 'index',
-                                                            caretPadding: 10,
-                                                            callbacks: {
-                                                                label: function (tooltipItem, chart) {
-                                                                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                                                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                });
+                                                                    // Pie Chart Example
+                                                                    var ctx = document.getElementById("myPieChart");
+                                                                    var myPieChart = new Chart(ctx, {
+                                                                        type: 'doughnut',
+                                                                        data: {
+                                                                            labels: serviceList,
+                                                                            datasets: [{
+                                                                                    data: amountService,
+                                                                                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
+                                                                                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                                                                                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                                                }],
+                                                                        },
+                                                                        options: {
+                                                                            maintainAspectRatio: false,
+                                                                            tooltips: {
+                                                                                backgroundColor: "rgb(255,255,255)",
+                                                                                bodyFontColor: "#858796",
+                                                                                borderColor: '#dddfeb',
+                                                                                borderWidth: 1,
+                                                                                xPadding: 15,
+                                                                                yPadding: 15,
+                                                                                displayColors: false,
+                                                                                caretPadding: 10,
+                                                                                callbacks: {
+                                                                                    label: function (tooltipItem, data) {
+                                                                                        var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
+                                                                                        return value + ' VNĐ';
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            legend: {
+                                                                                display: true,
+                                                                                position: 'bottom', // Hoặc 'top', 'left', 'right'
+                                                                                labels: {
+                                                                                    boxWidth: 10, // Kích thước của hộp màu
+                                                                                    padding: 10 // Khoảng cách giữa các mục
+                                                                                }
+                                                                            },
+                                                                            cutoutPercentage: 60,
+                                                                        },
+                                                                    });
+
+
+                                                                    // Area Chart Example
+                                                                    var ctx = document.getElementById("myAreaChart");
+                                                                    var myLineChart = new Chart(ctx, {
+                                                                        type: 'line',
+                                                                        data: {
+                                                                            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                                            datasets: [{
+                                                                                    label: "Amount",
+                                                                                    lineTension: 0.3,
+                                                                                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                                                                                    borderColor: "rgba(78, 115, 223, 1)",
+                                                                                    pointRadius: 3,
+                                                                                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                                                                                    pointHoverRadius: 3,
+                                                                                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                                                                                    pointHitRadius: 10,
+                                                                                    pointBorderWidth: 2,
+                                                                                    data: amountList,
+                                                                                }],
+                                                                        },
+                                                                        options: {
+                                                                            maintainAspectRatio: false,
+                                                                            layout: {
+                                                                                padding: {
+                                                                                    left: 10,
+                                                                                    right: 25,
+                                                                                    top: 25,
+                                                                                    bottom: 0
+                                                                                }
+                                                                            },
+                                                                            scales: {
+                                                                                xAxes: [{
+                                                                                        time: {
+                                                                                            unit: 'date'
+                                                                                        },
+                                                                                        gridLines: {
+                                                                                            display: false,
+                                                                                            drawBorder: false
+                                                                                        },
+                                                                                        ticks: {
+                                                                                            maxTicksLimit: 7
+                                                                                        }
+                                                                                    }],
+                                                                                yAxes: [{
+                                                                                        ticks: {
+                                                                                            maxTicksLimit: 5,
+                                                                                            padding: 10,
+                                                                                            // Include a dollar sign in the ticks
+                                                                                            callback: function (value, index, values) {
+                                                                                                return number_format(value) + ' VNĐ';
+                                                                                            }
+                                                                                        },
+                                                                                        gridLines: {
+                                                                                            color: "rgb(234, 236, 244)",
+                                                                                            zeroLineColor: "rgb(234, 236, 244)",
+                                                                                            drawBorder: false,
+                                                                                            borderDash: [2],
+                                                                                            zeroLineBorderDash: [2]
+                                                                                        }
+                                                                                    }],
+                                                                            },
+                                                                            legend: {
+                                                                                display: false
+                                                                            },
+                                                                            tooltips: {
+                                                                                backgroundColor: "rgb(255,255,255)",
+                                                                                bodyFontColor: "#858796",
+                                                                                titleMarginBottom: 10,
+                                                                                titleFontColor: '#6e707e',
+                                                                                titleFontSize: 14,
+                                                                                borderColor: '#dddfeb',
+                                                                                borderWidth: 1,
+                                                                                xPadding: 15,
+                                                                                yPadding: 15,
+                                                                                displayColors: false,
+                                                                                intersect: false,
+                                                                                mode: 'index',
+                                                                                caretPadding: 10,
+                                                                                callbacks: {
+                                                                                    label: function (tooltipItem, chart) {
+                                                                                        var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                                                        return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    });
             </script>
     </body>
 </html>

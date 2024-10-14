@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import utils.UserHomeUtil;
 
 /**
  *
@@ -69,9 +70,12 @@ public class UserHomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
+        UserHomeUtil userHomeUtil = new UserHomeUtil();
+
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
-
+        String apartmentID_raw = request.getParameter("apartmentID");
+        
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
@@ -79,22 +83,49 @@ public class UserHomeServlet extends HttpServlet {
         // get current date for user first access
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
-
+        int apartmentID = 0;
+        
         if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
             } catch (NumberFormatException e) {
             }
         }
+        
+        if(apartmentID_raw != null){
+            try {
+                apartmentID = Integer.parseInt(apartmentID_raw);
+            } catch (NumberFormatException e) {
+            }
+        }
 
+        // create dao
         InvoiceDAO invoiceDAO = new InvoiceDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
 
-//        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
-        List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(1);
-        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(1);
-        LinkedHashSet<Integer> listOfYear = listOfYear(dList);
-        LinkedHashSet<Date> listOfMonth = listOfMonth(dList, year);
+        // get apartment user is living
+        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
+        
+        // if user is owner
+        if (customer.getIsOwner() == 1) {
+            List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
+            if(apartmentID != 0){
+                for (Apartment apartment1 : apartmentList) {
+                    if(apartment1.getApartmentID() == apartmentID){
+                        apartment = apartment1;
+                    }
+                }
+            }
+            else if (apartment == null) {
+                apartment = apartmentList.get(0);
+            }
+            request.setAttribute("apartmentList", apartmentList);
+        }
+
+        List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(apartment.getApartmentID());
+        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());
+        LinkedHashSet<Integer> listOfYear = userHomeUtil.listOfYear(dList);
+        LinkedHashSet<Date> listOfMonth = userHomeUtil.listOfMonth(dList, year);
 
         if (month_raw != null) {
             try {
@@ -112,15 +143,15 @@ public class UserHomeServlet extends HttpServlet {
             }
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(1, month, year);
+        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
 
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
 
         // parameter for current year
-        double total = totalAmount(iList, year);
-        int numOfInvoice = numInvoiceInYear(iList, year);
-        double paid = paidAmount(iList, year);
-        double unpaid = unPaidAmount(iList, year);
+        double total = userHomeUtil.totalAmount(iList, year);
+        int numOfInvoice = userHomeUtil.numInvoiceInYear(iList, year);
+        double paid = userHomeUtil.paidAmount(iList, year);
+        double unpaid = userHomeUtil.unPaidAmount(iList, year);
 
         NewsDAO newsDAO = new NewsDAO();
 
@@ -150,7 +181,7 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("totalPages", totalPages);
 
         // area chart
-        List<Double> amoutMonth = listAmountByMonth(iList, year);
+        List<Double> amoutMonth = userHomeUtil.listAmountByMonth(iList, year);
         request.setAttribute("amoutMonth", amoutMonth);
 
         request.setAttribute("dateList", listOfMonth);
@@ -166,84 +197,8 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("invoiceCurrent", invoiceCurrent);
         request.setAttribute("serviceList", serviceList);
 
-//        request.setAttribute("apartment", apartment);
-        request.getRequestDispatcher("userhome.jsp").forward(request, response);
-    }
-
-    protected int numInvoiceInYear(List<Invoice> list, int year) {
-        int count = 0;
-        for (Invoice invoice : list) {
-            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
-                count += 1;
-            }
-        }
-        return count;
-    }
-
-    protected LinkedHashSet<Integer> listOfYear(List<Date> list) {
-        LinkedHashSet<Integer> yList = new LinkedHashSet<>();
-        for (Date date : list) {
-            yList.add(date.toLocalDate().getYear());
-        }
-        return yList;
-    }
-
-    protected LinkedHashSet<Date> listOfMonth(List<Date> list, int year) {
-        LinkedHashSet<Date> mList = new LinkedHashSet<>();
-        for (Date date : list) {
-            if (date.toLocalDate().getYear() == year) {
-                mList.add(date);
-            }
-        }
-        return mList;
-    }
-
-    protected double totalAmount(List<Invoice> list, int year) {
-        double total = 0;
-        for (Invoice invoice : list) {
-            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
-                total += invoice.getAmount();
-            }
-        }
-        return total;
-    }
-
-    protected double paidAmount(List<Invoice> list, int year) {
-        double total = 0;
-        for (Invoice invoice : list) {
-            // check if invoice is paid or not
-            // status = 1 => paid
-            // status = 0 => unpaid
-            if (invoice.getStatus() == 1 && invoice.getIssueDate().toLocalDate().getYear() == year) {
-                total += invoice.getAmount();
-            }
-        }
-        return total;
-    }
-
-    protected double unPaidAmount(List<Invoice> list, int year) {
-        double total = 0;
-        for (Invoice invoice : list) {
-            // check if invoice is paid or not
-            // status = 1 => paid
-            // status = 0 => unpaid
-            if (invoice.getStatus() == 0 && invoice.getIssueDate().toLocalDate().getYear() == year) {
-                total += invoice.getAmount();
-            }
-        }
-        return total;
-    }
-
-    protected List<Double> listAmountByMonth(List<Invoice> list, int year) {
-        double init = 0;
-        List<Double> amountList = new ArrayList<>(Arrays.asList(init, init, init, init, init, init, init, init, init, init, init, init));
-        for (Invoice invoice : list) {
-            if (invoice.getIssueDate().toLocalDate().getYear() == year) {
-                int month = invoice.getIssueDate().toLocalDate().getMonthValue();
-                amountList.add(month - 1, amountList.get(month - 1) + invoice.getAmount());
-            }
-        }
-        return amountList;
+        request.setAttribute("apartment", apartment);
+        request.getRequestDispatcher("/user/userhome.jsp").forward(request, response);
     }
 
     /**

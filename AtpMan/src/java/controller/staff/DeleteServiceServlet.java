@@ -2,22 +2,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package controller.staff;
 
-package controller;
-
-import DAO.CustomerDAO;
+import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Service;
 
 /**
  *
- * @author WuanTun
+ * @author thang
  */
-public class CreateAccount extends HttpServlet {
+public class DeleteServiceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +36,10 @@ public class CreateAccount extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateAccount</title>");
+            out.println("<title>Servlet DeleteServiceServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateAccount at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteServiceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,48 +57,32 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        ServiceDAO sdao = new ServiceDAO();
+        sdao.deleteService(Integer.parseInt(id));
+        request.setAttribute("listservice", sdao.getAll());
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        try {
-            CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-            String age = request.getParameter("age");
-            String registrationDate = request.getParameter("registrationDate");
-            String userType = request.getParameter("userType");
-
-            String isOwner = null;
-            if ("2".equals(userType)) {
-                isOwner = "1"; // Resident -> isOwner = 1
-            } else if ("3".equals(userType)) {
-                isOwner = "0"; // Owner -> isOwner = 0
-            }
-
-            boolean hasError = false;
-
-            if (customerDAO.existsByUsernameOrGmail(username, email)) {
-                request.setAttribute("messExist", "Username or email already exists");
-                request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-                return;
-            }
-
-            
-            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
-            request.setAttribute("successCreate", "Create account successfully");
-            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-            
-        } catch (Exception e) {
-        }
+        processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

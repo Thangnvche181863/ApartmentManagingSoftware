@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.math.BigDecimal;
+
 
 /**
  *
@@ -13,30 +15,25 @@ public class Apartment {
 
     private int apartmentID;
     private int buildingID;
-    private String departmentType;
-    private double price;
+    private String apartmentNumber;
+    private String apartmentType;
+    private BigDecimal price;
+    private BigDecimal maintenanceFee;
     private int floor;
     private int area;
 
 
     public Apartment() {
     }
-    public Apartment(int apartmentID, int buildingID, String departmentType, double price, int floor, int area) {
+
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
-
-        this.departmentType = departmentType;
+        this.apartmentNumber = apartmentNumber;
+        this.apartmentType = apartmentType;
         this.price = price;
+        this.maintenanceFee = maintenanceFee;
         this.floor = floor;
-        this.area = area;
-    }
-
-
-    public int getArea() {
-        return area;
-    }
-
-    public void setArea(int area) {
         this.area = area;
     }
 
@@ -54,23 +51,38 @@ public class Apartment {
 
     public void setBuildingID(int buildingID) {
         this.buildingID = buildingID;
-
     }
 
-    public String getDepartmentType() {
-        return departmentType;
+    public String getApartmentNumber() {
+        return apartmentNumber;
     }
 
-    public void setDepartmentType(String departmentType) {
-        this.departmentType = departmentType;
+    public void setApartmentNumber(String apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
-    public double getPrice() {
+    public String getApartmentType() {
+        return apartmentType;
+    }
+
+    public void setApartmentType(String apartmentType) {
+        this.apartmentType = apartmentType;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public BigDecimal getMaintenanceFee() {
+        return maintenanceFee;
+    }
+
+    public void setMaintenanceFee(BigDecimal maintenanceFee) {
+        this.maintenanceFee = maintenanceFee;
     }
 
     public int getFloor() {
@@ -81,11 +93,16 @@ public class Apartment {
         this.floor = floor;
     }
 
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", apartmentType=" + apartmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + '}';
     }
-
-
 }

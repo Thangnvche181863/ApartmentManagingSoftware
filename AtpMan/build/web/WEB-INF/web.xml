@@ -10,7 +10,7 @@
     </filter>
     <filter-mapping>
         <filter-name>CustomerPermissionFilter</filter-name>
-        <url-pattern>/userhome</url-pattern>
+        <url-pattern>/user/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>StaffPermissionFilter</filter-name>
@@ -26,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>News</servlet-name>
-        <servlet-class>controller.NewsServlet</servlet-class>
+        <servlet-class>controller.guest.NewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewsDetail</servlet-name>
@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>UserHomeServlet</servlet-name>
-        <servlet-class>controller.UserHomeServlet</servlet-class>
+        <servlet-class>controller.user.UserHomeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServiceIntroServlet</servlet-name>
@@ -42,7 +42,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateAccount</servlet-name>
-        <servlet-class>controller.CreateAccount</servlet-class>
+        <servlet-class>controller.staff.CreateAccount</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginGoogle</servlet-name>
@@ -62,15 +62,15 @@
     </servlet>
     <servlet>
         <servlet-name>AddNewsServlet</servlet-name>
-        <servlet-class>controller.AddNews</servlet-class>
+        <servlet-class>controller.staff.AddNews</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewsManager</servlet-name>
-        <servlet-class>controller.NewsManager</servlet-class>
+        <servlet-class>controller.staff.NewsManager</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NewsDelete</servlet-name>
-        <servlet-class>controller.NewsDelete</servlet-class>
+        <servlet-class>controller.staff.NewsDelete</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CRUDService</servlet-name>
@@ -82,23 +82,23 @@
     </servlet>
     <servlet>
         <servlet-name>EditService</servlet-name>
-        <servlet-class>controller.EditServiceServlet</servlet-class>
+        <servlet-class>controller.staff.EditServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteServiceServlet</servlet-name>
-        <servlet-class>controller.DeleteServiceServlet</servlet-class>
+        <servlet-class>controller.staff.DeleteServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServiceAddServlet</servlet-name>
-        <servlet-class>controller.ServiceAddServlet</servlet-class>
+        <servlet-class>controller.staff.ServiceAddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
-        <servlet-class>controller.UserhomeNewsServlet</servlet-class>
+        <servlet-class>controller.user.UserhomeNewsServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Home</servlet-name>
-        <servlet-class>controller.Home</servlet-class>
+        <servlet-class>controller.guest.Home</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -118,7 +118,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserHomeServlet</servlet-name>
-        <url-pattern>/userhome</url-pattern>
+        <url-pattern>/user/userhome</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServiceIntroServlet</servlet-name>

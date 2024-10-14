@@ -54,7 +54,7 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", customer);
-                response.sendRedirect("userhome");
+                response.sendRedirect("user/userhome");
 
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
