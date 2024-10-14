@@ -13,31 +13,25 @@ public class Apartment {
 
     private int apartmentID;
     private int buildingID;
-
+    private int apartmentNumber;
     private String departmentType;
     private double price;
+    private double maintenanceFee;
     private int floor;
     private int area;
 
 
     public Apartment() {
     }
-    public Apartment(int apartmentID, int buildingID, String departmentType, double price, int floor, int area) {
+
+    public Apartment(int apartmentID, int buildingID, int apartmentNumber, String departmentType, double price, double maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
-
+        this.apartmentNumber = apartmentNumber;
         this.departmentType = departmentType;
         this.price = price;
+        this.maintenanceFee = maintenanceFee;
         this.floor = floor;
-        this.area = area;
-    }
-
-
-    public int getArea() {
-        return area;
-    }
-
-    public void setArea(int area) {
         this.area = area;
     }
 
@@ -55,7 +49,14 @@ public class Apartment {
 
     public void setBuildingID(int buildingID) {
         this.buildingID = buildingID;
+    }
 
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     public String getDepartmentType() {
@@ -74,6 +75,14 @@ public class Apartment {
         this.price = price;
     }
 
+    public double getMaintenanceFee() {
+        return maintenanceFee;
+    }
+
+    public void setMaintenanceFee(double maintenanceFee) {
+        this.maintenanceFee = maintenanceFee;
+    }
+
     public int getFloor() {
         return floor;
     }
@@ -82,11 +91,18 @@ public class Apartment {
         this.floor = floor;
     }
 
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", departmentType=" + departmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + '}';
     }
-
+    
 
 }

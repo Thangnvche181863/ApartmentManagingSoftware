@@ -65,9 +65,9 @@
 
                         <c:if test="${sessionScope.user ==null}">
 
-                            <a href="register.jsp" class="btn btn-primary">
+<!--                            <a href="register.jsp" class="btn btn-primary">
                                 <i class="fab fa-slack me-2"></i> Sign up
-                            </a>
+                            </a>-->
                         </c:if>
 
                         <c:if test="${sessionScope.user !=null}">

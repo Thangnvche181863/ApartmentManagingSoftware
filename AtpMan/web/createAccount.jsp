@@ -72,7 +72,7 @@
                                 </c:if>
                                 <form action="createaccount" method="post">
 
-                                    <!-- Username và Name -->
+
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="username">Username</label>
@@ -86,7 +86,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Phone Number và Email -->
+
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="phoneNumber">Phone Number</label>
@@ -100,14 +100,13 @@
                                         </div>
                                     </div>
 
-                                    <!-- Building và Apartment -->
+
                                     <div class="row">
-                                        <!-- Danh sách Building -->
+
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label select-label">Building</label>
                                             <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
                                                 <option value="" selected>Choose building</option>
-                                                <!-- Lặp qua danh sách Building từ servlet -->
                                                 <c:forEach items="${listBuildings}" var="b">
                                                     <option value="${b.buildingID}">${b.name}</option>
                                                 </c:forEach>
@@ -115,7 +114,7 @@
                                             <small class="text-danger" id="buildingError"></small>
                                         </div>
 
-                                        <!-- Danh sách Apartment sẽ được nạp qua AJAX -->
+
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label select-label">Apartment</label>
                                             <select class="select form-control-lg" name="apartment" id="apartment" required>
@@ -123,9 +122,10 @@
                                             </select>
                                             <small class="text-danger" id="apartmentError"></small>
                                         </div>
+                                        
                                     </div>
 
-                                    <!-- Loại tài khoản -->
+
                                     <div class="row">
                                         <div class="col-12 mb-4">
                                             <label class="form-label select-label">Type</label>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Nút tạo tài khoản -->
+
                                     <div class="mt-4 pt-2">
                                         <div>
                                             <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
@@ -274,9 +274,9 @@
 
                 if (buildingId !== "") {
                     var xhr = new XMLHttpRequest();
-                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true); 
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
                     xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (xhr.readyState === 4 && xhr.status === 200) { //404, 400, 500
                             // Replace apartment select box options with the response from the server
                             document.getElementById("apartment").innerHTML = xhr.responseText;
                         }

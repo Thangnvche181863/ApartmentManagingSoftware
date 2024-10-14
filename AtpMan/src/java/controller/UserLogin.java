@@ -71,7 +71,7 @@ public class UserLogin extends HttpServlet {
 
                 session.setAttribute("user", staff);
 
-                response.sendRedirect("managerHomePage.jsp");
+                response.sendRedirect("managerPage");
 
             } else {
 

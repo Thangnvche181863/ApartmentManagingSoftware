@@ -117,8 +117,8 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Login Screens:</h6>
                             <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <a class="collapse-item" href="changeemail">Change Email</a>
+                            <a class="collapse-item" href="changepassword">Change Password</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
                             <a class="collapse-item" href="404.html">404 Page</a>
@@ -897,5 +897,12 @@
                                                 }
                                             });
         </script>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+            <df-messenger
+                intent="WELCOME"
+                chat-title="BotAPT"
+                agent-id="72c1271d-7664-46f4-9f3f-6076726f6b62"
+                language-code="vi"
+            ></df-messenger>
     </body>
 </html>

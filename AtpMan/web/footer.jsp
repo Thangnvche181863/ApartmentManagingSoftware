@@ -36,7 +36,7 @@
         <link href="css/style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-               <!-- Footer Start -->
+        <!-- Footer Start -->
         <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
             <div class="container py-5">
                 <div class="row g-5">
@@ -114,7 +114,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <div class="footer-instagram rounded">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -192,6 +192,12 @@
                 </div>
             </div>
         </div>
-        <!-- Footer End -->
-    </body>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+            <df-messenger
+                intent="WELCOME"
+                chat-title="BotAPT"
+                agent-id="72c1271d-7664-46f4-9f3f-6076726f6b62"
+                language-code="vi"
+            ></df-messenger>
+</body>
 </html>

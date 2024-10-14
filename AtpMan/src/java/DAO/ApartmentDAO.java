@@ -33,13 +33,17 @@ public class ApartmentDAO {
             PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int apartmentID = rs.getInt(1);
-                int buildingID = rs.getInt(2);
-                String departmentType = rs.getString(3);
-                double price = rs.getDouble(4);
-                int floor = rs.getInt(5);
-                int area = rs.getInt(6);
-                Apartment apartment = new Apartment(apartmentID, buildingID, departmentType, price, floor, area);
+                int apartmentID = rs.getInt(1);            // Column 1: apartmentID
+                int buildingID = rs.getInt(2);             // Column 2: buildingID
+                int apartmentNumber = rs.getInt(3);        // Column 3: apartmentNumber
+                String departmentType = rs.getString(4);   // Column 4: departmentType
+                double price = rs.getDouble(5);            // Column 5: price
+                double maintenanceFee = rs.getDouble(6);   // Column 6: maintenanceFee
+                int floor = rs.getInt(7);                  // Column 7: floor
+                int area = rs.getInt(8);                   // Column 8: area
+
+                // Create a new Apartment object
+                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);
                 vector.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -58,12 +62,16 @@ public class ApartmentDAO {
             pre.setInt(1, buildingID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int apartmentID = rs.getInt(1);
-                String departmentType = rs.getString(3);
-                double price = rs.getDouble(4);
-                int floor = rs.getInt(5);
-                int area = rs.getInt(6);
-                Apartment apartment = new Apartment(apartmentID, buildingID, departmentType, price, floor, area);
+                int apartmentID = rs.getInt(1);            // Column 1: apartmentID
+                int apartmentNumber = rs.getInt(3);        // Column 3: apartmentNumber
+                String departmentType = rs.getString(4);   // Column 4: departmentType
+                double price = rs.getDouble(5);            // Column 5: price
+                double maintenanceFee = rs.getDouble(6);   // Column 6: maintenanceFee
+                int floor = rs.getInt(7);                  // Column 7: floor
+                int area = rs.getInt(8);                   // Column 8: area
+
+                // Create a new Apartment object
+                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);
                 vector.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -105,8 +113,10 @@ public class ApartmentDAO {
                             Apartment apartment = new Apartment();
                             apartment.setApartmentID(rs.getInt("apartmentID"));
                             apartment.setBuildingID(rs.getInt("buildingID"));
+                            apartment.setApartmentNumber(rs.getInt("apartmentNumber"));
                             apartment.setDepartmentType(rs.getString("departmentType"));
                             apartment.setPrice(rs.getDouble("price"));
+                            apartment.setMaintenanceFee(rs.getDouble("maintenanceFee"));
                             apartment.setFloor(rs.getInt("floor"));
                             apartment.setArea(rs.getInt("area"));
                             apartments.add(apartment);
@@ -115,10 +125,10 @@ public class ApartmentDAO {
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {
-           
+
             LOGGER.log(Level.SEVERE, "Error retrieving apartments", ex);
         } finally {
-            
+
             if (conn != null) {
                 try {
                     conn.close();
@@ -127,11 +137,10 @@ public class ApartmentDAO {
                 }
             }
         }
-        
+
         return apartments;
     }
-    
-    
+
     public static void main(String[] args) {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         int buildingId = 1;

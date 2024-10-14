@@ -19,9 +19,9 @@ import utils.UtilHashPass;
 public class CustomerDAO {
 
     private static final Logger LOGGER = Logger.getLogger(CustomerDAO.class.getName());
-    
+
     //QUAN
-    public boolean checkUsername(String username) { 
+    public boolean checkUsername(String username) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
@@ -39,7 +39,7 @@ public class CustomerDAO {
         }
         return false; // Return false if connection is null or if an exception occurs
     }
-    
+
     //QUAN
     public boolean checkPassword(String username, String password) {
         Connection conn = null;
@@ -66,7 +66,7 @@ public class CustomerDAO {
         }
         return false;
     }
-    
+
     //QUAN
     public boolean checkAuthenticationUser(String username, String password) {
         Connection conn = null;
@@ -92,7 +92,7 @@ public class CustomerDAO {
         }
         return false;
     }
-    
+
     //QUAN
     public Customer getAllInformationCustomer(String username, String password) {
         Connection conn = null;
@@ -107,6 +107,7 @@ public class CustomerDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Customer customer = new Customer();
+                            customer.setCustomerID(rs.getInt("customerID")); // Lấy customerID từ kết quả
                             customer.setUsername(rs.getString("username"));
                             customer.setName(rs.getString("name"));
                             customer.setEmail(rs.getString("email"));
@@ -120,12 +121,34 @@ public class CustomerDAO {
                 }
             }
         } catch (Exception e) {
+            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "Error retrieving customer information", e);
         } finally {
             DBContext.closeConnection(conn);
         }
-        return null;
+        return null; // Trả về null nếu không tìm thấy hoặc có lỗi xảy ra
     }
-    
+
+    public String getEmailByCustomerID(int customerID) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT email FROM Customer WHERE customerID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, customerID);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("email");
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error finding email by customerID", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return null; // Trả về null nếu không tìm thấy email
+    }
+
     //QUAN
     public boolean existsByUsernameOrGmail(String username, String email) {
         Connection conn = null;
@@ -171,7 +194,7 @@ public class CustomerDAO {
             DBContext.closeConnection(conn);
         }
     }
-    
+
     //QUAN
     public int getCustomerIDByUsername(String username) {
         Connection conn = null;
@@ -195,7 +218,7 @@ public class CustomerDAO {
         }
         return customerID;
     }
-    
+
     //QUAN
     public String getPasswordByID(int customerID) {
         Connection conn = null;
@@ -212,13 +235,13 @@ public class CustomerDAO {
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error finding customer by gmail", e);
+            LOGGER.log(Level.SEVERE, "Error finding password by ID", e);
         } finally {
             DBContext.closeConnection(conn);
         }
         return password;
     }
-    
+
     //QUAN
     public boolean updatePassword(int customerID, String newPassword) {
 
@@ -232,6 +255,8 @@ public class CustomerDAO {
                     ps.setString(1, hashedPassword);
                     ps.setInt(2, customerID);
                     int rowsUpdated = ps.executeUpdate();
+                    System.out.println("Rows Updated: " + rowsUpdated);
+
                     return rowsUpdated > 0;
                 }
             }
@@ -242,14 +267,32 @@ public class CustomerDAO {
         }
         return false; // Return false if connection is null or if an exception occurs
     }
-
-//    public static void main(String[] args) {
-//        CustomerDAO dao = new CustomerDAO();
-//        Customer c = dao.getAllInformationCustomer("nguyenquan", "sRY4rMY8/DtYD2+OQLAkTVClzcY=");
-//        System.out.println(c.getName());
-//    }
     
     //QUAN
+    public boolean updateCustomerEmail(int customerID, String newemail) throws SQLException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "UPDATE Customer SET email = ? WHERE customerID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, newemail);
+                    ps.setInt(2, customerID);
+                    int rowsUpdate = ps.executeUpdate();
+                    System.out.println("Rows update: " + rowsUpdate);
+                    return rowsUpdate > 0;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error updating password", ex);
+        } finally {
+            DBContext.closeConnection(conn); 
+        }
+        return false;
+    }
+    
+    //QUAN
+
     public Customer findCustomerByGmail(String gmail) {
         Connection conn = null;
         try {
@@ -272,7 +315,7 @@ public class CustomerDAO {
         }
         return null;
     }
-    
+
     //QUAN
     public Customer getCustomer(int id) {
         Connection conn = null;

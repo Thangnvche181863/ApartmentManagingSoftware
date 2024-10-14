@@ -56,6 +56,9 @@ public class EmailHandle {
             // Set the actual message
             message.setText(body);
 
+            // Set content type to HTML
+            message.setContent(body, "text/html; charset=UTF-8");
+
             // Send the message
             Transport.send(message);
 
