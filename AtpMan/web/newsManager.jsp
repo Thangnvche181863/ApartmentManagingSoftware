@@ -380,7 +380,7 @@
                         <!-- Page Heading -->
                         <h1 class="h3 mb-4 text-gray-800">News Manager</h1>
                         <div>
-                            <a href="./addnews.jsp" class="btn btn-outline-primary">Add New</a>
+                            <a href="./AddNews" class="btn btn-outline-primary">Add New</a>
 
                         </div>
                         <center>

@@ -24,35 +24,48 @@ public class NewsManager extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        NewsDAO newsDAO = new NewsDAO();
-        String searchParam = request.getParameter("search");
+    throws ServletException, IOException {
+    NewsDAO newsDAO = new NewsDAO();
+    String searchParam = request.getParameter("search");
+
+    int currentPage = 1; // Default page number
+    try {
+        // Get current page from the request
         String pageParam = request.getParameter("page");
-        int currentPage = (pageParam != null) ? Integer.parseInt(pageParam) : 1;
+        if (pageParam != null) {
+            currentPage = Integer.parseInt(pageParam);
+        }
 
         List<News> newsList;
         int totalRows;
 
+        // Check if searchParam is provided and not empty
         if (searchParam != null && !searchParam.trim().isEmpty()) {
-//get news by Title, postDate desc
+            // Get news by Title, ordered by postDate desc
             totalRows = newsDAO.getNumberOfRowsByTitle(searchParam);
             newsList = newsDAO.getNewsByPageAndTitle(searchParam, currentPage, RECORDS_PER_PAGE);
-
         } else {
-//get news normally(by postDate desc)
+            // Get all news normally, ordered by postDate desc
             totalRows = newsDAO.getNumberOfRows();
             newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
-
         }
 
+        
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
+
+    
         request.setAttribute("news", newsList);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
 
+        
         request.getRequestDispatcher("newsManager.jsp").forward(request, response);
 
+    } catch (NumberFormatException e) {
+       
+        response.sendRedirect("forbiddenpage.jsp");
     }
+}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
