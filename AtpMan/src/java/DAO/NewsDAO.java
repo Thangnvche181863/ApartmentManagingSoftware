@@ -343,6 +343,54 @@ public class NewsDAO extends DBContext {
 
         return news;
     }
+    
+    public News getNewsById2(int newsID) {
+    News news = null;
+    String sql = "SELECT n.*, nc.name as newsCategoryName "
+               + "FROM News n "
+               + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+               + "WHERE n.newsID = ?";
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return null;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setInt(1, newsID); // Set the newsID parameter
+        ResultSet rs = pre.executeQuery();
+
+        if (rs.next()) {
+            int staffID = rs.getInt("staffID");  // Still retrieve staffID if needed
+            int taskID = rs.getInt("taskID");    // Still retrieve taskID if needed
+            int newsCategoryID = rs.getInt("newsCategoryID");
+            String newsTitle = rs.getString("newsTitle");
+            String newsContent = rs.getString("newsContent");
+            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+            Date postDate = new Date(sqlPostDate.getTime());
+            String newsImg = rs.getString("newsImg");
+            String newsCategoryName = rs.getString("newsCategoryName");
+            // Removed staffName since it's not fetched anymore
+
+            news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, null); // Use null for staffName
+        }
+
+        rs.close();
+        pre.close();
+        LOGGER.log(Level.INFO, "Successfully retrieved news with ID {0}.", newsID);
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching news by ID.", e);
+    }
+
+    return news;
+}
+    
+    
 
     public boolean addNews(News news) {
         String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -435,6 +483,48 @@ public class NewsDAO extends DBContext {
 
         return isDeleted;
     }
+    
+    public boolean updateNews(News news) {
+    String sql = "UPDATE News SET staffID = ?, taskID = ?, newsCategoryID = ?, newsTitle = ?, newsContent = ?, postDate = ? WHERE newsID = ?";
+    boolean updated = false;
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return false;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setInt(1, news.getStaffID());
+        pre.setInt(2, news.getTaskID());
+        pre.setInt(3, news.getNewsCategoryID());
+        pre.setString(4, news.getNewsTitle());
+        pre.setString(5, news.getNewsContent());
+        pre.setTimestamp(6, new java.sql.Timestamp(news.getPostDate().getTime()));
+        
+        pre.setInt(7, news.getNewsID());
+
+        int rowsAffected = pre.executeUpdate();
+
+        if (rowsAffected > 0) {
+            updated = true;
+            LOGGER.log(Level.INFO, "Successfully updated news with ID: {0}", news.getNewsID());
+        } else {
+            LOGGER.log(Level.WARNING, "No news record found with ID: {0}", news.getNewsID());
+        }
+
+        // Close resources
+        pre.close();
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error updating news record.", e);
+    }
+
+    return updated;
+}
 
     public static void main(String[] args) {
         NewsDAO dao = new NewsDAO();

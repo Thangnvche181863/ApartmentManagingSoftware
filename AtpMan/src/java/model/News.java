@@ -85,6 +85,14 @@ public class News {
         this.staffName = staffName;
     }
 
+    public News(int newsID, String newsTitle, String newsContent, String newsImg, int newsCategoryID) {
+        this.newsID = newsID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.newsImg = newsImg;
+    }
+
     public String getStaffName() {
         return staffName;
     }

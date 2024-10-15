@@ -179,18 +179,7 @@
                         </button>
 
                         <!-- Topbar Search -->
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" 
-                              action="newsmanage" method="get"> <!-- Specify the action and method -->
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control bg-light border-0 small" 
-                                       placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit"> <!-- Change to submit -->
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -377,11 +366,24 @@
                     <!-- Begin Page Content - Everything starts here-->
                     <div class="container-fluid ">
 
-                        <!-- Page Heading -->
-                        <h1 class="h3 mb-4 text-gray-800">News Manager</h1>
-                        <div>
-                            <a href="./AddNews" class="btn btn-outline-primary">Add New</a>
 
+
+                        <!-- Page Heading -->
+                        <center><h1 class="h3 mb-4 text-gray-800">News Manager</h1></center>  
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <form class="form-inline d-none d-sm-inline-block mw-100" action="newsmanage" method="get">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control bg-light border-0 small" 
+                                           placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <a href="./AddNews" class="btn btn-outline-primary">Add New</a>
                         </div>
                         <center>
                             <c:if test="${not empty message}">
@@ -419,7 +421,7 @@
                                                      aria-labelledby="dropdownMenuLink">
                                                     <div class="dropdown-header">Action:</div>
                                                     <a class="dropdown-item" href="NewsDetail?id=${newsItem.newsID}">View</a>
-                                                    <a class="dropdown-item" href="#">Edit</a>
+                                                    <a class="dropdown-item" href="EditNews?id=${newsItem.newsID}">Edit</a>
                                                     <div class="dropdown-divider"></div>
                                                     <a class="dropdown-item alert-danger" href="newsdelete?id=${newsItem.newsID}"  onclick="return confirmDelete();">Delete</a>
                                                 </div>
