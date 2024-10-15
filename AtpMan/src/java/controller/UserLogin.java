@@ -7,7 +7,6 @@ package controller;
 import DAO.CustomerDAO;
 import DAO.StaffDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
 import model.Staff;
-import utils.UtilHashPass;
 
 /**
  *

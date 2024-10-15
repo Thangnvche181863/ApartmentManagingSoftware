@@ -55,6 +55,7 @@
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.UserhomeNewsServlet</servlet-class>
+        
         <servlet-name>CreateAccountStaff</servlet-name>
         <servlet-class>controller.CreateAccountStaff</servlet-class>
     </servlet>
@@ -133,6 +134,7 @@
     <servlet-mapping>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <url-pattern>/userhomenews</url-pattern>
+        
         <servlet-name>CreateAccountStaff</servlet-name>
         <url-pattern>/createaccountstaff</url-pattern>
     </servlet-mapping>
