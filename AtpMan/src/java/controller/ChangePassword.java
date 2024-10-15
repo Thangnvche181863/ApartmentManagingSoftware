@@ -12,10 +12,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
+import utils.EmailHandle;
 
 /**
  *
@@ -58,10 +60,10 @@ public class ChangePassword extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("changepass.jsp").forward(request, response);
+        request.getRequestDispatcher("changepassword.jsp").forward(request, response);
     }
 
     @Override
@@ -74,41 +76,45 @@ public class ChangePassword extends HttpServlet {
             HttpSession session = request.getSession(false);
             Customer loggedInCustomer = (Customer) session.getAttribute("user");
 
+            if (loggedInCustomer == null) {
+                request.setAttribute("errSession", "Bạn cần đăng nhập để thay đổi mật khẩu.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+
             int customerID = loggedInCustomer.getCustomerID();
+            System.out.println("Customer ID from session: " + customerID);
 
-            String oldPassword = request.getParameter("oldpassword");
-            String newPassword = request.getParameter("oldpassword");
-            String cfPassword = request.getParameter("cfpassword");
+            String email = request.getParameter("email");
+            String newPassword = request.getParameter("newPassword");
+            String cfPassword = request.getParameter("cfPassword");
 
-            String currentPassword = customerDAO.getPasswordByID(customerID);
-
-            if (!oldPassword.equals(currentPassword)) {
-                request.setAttribute("errOldpass", "Mat khau cu khong khop");
-                request.getRequestDispatcher("changepass.jsp").forward(request, response);
+           
+            if (newPassword == null || newPassword.isEmpty()) {
+                request.setAttribute("errNewpass", "Mật khẩu mới không được để trống.");
+                request.getRequestDispatcher("changepassword.jsp").forward(request, response);
                 return;
             }
 
             if (!newPassword.equals(cfPassword)) {
-                request.setAttribute("errNewpass", "Mat khau moi khong khop");
-                request.getRequestDispatcher("changepass.jsp").forward(request, response);
+                request.setAttribute("errNewpass", "Mật khẩu mới không khớp.");
+                request.getRequestDispatcher("changepassword.jsp").forward(request, response);
                 return;
-
-            }
-            boolean passwordChange = customerDAO.updatePassword(customerID, newPassword);
-            if (passwordChange) {
-                request.setAttribute("changepwdsuccess", "Doi mat khau thanh cong.");
-                request.getRequestDispatcher("changepass.jsp").forward(request, response);
-            } else {
-                request.setAttribute("changepwderr", "Doi mat khau khong thanh cong.");
-                request.getRequestDispatcher("changepass.jsp").forward(request, response);
             }
             
+            boolean passwordChange = customerDAO.updatePassword(customerID, newPassword);
+            if (passwordChange) {               
+                request.setAttribute("changepwdsuccess", "Đổi mật khẩu thành công.");
+            } else {              
+                request.setAttribute("changepwderr", "Đổi mật khẩu không thành công.");
+            }          
+            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+
         } catch (SQLException ex) {
             Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**
@@ -121,4 +127,5 @@ public class ChangePassword extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+   
 }

@@ -12,19 +12,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
-import utils.EmailHandle;
-import utils.GeneratePassword;
 
 /**
  *
  * @author WuanTun
  */
-public class ChangeEmail extends HttpServlet {
+public class Verify extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +40,10 @@ public class ChangeEmail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangeEmail</title>");
+            out.println("<title>Servlet Verify</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangeEmail at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Verify at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,54 +61,36 @@ public class ChangeEmail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("changemail.jsp").forward(request, response);
+        request.getRequestDispatcher("verify.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
-            CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
-
             HttpSession session = request.getSession(false);
-            Customer loggedInCustomer = (Customer) session.getAttribute("user");
+            String sessionVericode = (String) session.getAttribute("vericode");
+            String newemail = (String) session.getAttribute("newemail");
+            String enteredVericode = request.getParameter("vericode");
 
-            if (loggedInCustomer == null) {
-                request.setAttribute("errSession", "Bạn cần đăng nhập để thay đổi email.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
+            if (sessionVericode != null && sessionVericode.equals(enteredVericode)) {               
+                CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+                Customer loggedInCustomer = (Customer) session.getAttribute("user");
+                
+                try {
+                    customerDAO.updateCustomerEmail(loggedInCustomer.getCustomerID(), newemail);
+                    session.removeAttribute("vericode"); 
+                    request.setAttribute("changemailSuccess", "Email đã được thay đổi thành công.");
+                    request.getRequestDispatcher("verify.jsp").forward(request, response);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+                    request.setAttribute("changemailerr", "Lỗi khi thay đổi email.");
+                    request.getRequestDispatcher("verify.jsp").forward(request, response);
+                }
+            } else {
+                request.setAttribute("errVerify", "Mã xác thực không chính xác.");
+                request.getRequestDispatcher("verify.jsp").forward(request, response);
             }
-
-            int customerID = loggedInCustomer.getCustomerID();
-            System.out.println("Customer ID from session: " + customerID);
-
-            String oldemail = request.getParameter("oldemail");
-            String newemail = request.getParameter("newemail");
-
-            String currentEmail = customerDAO.getEmailByCustomerID(customerID);
-
-            if (!oldemail.equals(currentEmail)) {
-                request.setAttribute("errOldEmail", "Email cũ không khớp với thông tin hiện tại.");
-                request.getRequestDispatcher("changemail.jsp").forward(request, response);
-                return;
-            }
-            String vericode = generateVerifyCode();
-            session.setAttribute("vericode", vericode);
-            session.setAttribute("newemail", newemail);
-
-            // Send verification email
-            String subject = "Xac nhan thay doi email";
-            String body = "<html><body>"
-                    + "<p>Dear,</p>"
-                    + "<p>Ma xac thuc cua ban la</p>"
-                    + "<h3>" + vericode + "</h3>"
-                    + "<p>Tran trong,</p>"
-                    + "<p>Doi ngu ho tro: Nhom 6</p>"
-                    + "</body></html>";
-
-            EmailHandle.sendEmail(oldemail, subject, body);
-            response.sendRedirect("verify");
 
         } catch (SQLException ex) {
             Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,14 +99,14 @@ public class ChangeEmail extends HttpServlet {
         }
     }
 
-    protected static String generateVerifyCode() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder codeBuilder = new StringBuilder();
-        int length = 6;
-        for (int i = 0; i < length; i++) {
-            int digit = random.nextInt(10); // Generate a random digit between 0 and 9
-            codeBuilder.append(digit);
-        }
-        return codeBuilder.toString();
-    }
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
 }
