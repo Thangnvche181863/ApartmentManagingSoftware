@@ -143,7 +143,7 @@
                                         Change password
                                         </a>
 
-                                        <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" value="" readonly></div>
+
                                         <div class="col-md-12"><label class="labels">Email </label><input type="text" name="email" class="form-control" placeholder="enter email " value="${user.email}" readonly></div>
                                         <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
                                             Change Email
@@ -152,13 +152,14 @@
                                             <label class="labels">Start Date(Hire/Register) </label>
                                             <input type="text" class="form-control" 
                                                    placeholder="enter hire date" 
-                                                   value="${userType =='3' ? user.hireDate : user.registrationDate}" 
+                                                   value="${userType == 'staff' ? user.hireDate : (userType == 'customer' ? user.registrationDate : '')}"
+
                                                    readonly>
                                         </div>
 
                                     </div>
 
-                                                   <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
                                 </div>
                             </form>
 
@@ -171,5 +172,17 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+
+        <!-- Page level plugins -->
+        <script src="vendor/chart.js/Chart.min.js"></script>
+
+        <!-- Page level custom scripts -->
+        <script src="js/demo/chart-area-demo.js"></script>
+        <script src="js/demo/chart-pie-demo.js"></script>
     </body>
 </html>

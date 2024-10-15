@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.math.BigDecimal;
+
 
 /**
  *
@@ -14,9 +16,9 @@ public class Apartment {
     private int apartmentID;
     private int buildingID;
     private String apartmentNumber;
-    private String departmentType;
-    private double price;
-    private double maintenanceFee;
+    private String apartmentType;
+    private BigDecimal price;
+    private BigDecimal maintenanceFee;
     private int floor;
     private int area;
 
@@ -26,11 +28,11 @@ public class Apartment {
     public Apartment() {
     }
 
-    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, double price, double maintenanceFee, int floor, int area) {
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
-        this.departmentType = departmentType;
+        this.apartmentType = departmentType;
         this.price = price;
         this.maintenanceFee = maintenanceFee;
         this.floor = floor;
@@ -45,11 +47,11 @@ public class Apartment {
         this.apartmentNumber = apartmentNumber;
     }
 
-    public double getMaintenanceFee() {
+    public BigDecimal getMaintenanceFee() {
         return maintenanceFee;
     }
 
-    public void setMaintenanceFee(double maintenanceFee) {
+    public void setMaintenanceFee(BigDecimal maintenanceFee) {
         this.maintenanceFee = maintenanceFee;
     }
     
@@ -80,18 +82,18 @@ public class Apartment {
     }
 
     public String getDepartmentType() {
-        return departmentType;
+        return apartmentType;
     }
 
     public void setDepartmentType(String departmentType) {
-        this.departmentType = departmentType;
+        this.apartmentType = departmentType;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -106,7 +108,7 @@ public class Apartment {
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + departmentType + ", price=" + price + ", floor=" + floor + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + apartmentType + ", price=" + price + ", floor=" + floor + '}';
     }
 
 

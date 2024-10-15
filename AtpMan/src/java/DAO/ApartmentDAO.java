@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,8 +34,8 @@ public class ApartmentDAO {
                 int buildingID = rs.getInt(2);
                 String apartmentNumber = rs.getString(3);
                 String departmentType = rs.getString(4);
-                double price = rs.getDouble(5);
-                double maintenanceFee = rs.getDouble(6);
+                BigDecimal price = rs.getBigDecimal(5);
+                BigDecimal maintenanceFee = rs.getBigDecimal(6);
                 int floor = rs.getInt(7);
                 int area = rs.getInt(8);
                 Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);
@@ -60,8 +61,8 @@ public class ApartmentDAO {
                 int apartmentID = rs.getInt(1);
                 String apartmentNumber = rs.getString(3);
                 String departmentType = rs.getString(4);
-                double price = rs.getDouble(5);
-                double maintenanceFee = rs.getDouble(6);
+                BigDecimal price = rs.getBigDecimal(5);
+                BigDecimal maintenanceFee = rs.getBigDecimal(6);
                 int floor = rs.getInt(7);
                 int area = rs.getInt(8);
                 Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);

@@ -108,6 +108,7 @@ public class StaffDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Staff staff = new Staff();
+                            staff.setStaffID(rs.getInt("staffID"));
                             staff.setUsername(rs.getString("username"));
                             staff.setName(rs.getString("name"));
                             staff.setEmail(rs.getString("email"));
@@ -198,30 +199,59 @@ public class StaffDAO {
 
     public int UpdateStaffInfo(String name, String phoneNumber, int staffID) {
         int n = 0;
-        String sql = "UPDATE Staff\n"
-                + "SET name = ?, \n"
-                + "    phoneNumber = ?\n"
-                + "WHERE staffID = ?;";
-        Connection conn = null;
-        try {
-            conn = DBContext.getConnection();
-            PreparedStatement pre = conn.prepareStatement(sql);
+        String sql = "UPDATE Staff SET name = ?, phoneNumber = ? WHERE staffID = ?;";
+
+        // Sử dụng try-with-resources để đảm bảo kết nối và preparedStatement được đóng tự động
+        try (Connection conn = DBContext.getConnection(); 
+            PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Thiết lập các giá trị cho câu lệnh SQL
             pre.setString(1, name);
             pre.setString(2, phoneNumber);
-
             pre.setInt(3, staffID);
+
+            // Thực thi câu lệnh SQL và trả về số dòng được cập nhật
             n = pre.executeUpdate();
+            
+            
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
-        return n;
+        return n; // Trả về số dòng được cập nhật (0 nếu không có dòng nào)
+    }
+
+    public Staff getStaffByID(int staffID) {
+        Staff staff = new Staff();
+        Connection conn = null;
+        String sql = "select * from Staff where staffID = ?";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, staffID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                int roleID = rs.getInt(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(5);
+                String phoneNumber = rs.getString(6);
+                String name = rs.getString(7);
+                Date hireDate = rs.getDate(8);
+                staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate); 
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return staff;
     }
 
     public static void main(String[] args) {
 
         StaffDAO dao = new StaffDAO();
-        int n = dao.dismissStaff(4);
+        int n = dao.UpdateStaffInfo("Duy Anh5", "5555555555", 4);
         System.out.println("Húp" + n);
 
     }

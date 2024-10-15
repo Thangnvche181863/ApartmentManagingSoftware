@@ -21,10 +21,10 @@
         <servlet-class>controller.UserHomeServlet</servlet-class>
     </servlet>
     <servlet>
-<!--<<<<<<< HEAD-->
+        <!--<<<<<<< HEAD-->
         <servlet-name>ServiceIntroServlet</servlet-name>
         <servlet-class>controller.ServiceIntroServlet</servlet-class>
-<!--=======-->
+        <!--=======-->
     </servlet>
     <servlet>
         <servlet-name>CreateAccount</servlet-name>
@@ -45,7 +45,11 @@
     <servlet>
         <servlet-name>ChangeEmail</servlet-name>
         <servlet-class>model.ChangeEmail</servlet-class>
-<!-->>>>>>> origin/quannguyen_iter1-->
+        <!-->>>>>>> origin/quannguyen_iter1-->
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.ProfileController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NewServlet</servlet-name>
@@ -68,10 +72,10 @@
         <url-pattern>/userhome</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-<!--<<<<<<< HEAD-->
+        <!--<<<<<<< HEAD-->
         <servlet-name>ServiceIntroServlet</servlet-name>
         <url-pattern>/serviceintro</url-pattern>
-<!--=======-->
+        <!--=======-->
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateAccount</servlet-name>
@@ -92,7 +96,11 @@
     <servlet-mapping>
         <servlet-name>ChangeEmail</servlet-name>
         <url-pattern>/changeemail</url-pattern>
-<!-->>>>>>> origin/quannguyen_iter1-->
+        <!-->>>>>>> origin/quannguyen_iter1-->
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

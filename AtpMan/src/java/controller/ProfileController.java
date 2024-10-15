@@ -20,7 +20,6 @@ import model.Staff;
  *
  * @author Admin
  */
-@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
 public class ProfileController extends HttpServlet {
 
     /**
@@ -36,34 +35,24 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+
             HttpSession session = request.getSession();
-            String userType = (String) session.getAttribute("userType");
-            if(userType.equals("2")){
-                Customer customer = (Customer) request.getAttribute("user");
-                
+            
+            Object user = session.getAttribute("user");
+            if (user instanceof Customer) {
+                Customer customer = (Customer) session.getAttribute("user");
+
                 request.setAttribute("user", customer);
-                request.setAttribute("userType", userType);
-                session.setAttribute("user", customer);
+                request.setAttribute("userType", "customer");
+
             }
-            if(userType.equals("3")){
-                Staff staff = (Staff) request.getAttribute("user");
+            if (user instanceof Staff) {
+                Staff staff = (Staff) session.getAttribute("user");
                 request.setAttribute("user", staff);
-                request.setAttribute("userType", userType);
-                
-                
-                
+                request.setAttribute("userType", "staff");
                 
                 //update profile
-                String name = (String) request.getAttribute("name");
-                String phoneNumber = (String) request.getAttribute("phoneNumber");
-                StaffDAO dao = new StaffDAO();
-                int n = dao.UpdateStaffInfo(name, phoneNumber, staff.getStaffID());
-                
             }
-            
-            
-            
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         }
     }
@@ -92,9 +81,44 @@ public class ProfileController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+
+        // In thông tin người dùng từ session
+        Staff staff = (Staff) session.getAttribute("user");
+        System.out.println("-----------");
+        System.out.println("Staff ID: " + staff.getStaffID());
+
+        String name = (String) request.getParameter("name");
+        String phoneNumber = (String) request.getParameter("phoneNumber");
+
+        // In thông tin được gửi từ form
+        System.out.println("Name: " + name);
+        System.out.println("Phone Number: " + phoneNumber);
+
+        StaffDAO dao = new StaffDAO();
+
+        // Thực hiện cập nhật và in kết quả trả về
+        int n = dao.UpdateStaffInfo(name, phoneNumber, staff.getStaffID());
+        System.out.println("Rows affected: " + n);
+
+        request.setAttribute("userType", "staff");
+
+        if (n > 0) {
+            // Lấy lại thông tin người dùng mới và in ra
+            staff.setName(name);
+            
+            // Cập nhật session và điều hướng lại trang profile
+            session.setAttribute("user", staff);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+        } else {
+            // In thông báo lỗi
+            System.out.println("Profile update failed");
+            request.setAttribute("message", "Profile update failed");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+        }
     }
 
     /**

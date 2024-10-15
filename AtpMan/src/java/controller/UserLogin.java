@@ -54,7 +54,7 @@ public class UserLogin extends HttpServlet {
 
                 session.setAttribute("user", customer);
                 //phan loai nguoi dung: user
-                session.setAttribute("userType", userType);
+               
                 response.sendRedirect("home");
                 
             } else if ("3".equals(userType)) { // Manage
@@ -68,7 +68,7 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("user", staff);
                 session.setAttribute("staffName", staffName);
                 //phan loai nguoi dung: staff
-                session.setAttribute("userType", userType);
+                
                 response.sendRedirect("managerPage");
 
             } else {
