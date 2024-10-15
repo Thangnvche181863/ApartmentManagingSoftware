@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.DBContext;
 import model.*;
 
@@ -152,4 +154,27 @@ public class LivingDAO {
         }
 
     }
+
+    //////////////////////////////////////QUAN////////////////////////////////////
+    private static final Logger LOGGER = Logger.getLogger(LivingDAO.class.getName());
+
+    public void insertResident(int customerID, int apartmentID) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO Living (customerID, apartmentID) VALUES (?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, customerID);
+                ps.setInt(2, apartmentID);
+                ps.executeUpdate();
+                System.out.println("Inserted into Living: customerID = " + customerID + ", apartmentID = " + apartmentID); // In thông báo thành công
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace(); // In ra lỗi
+            LOGGER.log(Level.SEVERE, "Error inserting into Living", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+    }
+
 }

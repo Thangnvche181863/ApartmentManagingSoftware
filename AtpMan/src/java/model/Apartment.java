@@ -78,7 +78,14 @@ public class Apartment {
 
     public void setBuildingID(int buildingID) {
         this.buildingID = buildingID;
+    }
 
+    public int getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     public String getDepartmentType() {
@@ -97,6 +104,14 @@ public class Apartment {
         this.price = price;
     }
 
+    public double getMaintenanceFee() {
+        return maintenanceFee;
+    }
+
+    public void setMaintenanceFee(double maintenanceFee) {
+        this.maintenanceFee = maintenanceFee;
+    }
+
     public int getFloor() {
         return floor;
     }
@@ -105,11 +120,18 @@ public class Apartment {
         this.floor = floor;
     }
 
+    public int getArea() {
+        return area;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
 
     @Override
     public String toString() {
         return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", departmentType=" + apartmentType + ", price=" + price + ", floor=" + floor + '}';
     }
-
+    
 
 }

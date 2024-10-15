@@ -124,27 +124,21 @@
                                     <div class="icon-circle bg-primary">
                                         <i class="fas fa-file-alt text-white"></i>
                                     </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 12, 2019</div>
-                                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-success">
-                                        <i class="fas fa-donate text-white"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="small text-gray-500">December 7, 2019</div>
-                                    $290.29 has been deposited into your account!
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="mr-3">
-                                    <div class="icon-circle bg-warning">
-                                        <i class="fas fa-exclamation-triangle text-white"></i>
+                                </c:if>
+                                <form action="createaccount" method="post">
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="username">Username</label>
+                                            <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
+                                            <small class="text-danger" id="usernameError"></small>
+                                        </div>
+
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="name">Name</label>
+                                            <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div>
@@ -156,204 +150,67 @@
                         </div>
                     </li>
 
-                    <!-- Nav Item - Messages -->
-                    <li class="nav-item dropdown no-arrow mx-1">
-                        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-envelope fa-fw"></i>
-                            <!-- Counter - Messages -->
-                            <span class="badge badge-danger badge-counter">7</span>
-                        </a>
-                        <!-- Dropdown - Messages -->
-                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="messagesDropdown">
-                            <h6 class="dropdown-header">
-                                Message Center
-                            </h6>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div class="font-weight-bold">
-                                    <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.</div>
-                                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                         alt="...">
-                                    <div class="status-indicator"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?</div>
-                                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                         alt="...">
-                                    <div class="status-indicator bg-warning"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!</div>
-                                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                         alt="...">
-                                    <div class="status-indicator bg-success"></div>
-                                </div>
-                                <div>
-                                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...</div>
-                                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                        </div>
-                    </li>
 
-                    <div class="topbar-divider d-none d-sm-block"></div>
-
-                    <!-- Nav Item - User Information -->
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">AdminName</span>
-                            <img class="img-profile rounded-circle"
-                                 src="img/undraw_profile.svg">
-                        </a>
-                        <!-- Dropdown - User Information -->
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="profile.jsp">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Activity Log
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>
-                    </li>
-
-                </ul>
-
-            </nav>
-            <!-- End of Topbar -->
-            
-            
-            
-            <body>
-                <section class="gradient-custom">
-                    <div class="container py-5 h-100">
-                        <div class="row justify-content-center align-items-center h-100">
-                            <div class="col-12 col-lg-9 col-xl-7">
-                                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                                    <div class="card-body p-4 p-md-5">
-                                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Account</h3>
-
-                                        <c:if test="${not empty messExist}">
-                                            <div class="alert alert-danger" role="alert">
-                                                ${messExist}
-                                            </div>
-                                        </c:if>
-
-                                        <!-- Display success message if account is created successfully -->
-                                        <c:if test="${not empty successCreate}">
-                                            <div class="alert alert-success" role="alert">
-                                                ${successCreate}
-                                            </div>
-                                        </c:if>
-                                        <form action="createaccount" method="post">
-
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="username">Username</label>
-                                                    <input type="text" id="username" class="form-control form-control-lg" name="username"/>
-                                                    <small class="text-danger" id="usernameError"></small>
-                                                </div>
-
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="password">Password</label>
-                                                    <input type="password" id="password" class="form-control form-control-lg" name="password" />
-                                                    <small class="text-danger" id="passwordError"></small>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="name">Name</label>
-                                                    <input type="text" id="name" class="form-control form-control-lg" name="name"/>
-                                                </div>
-
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="email">Email</label>
-                                                    <input type="text" id="email" class="form-control form-control-lg" name="email"/>
-                                                    <small class="text-danger" id="emailError"></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="phoneNumber">Phone Number</label>
-                                                    <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber"/>
-                                                    <small class="text-danger" id="phoneNumberError"></small>
-                                                </div>
-
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="age">Age</label>
-                                                    <input type="text" id="age" class="form-control form-control-lg" name="age" />
-                                                    <small class="text-danger" id="ageError"></small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label class="form-label" for="regDate">Registration Date</label>
-                                                    <input type="date" id="regDate" class="form-control form-control-lg" name="registrationDate" />
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-12 mb-4">
-                                                    <label class="form-label select-label">Type</label>
-                                                    <select class="select form-control-lg" name="userType">
-                                                        <option value="" selected>Choose option</option>
-                                                        <option value="2">Resident</option>
-                                                        <option value="3">Owner</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="mt-4 pt-2">
-                                                <div>
-                                                    <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
-                                                </div>
-                                                <a href="logout">Logout</a>
-                                            </div>
-
-                                        </form>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
+                                            <small class="text-danger" id="phoneNumberError"></small>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label" for="email">Email</label>
+                                            <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
+                                            <small class="text-danger" id="emailError"></small>
+                                        </div>
                                     </div>
-                                </div>
+
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label select-label">Building</label>
+                                            <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
+                                                <option value="" selected>Choose building</option>
+                                                <c:forEach items="${listBuildings}" var="b">
+                                                    <option value="${b.buildingID}">${b.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <small class="text-danger" id="buildingError"></small>
+                                        </div>
+
+
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label select-label">Apartment</label>
+                                            <select class="select form-control-lg" name="apartment" id="apartment" required>
+                                                <option value="" selected>Choose apartment</option>
+                                            </select>
+                                            <small class="text-danger" id="apartmentError"></small>
+                                        </div>
+                                        
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-12 mb-4">
+                                            <label class="form-label select-label">Type</label>
+                                            <select class="select form-control-lg" name="userType" required>
+                                                <option value="" selected>Choose option</option>
+                                                <option value="2">Resident</option>
+                                                <option value="3">Owner</option>
+                                            </select>
+                                            <small class="text-danger" id="userTypeError"></small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="mt-4 pt-2">
+                                        <div>
+                                            <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
+                                        </div>
+                                        <a href="logout">Logout</a>
+                                    </div>
+
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -418,10 +275,11 @@
                         }
                     }
 
-                    function validateEmail() {
-                        const email = document.getElementById("email").value;
-                        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
-                        const emailError = document.getElementById('emailError');
+            function validateEmail() {
+                const email = document.getElementById("email").value;
+                // Updated email pattern to allow general emails (like gmail.com) and .edu.vn
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu)(\.vn)?$/;
+                const emailError = document.getElementById('emailError');
 
                         if (!emailPattern.test(email)) {
                             emailError.textContent = "Please enter a valid email address.";
@@ -434,10 +292,11 @@
                         }
                     }
 
-                    function validatePhone() {
-                        const phone = document.getElementById("phoneNumber").value;
-                        const phonePattern = /^\d{10}$/;
-                        const phoneError = document.getElementById('phoneNumberError');
+
+            function validatePhone() {
+                const phone = document.getElementById("phoneNumber").value;
+                const phonePattern = /^\d{10}$/;
+                const phoneError = document.getElementById('phoneNumberError');
 
                         if (!phonePattern.test(phone)) {
                             phoneError.textContent = "Phone number must be exactly 10 digits.";
@@ -465,13 +324,30 @@
                         }
                     }
 
-                    // Attach the validate functions to the input fields
-                    document.getElementById("username").addEventListener("input", validateUsername);
-                    document.getElementById("password").addEventListener("input", validatePassword);
-                    document.getElementById("email").addEventListener("input", validateEmail);
-                    document.getElementById("phoneNumber").addEventListener("input", validatePhone);
-                    document.getElementById("age").addEventListener("input", validateAge);
-                </script>
+            // Attach the validate functions to the input fields
+            document.getElementById("username").addEventListener("input", validateUsername);
+//            document.getElementById("password").addEventListener("input", validatePassword);
+            document.getElementById("email").addEventListener("input", validateEmail);
+            document.getElementById("phoneNumber").addEventListener("input", validatePhone);
+//            document.getElementById("age").addEventListener("input", validateAge);
+
+            function loadApartments() {
+                var buildingId = document.getElementById("building").value;
+
+                if (buildingId !== "") {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) { //404, 400, 500
+                            // Replace apartment select box options with the response from the server
+                            document.getElementById("apartment").innerHTML = xhr.responseText;
+                        }
+                    };
+                    xhr.send();
+                }
+            }
+
+        </script>
 
 
             </body>

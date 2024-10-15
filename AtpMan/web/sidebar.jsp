@@ -87,7 +87,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
                        aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Pages</span>
@@ -105,12 +105,19 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="createAccount.jsp">
-                        <i class="fas fa-fw fa-user-plus"></i>
-                        <span>Create new resident</span></a>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCreateAccount"
+                       aria-expanded="true" aria-controls="collapseCreateAccount">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Tạo tài khoản</span>
+                    </a>
+                    <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Tạo tài khoản</h6>
+                            <a class="collapse-item" href="createaccount">Người dùng</a>
+                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Nav Item - Tables -->

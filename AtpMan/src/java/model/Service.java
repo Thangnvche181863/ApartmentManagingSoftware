@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author thang
@@ -12,7 +14,7 @@ public class Service {
     private int serviceId;
     private String name;
     private String type;
-    private double fee;
+    private BigDecimal fee;
     private String description;
     private String img;
     private String icon;
@@ -20,7 +22,7 @@ public class Service {
     public Service() {
     }
 
-    public Service(int serviceId, String name, String type, double fee, String description, String img, String icon) {
+    public Service(int serviceId, String name, String type, BigDecimal fee, String description, String img, String icon) {
         this.serviceId = serviceId;
         this.name = name;
         this.type = type;
@@ -54,11 +56,11 @@ public class Service {
         this.type = type;
     }
 
-    public double getFee() {
+    public BigDecimal getFee() {
         return fee;
     }
 
-    public void setFee(double fee) {
+    public void setFee(BigDecimal fee) {
         this.fee = fee;
     }
 

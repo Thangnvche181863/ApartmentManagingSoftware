@@ -21,7 +21,7 @@ public class DBContext {
     private static final String url = "jdbc:sqlserver://localhost:1433;databaseName=AptMan";
 
     private static final String username = "sa";
-    private static final String password = "123456";
+    private static final String password = "123";
 
     public DBContext(){
 

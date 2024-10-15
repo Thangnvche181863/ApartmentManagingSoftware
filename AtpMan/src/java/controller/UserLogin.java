@@ -7,7 +7,6 @@ package controller;
 import DAO.CustomerDAO;
 import DAO.StaffDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +17,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
 import model.Staff;
-import utils.UtilHashPass;
 
 /**
  *
  * @author WuanTun
  */
 public class UserLogin extends HttpServlet {
-
+    
+    @Override
+    protected  void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -53,10 +56,8 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", customer);
-                //phan loai nguoi dung: user
-               
-                response.sendRedirect("home");
-                
+                response.sendRedirect("userhome");
+
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
                 if (staff == null) {
@@ -69,6 +70,7 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("staffName", staffName);
                 //phan loai nguoi dung: staff
                 
+
                 response.sendRedirect("managerPage");
 
             } else {

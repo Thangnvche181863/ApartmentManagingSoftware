@@ -344,7 +344,7 @@
                                     <div class="feature-icon p-4 mb-4">
                                         <i class="${ls.icon}" style="font-size:  2rem;"></i>
                                     </div>
-                                    <h4 class="mb-4 ">Public Facilities</h4>
+                                    <h4 class="mb-4 ">${ls.name}</h4>
                                     <p class="mb-4 short-text" id="textContent">${ls.description}
                                     </p>
                                     <a class="btn btn-primary rounded-pill py-2 px-4 toggleBtn">Read More</a>

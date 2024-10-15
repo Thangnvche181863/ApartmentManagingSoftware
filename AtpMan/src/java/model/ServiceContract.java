@@ -15,17 +15,19 @@ public class ServiceContract {
     private Date startDate;
     private Date endDate;
     private double amount;
+    private Service service;
 
     public ServiceContract() {
     }
 
-    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, double amount) {
+    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, double amount, Service service) {
         this.serviceContractId = serviceContractId;
         this.apartmentId = apartmentId;
         this.serviceId = serviceId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
+        this.service = service;
     }
 
     public int getServiceContractId() {
@@ -75,13 +77,16 @@ public class ServiceContract {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     @Override
     public String toString() {
         return "ServiceContract{" + "serviceContractId=" + serviceContractId + ", apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + '}';
     }
-
-    
-    
-    
 }
