@@ -7,11 +7,24 @@
     <list default="true" id="30780cf5-fa27-4560-be8e-997e8b958ca4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/AtpMan.war" beforeDir="false" afterPath="$PROJECT_DIR$/dist/AtpMan.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/AddNews.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/AddNews.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/CreateAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/CreateAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/DeleteServiceServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/DeleteServiceServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/EditServiceServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/EditServiceServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/guest/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ManagerPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/ManagerPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/NewsDelete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/NewsDelete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/NewsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/NewsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/NewsServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/guest/NewsServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ServiceAddServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/staff/ServiceAddServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/UserHomeServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/user/UserHomeServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/java/controller/UserLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/UserLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/UserhomeNewsServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/user/UserhomeNewsServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/utils/filter/CustomerPermissionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/utils/filter/CustomerPermissionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/utils/filter/StaffPermissionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/utils/filter/StaffPermissionFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/forbiddenpage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/forbiddenpage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/userhome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/user/userhome.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,28 +54,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TomEE Server.AtpMan.executor": "Run",
-    "Tomcat Server.Tomcat 10.1.25.executor": "Run",
-    "git-widget-placeholder": "Developer",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Chuyen_nganh_SE_ki5_fa24/SWT301/Lab/Lab2/Junite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.29195088",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TomEE Server.AtpMan.executor&quot;: &quot;Run&quot;,
+    &quot;Tomcat Server.Tomcat 10.1.25.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;khangpm&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/programing_learning/Spring_Boot/First_Lession_2/firstlession2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.29195088&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="AtpMan" type="TomeeConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="TomEE 10.1.25" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
@@ -283,6 +296,8 @@
       <workItem from="1728033520593" duration="86000" />
       <workItem from="1728235523017" duration="609000" />
       <workItem from="1728353167766" duration="15000" />
+      <workItem from="1728493372110" duration="646000" />
+      <workItem from="1728520620139" duration="7000" />
     </task>
     <servers />
   </component>

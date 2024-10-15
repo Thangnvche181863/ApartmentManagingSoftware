@@ -116,14 +116,22 @@ public class StaffPermissionFilter implements Filter {
 
         // get staff session
         Object user = session.getAttribute("user");
+        String servletPath = req.getServletPath();
+        String url = "";
+        String[] pathParts = servletPath.split("\\/");
+
+        if (pathParts.length > 2) {
+            url = "../";
+        }
+        req.setAttribute("url", url);
         if (user == null) {
             req.setAttribute("goback", "/AtpMan/login.jsp");
             req.setAttribute("buttonText", "Go to Login");
-            req.getRequestDispatcher("forbiddenpage.jsp").forward(req, res);
-        }else if ( !(user instanceof Staff)){
-            req.setAttribute("goback", "/AtpMan/userhome");
+            req.getRequestDispatcher("/forbiddenpage.jsp").forward(req, res);
+        } else if (!(user instanceof Staff)) {
+            req.setAttribute("goback", "/AtpMan/user/userhome");
             req.setAttribute("buttonText", "Go to Home");
-            req.getRequestDispatcher("forbiddenpage.jsp").forward(req, res);
+            req.getRequestDispatcher("/forbiddenpage.jsp").forward(req, res);
         }
 
         Throwable problem = null;
