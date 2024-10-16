@@ -119,6 +119,184 @@ public class NewsDAO extends DBContext {
 
         return list;
     }
+    
+    public List<News> getNewsByPageAndTitleAndCategory(String search, String categoryID, int page, int recordsPerPage) {
+    List<News> list = new ArrayList<>();
+    String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
+            + "FROM News n "
+            + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+            + "JOIN Staff s ON n.staffID = s.staffID "
+            + "WHERE n.newsTitle LIKE ? AND nc.newsCategoryID = ? "
+            + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return list;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, "%" + search + "%");
+        pre.setString(2, categoryID); // Filter by category
+        pre.setInt(3, (page - 1) * recordsPerPage);
+        pre.setInt(4, recordsPerPage);
+
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) {
+            int newsID = rs.getInt("newsID");
+            int staffID = rs.getInt("staffID");
+            int taskID = rs.getInt("taskID");
+            int newsCategoryID = rs.getInt("newsCategoryID");
+            String newsTitle = rs.getString("newsTitle");
+            String newsContent = rs.getString("newsContent");
+            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+            Date postDate = new Date(sqlPostDate.getTime());
+            String newsImg = rs.getString("newsImg");
+            String newsCategoryName = rs.getString("newsCategoryName");
+            String staffName = rs.getString("staffName");
+
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+            list.add(news);
+        }
+
+        rs.close();
+        pre.close();
+
+        LOGGER.log(Level.INFO, "Successfully retrieved {0} news records for page {1}.", new Object[]{list.size(), page});
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching paginated news records by title and category.", e);
+    }
+
+    return list;
+}
+    
+    public int getNumberOfRowsByTitleAndCategory(String title, String categoryID) {
+    String sql = "SELECT COUNT(*) FROM News n JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+            + "WHERE n.newsTitle LIKE ? AND nc.newsCategoryID = ?";
+    int count = 0;
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return count;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, "%" + title + "%");
+        pre.setString(2, categoryID);
+
+        ResultSet rs = pre.executeQuery();
+
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+
+        rs.close();
+        pre.close();
+
+        LOGGER.log(Level.INFO, "Total number of news records matching title '{0}' and category '{1}': {2}", 
+            new Object[]{title, categoryID, count});
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error getting the number of news records by title and category.", e);
+    }
+
+    return count;
+}
+
+    public int getNumberOfRowsByCategory(String categoryID) {
+    String sql = "SELECT COUNT(*) FROM News WHERE newsCategoryID = ?";
+    int count = 0;
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return count;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, categoryID); // Filter by categoryID
+
+        ResultSet rs = pre.executeQuery();
+
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+
+        rs.close();
+        pre.close();
+
+        LOGGER.log(Level.INFO, "Total number of news records for category '{0}': {1}", new Object[]{categoryID, count});
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error getting the number of news records by category.", e);
+    }
+
+    return count;
+}
+
+    public List<News> getNewsByPageAndCategory(String categoryID, int page, int recordsPerPage) {
+    List<News> list = new ArrayList<>();
+    String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
+            + "FROM News n "
+            + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+            + "JOIN Staff s ON n.staffID = s.staffID "
+            + "WHERE nc.newsCategoryID = ? "
+            + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return list;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, categoryID); // Filter by categoryID
+        pre.setInt(2, (page - 1) * recordsPerPage); // Calculate offset
+        pre.setInt(3, recordsPerPage); // Set limit
+
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) {
+            int newsID = rs.getInt("newsID");
+            int staffID = rs.getInt("staffID");
+            int taskID = rs.getInt("taskID");
+            int newsCategoryID = rs.getInt("newsCategoryID");
+            String newsTitle = rs.getString("newsTitle");
+            String newsContent = rs.getString("newsContent");
+            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+            Date postDate = new Date(sqlPostDate.getTime());
+            String newsImg = rs.getString("newsImg");
+            String newsCategoryName = rs.getString("newsCategoryName");
+            String staffName = rs.getString("staffName");
+
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+            list.add(news);
+        }
+
+        rs.close();
+        pre.close();
+
+        LOGGER.log(Level.INFO, "Successfully retrieved {0} news records for page {1} in category '{2}'.", 
+            new Object[]{list.size(), page, categoryID});
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching paginated news records by category.", e);
+    }
+
+    return list;
+}
+
 
     //get by title with pagination
     public List<News> getNewsByPageAndTitle(String search, int page, int recordsPerPage) {

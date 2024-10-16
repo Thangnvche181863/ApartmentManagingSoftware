@@ -375,6 +375,15 @@
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control bg-light border-0 small" 
                                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+
+                                    <!-- Dropdown for News Categories -->
+                                    <select name="category" class="form-control ml-2">
+                                        <option value="all">All</option>
+                                        <c:forEach var="category" items="${newsCategories}">
+                                            <option value="${category.newsCategoryID}">${category.name}</option>
+                                        </c:forEach>
+                                    </select>
+
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search fa-sm"></i>
