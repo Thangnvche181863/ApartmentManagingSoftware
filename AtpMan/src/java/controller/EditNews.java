@@ -29,7 +29,7 @@ import model.Staff;
 public class EditNews extends HttpServlet {
 
     @Override
-     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Retrieve news ID from request parameters
         int newsId = Integer.parseInt(request.getParameter("id"));
@@ -45,13 +45,13 @@ public class EditNews extends HttpServlet {
         // Set attributes for the JSP
         request.setAttribute("news", news);
         request.setAttribute("newsCategories", categories);
-        
+
         // Forward to the editNews.jsp page
         request.getRequestDispatcher("editNews.jsp").forward(request, response);
     }
 
     @Override
-      protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Retrieve and validate the news ID
@@ -65,12 +65,7 @@ public class EditNews extends HttpServlet {
         String newsCategoryParam = request.getParameter("newsCategory");
 //        out.print(newsTitle);
 
-       
         int newsCategoryID = Integer.parseInt(newsCategoryParam);
-
-       
-
-       
 
         // Get staffID from session (default to 1 if not logged in)
         HttpSession session = request.getSession(false);
@@ -79,9 +74,9 @@ public class EditNews extends HttpServlet {
 
         // Format the content
         String formattedContent = newsContent.replace("\n", "<br>");
-
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
         // Create a news object with the updated values
-        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, new Date(), "");
+        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, "");
 
         // Update the news in the database
         NewsDAO dao = new NewsDAO();

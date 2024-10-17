@@ -594,7 +594,7 @@ public class NewsDAO extends DBContext {
             String updatedNewsContent = news.getNewsContent().replace("\n", "<br>");
             pre.setString(5, updatedNewsContent);
 
-            pre.setDate(6, new java.sql.Date(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
+            pre.setTimestamp(6, new java.sql.Timestamp(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
             pre.setString(7, news.getNewsImg());
 
             // Execute the update

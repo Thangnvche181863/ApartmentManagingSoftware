@@ -37,6 +37,7 @@
                 -webkit-line-clamp: 5; /* Limit the number of lines */
                 -webkit-box-orient: vertical;
             }
+
         </style>
     </head>
 
@@ -392,8 +393,54 @@
                                 </div>
                             </form>
 
-                            <a href="./AddNews" class="btn btn-outline-primary">Add New</a>
+                            <<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addNewsModal">Add News</button>
                         </div>
+                        <!-- Add News Modal -->
+                        <div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Add News Form (from addnews.jsp) -->
+                                        <form id="newsForm" action="AddNews" method="post" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label for="newsTitle">News Title:</label>
+                                                <input type="text" class="form-control" id="newsTitle" name="newsTitle" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="newsCategory">News Category:</label>
+                                                <select class="form-control" id="newsCategory" name="newsCategory">
+                                                    <c:forEach var="category" items="${newsCategories}">
+                                                        <option value="${category.newsCategoryID}">${category.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="newsContent">News Content:</label>
+                                                <textarea class="form-control" id="newsContent" name="newsContent" rows="10"></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="newsImg">News Image:</label>
+                                                <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>

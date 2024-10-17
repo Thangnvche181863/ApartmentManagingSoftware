@@ -22,6 +22,9 @@ import java.util.List;
 import model.News;
 import model.NewsCategory;
 import model.Staff;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB threshold
         maxFileSize = 1024 * 1024 * 5, // 5MB max size
@@ -44,7 +47,6 @@ public class AddNews extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-       
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
 
@@ -73,15 +75,17 @@ public class AddNews extends HttpServlet {
 
         // Format the newsContent, no longer needed since i use tinymce
         String formattedContent = newsContent.replace("\n", "<br>");
-
        
-        News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, new Date(), "img/" + fileName);
-
        
+
+        // Convert to Timestamp for database storage
+        java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
+
+        News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, currentTime, "img/" + fileName);
+
         NewsDAO dao = new NewsDAO();
         boolean isAdded = dao.addNews(news);
 
-        
         if (isAdded) {
             response.sendRedirect("NewsDetail?id=" + news.getNewsID());
         } else {
