@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-
+import java.sql.Connection;
+import utils.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import model.InvoiceService;
  *
  * @author thang
  */
-public class InvoiceServiceDAO extends DBContext {
-
+public class InvoiceServiceDAO {
+    Connection connection = null;
     public List<InvoiceService> getAll() {
         List<InvoiceService> list = new ArrayList<>();
 

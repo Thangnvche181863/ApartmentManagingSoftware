@@ -66,8 +66,9 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     ID: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Type: ${o.departmentType}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Price: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Type: ${o.apartmentType}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Number: ${o.apartmentNumber}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Service fee: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Area: ${o.area} m² </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Floor: ${o.floor}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">No. of Resident: ${countList.get(pageScope.count)} </div>

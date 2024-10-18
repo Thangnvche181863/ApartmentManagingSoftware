@@ -54,8 +54,10 @@ public class UserLogin extends HttpServlet {
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
-
+                
+                String userName = customer.getName();
                 session.setAttribute("user", customer);
+                session.setAttribute("name", userName);
                 response.sendRedirect("userhome");
 
             } else if ("3".equals(userType)) { // Manage
@@ -67,10 +69,8 @@ public class UserLogin extends HttpServlet {
                 }
                 String staffName = staff.getName();
                 session.setAttribute("user", staff);
-                session.setAttribute("staffName", staffName);
+                session.setAttribute("name", staffName);
                 //phan loai nguoi dung: staff
-                
-
                 response.sendRedirect("managerPage");
 
             } else {

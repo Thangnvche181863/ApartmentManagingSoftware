@@ -202,8 +202,7 @@ public class StaffDAO {
         String sql = "UPDATE Staff SET name = ?, phoneNumber = ? WHERE staffID = ?;";
 
         // Sử dụng try-with-resources để đảm bảo kết nối và preparedStatement được đóng tự động
-        try (Connection conn = DBContext.getConnection(); 
-            PreparedStatement pre = conn.prepareStatement(sql)) {
+        try (Connection conn = DBContext.getConnection(); PreparedStatement pre = conn.prepareStatement(sql)) {
 
             // Thiết lập các giá trị cho câu lệnh SQL
             pre.setString(1, name);
@@ -212,8 +211,7 @@ public class StaffDAO {
 
             // Thực thi câu lệnh SQL và trả về số dòng được cập nhật
             n = pre.executeUpdate();
-            
-            
+
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
@@ -239,13 +237,42 @@ public class StaffDAO {
                 String phoneNumber = rs.getString(6);
                 String name = rs.getString(7);
                 Date hireDate = rs.getDate(8);
-                staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate); 
+                staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
         return staff;
+    }
+
+    public List<Staff> staffPaging(int page, int recordsPerPage) {
+        List<Staff> list = new ArrayList<>();
+        Connection conn = null;
+        try {
+            int offset = (page - 1) * recordsPerPage;
+            String sql = "select * from Staff order by staffID offset ? rows fetch next ? rows only";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, offset);
+            ps.setInt(2, recordsPerPage);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Staff staff = new Staff();
+                int staffID = rs.getInt(1);
+                int roleID = rs.getInt(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(5);
+                String phoneNumber = rs.getString(6);
+                String name = rs.getString(7);
+                java.util.Date hireDate = rs.getDate(8);
+                list.add(staff);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
     }
 
     public static void main(String[] args) {

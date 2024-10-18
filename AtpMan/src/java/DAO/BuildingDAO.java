@@ -53,11 +53,11 @@ public class BuildingDAO {
         Vector<Building> vector = dao.getAllBuilding();
         return vector.size();
     }
-
+    
     public static void main(String[] args) {
         Building building = new Building();
         BuildingDAO dao = new BuildingDAO();
-        Vector<Building> vector = dao.getAllBuilding();
+        List<Building> vector = dao.getAllBuildings();
         System.out.println(vector.size());
     }
 

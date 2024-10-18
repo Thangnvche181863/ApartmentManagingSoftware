@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">-->
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>UserLogin</servlet-name>
@@ -49,13 +50,18 @@
         <servlet-class>controller.ServiceAddServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.ProfileController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>controller.Home</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.UserhomeNewsServlet</servlet-class>
-        
+    </servlet>
+    <servlet>
         <servlet-name>CreateAccountStaff</servlet-name>
         <servlet-class>controller.CreateAccountStaff</servlet-class>
     </servlet>
@@ -70,6 +76,10 @@
     <servlet>
         <servlet-name>Verify</servlet-name>
         <servlet-class>controller.Verify</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AssignmentController</servlet-name>
+        <servlet-class>controller.AssignmentController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -116,6 +126,10 @@
         <url-pattern>/servicedetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditService</servlet-name>
         <url-pattern>/serviceedit</url-pattern>
     </servlet-mapping>
@@ -134,13 +148,18 @@
     <servlet-mapping>
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <url-pattern>/userhomenews</url-pattern>
-        
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CreateAccountStaff</servlet-name>
         <url-pattern>/createaccountstaff</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Verify</servlet-name>
         <url-pattern>/verify</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignmentController</servlet-name>
+        <url-pattern>/assignment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

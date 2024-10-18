@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import java.sql.Connection;
+import utils.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,14 +16,15 @@ import model.Finance;
  *
  * @author thang
  */
-public class FinanceDAO extends DBContext {
+public class FinanceDAO {
 
     public List<Finance> getAll() {
+        Connection conn = null;
         List<Finance> list = new ArrayList<>();
         try {
             String sql = "Select * from Finance";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -34,10 +37,11 @@ public class FinanceDAO extends DBContext {
     }
 
     public void insertFinance(int buildingId, int financeTypeId, double amount, int month) {
+        Connection conn = null;
         try {
             String sql = "Insert into Finance(buildingId,financeTypeId,amount,month) values(?,?,?,?)";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setInt(1, buildingId);
             ps.setInt(2, financeTypeId);
@@ -51,10 +55,12 @@ public class FinanceDAO extends DBContext {
     }
 
     public void deleteFinance(int financeId) {
+        Connection conn = null;
         try {
             String sql = "DELETE FROM [dbo].[Finance]\n"
                     + "      WHERE financeId = ?";
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, financeId);
 
             ps.executeUpdate();
@@ -64,6 +70,7 @@ public class FinanceDAO extends DBContext {
     }
 
     public void updateFinance(int financeId, int buildingId, int financeTypeId, double amount, int month) {
+        Connection conn = null;
         try {
             String sql = "UPDATE [dbo].[Finance]\n"
                     + "   SET [buildingID] = ?\n"
@@ -71,8 +78,8 @@ public class FinanceDAO extends DBContext {
                     + "      ,[amount] = ?\n"
                     + "      ,[month] = ?\n"
                     + " WHERE financeId = ?";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, buildingId);
             ps.setInt(2, financeId);
             ps.setDouble(3, amount);

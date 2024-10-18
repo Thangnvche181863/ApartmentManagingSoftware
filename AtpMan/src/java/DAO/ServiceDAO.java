@@ -4,6 +4,9 @@
  */
 package DAO;
 
+import utils.DBContext;
+import java.sql.Connection;
+
 import java.sql.*;
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
@@ -16,8 +19,9 @@ import model.*;
  *
  * @author thang
  */
+public class ServiceDAO {
 
-public class ServiceDAO extends DBContext {
+    Connection connection = null;
 
     public List<Service> getAllService() {
         List<Service> list = new ArrayList<>();
@@ -39,7 +43,6 @@ public class ServiceDAO extends DBContext {
         return list;
     }
 
-    
     public List<Service> getAll() {
         List<Service> list = new ArrayList<>();
         try {
@@ -55,27 +58,27 @@ public class ServiceDAO extends DBContext {
         }
         return list;
     }
-    
-    public Service findById(int id){
+
+    public Service findById(int id) {
         List<Service> list = getAll();
         for (Service service : list) {
-            if(service.getServiceId() == id) return service;
+            if (service.getServiceId() == id) {
+                return service;
+            }
         }
         return null;
     }
-    
-    public int update(Service service){
+
+    public int update(Service service) {
         List<Service> list = getAll();
-        for(int i=0;i<list.size();i++){
-            if(list.get(i).getServiceId() == service.getServiceId()){
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getServiceId() == service.getServiceId()) {
                 list.set(i, service);
                 return i;
             }
         }
         return -1;
     }
-    
-    
 
     public void insertService(String name, String type, BigDecimal fee, String description, String img, String icon) {
         try {
@@ -93,7 +96,7 @@ public class ServiceDAO extends DBContext {
         }
     }
 
-    public void updateService(int serviceId, String name, String type, BigDecimal fee, String description,String img, String icon) {
+    public void updateService(int serviceId, String name, String type, BigDecimal fee, String description, String img, String icon) {
         try {
             String sql = "UPDATE [dbo].[Service]\n"
                     + "   SET [name] = ?\n"

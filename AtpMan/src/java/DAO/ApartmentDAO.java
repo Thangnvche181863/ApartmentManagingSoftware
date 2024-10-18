@@ -65,12 +65,12 @@ public class ApartmentDAO {
             while (rs.next()) {
                 int apartmentID = rs.getInt(1);
                 String apartmentNumber = rs.getString(3);
-                String departmentType = rs.getString(4);
+                String apartmentType = rs.getString(4);
                 BigDecimal price = rs.getBigDecimal(5);
                 BigDecimal maintenanceFee = rs.getBigDecimal(6);
                 int floor = rs.getInt(7);
                 int area = rs.getInt(8);
-                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);
+                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, apartmentType, price, maintenanceFee, floor, area);
                 vector.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -85,22 +85,24 @@ public class ApartmentDAO {
         return vector.size();
     }
 
-    public static void main(String[] args) {
-        
-        ApartmentDAO dao = new ApartmentDAO();
-        Vector<Apartment> vector = dao.getAllApartmentByID(1);
-        System.out.println(vector.size());
-    // public static void main(String[] args) {
+//    public static void main(String[] args) {
+//        
+//        ApartmentDAO dao = new ApartmentDAO();
+//        Vector<Apartment> vector = dao.getAllApartmentByID(1);
+//        System.out.println(vector.size());
+//    // public static void main(String[] args) {
     // Apartment a = new Apartment();
     // ApartmentDAO dao = new ApartmentDAO();
     // Vector<Apartment> vector = dao.getAllApartmentByID(1);
     // System.out.println(vector.size());
     //
     // }
+    
     //////////////////////////////// QUAN///////////////////////////////////////
     private static final Logger LOGGER = Logger.getLogger(ApartmentDAO.class.getName());
 
     public List<Apartment> getApartmentsByBuilding(int buildingId) {
+        System.out.println("-------------");
         Connection conn = null;
         List<Apartment> apartments = new ArrayList<>();
         try {
@@ -117,10 +119,10 @@ public class ApartmentDAO {
                             Apartment apartment = new Apartment();
                             apartment.setApartmentID(rs.getInt("apartmentID"));
                             apartment.setBuildingID(rs.getInt("buildingID"));
-                            apartment.setApartmentNumber(rs.getInt("apartmentNumber"));
-                            apartment.setDepartmentType(rs.getString("departmentType"));
-                            apartment.setPrice(rs.getDouble("price"));
-                            apartment.setMaintenanceFee(rs.getDouble("maintenanceFee"));
+                            apartment.setApartmentNumber(rs.getString("apartmentNumber"));
+                            apartment.setApartmentType(rs.getString("departmentType"));
+                            apartment.setPrice(rs.getBigDecimal("price"));
+                            apartment.setMaintenanceFee(rs.getBigDecimal("maintenanceFee"));
                             apartment.setFloor(rs.getInt("floor"));
                             apartment.setArea(rs.getInt("area"));
                             apartments.add(apartment);
@@ -149,15 +151,7 @@ public class ApartmentDAO {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         int buildingId = 1;
         List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingId);
-        if (apartments != null && !apartments.isEmpty()) {
-
-            for (Apartment apartment : apartments) {
-                System.out.println("Apartment ID: " + apartment.getApartmentID());
-
-            }
-        } else {
-            System.out.println("No apartments found for building ID: " + buildingId);
-        }
+        System.out.println("c " + apartments.size());
     }
 
 }

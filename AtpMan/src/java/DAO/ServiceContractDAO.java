@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-
+import utils.DBContext;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.Date;
@@ -11,12 +11,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.*;
+import java.sql.Connection;
+
 
 /**
  *
  * @author thang
  */
-public class ServiceContractDAO extends DBContext {
+public class ServiceContractDAO  {
+    Connection connection = null;
     public List<ServiceContract> getAllServiceByAparmentID(int apartmentID) {
         List<ServiceContract> list = new ArrayList<>();
         String sql = "select * from ServiceContract sc, Service s where sc.serviceID = s.serviceID and apartmentID = ?";

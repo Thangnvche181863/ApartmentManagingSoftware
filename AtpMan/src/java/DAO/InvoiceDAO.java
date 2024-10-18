@@ -152,6 +152,10 @@ public class InvoiceDAO {
             ps.executeUpdate();
 
         } catch (Exception e) {
+
+        }
+    }
+
     public List<Integer> getAllApartmentInvoiceYear(int apartmentId) {
         List<Integer> list = new ArrayList<>();
         String sql = "Select distinct YEAR(issueDate) as year from Invoice where apartmentID = ?";

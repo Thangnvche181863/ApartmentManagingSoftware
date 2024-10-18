@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import java.sql.Connection;
+import utils.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,15 +16,15 @@ import model.FinanceType;
  *
  * @author thang
  */
-public class FinanceTypeDAO extends DBContext {
+public class FinanceTypeDAO {
 
     public List<FinanceType> getAll() {
         List<FinanceType> list = new ArrayList<>();
-
+        Connection conn = null;
         try {
             String sql = "Select * from FinanceBuilding";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -35,10 +37,11 @@ public class FinanceTypeDAO extends DBContext {
     }
 
     public void insertFinanceType(String name, String description) {
+        Connection conn = null;
         try {
             String sql = "Insert into FinanceType (name,description) values(?,?)";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
 
@@ -49,11 +52,12 @@ public class FinanceTypeDAO extends DBContext {
     }
 
     public void deleteFinanceType(int financeTypeId) {
+        Connection conn = null;
         try {
             String sql = "ELETE FROM [dbo].[FinanceType]\n"
                     + "      WHERE financeTypeId = ?";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, financeTypeId);
 
             ps.executeUpdate();
@@ -62,14 +66,15 @@ public class FinanceTypeDAO extends DBContext {
         }
     }
 
-    public void updateFinaceType(int financeTypeId,String name, String description) {
+    public void updateFinaceType(int financeTypeId, String name, String description) {
+        Connection conn = null;
         try {
             String sql = "UPDATE [dbo].[FinanceType]\n"
                     + "   SET [name] = ?\n"
                     + "      ,[description] = ?\n"
                     + " WHERE financeTypeId = ?";
-            
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
             ps.setInt(3, financeTypeId);
@@ -78,7 +83,7 @@ public class FinanceTypeDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     public static void main(String[] args) {
         FinanceTypeDAO fdao = new FinanceTypeDAO();
 //        fdao.insertFinanceBuilding(1, 2);

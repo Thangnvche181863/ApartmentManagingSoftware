@@ -33,6 +33,7 @@ public class ProfileController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("0000000000000000000000000000000");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
@@ -109,9 +110,9 @@ public class ProfileController extends HttpServlet {
         if (n > 0) {
             // Lấy lại thông tin người dùng mới và in ra
             staff.setName(name);
-            
             // Cập nhật session và điều hướng lại trang profile
             session.setAttribute("user", staff);
+            
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         } else {
             // In thông báo lỗi

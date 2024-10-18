@@ -34,18 +34,21 @@ public class BuildingController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("999999999999999999999");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
             BuildingDAO dao = new BuildingDAO();
-            Vector<Building> vector = dao.getAllBuilding();
+            List<Building> list = dao.getAllBuildings();
+            
             Vector<Integer> vector1 = dao.getApartmentAvailable();
             
             request.setAttribute("availableApartment", vector1);
-            request.setAttribute("listBuilding", vector);
+            request.setAttribute("listBuilding", list);
+            System.out.println("++++++++");
             request.getRequestDispatcher("building.jsp").forward(request, response);
-            
-            
+            System.out.println("---------");
         }
     }
 
@@ -61,7 +64,8 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
+
     }
 
     /**

@@ -14,10 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Apartment;
 import model.Building;
 import utils.EmailHandle;
@@ -83,7 +80,7 @@ public class CreateAccount extends HttpServlet {
                         .append("<option value='")
                         .append(apartment.getApartmentID())
                         .append("'>")
-                        .append(apartment.getDepartmentType())
+                        .append(apartment.getApartmentType())
                         .append(" - ") // thêm dấu gạch ngang giữa type và number
                         .append(apartment.getApartmentNumber())
                         .append(" - Floor: ")
