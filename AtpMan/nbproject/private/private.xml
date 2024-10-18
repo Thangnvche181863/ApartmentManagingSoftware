@@ -3,8 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/LoginGoogle.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/index.html</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/serviceedit.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceIntroServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceListServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceAddServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/js/main2.js</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/serviceadd.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/servicelist.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/js/main1.js</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceUserDetailServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/RegistListServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/web/js/main.js</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject3/ApartmentManagingSoftware/AtpMan/src/java/controller/EditServiceServlet.java</file>
         </group>
     </open-files>
 </project-private>

@@ -57,9 +57,14 @@ public class DeleteServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int page = 1;
+        int recordsPerPage = 10;
         String id = request.getParameter("id");
         ServiceDAO sdao = new ServiceDAO();
         sdao.deleteService(Integer.parseInt(id));
+        request.setAttribute("totalservice", sdao.totalService());
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", sdao.count(recordsPerPage));
         request.setAttribute("listservice", sdao.getAll());
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }

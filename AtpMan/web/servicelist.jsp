@@ -41,6 +41,85 @@
                 return confirm("Sure delete?");
             }
         </script>
+        <style>
+            table {
+                width: 110%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            thead th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+
+            select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            form label {
+                margin-right: 10px;
+                font-weight: bold;
+            }
+
+            .form-container {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            td:last-child {
+                font-weight: bold;
+                color: #333;
+            }
+
+            .total-label {
+                font-weight: bold;
+                color: #666;
+            }
+
+            .search-box {
+                padding: 8px;
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .pagination {
+                font-size: 0.8em; /* Adjust font size as needed */
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .pagination a {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                text-decoration: none;
+                color: #333;
+            }
+
+            .pagination a:hover {
+                background-color: #f0f0f0;
+            }
+
+            .pagination strong {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #f0f0f0;
+                color: #333;
+            }
+        </style>
 
     </head>
 
@@ -156,6 +235,7 @@
                         <i class="fas fa-fw fa-table"></i>
                         <span>Danh Sách Dịch Vụ</span></a>
                 </li>
+
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
@@ -378,16 +458,79 @@
                     </nav>
                     <!-- End of Topbar -->
 
+
+
+
+
+
+
+
+
+
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Service List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Dịch Vụ</h1>
                             <p>
-                                <a class="btn btn-primary" href="serviceadd.jsp">Thêm Dịch Vụ</a>
+                                <a class="btn btn-info" href="registlist">Danh Sách Đăng Kí</a>
+                            </p>
+                            <p>
+                                <a class="btn btn-primary" href="serviceadd">Thêm Dịch Vụ</a>
                             </p>
                         </div>
+
+                        <div class="form-container">
+                            <form action="servicelist" method="POST">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Số Dòng</th>
+                                            <th class="text-center">Phân Loại</th>
+                                            <th class="text-center">Tìm Kiếm</th>
+                                            <th class="text-center">Sắp Xếp Phí</th>
+                                            <th class="text-center">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select name="recordsPerPage" id="recordsPerPage" onchange="this.form.submit()" style="width: 80px;">
+                                                    <option value="10">10</option>
+                                                    <option value="25" <c:if test="${recordsPerPage == 25}">selected</c:if>>25</option>
+                                                    <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
+                                                    <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="type" id="type" onchange="this.form.submit()" style="width: 100px;">
+                                                        <option value="All">All</option>
+                                                    <c:forEach items="${serviceType}" var="ls">
+                                                        <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${search}" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()"/>
+                                            </td>
+                                            <td>
+                                                <select name="orderBy" id="orderBy" style="width: 110px;" onchange="this.form.submit()">
+                                                    <option >All</option>
+                                                    <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng Dần</option>
+                                                    <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm Dần</option>
+                                                    </select>
+                                                </td>
+                                                <td class="total-label text-center" style="width: 130px;">
+                                                <%=  (Integer) request.getAttribute("totalservice") %> dịch vụ
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
@@ -396,7 +539,40 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <div class="pagination">
+                                            <%
+                                                int currentPage = (Integer) request.getAttribute("currentPage");
+                                                int totalPages = (Integer) request.getAttribute("totalPages");
+
+                                                // Hiển thị nút "Previous" nếu không phải trang đầu tiên
+                                                if (currentPage > 1) {
+                                            %>
+                                            <a href="servicelist?page=<%= currentPage - 1 %>">Previous</a>
+                                            <%
+                                                }
+
+                                                // Hiển thị danh sách các trang
+                                                for (int i = 1; i <= totalPages; i++) {
+                                                    if (i == currentPage) {
+                                            %>
+                                            <strong><%= i %></strong>
+                                            <%
+                                                    } else {
+                                            %>
+                                            <a href="servicelist?page=<%= i %>"><%= i %></a>
+                                            <%
+                                                    }
+                                                }
+
+                                                // Hiển thị nút "Next" nếu không phải trang cuối cùng
+                                                if (currentPage < totalPages) {
+                                            %>
+                                            <a href="servicelist?page=<%= currentPage + 1 %>">Next</a>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                        <table class="table table-bordered"  width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>Tên</th>
@@ -410,9 +586,10 @@
                                                     <tr>
                                                         <td>${ls.name}</td>
                                                         <td>${ls.type}</td>
-<!--                                                        data-order: add to save addition infomation about data-->
-                                                        <td data-order="${ls.fee}">
-                                                            <fmt:formatNumber type="number" value="${ls.fee}" />
+                                                        <!--                                                        data-order: add to save addition infomation about data-->
+                                                        <td>
+                                                            <fmt:setLocale value="en_US" />
+                                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.fee}"/>
                                                         </td>
                                                         <td style="width: 150px" class="text-center">
                                                             <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${ls.serviceId}" style="height: 30px; width: 50px">Sửa</a>
@@ -433,6 +610,17 @@
 
                     </div>
                     <!-- /.container-fluid -->
+
+
+
+
+
+
+
+
+
+
+
 
                 </div>
                 <!-- End of Main Content -->
@@ -469,6 +657,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
