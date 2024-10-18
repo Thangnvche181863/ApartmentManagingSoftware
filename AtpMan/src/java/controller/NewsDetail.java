@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import model.News;
 
 /**
@@ -37,7 +39,16 @@ public class NewsDetail extends HttpServlet {
 
                 // Check if news exists
                 if (newsItem != null) {
+                    // Get news content
+                    String newsContent = newsItem.getNewsContent();
+
+                    // Extract <img> and <video> tags
+                    String mediaTags = extractMediaTags(newsContent);
+
+                    // Set attributes to be forwarded to JSP
                     request.setAttribute("news", newsItem);
+                    request.setAttribute("mediaTags", mediaTags);
+
                     request.getRequestDispatcher("news-detail.jsp").forward(request, response);
 
                 } else {
@@ -56,6 +67,28 @@ public class NewsDetail extends HttpServlet {
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
 
+    }
+   // Method to extract <img> and <video> tags and format them for the carousel
+    private String extractMediaTags(String content) {
+        StringBuilder mediaTags = new StringBuilder();
+
+        // Regex for <img> and <video> tags
+        String regex = "(<img[^>]+>|<video[^>]+>[\\s\\S]*?<\\/video>)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        int index = 0;
+
+        while (matcher.find()) {
+            String mediaTag = matcher.group();
+            // Wrap each media tag in a carousel item div
+            mediaTags.append("<div class=\"carousel-item")
+                    .append(index == 0 ? " active" : "") // Add active class to the first item
+                    .append("\">")
+                    .append(mediaTag)
+                    .append("</div>");
+            index++;
+        }
+        return mediaTags.toString();
     }
 
     @Override

@@ -35,7 +35,7 @@ public class NewsManager extends HttpServlet {
 
         int currentPage = 1; // Default page number
         try {
-            // Get current page from the request
+            
             String pageParam = request.getParameter("page");
             if (pageParam != null) {
                 currentPage = Integer.parseInt(pageParam);

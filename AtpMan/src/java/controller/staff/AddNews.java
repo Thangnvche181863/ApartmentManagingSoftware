@@ -67,7 +67,7 @@ public class AddNews extends HttpServlet {
             staffID = staff.getStaffID(); // Assuming `getStaffID()` exists
         }
 
-        // Get newsCategoryID from the form
+      
         int newsCategoryID = Integer.parseInt(request.getParameter("newsCategory"));
 
         // Hardcoded taskID (can be updated if needed)
@@ -78,7 +78,7 @@ public class AddNews extends HttpServlet {
        
        
 
-        // Convert to Timestamp for database storage
+      
         java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
 
         News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, currentTime, "img/" + fileName);

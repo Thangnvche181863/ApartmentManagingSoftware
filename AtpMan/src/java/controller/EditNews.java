@@ -31,10 +31,10 @@ public class EditNews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve news ID from request parameters
+        
         int newsId = Integer.parseInt(request.getParameter("id"));
 
-        // Fetch news by ID
+        
         NewsDAO newsDAO = new NewsDAO();
         News news = newsDAO.getNewsById2(newsId);
 
@@ -42,11 +42,11 @@ public class EditNews extends HttpServlet {
         NewsCategoryDAO categoryDAO = new NewsCategoryDAO();
         List<NewsCategory> categories = categoryDAO.getAll();
 
-        // Set attributes for the JSP
+        
         request.setAttribute("news", news);
         request.setAttribute("newsCategories", categories);
 
-        // Forward to the editNews.jsp page
+       
         request.getRequestDispatcher("editNews.jsp").forward(request, response);
     }
 
@@ -54,12 +54,12 @@ public class EditNews extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Retrieve and validate the news ID
+        
         String newsId = request.getParameter("newsId");
         PrintWriter out = response.getWriter();
 //        out.print(newsId);
 
-        // Retrieve other parameters
+      
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
         String newsCategoryParam = request.getParameter("newsCategory");
@@ -72,13 +72,13 @@ public class EditNews extends HttpServlet {
         Staff staff = (Staff) (session != null ? session.getAttribute("user") : null);
         int staffID = (staff != null) ? staff.getStaffID() : 1;
 
-        // Format the content
+      
         String formattedContent = newsContent.replace("\n", "<br>");
         java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
-        // Create a news object with the updated values
+       
         News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, "");
 
-        // Update the news in the database
+      
         NewsDAO dao = new NewsDAO();
         boolean isUpdated = dao.updateNews(news);
 

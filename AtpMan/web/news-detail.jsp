@@ -16,7 +16,23 @@
             width: auto;
             margin: auto;
         }
+
+        /* Styling for the gallery images */
+        .gallery-image {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.1);
+        }
+
+        .modal-content img, .modal-content video {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
+
     <head>
         <meta charset="utf-8">
         <title>AptMan - News</title>
@@ -125,7 +141,7 @@
                 <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                     <div class="card">
                         <div class="card-body">
-                            <!-- News Image -->
+                            <!-- News Image Thumbnail -->
                             <div class="text-center mb-4">
                                 <img src="${news.newsImg}" class="img-fluid rounded" alt="News Image" style="max-height: 400px;">
                             </div>
@@ -148,10 +164,17 @@
                             </div>
 
                             <!-- News Content -->
-                            <p class="card-text">${news.newsContent}</p>
+                            <div id="news-content">
+                                <c:out value="${news.newsContent}" escapeXml="false" />
+                            </div>
+
 
                             <!-- Back Button -->
                             <a href="News" class="btn btn-primary">Back to News List</a>
+                            <!-- Modal Trigger -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mediaModal">
+                                View Media
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -159,7 +182,63 @@
         </div>
         <!-- News Detail Section End -->
 
+        <!-- Modal to display media -->
+        <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog custom-modal-size"> <!-- Custom class for size -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mediaModalLabel">Media Gallery</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="carousel-container" style="width: 100%; height: 500px;">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 100%;">
+                                <div class="carousel-inner" style="height: 100%;">
+                                    ${mediaTags}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <style>
+            .custom-modal-size {
+                max-width: 800px; /* Set your desired width */
+                width: 100%; /* Full width on small screens */
+            }
+
+            .carousel-inner {
+                height: 100%; /* Keep this if you want full height */
+            }
+
+            .carousel-item {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .carousel-item img,
+            .carousel-item video {
+                width: auto;
+                height: 100%;
+                object-fit: contain;
+            }
+        </style>     
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
 
 
 
@@ -191,6 +270,18 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    // Using jQuery to add modal trigger attributes to images in the news content
+    $(document).ready(function() {
+        $('#news-content img').each(function() {
+            $(this).attr({
+                'data-bs-toggle': 'modal',
+                'data-bs-target': '#mediaModal'
+            });
+        });
+    });
+</script>
     </body>
 
 </html>
