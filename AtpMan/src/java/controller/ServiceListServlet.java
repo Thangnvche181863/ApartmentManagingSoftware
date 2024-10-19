@@ -12,7 +12,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import model.Service;
+import java.util.List;
+import model.ServiceType;
 
 /**
  *
@@ -60,18 +61,35 @@ public class ServiceListServlet extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         int recordsPerPage = 10;
+        String type = "";
+        String search = "";
+        String orderBy = "";
+        if (request.getParameter("type") != null) {
+            type = request.getParameter("type");
+        }
+        if (request.getParameter("search") != null) {
+            search = request.getParameter("search");
+        }
+        if (request.getParameter("orderBy") != null) {
+            orderBy = request.getParameter("orderBy");
+        }
         if (request.getParameter("recordsPerPage") != null) {
             recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
         }
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+
+        request.setAttribute("type", type);
+        request.setAttribute("search", search);
+        request.setAttribute("orderBy", orderBy);
         ServiceDAO sdao = new ServiceDAO();
-        request.setAttribute("totalservice", sdao.totalService());
+        int totalRecords = sdao.getTotalService(type, search, orderBy);
+        request.setAttribute("totalservice", totalRecords);
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);
-        request.setAttribute("totalPages", sdao.count(recordsPerPage));
-        request.setAttribute("listservice", sdao.servicePaging(page, recordsPerPage));
+        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+        request.setAttribute("listservice", sdao.getServiceByType(type, search, orderBy, page, recordsPerPage));
         request.setAttribute("serviceType", sdao.getAllType());
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
@@ -90,7 +108,8 @@ public class ServiceListServlet extends HttpServlet {
         ServiceDAO sdao = new ServiceDAO();
         int page = 1;
         int recordsPerPage = 10;
-        String search = request.getParameter("search");
+        String type = request.getParameter("type");
+        String search = request.getParameter("search").trim().replaceAll("\\s+", " ");
         String orderBy = request.getParameter("orderBy");
         if (request.getParameter("recordsPerPage") != null) {
             recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
@@ -98,37 +117,20 @@ public class ServiceListServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        String type = request.getParameter("type");
 
-        if ((type == null || type.equals("All")) && (search == null || search.isEmpty()) && (orderBy == null || orderBy.isEmpty())) {
-            // Không có loại dịch vụ cụ thể và không có từ khóa tìm kiếm, lấy tất cả dịch vụ theo phân trang
-            request.setAttribute("listservice", sdao.servicePaging(page, recordsPerPage));
-        } 
-        else if (search != null && !search.isEmpty() && (type == null || type.equals("All"))) {
-            // Có từ khóa tìm kiếm, tìm tất cả dịch vụ theo từ khóa (bất kể loại)
-            request.setAttribute("listservice", sdao.getServiceByType("All", search, orderBy, page, recordsPerPage));
+        request.setAttribute("listservice", sdao.getServiceByType(type, search, orderBy, page, recordsPerPage));
 
-        } else {
-            // Lọc theo loại dịch vụ cụ thể và có thể có sắp xếp
-            request.setAttribute("listservice", sdao.getServiceByType(type, search, orderBy, page, recordsPerPage));
-            // Đếm số lượng theo loại dịch vụ
-        }
-        if (recordsPerPage == 25) {
-            request.setAttribute("recordsPerPage", 25);
-        }
-        if (recordsPerPage == 50) {
-            request.setAttribute("recordsPerPage", 50);
-        }
-        if (recordsPerPage == 100) {
-            request.setAttribute("recordsPerPage", 100);
-        }
+        request.setAttribute("recordsPerPage", recordsPerPage);
+
+        int totalRecords = sdao.getTotalService(type, search, orderBy);
+        request.setAttribute("totalservice", totalRecords);
         request.setAttribute("type", type);
         request.setAttribute("search", search);
         request.setAttribute("orderBy", orderBy);
-        request.setAttribute("totalservice", sdao.totalService());
         request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", sdao.countActive(type, search, recordsPerPage));
+        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
         request.setAttribute("serviceType", sdao.getAllType());
+
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 

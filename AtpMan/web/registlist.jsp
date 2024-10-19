@@ -480,11 +480,16 @@
                                             <%
                                                 int currentPage = (Integer) request.getAttribute("currentPage");
                                                 int totalPages = (Integer) request.getAttribute("totalPages");
+                                                int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
+                                                String buildingtype = (String) request.getAttribute("buildingtype");
+                                                String departmenttype = (String) request.getAttribute("departmenttype");
+                                                String search = (String) request.getAttribute("search");
+                                                String orderBy = (String) request.getAttribute("orderBy");
 
                                                 // Hiển thị nút "Previous" nếu không phải trang đầu tiên
                                                 if (currentPage > 1) {
                                             %>
-                                            <a href="registlist?page=<%= currentPage - 1 %>">Previous</a>
+                                            <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
                                             <%
                                                 }
 
@@ -496,7 +501,7 @@
                                             <%
                                                     } else {
                                             %>
-                                            <a href="registlist?page=<%= i %>"><%= i %></a>
+                                            <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
                                             <%
                                                     }
                                                 }
@@ -504,7 +509,7 @@
                                                 // Hiển thị nút "Next" nếu không phải trang cuối cùng
                                                 if (currentPage < totalPages) {
                                             %>
-                                            <a href="registlist?page=<%= currentPage + 1 %>">Next</a>
+                                            <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
                                             <%
                                                 }
                                             %>
@@ -528,7 +533,7 @@
                                                         <td class="text-center">
                                                             <fmt:formatNumber type="number" value="${ls.totalAmount}" />
                                                         </td>
-                                                        <td class="text-center"><a href="#">Chi tiết</a></td>
+                                                        <td class="text-center"><a href="inforapartmentservice">Chi tiết</a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

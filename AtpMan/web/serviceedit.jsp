@@ -404,7 +404,7 @@
                              style="border: 1px darkgrey solid; border-radius: 10px; width: 100%; margin: 0 auto; padding: 20px;">
                             <form action="serviceedit" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data">
                                 <div class="row g-0"> 
-
+                                    <input type="hidden" name="page" value="${page}">
                                     <div class="col-md-5">
                                         <div class="form-group mb-4">
                                             <label for="name" class="form-label">Name:</label>
@@ -448,7 +448,7 @@
 
                                 <div class="text-center mt-4 d-flex">
                                     <input type="submit" class="btn btn-primary btn-block" value="Lưu"  style="width: 80px; margin: 0 auto"/>
-                                    <a class="btn btn-primary" href="servicelist?id=${service.serviceId}" style="margin-right: 150px">Hoàn Tác</a>
+                                    <a class="btn btn-primary" href="servicelist?id=${service.serviceId}&page=${page}" style="margin-right: 150px">Hoàn Tác</a>
                                 </div>
                             </form>
 

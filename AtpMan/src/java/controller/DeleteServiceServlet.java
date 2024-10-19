@@ -59,13 +59,25 @@ public class DeleteServiceServlet extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         int recordsPerPage = 10;
+        if (request.getParameter("recordsPerPage") != null) {
+            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
+        }
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
         String id = request.getParameter("id");
         ServiceDAO sdao = new ServiceDAO();
+        request.setAttribute("type", "");
+        request.setAttribute("search", "");
+        request.setAttribute("orderBy", "");
         sdao.deleteService(Integer.parseInt(id));
-        request.setAttribute("totalservice", sdao.totalService());
+        int totalRecords = sdao.getTotalService("", "", "");
+        request.setAttribute("totalservice", totalRecords);
         request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", sdao.count(recordsPerPage));
-        request.setAttribute("listservice", sdao.getAll());
+        request.setAttribute("recordsPerPage", recordsPerPage);
+        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+        request.setAttribute("listservice", sdao.getServiceByType("", "", "", page, recordsPerPage));
+        request.setAttribute("serviceType", sdao.getAllType());
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 

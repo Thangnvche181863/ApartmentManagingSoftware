@@ -11,16 +11,19 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.*;
+import utils.DBContext;
 
 /**
  *
  * @author thang
  */
-public class ServiceContractDAO extends DBContext {
-    public List<ServiceContract> getAllServiceByAparmentID(int apartmentID) {
+public class ServiceContractDAO   {
+    Connection connection= null;
+    public List<ServiceContract> getAllServiceByAparmentID(int apartmentID) throws ClassNotFoundException {
         List<ServiceContract> list = new ArrayList<>();
         String sql = "select * from ServiceContract sc, Service s where sc.serviceID = s.serviceID and apartmentID = ?";
         try {
+            connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentID);
             ResultSet rs = statement.executeQuery();
@@ -53,6 +56,7 @@ public class ServiceContractDAO extends DBContext {
         
         try {
             String sql = "Select * from ServiceContract";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
@@ -67,6 +71,7 @@ public class ServiceContractDAO extends DBContext {
     public void insertServiceContract(int apartmentId, int serviceId, Date startDate, Date endDate, double amount) {
         try {
             String sql = "Insert into ServiceContract values(?,?,?,?,?)";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, apartmentId);
             ps.setInt(2, serviceId);
@@ -83,6 +88,7 @@ public class ServiceContractDAO extends DBContext {
     public void deleteServiceContract(int apartmentId, int serviceId) {
         try {
             String sql = "Delete * from ServiceContract where apartmentId = ? AND serviceId = ?";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, apartmentId);
             ps.setInt(2, serviceId);

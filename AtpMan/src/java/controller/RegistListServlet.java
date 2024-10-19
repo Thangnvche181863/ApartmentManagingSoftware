@@ -60,20 +60,42 @@ public class RegistListServlet extends HttpServlet {
             throws ServletException, IOException {
         int page = 1;
         int recordsPerPage = 25;
-//        if (request.getParameter("recordsPerPage") != null) {
-//            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
-//        }
+        String buildingtype = "";
+        String departmenttype = "";
+        String search = "";
+        String orderBy = "";
+        if (request.getParameter("departmenttype") != null) {
+            departmenttype = request.getParameter("departmenttype");
+        }
+        if (request.getParameter("search") != null) {
+            search = request.getParameter("search");
+        }
+        if (request.getParameter("orderBy") != null) {
+            orderBy = request.getParameter("orderBy");
+        }
+        if (request.getParameter("buildingtype") != null) {
+            buildingtype = request.getParameter("buildingtype");
+        }
+        if (request.getParameter("recordsPerPage") != null) {
+            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
+        }
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+
         ApartmentDAO adao = new ApartmentDAO();
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);
-        request.setAttribute("totalPages", adao.count(recordsPerPage));
-        request.setAttribute("totalRoom", adao.getAmountOfApartment());
+        request.setAttribute("buildingtype", buildingtype);
+        request.setAttribute("departmenttype", departmenttype);
+        request.setAttribute("search", search);
+        request.setAttribute("orderBy", orderBy);
+        int totalRecords = adao.getTotalApartment(buildingtype, departmenttype, search, orderBy);
+        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+        request.setAttribute("totalRoom", totalRecords);
         request.setAttribute("listbuilding", adao.getAllBuilding());
         request.setAttribute("listdepartment", adao.getAllDepartmentType());
-        request.setAttribute("listapart", adao.apartmentPaging(page, recordsPerPage));
+        request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, departmenttype, search, orderBy));
         request.getRequestDispatcher("registlist.jsp").forward(request, response);
     }
 
@@ -102,7 +124,7 @@ public class RegistListServlet extends HttpServlet {
 
         String buildingtype = request.getParameter("buildingtype");
         String departmenttype = request.getParameter("departmenttype");
-        String search = request.getParameter("search");
+        String search = request.getParameter("search").trim().replaceAll("\\s+", " ");
         String orderBy = request.getParameter("orderBy");
 
         request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, departmenttype, search, orderBy));
@@ -112,8 +134,9 @@ public class RegistListServlet extends HttpServlet {
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("orderBy", orderBy);
         request.setAttribute("search", search);
-        request.setAttribute("totalPages", adao.count(recordsPerPage));
-        request.setAttribute("totalRoom", adao.getAmountOfApartment());
+        int totalRecords = adao.getTotalApartment(buildingtype, departmenttype, search, orderBy);
+        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+        request.setAttribute("totalRoom", totalRecords);
         request.setAttribute("listbuilding", adao.getAllBuilding());
         request.setAttribute("listdepartment", adao.getAllDepartmentType());
         request.getRequestDispatcher("registlist.jsp").forward(request, response);

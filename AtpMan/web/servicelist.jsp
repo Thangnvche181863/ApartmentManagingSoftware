@@ -478,7 +478,7 @@
                                 <a class="btn btn-info" href="registlist">Danh Sách Đăng Kí</a>
                             </p>
                             <p>
-                                <a class="btn btn-primary" href="serviceadd">Thêm Dịch Vụ</a>
+                                <a class="btn btn-primary" href="serviceadd?page=${currentPage}">Thêm Dịch Vụ</a>
                             </p>
                         </div>
 
@@ -498,7 +498,7 @@
                                         <tr>
                                             <td>
                                                 <select name="recordsPerPage" id="recordsPerPage" onchange="this.form.submit()" style="width: 80px;">
-                                                    <option value="10">10</option>
+                                                    <option >10</option>
                                                     <option value="25" <c:if test="${recordsPerPage == 25}">selected</c:if>>25</option>
                                                     <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
                                                     <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
@@ -506,7 +506,7 @@
                                                 </td>
                                                 <td>
                                                     <select name="type" id="type" onchange="this.form.submit()" style="width: 100px;">
-                                                        <option value="All">All</option>
+                                                        <option value="">All</option>
                                                     <c:forEach items="${serviceType}" var="ls">
                                                         <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
                                                     </c:forEach>
@@ -517,12 +517,13 @@
                                             </td>
                                             <td>
                                                 <select name="orderBy" id="orderBy" style="width: 110px;" onchange="this.form.submit()">
-                                                    <option >All</option>
+                                                    <option value="">All</option>
                                                     <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng Dần</option>
                                                     <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm Dần</option>
                                                     </select>
                                                 </td>
                                                 <td class="total-label text-center" style="width: 130px;">
+                                                
                                                 <%=  (Integer) request.getAttribute("totalservice") %> dịch vụ
                                             </td>
                                         </tr>
@@ -543,11 +544,16 @@
                                             <%
                                                 int currentPage = (Integer) request.getAttribute("currentPage");
                                                 int totalPages = (Integer) request.getAttribute("totalPages");
+                                                int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
+                                                String search = (String) request.getAttribute("search");
+                                                String type = (String) request.getAttribute("type");
+                                                String orderBy = (String) request.getAttribute("orderBy");
+
 
                                                 // Hiển thị nút "Previous" nếu không phải trang đầu tiên
                                                 if (currentPage > 1) {
                                             %>
-                                            <a href="servicelist?page=<%= currentPage - 1 %>">Previous</a>
+                                            <a href="servicelist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
                                             <%
                                                 }
 
@@ -559,7 +565,7 @@
                                             <%
                                                     } else {
                                             %>
-                                            <a href="servicelist?page=<%= i %>"><%= i %></a>
+                                            <a href="servicelist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
                                             <%
                                                     }
                                                 }
@@ -567,7 +573,7 @@
                                                 // Hiển thị nút "Next" nếu không phải trang cuối cùng
                                                 if (currentPage < totalPages) {
                                             %>
-                                            <a href="servicelist?page=<%= currentPage + 1 %>">Next</a>
+                                            <a href="servicelist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
                                             <%
                                                 }
                                             %>
@@ -592,8 +598,8 @@
                                                             <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.fee}"/>
                                                         </td>
                                                         <td style="width: 150px" class="text-center">
-                                                            <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${ls.serviceId}" style="height: 30px; width: 50px">Sửa</a>
-                                                            <a class="btn btn-danger btn-sm text-center" href="servicedelete?id=${ls.serviceId}" style="height: 30px; width: 50px"
+                                                            <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${ls.serviceId}&page=${currentPage}" style="height: 30px; width: 50px">Sửa</a>
+                                                            <a class="btn btn-danger btn-sm text-center" href="servicedelete?id=${ls.serviceId}&page=${currentPage}" style="height: 30px; width: 50px"
                                                                onclick="return confirmDelete();">Xóa</a>
                                                         </td>
                                                     </tr>

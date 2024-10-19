@@ -64,6 +64,7 @@ public class EditServiceServlet extends HttpServlet {
         String id = request.getParameter("id");
         ServiceDAO sdao = new ServiceDAO();
         Service service = sdao.findById(Integer.parseInt(id));
+        request.setAttribute("page", request.getParameter("page"));
         request.setAttribute("service", service);
         request.setAttribute("serviceType", sdao.getAllType());
         request.getRequestDispatcher("serviceedit.jsp").forward(request, response);
@@ -91,6 +92,13 @@ public class EditServiceServlet extends HttpServlet {
         String description = request.getParameter("description");
         String icon = request.getParameter("icon");
         String imgPath = request.getParameter("imgPath"); // Đường dẫn ảnh cũ
+
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        if (request.getParameter("recordsPerPage") != null) {
+            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
+        }
 
         // pick file upload form
         Part filePart = request.getPart("img"); // "img" is name in input of form
@@ -158,6 +166,9 @@ public class EditServiceServlet extends HttpServlet {
 
         ServiceDAO sdao = new ServiceDAO();
         sdao.updateService(Integer.parseInt(id), name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
+        request.setAttribute("type", "");
+        request.setAttribute("search", "");
+        request.setAttribute("orderBy", "");
         request.setAttribute("totalservice", sdao.totalService());
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);

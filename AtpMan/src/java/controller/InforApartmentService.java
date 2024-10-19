@@ -17,7 +17,7 @@ import model.Service;
  *
  * @author thang
  */
-public class ServiceDetailServlet extends HttpServlet {
+public class InforApartmentService extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,11 +32,11 @@ public class ServiceDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("id");
-            ServiceDAO sdao = new ServiceDAO();
-            Service service = sdao.findById(Integer.parseInt(id));
-            request.setAttribute("service", service);
-            request.getRequestDispatcher("serviceinfordetail.jsp").forward(request, response);
+//            String id = request.getParameter("id");
+//            ServiceDAO sdao = new ServiceDAO();
+//            Service service = sdao.findById(Integer.parseInt(id));
+//            request.setAttribute("service", service);
+//            request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
         }
     }
 
@@ -52,7 +52,7 @@ public class ServiceDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
     }
 
     /**

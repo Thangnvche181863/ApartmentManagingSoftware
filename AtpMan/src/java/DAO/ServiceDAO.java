@@ -9,17 +9,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import model.*;
+import utils.DBContext;
 
 /**
  *
  * @author thang
  */
-public class ServiceDAO extends DBContext {
+public class ServiceDAO {
 
-    public List<Service> getAllService() {
+    Connection connection = null;
+
+    public List<Service> getAllService() throws ClassNotFoundException {
         List<Service> list = new ArrayList<>();
         String sql = "select * from Service";
         try {
+            connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -42,6 +46,7 @@ public class ServiceDAO extends DBContext {
         try {
 
             String sql = "Select * from Service";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -75,6 +80,7 @@ public class ServiceDAO extends DBContext {
                 + "    type";
 
         try {
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -112,12 +118,13 @@ public class ServiceDAO extends DBContext {
             }
             // Thêm giới hạn phân trang
             sql.append("OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql.toString());
 
             // Thiết lập giá trị cho các tham số
             int paramIndex = 1;
 
-            if (type != null && !type.isEmpty() && !"All".equals(type)) {
+            if (type != null && !type.isEmpty() && !"".equals(type)) {
                 ps.setString(paramIndex++, type);
             }
 
@@ -150,6 +157,7 @@ public class ServiceDAO extends DBContext {
     public void insertService(String name, String type, BigDecimal fee, String description, String img, String icon) {
         try {
             String sql = "Insert into Service(name,type,fee,description,img,icon) values(?,?,?,?,?,?)";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
@@ -173,7 +181,7 @@ public class ServiceDAO extends DBContext {
                     + "      ,[img] = ?\n"
                     + "      ,[icon] = ?\n"
                     + " WHERE serviceID = ?";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, type);
@@ -193,7 +201,7 @@ public class ServiceDAO extends DBContext {
         try {
             String sql = "DELETE FROM [dbo].[Service]\n"
                     + "      WHERE serviceID = ?";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, serviceId);
             ps.executeUpdate();
@@ -207,7 +215,7 @@ public class ServiceDAO extends DBContext {
         try {
             int offset = (page - 1) * recordsPerPage;
             String sql = "select * from Service order by serviceID offset ? rows fetch next ? rows only";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, offset);
             ps.setInt(2, recordsPerPage);
@@ -233,6 +241,7 @@ public class ServiceDAO extends DBContext {
         int totalPages = 0;
         try {
             String sql = "select count(*) from service";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             rs.next();
@@ -251,7 +260,7 @@ public class ServiceDAO extends DBContext {
             StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Service WHERE 1=1");
 
             // Nếu type không phải "All", thêm điều kiện lọc theo type
-            if (type != null && !type.equals("All")) {
+            if (type != null && !type.equals("")) {
                 sql.append(" AND type = ?");
             }
 
@@ -263,7 +272,7 @@ public class ServiceDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql.toString());
 
             int paramIndex = 1;
-            if (type != null && !type.equals("All")) {
+            if (type != null && !type.equals("")) {
                 ps.setString(paramIndex++, type);
             }
             if (search != null && !search.isEmpty()) {
@@ -285,6 +294,7 @@ public class ServiceDAO extends DBContext {
         int total = 0;
         try {
             String sql = "select count(*) from service";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -296,7 +306,12 @@ public class ServiceDAO extends DBContext {
         return total;
     }
     
-    
+    public int getTotalService(String type, String search, String orderBy) {
+        ServiceDAO sdao = new ServiceDAO();
+        List<Service> list = sdao.getServiceByType(type, search, orderBy, 1, sdao.totalService());
+        return list.size();
+    }
+
     public static String stripHtml(String input) {
         return input.replaceAll("\\<.*?\\>", ""); // Xóa tất cả các thẻ HTML
     }
@@ -304,20 +319,11 @@ public class ServiceDAO extends DBContext {
     public static void main(String[] args) {
         ServiceDAO sdao = new ServiceDAO();
 
-//        sdao.insertService("Finance manager", type, 0, description);
-//        sdao.insertService("Monthly Maintaince", "Apartment Fee", 150.00);
-//        sdao.insertService("Gym Membership", "Amenity", 150.00);
-//('Gym Membership', 'Amenity', 200.00),
-//('Swimming Pool Access', 'Amenity', 120.00),
-//('Laundry Service', 'Convenience', 80.00),
-//('Repair Service', 'Maintenance', 250.00);
-//        System.out.println(sdao.getAll());
-//        List<Service> list = sdao.getAll();
-//        for (Service service : list) {
-//            System.out.println(service);
-//        }
-//        System.out.println(sdao.servicePaging(1, 10));
-//        System.out.println(sdao.count(10));
-        System.out.println(sdao.totalService());
+
+        List<Service> list = sdao.servicePaging(1, 25);
+        for (Service elem : list) {
+            System.out.println(elem);
+        }
+//        System.out.println(sdao.totalService());
     }
 }

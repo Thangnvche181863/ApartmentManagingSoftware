@@ -41,8 +41,8 @@
         <servlet-class>controller.ServiceListServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServiceDetailServlet</servlet-name>
-        <servlet-class>controller.ServiceDetailServlet</servlet-class>
+        <servlet-name>InforApartmentService</servlet-name>
+        <servlet-class>controller.InforApartmentService</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditService</servlet-name>
@@ -109,8 +109,8 @@
         <url-pattern>/servicelist</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServiceDetailServlet</servlet-name>
-        <url-pattern>/servicedetail</url-pattern>
+        <servlet-name>InforApartmentService</servlet-name>
+        <url-pattern>/inforapartmentservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditService</servlet-name>
@@ -140,8 +140,11 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
     <multipart-config>
-        <max-file-size>5242880</max-file-size> <!-- Giới hạn 5MB -->
-        <max-request-size>20971520</max-request-size> <!-- Tổng 20MB -->
-        <file-size-threshold>1048576</file-size-threshold> <!-- 1MB -->
+        <max-file-size>5242880</max-file-size>
+        <!-- Giới hạn 5MB -->
+        <max-request-size>20971520</max-request-size>
+        <!-- Tổng 20MB -->
+        <file-size-threshold>1048576</file-size-threshold>
+        <!-- 1MB -->
     </multipart-config>
 </web-app>

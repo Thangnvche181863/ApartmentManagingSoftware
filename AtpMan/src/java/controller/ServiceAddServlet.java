@@ -74,6 +74,10 @@ public class ServiceAddServlet extends HttpServlet {
         int page = 1;
         int recordsPerPage = 10;
         ServiceDAO sdao = new ServiceDAO();
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        request.setAttribute("page", page);
         request.setAttribute("totalservice", sdao.totalService());
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);
@@ -108,7 +112,6 @@ public class ServiceAddServlet extends HttpServlet {
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên file gốc
 
         // Kiểm tra loại file
-
         // Đường dẫn lưu trữ file
         String applicationPath = request.getServletContext().getRealPath("");
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
@@ -126,8 +129,7 @@ public class ServiceAddServlet extends HttpServlet {
         ServiceDAO sdao = new ServiceDAO();
         String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
         String fileType = filePart.getContentType();
-        
-        
+
         if (!fileType.startsWith("image/")) {
             request.setAttribute("name", name);
             request.setAttribute("type", type);
@@ -140,7 +142,13 @@ public class ServiceAddServlet extends HttpServlet {
             request.getRequestDispatcher("serviceadd.jsp").forward(request, response);
             return;
         }
+
+        fee = fee.replace(",", ""); // Loại bỏ dấu phẩy
+
         sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replace("\n", "<br>"), fileURL, icon);
+        request.setAttribute("type", "");
+        request.setAttribute("search", "");
+        request.setAttribute("orderBy", "");
         request.setAttribute("totalservice", sdao.totalService());
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);

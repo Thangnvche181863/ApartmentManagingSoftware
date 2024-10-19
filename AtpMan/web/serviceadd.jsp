@@ -595,7 +595,7 @@
                                         <div class="form-group mb-4">
                                             <label for="fee" class="form-label">Fee:</label>
                                             <input
-                                                type="number"
+                                                type="text"
                                                 class="form-control w-100"
                                                 name="fee"
                                                 id="fee"
@@ -645,7 +645,7 @@
                                         />
                                     <a
                                         class="btn btn-primary"
-                                        href="servicelist?id=${service.serviceId}"
+                                        href="servicelist?page=${page}"
                                         style="margin-right: 150px"
                                         >Hoàn Tác</a
                                     >

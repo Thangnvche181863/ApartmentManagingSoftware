@@ -118,73 +118,8 @@ public class ApartmentDAO {
         Vector<Apartment> vector = dao.getAllApartment();
         return vector.size();
     }
-
     
-    //thang
-    public int count(int recordsPerPage) {
-        int totalPages = 0;
-        Connection conn = null;
-        String sql = "select count(*) from Apartment";
-        try {
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            int totalRecords = rs.getInt(1);
-            totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return totalPages;
-    }
-
-    //thang
-    public Vector<Apartment> apartmentPaging(int page, int recordsPerPage) {
-        Vector<Apartment> vector = new Vector<>();
-        Connection conn = null;
-        String sql = "SELECT \n"
-                + "    A.apartmentID,\n"
-                + "	b.name,\n"
-                + "    A.apartmentNumber,\n"
-                + "	A.departmentType,\n"
-                + "	A.floor,\n"
-                + "    CASE WHEN SUM(SC.amount) IS NULL THEN 0 ELSE SUM(SC.amount) END AS totalAmount\n"
-                + "FROM \n"
-                + "    Apartment A\n"
-                + "left JOIN \n"
-                + "    ServiceContract SC ON A.apartmentID = SC.apartmentID\n"
-                + "left join\n"
-                + "    Service S ON SC.serviceID = S.serviceID\n"
-                + "join \n"
-                + "	Building b on b.buildingID = a.buildingID\n"
-                + "GROUP BY \n"
-                + "    A.apartmentID ,A.apartmentNumber,A.departmentType,A.floor,b.name\n"
-                + "ORDER BY \n"
-                + "    A.apartmentID\n"
-                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        try {
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, (page - 1) * recordsPerPage);
-            ps.setInt(2, recordsPerPage);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int apartmentID = rs.getInt(1);
-                String name = rs.getString(2);
-                String apartmentNumber = rs.getString(3);
-                String departmentType = rs.getString(4);
-                int floor = rs.getInt(5);
-                BigDecimal totalAmount = rs.getBigDecimal(6);
-                Apartment a = new Apartment(apartmentID, apartmentNumber, departmentType, floor, totalAmount, name);
-                vector.add(a);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return vector;
-    }
-
-    //thang
+        //thang
     public Vector<Apartment> allApartmentPaging(int page, int recordsPerPage, String buildingtype, String departmenttype, String search, String orderBy) {
         Vector<Apartment> vector = new Vector<>();
         Connection conn = null;
@@ -257,6 +192,15 @@ public class ApartmentDAO {
         }
         return vector;
     }
+    
+        public int getTotalApartment( String buildingtype, String departmenttype, String search, String orderBy) {
+        ApartmentDAO dao = new ApartmentDAO();
+        Vector<Apartment> vector = dao.allApartmentPaging(1, dao.getAmountOfApartment(), buildingtype, departmenttype, search, orderBy);
+        return vector.size();
+    }
+
+
+
 
     public static void main(String[] args) {
         Apartment a = new Apartment();
@@ -265,14 +209,6 @@ public class ApartmentDAO {
 //        System.out.println(vector.size());
         Vector<Apartment> apartments = dao.allApartmentPaging(1, 25, "", "", "", "");
 
-        // Kiểm tra và in ra thông tin của các căn hộ
-        if (apartments.isEmpty()) {
-            System.out.println("Không có căn hộ nào trong danh sách.");
-        } else {
-            for (Apartment apartment : apartments) {
-                // Sử dụng phương thức toString() của Apartment để in ra thông tin
-                System.out.println(apartment);
-            }
-        }
+        System.out.println(dao.getTotalApartment("tòa Alpha", "", "", ""));
     }
 }
