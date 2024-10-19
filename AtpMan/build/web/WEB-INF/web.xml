@@ -33,8 +33,8 @@
         <servlet-class>controller.ServiceListServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServiceDetailServlet</servlet-name>
-        <servlet-class>controller.ServiceDetailServlet</servlet-class>
+        <servlet-name>InforApartmentService</servlet-name>
+        <servlet-class>controller.InforApartmentService</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditService</servlet-name>
@@ -70,6 +70,12 @@
     <servlet>
         <servlet-name>Verify</servlet-name>
         <servlet-class>controller.Verify</servlet-class>
+        <servlet-name>ServiceUserDetailServlet</servlet-name>
+        <servlet-class>controller.ServiceUserDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistList</servlet-name>
+        <servlet-class>controller.RegistListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -112,8 +118,8 @@
         <url-pattern>/servicelist</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServiceDetailServlet</servlet-name>
-        <url-pattern>/servicedetail</url-pattern>
+        <servlet-name>InforApartmentService</servlet-name>
+        <url-pattern>/inforapartmentservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditService</servlet-name>
@@ -141,8 +147,22 @@
     <servlet-mapping>
         <servlet-name>Verify</servlet-name>
         <url-pattern>/verify</url-pattern>
+        <servlet-name>ServiceUserDetailServlet</servlet-name>
+        <url-pattern>/serviceuserdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistList</servlet-name>
+        <url-pattern>/registlist</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <multipart-config>
+        <max-file-size>5242880</max-file-size>
+        <!-- Giới hạn 5MB -->
+        <max-request-size>20971520</max-request-size>
+        <!-- Tổng 20MB -->
+        <file-size-threshold>1048576</file-size-threshold>
+        <!-- 1MB -->
+    </multipart-config>
 </web-app>

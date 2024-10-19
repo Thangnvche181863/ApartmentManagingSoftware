@@ -75,7 +75,7 @@ public class CreateAccount extends HttpServlet {
 
             // Fetch the apartments for the selected building
             ApartmentDAO apartmentDAO = new ApartmentDAO();
-            List<Apartment> apartments = apartmentDAO.getApartmentsByBuilding(buildingID);
+            List<Apartment> apartments = apartmentDAO.getAllApartmentByID(buildingID);
 
             StringBuilder apartmentOptions = new StringBuilder();
             for (Apartment apartment : apartments) {
@@ -169,6 +169,7 @@ public class CreateAccount extends HttpServlet {
             e.printStackTrace();
         }
     }
+}
 
     @Override
     public String getServletInfo() {

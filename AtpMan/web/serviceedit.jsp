@@ -1,4 +1,4 @@
-
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,13 +30,20 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
             />
-
+            
+            <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
+            <script>
+                tinymce.init({
+                  selector: '#description'
+                });
+            </script>
         <style>
             .is-invalid {
                 border-color: red;
                 background-color: #f8d7da;
             }
         </style>
+
 
     </head>
 
@@ -150,7 +157,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="servicelist">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Service List</span></a>
+                        <span>Danh Sách Dịch Vụ</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -293,7 +300,7 @@
                                         <div class="font-weight-bold">
                                             <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                                 problem I've been having.</div>
-                                            <div class="small text-gray-500">Emily Fowler � 58m</div>
+                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -305,7 +312,7 @@
                                         <div>
                                             <div class="text-truncate">I have the photos that you ordered last month, how
                                                 would you like them sent to you?</div>
-                                            <div class="small text-gray-500">Jae Chun � 1d</div>
+                                            <div class="small text-gray-500">Jae Chun · 1d</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -317,7 +324,7 @@
                                         <div>
                                             <div class="text-truncate">Last month's report looks great, I am very happy with
                                                 the progress so far, keep up the good work!</div>
-                                            <div class="small text-gray-500">Morgan Alvarez � 2d</div>
+                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -329,7 +336,7 @@
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                                                 told me that people say this to all dogs, even if they aren't good...</div>
-                                            <div class="small text-gray-500">Chicken the Dog � 2w</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
@@ -383,14 +390,21 @@
                         </div>
 
 
+                        
 
 
+                        <!-- Hiển thị thông báo lỗi -->
+                        <c:if test="${not empty errorMessage}">
+                            <div class="alert alert-danger" role="alert">
+                                ${errorMessage}
+                            </div>
+                        </c:if>
 
                         <div class="row"
-                             style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
+                             style="border: 1px darkgrey solid; border-radius: 10px; width: 100%; margin: 0 auto; padding: 20px;">
                             <form action="serviceedit" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data">
                                 <div class="row g-0"> 
-
+                                    <input type="hidden" name="page" value="${page}">
                                     <div class="col-md-5">
                                         <div class="form-group mb-4">
                                             <label for="name" class="form-label">Name:</label>
@@ -399,28 +413,32 @@
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="type" class="form-label">Type:</label>
-                                            <input type="text" class="form-control w-100" name="type" id="type" value="${service.type}">
+                                            <select class="form-select w-100" name="type" id="type" style="border-radius: 5px; outline: none;">
+                                                <c:forEach items="${serviceType}" var="ls">
+                                                    <option value="${ls.type}" <c:if test="${service.type == ls.type}">selected</c:if>>${ls.type}</option>
+                                                </c:forEach>
+                                            </select>
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="img" class="form-label">URL img:</label>
-                                            <input type="file" class="form-control w-100" name="img" id="img" value="${service.img}" onchange="previewImg(event)">
-                                            <img src="${service.img}" id="after" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
-                                            <img src="" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px; display: none"/>
+                                            <input type="file" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
+                                            <img src="${service.img}" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
+                                            <input type="hidden" name="imgPath" value="${service.img}">
                                         </div>
                                     </div>
 
 
-                                    <div class="col-md-7">
+                                    <div class="col-md-12">
                                         <div class="form-group mb-4">
                                             <label for="fee" class="form-label">Fee:</label>
                                             <input type="text" class="form-control w-100" name="fee" id="fee" value="${service.fee}">
                                             <div id="feeError" class="text-danger" style="display: none;"></div>
                                         </div>
                                         <div class="form-group mb-4">
-                                            <label for="icon" class="form-label" style="width: ">URL icon:</label>
+                                            <label for="icon" class="form-label" style="width: 100%">URL icon:</label>
                                             <input type="text" class="form-control w-100" name="icon" id="icon" value="${service.icon}">
                                         </div>
-                                        <div class="form-group mb-4">
+                                        <div class="form-group mb-4" style="width: 100%;">
                                             <label for="description" class="form-label">Description:</label>
                                             <textarea class="form-control w-100" name="description" id="description" rows="9">${service.description}</textarea>
                                         </div>
@@ -429,8 +447,8 @@
 
 
                                 <div class="text-center mt-4 d-flex">
-                                    <input type="submit" class="btn btn-primary btn-block" value="Save"  style="width: 80px; margin: 0 auto"/>
-                                    <a class="btn btn-primary" href="servicelist?id=${service.serviceId}" style="margin-right: 150px">Cancel</a>
+                                    <input type="submit" class="btn btn-primary btn-block" value="Lưu"  style="width: 80px; margin: 0 auto"/>
+                                    <a class="btn btn-primary" href="servicelist?id=${service.serviceId}&page=${page}" style="margin-right: 150px">Hoàn Tác</a>
                                 </div>
                             </form>
 
@@ -469,7 +487,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">�</span>
+                            <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -480,18 +498,22 @@
                 </div>
             </div>
         </div>
-        <script src="js/main.js"></script>
+
+        
+
+
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
+        
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
+        
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script src="js/main.js"></script>
-        <script src="js/main1.js"></script>
+        <script src="js/main2.js"></script>
 
     </body>
 

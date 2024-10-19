@@ -975,12 +975,13 @@
 /*** copyright end ***/
 
 .short-text {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Hiển thị 2 dòng văn bản */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    -webkit-line-clamp: 3 !important;
+    line-height: 1.5em !important;
+    max-height: 4.5em !important;
 }
 
 .full-text {

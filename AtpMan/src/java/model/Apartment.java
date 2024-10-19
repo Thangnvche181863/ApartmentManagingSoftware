@@ -4,6 +4,9 @@
  */
 package model;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 
 /**
  *
@@ -13,18 +16,64 @@ public class Apartment {
 
     private int apartmentID;
     private int buildingID;
-    private int apartmentNumber;
+    private String apartmentNumber;
     private String departmentType;
-    private double price;
-    private double maintenanceFee;
+    private BigDecimal price;
+    private BigDecimal maintenanceFee;
     private int floor;
     private int area;
+    private BigDecimal totalAmount;
 
-
+    private List<Service> services;
+    private String name;
+	
+    
     public Apartment() {
     }
 
     public Apartment(int apartmentID, int buildingID, int apartmentNumber, String departmentType, double price, double maintenanceFee, int floor, int area) {
+        this.apartmentID = apartmentID;
+        this.buildingID = buildingID;
+        this.apartmentNumber = apartmentNumber;
+    public Apartment(String departmentType) {
+        this.departmentType = departmentType;
+    }
+
+    public Apartment(int apartmentID, String apartmentNumber, String departmentType, int floor, BigDecimal totalAmount, String name) {
+        this.apartmentID = apartmentID;
+        this.apartmentNumber = apartmentNumber;
+        this.departmentType = departmentType;
+        this.floor = floor;
+        this.totalAmount = totalAmount;
+        this.name = name;
+    }
+
+    
+    
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, BigDecimal totalAmount) {
+        this.apartmentID = apartmentID;
+        this.buildingID = buildingID;
+        this.apartmentNumber = apartmentNumber;
+        this.departmentType = departmentType;
+        this.totalAmount = totalAmount;
+    }
+    
+    
+
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, List<Service> services) {
+        this.apartmentID = apartmentID;
+        this.buildingID = buildingID;
+        this.apartmentNumber = apartmentNumber;
+        this.departmentType = departmentType;
+        this.price = price;
+        this.maintenanceFee = maintenanceFee;
+        this.floor = floor;
+        this.area = area;
+        this.services = services;
+    }
+    
+
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
@@ -51,11 +100,11 @@ public class Apartment {
         this.buildingID = buildingID;
     }
 
-    public int getApartmentNumber() {
+    public String getApartmentNumber() {
         return apartmentNumber;
     }
 
-    public void setApartmentNumber(int apartmentNumber) {
+    public void setApartmentNumber(String apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
     }
 
@@ -67,19 +116,19 @@ public class Apartment {
         this.departmentType = departmentType;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public double getMaintenanceFee() {
+    public BigDecimal getMaintenanceFee() {
         return maintenanceFee;
     }
 
-    public void setMaintenanceFee(double maintenanceFee) {
+    public void setMaintenanceFee(BigDecimal maintenanceFee) {
         this.maintenanceFee = maintenanceFee;
     }
 
@@ -99,10 +148,36 @@ public class Apartment {
         this.area = area;
     }
 
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    } 
+    
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", departmentType=" + departmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", departmentType=" + departmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + ", totalAmount=" + totalAmount + ", services=" + services + '}';
     }
+
+    
     
 
 }
