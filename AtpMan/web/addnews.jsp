@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="newsImg">News Image:</label>
+                    <label for="newsImg">News Thumbnail Image:</label>
                     <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
                 </div>
 

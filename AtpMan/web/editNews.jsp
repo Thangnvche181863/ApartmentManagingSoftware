@@ -38,7 +38,7 @@
             <c:if test="${not empty success}">
                 <div class="alert alert-success">${success}</div>
             </c:if>
-            <form id="newsForm" action="EditNews" method="post" >
+            <form id="newsForm" action="EditNews" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="newsId" value="${requestScope.news.newsID}" />  <!-- This should hold a valid ID -->
 
                 <div class="form-group">
@@ -46,12 +46,15 @@
                     <input type="text" class="form-control" id="newsTitle" name="newsTitle" value="${news.newsTitle}" required>
                 </div>
 
+                <!-- File input for image thumbnail -->
                 <div class="form-group">
-                    <label for="newsContent">News Content:</label>
-                    <textarea class="form-control" id="newsContent" name="newsContent" rows="10">${news.newsContent}</textarea>
+                    <label for="newsImg">News Thumbnail (Optional):</label>
+                    <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
+                    <!-- Display current thumbnail if available -->
+                    <c:if test="${news.newsImg != null && !news.newsImg.isEmpty()}">
+                        <img src="${news.newsImg}" alt="Current Thumbnail" style="max-width: 150px; margin-top: 10px;">
+                    </c:if>
                 </div>
-
-                
 
                 <div class="form-group">
                     <label for="newsCategory">News Category:</label>
@@ -62,8 +65,32 @@
                         </c:forEach>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <label for="newsContent">News Content:</label>
+                    <textarea class="form-control" id="newsContent" name="newsContent" rows="10">${news.newsContent}</textarea>
+                </div>
+
+
+
+
                 <input type="submit"  class="btn btn-primary" value="Update" />
             </form>
         </div>
+        <script>
+            document.getElementById("newsForm").addEventListener("submit", function (event) {
+                const fileInput = document.getElementById("newsImg");
+                const filePath = fileInput.value;
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+                if (filePath) {
+                    if (!allowedExtensions.exec(filePath)) {
+                        alert("Please upload a valid image file (jpg, jpeg, png, gif).");
+                        fileInput.value = ''; // Clear the input
+                        event.preventDefault(); // Prevent form submission
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

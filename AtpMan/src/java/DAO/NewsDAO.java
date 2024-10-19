@@ -663,7 +663,7 @@ public class NewsDAO extends DBContext {
     }
     
     public boolean updateNews(News news) {
-    String sql = "UPDATE News SET staffID = ?, taskID = ?, newsCategoryID = ?, newsTitle = ?, newsContent = ?, postDate = ? WHERE newsID = ?";
+    String sql = "UPDATE News SET staffID = ?, taskID = ?, newsCategoryID = ?, newsTitle = ?, newsContent = ?, postDate = ?, newsImg = ? WHERE newsID = ?";
     boolean updated = false;
 
     try {
@@ -682,8 +682,8 @@ public class NewsDAO extends DBContext {
         pre.setString(4, news.getNewsTitle());
         pre.setString(5, news.getNewsContent());
         pre.setTimestamp(6, new java.sql.Timestamp(news.getPostDate().getTime()));
-        
-        pre.setInt(7, news.getNewsID());
+        pre.setString(7, news.getNewsImg());
+        pre.setInt(8, news.getNewsID());
 
         int rowsAffected = pre.executeUpdate();
 

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : newsManager
-    Created on : Sep 29, 2024, 6:28:29 PM
+    Document   : test
+    Created on : Oct 19, 2024, 9:56:08 PM
     Author     : PC
 --%>
 
@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Admin Managing - Rename when finished    </title>
+        <title>SB Admin 2 - Blank</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,45 +28,7 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-        <style>
-            .card-body {
-                height: 100px; /* Adjust the height as needed */
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 5; /* Limit the number of lines */
-                -webkit-box-orient: vertical;
-            }
 
-        </style>
-        <!-- Include TinyMCE -->
-        <script src="https://cdn.tiny.cloud/1/n0b2uh23r0ya9qhhy07odsf6v4qhzjpn6aoav7c4rzx6ocd4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-        <script>
-            tinymce.init({
-                selector: '#newsContent', // Target the textarea
-                plugins: 'image link media',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image media',
-                height: 300
-            });
-
-            // Ensure the TinyMCE content is saved before form submission
-            $(document).ready(function () {
-                $('#newsForm').on('submit', function (e) {
-                    console.log("Form is being submitted...");
-
-                    tinymce.triggerSave(); // Update textarea with TinyMCE content
-
-                    // Debug: Check if the textarea now has content
-                    console.log("News content:", $('#newsContent').val());
-
-                    if ($('#newsContent').val() === '') {
-                        e.preventDefault();  // Prevent form submission if content is missing
-                        alert("News content is empty!");
-                    }
-                });
-            });
-        </script>
     </head>
 
     <body id="page-top">
@@ -82,7 +44,7 @@
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">Admin Page<sup>2</sup></div>
+                    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
                 </a>
 
                 <!-- Divider -->
@@ -208,7 +170,18 @@
                         </button>
 
                         <!-- Topbar Search -->
-
+                        <form
+                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
 
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
@@ -392,13 +365,23 @@
                     </nav>
                     <!-- End of Topbar -->
 
-                    <!-- Begin Page Content - Everything starts here-->
-                    <div class="container-fluid ">
-
-
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
                         <!-- Page Heading -->
                         <center><h1 class="h3 mb-4 text-gray-800">News Manager</h1></center>  
+                        <center>
+                            <c:if test="${not empty message}">
+                                <c:choose>
+                                    <c:when test="${message.startsWith('News deleted')}">
+                                        <p class="text-center alert alert-success">${message}</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p class="text-center alert alert-danger">${message}</p>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:if>
+                        </center>
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <form class="form-inline d-none d-sm-inline-block mw-100" action="newsmanage" method="get">
                                 <div class="input-group">
@@ -421,170 +404,125 @@
                                 </div>
                             </form>
 
-                            <<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addNewsModal">Add News</button>
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addNewsModal">Add News</button>
                         </div>
-                        <!-- Add News Modal -->
-                        <div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Add News Form (from addnews.jsp) -->
-                                        <form id="newsForm" action="AddNews" method="post" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label for="newsTitle">News Title:</label>
-                                                <input type="text" class="form-control" id="newsTitle" name="newsTitle" required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="newsCategory">News Category:</label>
-                                                <select class="form-control" id="newsCategory" name="newsCategory">
-                                                    <c:forEach var="category" items="${newsCategories}">
-                                                        <option value="${category.newsCategoryID}">${category.name}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="newsContent">News Content:</label>
-                                                <textarea class="form-control" id="newsContent" name="newsContent" rows="10"></textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="newsImg">News Image:</label>
-                                                <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
-                                            </div>
-
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <center>
-                            <c:if test="${not empty message}">
-                                <c:choose>
-                                    <c:when test="${message.startsWith('News deleted')}">
-                                        <p class="text-center alert alert-success">${message}</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p class="text-center alert alert-danger">${message}</p>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:if>
-                        </center>
-
-                        <div class="row">
-                            <c:forEach items="${news}" var="newsItem">
-                                <div class="col-lg-4">
-
-                                    <!-- Dropdown Card Example -->
-                                    <div class="card shadow mb-4">
-                                        <!-- Card Header - Dropdown -->
-                                        <div
-                                            class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                            <div>
-                                                <h6 class="m-0 font-weight-bold text-primary">${newsItem.newsTitle}</h6>
-                                                <small>By ${newsItem.staffName}</small>
-                                                <small><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></small>
-                                            </div>
-                                            <div class="dropdown no-arrow">
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                     aria-labelledby="dropdownMenuLink">
-                                                    <div class="dropdown-header">Action:</div>
-                                                    <a class="dropdown-item" href="NewsDetail?id=${newsItem.newsID}">View</a>
-                                                    <a class="dropdown-item" href="EditNews?id=${newsItem.newsID}">Edit</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item alert-danger" href="newsdelete?id=${newsItem.newsID}"  onclick="return confirmDelete();">Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Card Body -->
-                                        <div class="card-body">
-                                            <c:set var="textOnly" value="${newsItem.newsContent}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<br>', ' ')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<p>', ' ')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</p>', ' ')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<strong>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</strong>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<em>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</em>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<a>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</a>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '<span>', '')}" />
-                                            <c:set var="textOnly" value="${fn:replace(textOnly, '</span>', '')}" />
-
-                                            <c:choose>
-                                                <c:when test="${fn:length(textOnly) > 100}">
-                                                    <c:set var="trimmedContent" value="${fn:substring(textOnly, 0, 100)}..." />
-                                                    ${trimmedContent} <a href="NewsDetail?id=${newsItem.newsID}">Read More</a>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${textOnly}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
-                            </c:forEach>
-
-
-
-
-
-
-
-
-
-                        </div>
-                        <!-- Pagination -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-start">
-                                        <c:if test="${currentPage > 1}">
-                                            <li class="page-item">
-                                                <a class="page-link" href="newsmanage?page=${currentPage - 1}&search=${param.search}">Previous</a>
-                                            </li>
-                                        </c:if>
-
-                                        <c:forEach var="i" begin="1" end="${totalPages}">
-                                            <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                <a class="page-link" href="newsmanage?page=${i}&search=${param.search}">${i}</a>
-                                            </li>
-                                        </c:forEach>
-
-                                        <c:if test="${currentPage < totalPages}">
-                                            <li class="page-item">
-                                                <a class="page-link" href="newsmanage?page=${currentPage + 1}&search=${param.search}">Next</a>
-                                            </li>
-                                        </c:if>
-                                    </ul>
-                                </nav>
-                            </div><!-- end col -->
-                        </div><!-- end row/pagination -->
-
                     </div>
                     <!-- /.container-fluid -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Author</th>
+                                            <th>Post Date</th>
+                                            <th>Actions</th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <c:forEach items="${news}" var="newsItem">
+                                            <tr>
+                                                <td>${newsItem.newsTitle}</td>
+                                                <td>${newsItem.staffName}</td>
+                                                <td><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a class="btn btn-sm btn-primary" href="NewsDetail?id=${newsItem.newsID}">View</a>
+                                                        <a class="btn btn-sm btn-warning" href="EditNews?id=${newsItem.newsID}">Edit</a>
+                                                        <a class="btn btn-sm btn-danger" href="newsdelete?id=${newsItem.newsID}" onclick="return confirmDelete();">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </c:forEach>
+
+
+
+
+
+                                    </tbody>
+                                </table>
+                                <!-- Pagination -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-start">
+                                                <c:if test="${currentPage > 1}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="newsmanage?page=${currentPage - 1}&search=${param.search}">Previous</a>
+                                                    </li>
+                                                </c:if>
+
+                                                <c:forEach var="i" begin="1" end="${totalPages}">
+                                                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                                        <a class="page-link" href="newsmanage?page=${i}&search=${param.search}">${i}</a>
+                                                    </li>
+                                                </c:forEach>
+
+                                                <c:if test="${currentPage < totalPages}">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="newsmanage?page=${currentPage + 1}&search=${param.search}">Next</a>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
+                                    </div><!-- end col -->
+                                </div><!-- end row/pagination --> 
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- End of Main Content -->
+                <!-- Add News Modal -->
+                <div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Add News Form (from addnews.jsp) -->
+                                <form id="newsForm" action="AddNews" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="newsTitle">News Title:</label>
+                                        <input type="text" class="form-control" id="newsTitle" name="newsTitle" required>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <label for="newsCategory">News Category:</label>
+                                        <select class="form-control" id="newsCategory" name="newsCategory">
+                                            <c:forEach var="category" items="${newsCategories}">
+                                                <option value="${category.newsCategoryID}">${category.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newsContent">News Content:</label>
+                                        <textarea class="form-control" id="newsContent" name="newsContent" rows="10"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newsImg">News Thumbnail Image:</label>
+                                        <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
@@ -635,10 +573,10 @@
 
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
-        <script>
-                                                        function confirmDelete() {
-                                                            return confirm("Do you want to delete this news?");
-                                                        }
+        <script type="text/javascript">
+                                                            function confirmDelete() {
+                                                                return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
+                                                            }
         </script>
     </body>
 

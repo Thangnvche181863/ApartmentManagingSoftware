@@ -28,14 +28,17 @@ public class NewsManager extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         NewsDAO newsDAO = new NewsDAO();
-        String searchParam = request.getParameter("search");
+        String searchParam = request.getParameter("search");     
+        if (searchParam != null) {
+            searchParam = searchParam.trim();  
+        }
         NewsCategoryDAO categoryDAO = new NewsCategoryDAO();
         List<NewsCategory> categories = categoryDAO.getAll();
         String categoryParam = request.getParameter("category");
 
         int currentPage = 1; // Default page number
         try {
-            
+
             String pageParam = request.getParameter("page");
             if (pageParam != null) {
                 currentPage = Integer.parseInt(pageParam);

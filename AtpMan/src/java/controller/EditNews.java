@@ -9,6 +9,7 @@ import DAO.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,15 +27,19 @@ import model.Staff;
  *
  * @author PC
  */
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 1024 * 1024 * 5, // 5MB max size
+        maxRequestSize = 1024 * 1024 * 5 * 5 // 25MB max request size
+)
 public class EditNews extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int newsId = Integer.parseInt(request.getParameter("id"));
 
-        
         NewsDAO newsDAO = new NewsDAO();
         News news = newsDAO.getNewsById2(newsId);
 
@@ -42,11 +47,9 @@ public class EditNews extends HttpServlet {
         NewsCategoryDAO categoryDAO = new NewsCategoryDAO();
         List<NewsCategory> categories = categoryDAO.getAll();
 
-        
         request.setAttribute("news", news);
         request.setAttribute("newsCategories", categories);
 
-       
         request.getRequestDispatcher("editNews.jsp").forward(request, response);
     }
 
@@ -54,16 +57,12 @@ public class EditNews extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
         String newsId = request.getParameter("newsId");
-        PrintWriter out = response.getWriter();
-//        out.print(newsId);
 
-      
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
         String newsCategoryParam = request.getParameter("newsCategory");
-//        out.print(newsTitle);
+
 
         int newsCategoryID = Integer.parseInt(newsCategoryParam);
 
@@ -72,13 +71,30 @@ public class EditNews extends HttpServlet {
         Staff staff = (Staff) (session != null ? session.getAttribute("user") : null);
         int staffID = (staff != null) ? staff.getStaffID() : 1;
 
-      
+        // Handle the image upload (optional)
+        Part filePart = request.getPart("newsImg");
+        String fileName = null;
+        String filePath = null;
+
+        if (filePart != null && filePart.getSize() > 0) {
+            fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            String uploadDir = getServletContext().getRealPath("/") + "img"; // Path to the image upload folder
+
+            File file = new File(uploadDir, fileName);
+            filePart.write(file.getAbsolutePath());  // Save the uploaded file
+
+            filePath = "img/" + fileName;  // Path to store in the database
+        }
+        NewsDAO newsDAO = new NewsDAO();
+        News oldNews = newsDAO.getNewsById2(Integer.parseInt(newsId));
         String formattedContent = newsContent.replace("\n", "<br>");
         java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
-       
-        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, "");
+        String finalImagePath = (filePath != null) ? filePath : oldNews.getNewsImg();
+        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, finalImagePath);
 
-      
+               
+        
+        
         NewsDAO dao = new NewsDAO();
         boolean isUpdated = dao.updateNews(news);
 
@@ -90,6 +106,12 @@ public class EditNews extends HttpServlet {
             request.setAttribute("error", "Failed to update News!");
             request.getRequestDispatcher("forbiddenpage.jsp").forward(request, response);
         }
+//        PrintWriter out = response.getWriter();
+//        out.println("newsId: " + newsId);         // Print to check if it's null
+//        out.println("newsTitle: " + newsTitle);
+//        out.println("newsContent: " + newsContent);
+//        out.println("newsCategory: " + newsCategoryParam);
+//        out.println("newsImgURL: " + finalImagePath);
     }
 
     @Override
