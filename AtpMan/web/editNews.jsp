@@ -45,6 +45,11 @@
                     <label for="newsTitle">News Title:</label>
                     <input type="text" class="form-control" id="newsTitle" name="newsTitle" value="${news.newsTitle}" required>
                 </div>
+                
+                <div class="form-group">
+                    <label for="newsDescription">News Description: </label>
+                    <input type="text" class="form-control" id="newsDescription" name="newsDescription" value="${news.description}" >
+                </div>
 
                 <!-- File input for image thumbnail -->
                 <div class="form-group">

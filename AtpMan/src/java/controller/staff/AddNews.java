@@ -49,6 +49,7 @@ public class AddNews extends HttpServlet {
 
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
+        String newsDescription = request.getParameter("newsDescription");
 
         // Process image upload
         Part filePart = request.getPart("newsImg");
@@ -81,7 +82,7 @@ public class AddNews extends HttpServlet {
       
         java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
 
-        News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, currentTime, "img/" + fileName);
+        News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, currentTime, "img/" + fileName,newsDescription);
 
         NewsDAO dao = new NewsDAO();
         boolean isAdded = dao.addNews(news);

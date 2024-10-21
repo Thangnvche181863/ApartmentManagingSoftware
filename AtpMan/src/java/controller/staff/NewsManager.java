@@ -22,7 +22,7 @@ import model.NewsCategory;
  */
 public class NewsManager extends HttpServlet {
 
-    private static final int RECORDS_PER_PAGE = 6;
+    private static final int RECORDS_PER_PAGE = 10;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

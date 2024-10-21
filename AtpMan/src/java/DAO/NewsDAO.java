@@ -101,10 +101,11 @@ public class NewsDAO extends DBContext {
                 java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
                 Date postDate = new Date(sqlPostDate.getTime());
                 String newsImg = rs.getString("newsImg");
+                String newsDescription = rs.getString("newsDescription");
                 String newsCategoryName = rs.getString("newsCategoryName");
                 String staffName = rs.getString("staffName");
 
-                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName,newsDescription);
                 list.add(news);
             }
 
@@ -155,10 +156,11 @@ public class NewsDAO extends DBContext {
             java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
             Date postDate = new Date(sqlPostDate.getTime());
             String newsImg = rs.getString("newsImg");
+            String newsDescription = rs.getString("newsDescription");
             String newsCategoryName = rs.getString("newsCategoryName");
             String staffName = rs.getString("staffName");
 
-            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName,newsDescription);
             list.add(news);
         }
 
@@ -277,10 +279,11 @@ public class NewsDAO extends DBContext {
             java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
             Date postDate = new Date(sqlPostDate.getTime());
             String newsImg = rs.getString("newsImg");
+            String newsDescription = rs.getString("newsDescription");
             String newsCategoryName = rs.getString("newsCategoryName");
             String staffName = rs.getString("staffName");
 
-            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName,newsDescription);
             list.add(news);
         }
 
@@ -334,10 +337,11 @@ public class NewsDAO extends DBContext {
                 java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
                 Date postDate = new Date(sqlPostDate.getTime());
                 String newsImg = rs.getString("newsImg");
+                String newsDescription = rs.getString("newsDescription");
                 String newsCategoryName = rs.getString("newsCategoryName");
                 String staffName = rs.getString("staffName");
 
-                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName);
+                News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName,newsDescription);
                 list.add(news);
             }
 
@@ -551,10 +555,12 @@ public class NewsDAO extends DBContext {
             java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
             Date postDate = new Date(sqlPostDate.getTime());
             String newsImg = rs.getString("newsImg");
+            String newsDescription = rs.getString("newsDescription");
+            
             String newsCategoryName = rs.getString("newsCategoryName");
             // Removed staffName since it's not fetched anymore
 
-            news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, null); // Use null for staffName
+            news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, null,newsDescription); // Use null for staffName
         }
 
         rs.close();
@@ -571,7 +577,7 @@ public class NewsDAO extends DBContext {
     
 
     public boolean addNews(News news) {
-        String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO News (staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsDescription) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean isAdded = false;
 
         try {
@@ -596,6 +602,7 @@ public class NewsDAO extends DBContext {
 
             pre.setTimestamp(6, new java.sql.Timestamp(news.getPostDate().getTime()));  // Assuming news.getPostDate() returns a java.util.Date object
             pre.setString(7, news.getNewsImg());
+            pre.setString(8,news.getDescription());
 
             // Execute the update
             int rowsAffected = pre.executeUpdate();

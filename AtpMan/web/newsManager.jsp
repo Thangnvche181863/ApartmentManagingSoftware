@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Blank</title>
+        <title>News Manager</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,6 +29,34 @@
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+        <!-- Include TinyMCE -->
+        <script src="https://cdn.tiny.cloud/1/n0b2uh23r0ya9qhhy07odsf6v4qhzjpn6aoav7c4rzx6ocd4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+        <script>
+            tinymce.init({
+                selector: '#newsContent', // Target the textarea
+                plugins: 'image link media',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image media',
+                height: 300
+            });
+
+            // Ensure the TinyMCE content is saved before form submission
+            $(document).ready(function () {
+                $('#newsForm').on('submit', function (e) {
+                    console.log("Form is being submitted...");
+
+                    tinymce.triggerSave(); // Update textarea with TinyMCE content
+
+                    // Debug: Check if the textarea now has content
+                    console.log("News content:", $('#newsContent').val());
+
+                    if ($('#newsContent').val() === '') {
+                        e.preventDefault();  // Prevent form submission if content is missing
+                        alert("News content is empty!");
+                    }
+                });
+            });
+        </script>
     </head>
 
     <body id="page-top">
@@ -44,7 +72,7 @@
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
-                    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                    <div class="sidebar-brand-text mx-3">Admin <sup>2</sup></div>
                 </a>
 
                 <!-- Divider -->
@@ -410,7 +438,7 @@
                     <!-- /.container-fluid -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">News Table</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -418,6 +446,7 @@
                                     <thead>
                                         <tr>
                                             <th>Title</th>
+                                            <th>Description</th>
                                             <th>Author</th>
                                             <th>Post Date</th>
                                             <th>Actions</th>
@@ -429,6 +458,7 @@
                                         <c:forEach items="${news}" var="newsItem">
                                             <tr>
                                                 <td>${newsItem.newsTitle}</td>
+                                                <td>${newsItem.description}</td>
                                                 <td>${newsItem.staffName}</td>
                                                 <td><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
                                                 <td>
@@ -496,6 +526,11 @@
                                     <div class="form-group">
                                         <label for="newsTitle">News Title:</label>
                                         <input type="text" class="form-control" id="newsTitle" name="newsTitle" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="newsTitle">News Description:</label>
+                                        <input type="text" class="form-control" id="newsDescription" name="newsDescription" >
                                     </div>
 
                                     <div class="form-group">
@@ -577,6 +612,22 @@
                                                             function confirmDelete() {
                                                                 return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
                                                             }
+        </script>
+        
+        <script>
+            document.getElementById("newsForm").addEventListener("submit", function (event) {
+                const fileInput = document.getElementById("newsImg");
+                const filePath = fileInput.value;
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+                if (filePath) {
+                    if (!allowedExtensions.exec(filePath)) {
+                        alert("Please upload a valid image file (jpg, jpeg, png, gif).");
+                        fileInput.value = ''; // Clear the input
+                        event.preventDefault(); // Prevent form submission
+                    }
+                }
+            });
         </script>
     </body>
 
