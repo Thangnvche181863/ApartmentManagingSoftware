@@ -4,6 +4,8 @@
  */
 package controller;
 
+import DAO.ApartmentDAO;
+import DAO.ServiceContractDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,6 +54,11 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ApartmentDAO adao = new ApartmentDAO();
+        ServiceContractDAO sdao = new ServiceContractDAO();
+        int id = Integer.parseInt(request.getParameter("id"));
+        request.setAttribute("apart", adao.apartmentDetail(id));
+        request.setAttribute("statistic", sdao.statisticContract(id));
         request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
     }
 

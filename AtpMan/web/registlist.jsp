@@ -445,12 +445,12 @@
                                                 <c:if test="${buildingtype == ls.name}">selected</c:if>>${ls.name}</option>
                                     </c:forEach>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="departmenttype">Loại Căn Hộ:</label>
-                                <select name="departmenttype" id="departmentType" style="border-radius: 5px" onchange="this.form.submit()">
+                                <label for="apartmentType">Loại Căn Hộ:</label>
+                                <select name="apartmentType" id="apartmentType" style="border-radius: 5px" onchange="this.form.submit()">
                                     <option value="">All</option>
                                     <c:forEach items="${listdepartment}" var="ls">
-                                        <option value="${ls.departmentType}" 
-                                                <c:if test="${departmenttype == ls.departmentType}">selected</c:if>>${ls.departmentType}</option>
+                                        <option value="${ls.apartmentType}" 
+                                                <c:if test="${apartmentType == ls.apartmentType}">selected</c:if>>${ls.apartmentType}</option>
                                     </c:forEach>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <label for="search">Tìm kiếm:</label>
@@ -482,14 +482,14 @@
                                                 int totalPages = (Integer) request.getAttribute("totalPages");
                                                 int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
                                                 String buildingtype = (String) request.getAttribute("buildingtype");
-                                                String departmenttype = (String) request.getAttribute("departmenttype");
+                                                String apartmentType = (String) request.getAttribute("apartmentType");
                                                 String search = (String) request.getAttribute("search");
                                                 String orderBy = (String) request.getAttribute("orderBy");
 
                                                 // Hiển thị nút "Previous" nếu không phải trang đầu tiên
                                                 if (currentPage > 1) {
                                             %>
-                                            <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
+                                            <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
                                             <%
                                                 }
 
@@ -501,7 +501,7 @@
                                             <%
                                                     } else {
                                             %>
-                                            <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
+                                            <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
                                             <%
                                                     }
                                                 }
@@ -509,7 +509,7 @@
                                                 // Hiển thị nút "Next" nếu không phải trang cuối cùng
                                                 if (currentPage < totalPages) {
                                             %>
-                                            <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&departmenttype=<%= departmenttype %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
+                                            <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
                                             <%
                                                 }
                                             %>
@@ -520,7 +520,7 @@
                                                     <th class="text-center">Số Phòng</th>
                                                     <th class="text-center">Loại Căn Hộ</th>
                                                     <th class="text-center">Số Tầng</th>
-                                                    <th class="text-center">Tổng Tiền Dịch Vụ</th>
+                                                    <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
                                                     <th class="text-center">Thông Tin</th>
                                                 </tr>
                                             </thead>
@@ -528,12 +528,12 @@
                                                 <c:forEach items="${listapart}" var="ls">
                                                     <tr>
                                                         <td class="text-center">${ls.apartmentNumber}</td>
-                                                        <td class="text-center">${ls.departmentType}</td>
+                                                        <td class="text-center">${ls.apartmentType}</td>
                                                         <td class="text-center">${ls.floor}</td>
                                                         <td class="text-center">
                                                             <fmt:formatNumber type="number" value="${ls.totalAmount}" />
                                                         </td>
-                                                        <td class="text-center"><a href="inforapartmentservice">Chi tiết</a></td>
+                                                        <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}">Chi tiết</a></td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>

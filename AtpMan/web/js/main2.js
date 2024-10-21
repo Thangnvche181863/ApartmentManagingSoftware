@@ -3,7 +3,7 @@ const nameInput = document.getElementById('name');
 const typeInput = document.getElementById('type');
 const feeInput = document.getElementById('fee');
 const feeError = document.getElementById('feeError');
-const fileInput = document.getElementById('img');
+//const fileInput = document.getElementById('img');
 const iconInput = document.getElementById('icon');
 const descriptionInput = document.getElementById('description');
 

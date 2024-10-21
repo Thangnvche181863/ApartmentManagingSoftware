@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.List;
+
 
 /**
  *
@@ -16,12 +18,21 @@ public class Building {
     private int numFloor;
     private int numApartment;
     private String address;
+    
+    private List<Apartment> list;
 
 
     public Building() {
     }
 
-
+    public Building(int buildingID, String name, List<Apartment> list) {
+        this.buildingID = buildingID;
+        this.name = name;
+        this.list = list;
+    }
+    
+    
+    
     public Building(int buildingID, String name, int numFloor, int numApartment, String address) {
         this.buildingID = buildingID;
 
@@ -31,7 +42,16 @@ public class Building {
         this.address = address;
     }
 
+    public List<Apartment> getList() {
+        return list;
+    }
 
+    public void setList(List<Apartment> list) {
+        this.list = list;
+    }
+
+    
+    
     public int getBuildingID() {
         return buildingID;
     }

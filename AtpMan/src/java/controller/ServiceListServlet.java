@@ -127,8 +127,12 @@ public class ServiceListServlet extends HttpServlet {
         request.setAttribute("type", type);
         request.setAttribute("search", search);
         request.setAttribute("orderBy", orderBy);
-        request.setAttribute("currentPage", page);
         request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
+        if(page > (int) Math.ceil((double) totalRecords / recordsPerPage)){
+             request.setAttribute("currentPage", (int) Math.ceil((double) totalRecords / recordsPerPage)-1);
+        }else{
+            request.setAttribute("currentPage", page);
+        }
         request.setAttribute("serviceType", sdao.getAllType());
 
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);

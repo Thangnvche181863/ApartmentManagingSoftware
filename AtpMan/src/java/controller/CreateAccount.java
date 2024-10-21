@@ -83,7 +83,7 @@ public class CreateAccount extends HttpServlet {
                         .append("<option value='")
                         .append(apartment.getApartmentID())
                         .append("'>")
-                        .append(apartment.getDepartmentType())
+                        .append(apartment.getApartmentType())
                         .append(" - ") // thêm dấu gạch ngang giữa type và number
                         .append(apartment.getApartmentNumber())
                         .append(" - Floor: ")
@@ -169,7 +169,6 @@ public class CreateAccount extends HttpServlet {
             e.printStackTrace();
         }
     }
-}
 
     @Override
     public String getServletInfo() {

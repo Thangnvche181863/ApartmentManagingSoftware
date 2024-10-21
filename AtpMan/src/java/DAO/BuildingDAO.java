@@ -4,7 +4,6 @@
  */
 package DAO;
 
-import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -105,20 +104,29 @@ public class BuildingDAO {
         return buildings;
     }
 
-//    public static void main(String[] args) {
-//        
-//        BuildingDAO buildingDAO = new BuildingDAO();       
-//        List<Building> buildings = buildingDAO.getAllBuildings(); 
-//        if (buildings != null && !buildings.isEmpty()) {           
-//            for (Building building : buildings) {
-//                System.out.println("Building ID: " + building.getBuildingID() 
-//                        + ", Name: " + building.getName() 
-//                        + ", Floor " + building.getNumFloor() 
-//                        + ", Apartment " + building.getNumApartment()
-//                        + ", Address " + building.getAddress());
-//            }
-//        } else {
-//            System.out.println("No buildings found or an error occurred.");
-//        }
-//    }
+    public String getBuildingName(int id) {
+        Connection conn = null;
+        String name = "";
+        try {
+            String sql = "SELECT * FROM Building WHERE buildingID = ?";
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                name = rs.getString("name");
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return name;
+    }
+
+    public static void main(String[] args) {
+
+        BuildingDAO buildingDAO = new BuildingDAO();
+        System.out.println(buildingDAO.getBuildingName(1));
+
+    }
 }
