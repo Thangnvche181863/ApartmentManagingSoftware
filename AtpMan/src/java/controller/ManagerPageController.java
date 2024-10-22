@@ -9,6 +9,7 @@ import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import DAO.LivingDAO;
 import DAO.StaffDAO;
+import DAO.TaskDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -41,7 +42,7 @@ public class ManagerPageController extends HttpServlet {
             //lay so luong building
             HttpSession session = request.getSession();
             String staffName = (String) session.getAttribute("staffName");
-
+            
             request.setAttribute("staffName", staffName);
             BuildingDAO buildingDAO = new BuildingDAO();
             int amountBuilding = buildingDAO.getAmountOfBuilding();
@@ -55,6 +56,11 @@ public class ManagerPageController extends HttpServlet {
             StaffDAO staffdao = new StaffDAO();
             int amountStaff = staffdao.getAmountOfStaff();
             request.setAttribute("amountStaff", amountStaff);
+            
+            //Lay so luong task
+            TaskDAO tdao = new TaskDAO();
+            int amountOfTask = tdao.getAmountOfTask();
+            request.setAttribute("amountOfTask", amountOfTask);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }

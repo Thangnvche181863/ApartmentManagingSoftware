@@ -16,41 +16,36 @@ public class Staff {
     private int roleID;
     private String username;
     private String password;
+    private String name;
     private String email;
     private String phoneNumber;
-    private String name;
+    
     private Date hireDate;
-
+    private String staffImg;
     public Staff() {
     }
 
-    public Staff(int staffID, int roleID, String username, String password, String email, String phoneNumber, String name, Date hireDate) {
+    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
         this.password = password;
+        this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.name = name;
         this.hireDate = hireDate;
     }
 
-    public Staff(int staffID, int roleID, String username, String email, String phoneNumber, String name, Date hireDate) {
+    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String staffImg) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
+        this.password = password;
+        this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.name = name;
         this.hireDate = hireDate;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.staffImg = staffImg;
     }
 
     public int getStaffID() {
@@ -73,16 +68,32 @@ public class Staff {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public String getStaffImg() {
+        return staffImg;
+    }
+
+    public void setStaffImg(String staffImg) {
+        this.staffImg = staffImg;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -111,7 +122,9 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + '}';
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", staffImg=" + staffImg + '}';
     }
+   
 
+    
 }

@@ -105,6 +105,30 @@
             border: solid 1px #BA68C8
         }
     </style>
+    <script>
+        // Hàm xem trước hình ảnh
+        function previewImg(event) {
+            const file = event.target.files[0];
+            const imgPreview = document.getElementById('imgPreview'); // Phần tử img hiện tại
+
+            if (file) {
+                const url = URL.createObjectURL(file); // Tạo URL tạm thời cho ảnh mới
+                imgPreview.src = url; // Gán URL cho phần tử img
+                imgPreview.style.display = "block"; // Hiển thị ảnh mới
+                imgPreview.onload = function () {
+                    URL.revokeObjectURL(imgPreview.src); // Giải phóng bộ nhớ khi ảnh tải xong
+                };
+            } else {
+                // Kiểm tra xem URL hiện tại có sẵn không, nếu có, giữ nguyên URL
+                const currentURL = imgPreview.getAttribute("src");
+                if (currentURL) {
+                    imgPreview.style.display = "block"; // Hiển thị ảnh hiện tại nếu có
+                } else {
+                    imgPreview.style.display = "none"; // Ẩn nếu không có URL nào
+                }
+            }
+        }
+    </script>
     <body>
         <%@include file="sidebar.jsp" %>
         <!-- Content Wrapper -->
@@ -118,17 +142,17 @@
 
 
 
+                <form action="profile" enctype="multipart/form-data" method="POST">
+                    <div class="container rounded bg-white mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-md-4 border-right">
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="${user.staffImg}" id="imgPreview" width="150px" height="150px" >
+                                    <span class="font-weight-bold">${user.name}</span><span class="text-black-50">${user.email}</span><span> </span></div>
+                            </div>
+                            <div class="col-md-6 border-right">
 
-                <div class="container rounded bg-white mt-5 mb-5">
-                    <div class="row">
-                        <div class="col-md-4 border-right">
-                            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                                <span class="font-weight-bold">${user.name}</span><span class="text-black-50">${user.email}</span><span> </span></div>
-                        </div>
-                        <div class="col-md-6 border-right">
 
 
-                            <form action="profile" method="POST">
                                 <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h4 class="text-right">Profile Settings</h4>
@@ -157,32 +181,38 @@
                                                    readonly>
                                         </div>
 
+
                                     </div>
+                                    <label for="img" class="form-label">Change your avatar:</label>
+                                    <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
+                                            
+                                            <input type="hidden" name="imgPath" value="${user.staffImg}">
 
                                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+
                                 </div>
-                            </form>
+
+                            </div>
 
                         </div>
-
                     </div>
-                </div>
             </div>
         </div>
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    </form>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
-    </body>
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+</body>
 </html>

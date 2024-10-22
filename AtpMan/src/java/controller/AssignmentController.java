@@ -39,7 +39,7 @@ public class AssignmentController extends HttpServlet {
             int AmountOfTask = dao.getAmountOfTask();
             
             request.setAttribute("AmountOfTask", AmountOfTask);
-            request.setAttribute("listAssignment", list);
+            request.setAttribute("listTask", list);
             request.getRequestDispatcher("assignment.jsp").forward(request, response);
             
             

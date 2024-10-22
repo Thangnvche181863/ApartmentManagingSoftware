@@ -50,6 +50,14 @@ public class TaskDAO {
 
         return list;
     }
+    public List<String> getAllTaskType(){
+        List list = new ArrayList<>();
+        String sql = "";
+        
+        
+        
+        return list;
+    }
     public int getAmountOfTask(){
         TaskDAO dao = new TaskDAO();
         List<Task> list = dao.getAllTask();
