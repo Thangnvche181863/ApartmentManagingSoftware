@@ -57,11 +57,6 @@ public class UserhomeNewsServlet extends HttpServlet {
         List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
         List<News> bannerList = newsDAO.getNewsForBanner();
 
-//        request.setAttribute("newsBanner", bannerList);
-//        request.setAttribute("news", newsList);
-//        request.setAttribute("currentPage", currentPage);
-//        request.setAttribute("totalPages", totalPages);
-
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         
         PrintWriter out = response.getWriter();

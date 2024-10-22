@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.List;
+import model.Apartment;
 
 /**
  *
@@ -16,11 +18,10 @@ public class Building {
     private int numFloor;
     private int numApartment;
     private String address;
-
+    private List<Apartment> apartmentList;
 
     public Building() {
     }
-
 
     public Building(int buildingID, String name, int numFloor, int numApartment, String address) {
         this.buildingID = buildingID;
@@ -73,6 +74,13 @@ public class Building {
         this.address = address;
     }
 
+    public List<Apartment> getApartmentList() {
+        return apartmentList;
+    }
+
+    public void setApartmentList(List<Apartment> apartmentList) {
+        this.apartmentList = apartmentList;
+    }
 
     @Override
     public String toString() {

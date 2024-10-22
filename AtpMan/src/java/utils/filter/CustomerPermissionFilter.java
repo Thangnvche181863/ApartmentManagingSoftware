@@ -106,7 +106,10 @@ public class CustomerPermissionFilter implements Filter {
         }
 
         doBeforeProcessing(request, response);
-
+        
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 

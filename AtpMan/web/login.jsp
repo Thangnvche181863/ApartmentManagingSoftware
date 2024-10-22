@@ -45,10 +45,10 @@
                                         <!-- Phần hiển thị lỗi nếu có -->
                                         <div class="text-danger mb-3">
                                             <c:if test="${not empty loginerr}">
-                                                <p>${loginerr}</p>
+                                                <p id="err">${loginerr}</p>
                                             </c:if>
                                             <c:if test="${not empty err}">
-                                                <p>${err}</p>
+                                                <p id="err">${err}</p>
                                             </c:if>
 
                                         </div>

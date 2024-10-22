@@ -82,7 +82,6 @@ public class ApartmentDAO {
 
     public Apartment getApartmentByCustomerId(int customerId) {
         Connection connection = null;
-        Apartment apartment = new Apartment();
         String sql = "select a.* from Apartment a\n"
                 + "inner join Living l on a.apartmentID = l.apartmentID\n"
                 + "where l.customerID = ?";
@@ -92,6 +91,7 @@ public class ApartmentDAO {
             statement.setInt(1, customerId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
+                Apartment apartment = new Apartment();
                 apartment.setApartmentID(rs.getInt(1));
                 apartment.setBuildingID(rs.getInt(2));
                 apartment.setApartmentNumber(rs.getString(3));
@@ -100,11 +100,38 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
+                return apartment;
             }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
         }
-        return apartment;
+        return null;
+    }
+
+    public Apartment getApartmentByID(int apartmentID) {
+        Connection connection = null;
+        String sql = "select * from Apartment where apartmentID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Apartment apartment = new Apartment();
+                apartment.setApartmentID(rs.getInt(1));
+                apartment.setBuildingID(rs.getInt(2));
+                apartment.setApartmentNumber(rs.getString(3));
+                apartment.setApartmentType(rs.getString(4));
+                apartment.setPrice(rs.getBigDecimal(5));
+                apartment.setMaintenanceFee(rs.getBigDecimal(6));
+                apartment.setFloor(rs.getInt(7));
+                apartment.setArea(rs.getInt(8));
+                return apartment;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
     public List<Apartment> getAllApartmentByOwner(int customerID) {
@@ -135,13 +162,12 @@ public class ApartmentDAO {
         }
         return list;
     }
-    
 
     public static void main(String[] args) {
         Apartment a = new Apartment();
         ApartmentDAO dao = new ApartmentDAO();
         Vector<Apartment> vector = dao.getAllApartment();
-        
+
         System.out.println(vector.size());
 
         a = dao.getApartmentByCustomerId(1);

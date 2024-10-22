@@ -7,6 +7,7 @@ package DAO;
 import java.time.LocalDate;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import model.Invoice;
 import utils.DBContext;
@@ -52,6 +53,49 @@ public class InvoiceDAO {
      * @param year
      * @return
      */
+    public List<ServiceContract> getAllServiceInvoiceByApartmentIDandMonth(int apartmentID, int month, int year) {
+        List<ServiceContract> serviceList = new ArrayList<>();
+        String sql = "select i.apartmentID, ins.serviceContractID, sc.serviceID, sc.startDate, sc.endDate, sc.amount as contractAmount, s.name, s.type, s.description, s.fee from InvoiceService ins\n"
+                + "inner join Invoice i on ins.invoiceID = i.invoiceID\n"
+                + "inner join ServiceContract sc on ins.serviceContractID = sc.serviceContractID\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            statement.setInt(2, month);
+            statement.setInt(3, year);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                // declare service object
+                Service service = new Service();
+
+                service.setServiceId(rs.getInt("serviceID"));
+                service.setName(rs.getString("name"));
+                service.setType(rs.getString("type"));
+                service.setDescription(rs.getString("description"));
+                service.setFee(rs.getBigDecimal("fee"));
+
+                // declare serviceContract object
+                ServiceContract serviceContract = new ServiceContract();
+
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
+                serviceContract.setService(service);
+                serviceContract.setStartDate(rs.getDate("startDate"));
+                serviceContract.setEndDate(rs.getDate("endDate"));
+                serviceContract.setAmount(rs.getDouble("contractAmount"));
+
+                serviceList.add(serviceContract);
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return serviceList;
+    }
+
     public Invoice getAllInvoiceByApartmentIDandMonth(int apartmentID, int month, int year) {
         Invoice invoice = new Invoice();
         List<ServiceContract> serviceList = new ArrayList<>();
@@ -104,6 +148,138 @@ public class InvoiceDAO {
             System.out.println(e);
         }
         return invoice;
+    }
+
+    public Invoice getInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, int page, int rowPerPage, List<String> searchTermList) {
+        Invoice invoice = new Invoice();
+        List<ServiceContract> serviceList = new ArrayList<>();
+        String sql = "select ins.invoiceID, ins.serviceContractID, i.apartmentID, i.amount, i.issueDate, i.dueDate, i.status, i.transactionDate, sc.serviceID, sc.startDate, sc.endDate, sc.amount as contractAmount, s.name, s.type, s.description, s.fee from InvoiceService ins\n"
+                + "inner join Invoice i on ins.invoiceID = i.invoiceID\n"
+                + "inner join ServiceContract sc on ins.serviceContractID = sc.serviceContractID\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
+
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+        sql += " order by ins.invoiceID offset ? rows fetch next ? rows only";
+
+        int fetchStart = (page - 1) * rowPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            statement.setInt(2, month);
+            statement.setInt(3, year);
+            statement.setInt(4, fetchStart);
+            statement.setInt(5, rowPerPage);
+
+            ResultSet rs = statement.executeQuery();
+            LinkedHashMap<Integer, Invoice> map = new LinkedHashMap<>();
+            while (rs.next()) {
+                int invoiceID = rs.getInt(1);
+                invoice = map.get(invoiceID);
+
+                if (invoice == null) {
+                    invoice = new Invoice();
+                    invoice.setInvoiceId(invoiceID);
+                    invoice.setApartmentId(rs.getInt(3));
+                    invoice.setAmount(rs.getDouble(4));
+                    invoice.setIssueDate(rs.getDate(5));
+                    invoice.setDueDate(rs.getDate(6));
+                    invoice.setStatus(rs.getInt(7));
+                    invoice.setTransactionDate(rs.getDate(8));
+                    map.put(invoiceID, invoice);
+                }
+
+                // declare service object
+                Service service = new Service();
+
+                service.setServiceId(rs.getInt("serviceID"));
+                service.setName(rs.getString("name"));
+                service.setType(rs.getString("type"));
+                service.setDescription(rs.getString("description"));
+                service.setFee(rs.getBigDecimal("fee"));
+
+                // declare serviceContract object
+                ServiceContract serviceContract = new ServiceContract();
+
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
+                serviceContract.setService(service);
+                serviceContract.setStartDate(rs.getDate("startDate"));
+                serviceContract.setEndDate(rs.getDate("endDate"));
+                serviceContract.setAmount(rs.getDouble("contractAmount"));
+
+                serviceList.add(serviceContract);
+
+                // set data for invoice
+                invoice.setServiceContractList(serviceList);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return invoice;
+    }
+
+    public int countInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, List<String> searchTermList) {
+        int count = 0;
+        String sql = "select count(*) from InvoiceService ins\n"
+                + "inner join Invoice i on ins.invoiceID = i.invoiceID\n"
+                + "inner join ServiceContract sc on ins.serviceContractID = sc.serviceContractID\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            statement.setInt(2, month);
+            statement.setInt(3, year);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return count;
     }
 
     public List<Date> getAllApartmentInvoiceDate(int apartmentId) {
@@ -199,12 +375,18 @@ public class InvoiceDAO {
         List<Date> dList = dao.getAllApartmentInvoiceDate(1);
         List<Integer> yList = dao.getAllApartmentInvoiceYear(1);
 
-        Invoice i = dao.getAllInvoiceByApartmentIDandMonth(1, 12, 2023);
+        List<String> sList = new ArrayList<>();
+        sList.add("service");
+        sList.add("b");
+        
+        List<ServiceContract> serviceContractsList = dao.getAllServiceInvoiceByApartmentIDandMonth(1, 11, 2024);
+        Invoice i = dao.getInvoiceByApartmentIDandMonth(1, 11, 2024, 1, 5, null);
         // System.out.println(i.getServiceContractList().get(0).getService().getName());
         // for (ServiceContract serviceContract : i.getServiceContractList()) {
         // System.out.println(serviceContract.getService().getName());
         // }
 
-        System.out.println(i);
+        int count = dao.countInvoiceByApartmentIDandMonth(1, 9, 2024, null);
+        System.out.println(serviceContractsList.size());
     }
 }

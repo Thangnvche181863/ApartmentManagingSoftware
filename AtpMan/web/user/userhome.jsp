@@ -33,11 +33,16 @@
         <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
         <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
-            .chooseApt:focus li{
+            .chooseApt:focus li, .chooseApt:focus div{
                 background-color: #198754;
             }
             .chooseApt:focus .card1, .chooseApt:focus .card2{
                 color: white !important;
+            }
+            #carouselExampleIndicators .carousel-item img {
+                max-height: 500px; /* Adjust the maximum height as needed */
+                width: auto;
+                margin: auto;
             }
         </style>
     </head>
@@ -59,7 +64,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="userhome.jsp">
+                    <a class="nav-link" href="userhome">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -378,21 +383,27 @@
                             <div class="row">
                                 <div class="card border-left-success shadow h-100 py-2">
                                     <div class="btn-group dropend">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Căn hộ
+                                        <a class="chooseApt" href="/AtpMan/userapartmentinfo?apartmentID=${requestScope.apartment.apartmentID}&buildingID=${requestScope.apartment.buildingID}" style="text-decoration: none">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1 card1">
+                                                            Căn hộ
+                                                        </div>
+                                                        <div class="h4 mb-0 font-weight-bold text-gray-800 card1">
+                                                            ${requestScope.apartment.apartmentNumber} - ${requestScope.building.name}
+                                                        </div>
+                                                        <div class="text-sm font-weight-bold text-success text-uppercase mb-1 card1">
+                                                            (Bấm vào để xem chi tiết)
+                                                        </div>
                                                     </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                        ${requestScope.apartment.apartmentType} - Tầng ${requestScope.apartment.floor} - Diện tích ${requestScope.apartment.area} m2   
-                                                    </div>
+
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-home fa-2x text-gray-300"></i>
+                                                    </div> 
                                                 </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-home fa-2x text-gray-300"></i>
-                                                </div> 
                                             </div>
-                                        </div>
+                                        </a>
                                         <c:if test="${requestScope.apartmentList.size() > 1}">
                                             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <span class="visually-hidden">Toggle Dropright</span>
@@ -409,7 +420,7 @@
                                                                             Căn hộ
                                                                         </div>
                                                                         <div class="h5 mb-0 font-weight-bold text-gray-800 card2">
-                                                                            ${apartment.apartmentType} - Tầng ${apartment.floor} - Diện tích ${apartment.area} m2   
+                                                                            ${apartment.apartmentNumber} - Tầng ${apartment.floor} - Diện tích ${apartment.area} m2   
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-auto">
@@ -442,6 +453,7 @@
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Tổng hóa đơn (${requestScope.currentYear})
                                                     </div>
+                                                    <fmt:setLocale value = "en_US"/>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                         <fmt:formatNumber value="${requestScope.totalBill}" type="number" maxFractionDigits="0"></fmt:formatNumber>
                                                             VNĐ
@@ -525,10 +537,10 @@
                             <div class="row">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                     <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary col-xl-5 col-md-5">Thông tin hóa đơn trong tháng</h1>
-
                                     <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
                                         <div class="col-xl-6 col-md-6">
                                             <input type="hidden" name="apartmentID" value="${requestScope.apartment.apartmentID}" />
+                                            <fmt:setLocale value = "vi_VN"/>
                                             <label for="month" class="form-label">Chọn Tháng</label>
                                             <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
                                                 <c:forEach items="${requestScope.dateList}" var="dList">
@@ -560,6 +572,7 @@
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Tổng hóa đơn trong tháng</div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:setLocale value = "en_US"/>
                                                         <fmt:formatNumber value="${requestScope.invoiceCurrent.amount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
                                                         </div>
                                                     </div>
@@ -646,123 +659,160 @@
                                 </div>
                             </div>
                             <!--End Current month's billing information-->
+                        </div>
+                        <!-- Content Row -->
 
-                            <!-- Content Row -->
-
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="chart-tab" data-toggle="tab" href="#chart" role="tab">Biều đồ</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab">Bảng dịch vụ</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="myTabContent">
-                                <br>
-                                <div class="tab-pane fade show active" id="chart" role="tabpanel">
-                                    <!-- chart here -->
-                                    <div class="row">
-                                        <!-- Area Chart -->
-                                        <div class="col-xl-8 col-lg-7">
-                                            <div class="card shadow mb-4">
-                                                <!-- Card Header - Dropdown -->
-                                                <div
-                                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                    <h6 class="m-0 font-weight-bold text-primary">Biểu đồ hóa đơn trong 12 tháng</h6>
-                                                    <div class="dropdown no-arrow">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                             aria-labelledby="dropdownMenuLink">
-                                                            <div class="dropdown-header">Dropdown Header:</div>
-                                                            <a class="dropdown-item" href="#">Action</a>
-                                                            <a class="dropdown-item" href="#">Another action</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="#">Something else here</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Card Body -->
-                                                <div class="card-body">
-                                                    <div class="chart-area">
-                                                        <canvas id="myAreaChart"></canvas>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="chart-tab" data-toggle="tab" href="#chart" role="tab">Biều đồ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab">Bảng dịch vụ</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <br>
+                            <div class="tab-pane fade show active" id="chart" role="tabpanel">
+                                <!-- chart here -->
+                                <div class="row">
+                                    <!-- Area Chart -->
+                                    <div class="col-xl-8 col-lg-7">
+                                        <div class="card shadow mb-4">
+                                            <!-- Card Header - Dropdown -->
+                                            <div
+                                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                <h6 class="m-0 font-weight-bold text-primary">Biểu đồ hóa đơn trong 12 tháng</h6>
+                                                <div class="dropdown no-arrow">
+                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                         aria-labelledby="dropdownMenuLink">
+                                                        <div class="dropdown-header">Dropdown Header:</div>
+                                                        <a class="dropdown-item" href="#">Action</a>
+                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Something else here</a>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- Card Body -->
+                                            <div class="card-body">
+                                                <div class="chart-area">
+                                                    <canvas id="myAreaChart"></canvas>
+                                                </div>
+                                            </div>
                                         </div>
+                                    </div>
 
-                                        <!-- Pie Chart -->
-                                        <div class="col-xl-4 col-lg-5">
-                                            <div class="card shadow mb-4">
-                                                <!-- Card Header - Dropdown -->
-                                                <div
-                                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                                    <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tỉ lệ dịch vụ trong hóa đơn</h6>
-                                                    <div class="dropdown no-arrow">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                             aria-labelledby="dropdownMenuLink">
-                                                            <div class="dropdown-header">Dropdown Header:</div>
-                                                            <a class="dropdown-item" href="#">Action</a>
-                                                            <a class="dropdown-item" href="#">Another action</a>
-                                                            <div class="dropdown-divider"></div>
-                                                            <a class="dropdown-item" href="#">Something else here</a>
-                                                        </div>
+                                    <!-- Pie Chart -->
+                                    <div class="col-xl-4 col-lg-5">
+                                        <div class="card shadow mb-4">
+                                            <!-- Card Header - Dropdown -->
+                                            <div
+                                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                                <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tỉ lệ dịch vụ trong hóa đơn</h6>
+                                                <div class="dropdown no-arrow">
+                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                                         aria-labelledby="dropdownMenuLink">
+                                                        <div class="dropdown-header">Dropdown Header:</div>
+                                                        <a class="dropdown-item" href="#">Action</a>
+                                                        <a class="dropdown-item" href="#">Another action</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item" href="#">Something else here</a>
                                                     </div>
                                                 </div>
-                                                <!-- Card Body -->
-                                                <div class="card-body">
-                                                    <div class="chart-pie pt-4 pb-2">
-                                                        <canvas id="myPieChart"></canvas>
-                                                    </div>
-                                                    <div class="mt-4 text-center small">
-
-                                                    </div>
+                                            </div>
+                                            <!-- Card Body -->
+                                            <div class="card-body">
+                                                <div class="chart-pie pt-4 pb-2">
+                                                    <canvas id="myPieChart"></canvas>
                                                 </div>
+                                                <div class="mt-4 text-center small">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>
+                            <div class="tab-pane fade" id="table" role="tabpanel">
+                                <!-- table here -->
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 row">
+                                        <h5 class="m-0 font-weight-bold text-primary col-md-8">Danh sách dịch vụ trong hóa đơn</h5>
+                                        <div class="col-md-4">
+                                            <div class="input-group rounded ">
+                                                <!--reset the current page to 1 cause of search can reduce the number of page-->
+                                                <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#searchTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text btn-primary border-0" id="search-addon">
+                                                        <i class="fas fa-search"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="searchTable" class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                <thead style="background-color: #4e73df; color: white">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Tên</th>
+                                                        <th>Loại dịch vụ</th>
+                                                        <th>Ngày đăng kí</th>
+                                                        <th>Ngày kết thúc</th>
+                                                        <th>Đơn giá</th>
+                                                        <th>Tỉ lệ</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <c:set var="countServiceTable" value="0"/>
+                                                    <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
+                                                        <c:set var="countServiceTable" value="${countServiceTable+1}"/>
+                                                        <tr>
+                                                            <td>${countServiceTable}</td>
+                                                            <td>${serviceContract.getService().getName()}</td>
+                                                            <td>${serviceContract.getService().getType()}</td>
+                                                            <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
+                                                            <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
+                                                            <td><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
+                                                            <td><fmt:formatNumber value="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}" type="percent" maxFractionDigits="0"></fmt:formatNumber></td>
+                                                            </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                            <div class="d-flex flex-row-reverse">
+                                                <nav aria-label="Page navigation">
+                                                    <ul class="pagination justify-content-start">
+                                                        <c:if test="${requestScope.currentServicePage > 1}">
+                                                            <li class="page-item">
+                                                                <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                            </li>
+                                                        </c:if>
+
+                                                        <c:forEach var="i" begin="1" end="${requestScope.totalServicePages}">
+                                                            <li class="page-item ${i == requestScope.currentServicePage ? 'active' : ''}">
+                                                                <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                        <c:if test="${requestScope.currentServicePage < requestScope.totalServicePages}">
+                                                            <li class="page-item">
+                                                                <button class="page-link" value="${requestScope.currentServicePage + 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                            </li>
+                                                        </c:if>
+                                                    </ul>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>   
-                                </div>
-                                <div class="tab-pane fade" id="table" role="tabpanel">
-                                    <!-- table here -->
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <h6 class="m-0 font-weight-bold text-primary">Danh sách dịch vụ trong hóa đơn</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Tên</th>
-                                                            <th>Loại dịch vụ</th>
-                                                            <th>Ngày đăng kí</th>
-                                                            <th>Ngày kết thúc</th>
-                                                            <th>Đơn giá</th>
-                                                            <th>Tỉ lệ</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
-                                                            <tr>
-                                                                <td>${serviceContract.getService().getName()}</td>
-                                                                <td>${serviceContract.getService().getType()}</td>
-                                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
-                                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
-                                                                <td data-order="${serviceContract.getAmount()}"><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
-                                                                <td data-order="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}"><fmt:formatNumber value="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}" type="percent" maxFractionDigits="0"></fmt:formatNumber></td>
-                                                                </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>   
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -842,7 +892,7 @@
                                                     <div class="blog-box row">
                                                         <div class="col-md-4">
                                                             <div class="post-media">
-                                                                <a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                                <a href="/AtpMan/NewsDetail?id=${newsItem.newsID}" title="">
                                                                     <img src="../${newsItem.newsImg}" alt="" class="img-fluid">
                                                                     <div class="hovereffect"></div>
                                                                 </a>
@@ -850,7 +900,7 @@
                                                         </div><!-- end col -->
 
                                                         <div class="blog-meta big-meta col-md-8">
-                                                            <h4><a href="NewsDetail?id=${newsItem.newsID}" title="">
+                                                            <h4><a href="/AtpMan/NewsDetail?id=${newsItem.newsID}" title="">
                                                                     ${newsItem.newsTitle}
                                                                 </a></h4>
                                                             <p>${newsItem.newsContent}</p>
@@ -905,7 +955,6 @@
 
             <!-- Bootstrap core JavaScript-->
             <script src="../vendor/jquery/jquery.min.js"></script>
-            <script src="../"></script>
             <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
             <script src="../vendor/chart.js/Chart.min.js"></script>
@@ -920,7 +969,7 @@
             <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Page level custom scripts -->
+            <!--Page level custom scripts--> 
             <script src="../js/demo/datatables-demo.js"></script>
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -936,6 +985,37 @@
                                                                             },
                                                                             success: function (data) {
                                                                                 $("#newsContent").html(data);
+//                                                            generate.innerHTML = data;
+                                                                            },
+                                                                            error: function (xhr) {
+                                                                                //Do Something to handle error
+                                                                            }
+                                                                        });
+                                                                    }
+                                                                    function handleSearch(page) {
+                                                                        let searchTerm = document.getElementById("searchService").value;
+                                                                        let selectMonth = ${requestScope.currentMonth};
+                                                                        let selectYears = ${requestScope.currentYear};
+                                                                        let apartmentID = ${requestScope.apartmentID};
+                                                                        let currentPage = page;
+                                                                        console.log("search ", searchTerm);
+                                                                        console.log("month ", selectMonth);
+                                                                        console.log("year ", selectYears);
+                                                                        console.log("aptId ", apartmentID);
+                                                                        console.log("current ", currentPage);
+                                                                        $.ajax({
+                                                                            url: "/AtpMan/userhometableajax",
+                                                                            type: "get", //send it through post method
+                                                                            data: {
+                                                                                searchTerm: searchTerm,
+                                                                                selectMonth: selectMonth,
+                                                                                selectYear: selectYears,
+                                                                                apartmentID: apartmentID,
+                                                                                currentPage: currentPage
+                                                                            },
+                                                                            success: function (data) {
+                                                                                $("#searchTable").html(data);
+//                                                                                console.log("data",data);
 //                                                            generate.innerHTML = data;
                                                                             },
                                                                             error: function (xhr) {
@@ -974,7 +1054,7 @@
                 </c:forEach>
                                                                     ];
                                                                     const amountService = [
-                <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
+                <c:forEach items="${requestScope.serviceList}" var="serviceContract">
                     <c:out value="${serviceContract.getAmount()}"/>,
                 </c:forEach>
                                                                     ];
