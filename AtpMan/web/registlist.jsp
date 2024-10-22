@@ -462,6 +462,7 @@
                                     <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng dần</option>
                                     <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm dần</option>
                                 </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="hidden" name="page" value="${currentPage}"/>
                             </div>
                         </form>
 

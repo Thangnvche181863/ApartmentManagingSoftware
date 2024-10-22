@@ -231,7 +231,8 @@ public class ApartmentDAO {
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
         Apartment a =  dao.apartmentDetail(1);
-        System.out.println(a.getList().get(0).getService().getFee());
+//        System.out.println(a.getList().get(0).getService().getFee());
+        System.out.println(dao.allApartmentPaging(1, 25, "", "", "", "asc"));
 //        System.out.println(dao.getAllApartment());
     }
 }

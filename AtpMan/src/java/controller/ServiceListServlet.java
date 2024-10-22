@@ -59,6 +59,7 @@ public class ServiceListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         int page = 1;
         int recordsPerPage = 10;
         String type = "";
@@ -105,6 +106,7 @@ public class ServiceListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         ServiceDAO sdao = new ServiceDAO();
         int page = 1;
         int recordsPerPage = 10;

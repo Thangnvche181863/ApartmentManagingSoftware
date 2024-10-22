@@ -115,6 +115,7 @@ public class EditServiceServlet extends HttpServlet {
                 ServiceDAO sdao = new ServiceDAO();
                 Service service = sdao.findById(Integer.parseInt(id));
                 request.setAttribute("service", service);
+                request.setAttribute("page", page);
                 request.setAttribute("serviceType", sdao.getAllType());
                 request.setAttribute("errorMessage", "Please upload a valid image file.");
                 request.getRequestDispatcher("serviceedit.jsp").forward(request, response);
@@ -159,6 +160,7 @@ public class EditServiceServlet extends HttpServlet {
             Service service = sdao.findById(Integer.parseInt(id));
             request.setAttribute("service", service);
             request.setAttribute("serviceType", sdao.getAllType());
+            request.setAttribute("page", page);
             request.setAttribute("errorMessage", "Invalid fee value.");
             request.getRequestDispatcher("serviceedit.jsp").forward(request, response);
             return; // Dừng lại sau khi chuyển hướng
