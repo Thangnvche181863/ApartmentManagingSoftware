@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.staff;
 
 import DAO.NewsCategoryDAO;
 import DAO.NewsDAO;
@@ -62,7 +62,7 @@ public class EditNews extends HttpServlet {
         String newsTitle = request.getParameter("newsTitle");
         String newsContent = request.getParameter("newsContent");
         String newsCategoryParam = request.getParameter("newsCategory");
-
+       String newsDescription = request.getParameter("newsDescription");
 
         int newsCategoryID = Integer.parseInt(newsCategoryParam);
 
@@ -90,7 +90,7 @@ public class EditNews extends HttpServlet {
         String formattedContent = newsContent.replace("\n", "<br>");
         java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
         String finalImagePath = (filePath != null) ? filePath : oldNews.getNewsImg();
-        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, finalImagePath);
+        News news = new News(Integer.parseInt(newsId), staffID, 1, newsCategoryID, newsTitle, formattedContent, currentTime, finalImagePath,newsDescription);
 
                
         

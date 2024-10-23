@@ -22,7 +22,7 @@ import model.NewsCategory;
  */
 public class NewsManager extends HttpServlet {
 
-    private static final int RECORDS_PER_PAGE = 5;
+    private static final int RECORDS_PER_PAGE = 6;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +45,7 @@ public class NewsManager extends HttpServlet {
             }
 
             // Set default value for category if not provided or "all"
-            if (categoryParam == null || categoryParam.equalsIgnoreCase("all")) {
+            if (categoryParam == null || categoryParam.equalsIgnoreCase("all")||categoryParam == "") {
                 categoryParam = "all";
             }
 

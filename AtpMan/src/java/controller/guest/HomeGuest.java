@@ -30,6 +30,11 @@ public class HomeGuest extends HttpServlet {
 
         List<News> teamMembers = newsDAO.getTeamMembers();
         List<News> banner = newsDAO.getBannerHomepage();
+        List<News> managementFeature = newsDAO.getManagementFeature();
+        List<News> residentFeature = newsDAO.getResidentFeature();
+
+        request.setAttribute("resident", residentFeature);
+        request.setAttribute("management", managementFeature);
         request.setAttribute("teamMembers", teamMembers);
         request.setAttribute("banner", banner);
         List<NewsCategory> categories = ncDAO.getNewscategoryGreaterThan10();

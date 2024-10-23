@@ -402,7 +402,7 @@
                             </form>
                             <div>
                                 <a href="newsmanage" class="btn btn-outline-primary mr-2">News Manage</a>
-                                <a href="AddNewsCategory" class="btn btn-outline-primary">Add NewsCategory</a>
+                                <a href="newscategoryadd.jsp" class="btn btn-outline-primary">Add NewsCategory</a>
                             </div>
 
                         </div>
@@ -579,14 +579,14 @@
         </script>
 
         <script>
-            // Disable delete button for system categories (newsCategoryID <= 20)
+            // Disable delete button for system categories (newsCategoryID <= 10)
             document.addEventListener("DOMContentLoaded", function () {
                 const deleteButtons = document.querySelectorAll(".unpressable-btn");
 
                 deleteButtons.forEach(function (button) {
                     const categoryId = parseInt(button.getAttribute("data-id"));
 
-                    if (categoryId <= 20) {
+                    if (categoryId <= 10) {
                         button.classList.add("disabled");
                         button.style.pointerEvents = "none";
                         button.title = "This NewsCategory is part of the system and cannot be deleted.";

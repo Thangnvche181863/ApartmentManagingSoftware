@@ -147,6 +147,7 @@
                                         <h4 class="text-white text-uppercase fw-bold mb-4">Welcome To AtpMan</h4>
                                         <h1 class="display-1 text-white mb-4">${banner.newsTitle}</h1>
                                         <p class="mb-5 fs-5">${banner.description}</p>
+<!--                                        <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${banner.newsID}">Learn More</a>-->
                                     </div>
                                 </div>
                                 <div class="col-lg-5 animated fadeInRight">
@@ -181,52 +182,22 @@
                     <h1 class="display-8 mb-4">For management</h1>
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="far fa-handshake fa-3x"></i>
+                    <c:forEach var="mana" items="${management}" varStatus="status">
+                        <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="feature-item p-4 pt-0 d-flex flex-column justify-content-between" style="height: 360px;">
+                                <div>
+                                    <div class="feature-icon p-4 mb-4">
+                                        <i class="fa fa-handshake fa-3x"></i>
+                                    </div>
+                                    <h5 class="mb-4">${mana.newsTitle}</h5>
+                                    <p class="mb-4">${mana.description}</p>
+                                </div>
+                                <div class="mt-auto">
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${mana.newsID}">Learn More</a>
+                                </div>
                             </div>
-                            <h5 class="mb-4">Information Management</h5>
-                            <p class="mb-4">General information about the apartment, apartment status, staff
-                            </p>
-                            <br>
-                            <a class="btn btn-primary rounded-pill py-2 px-4 " href="#">Learn More</a>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-dollar-sign fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Cost Management</h4>
-                            <p class="mb-4">Include basic fee and able to create more specific fee, detailed information on cost types
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-bullseye fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Flexible Plans</h4>
-                            <p class="mb-4">Create tasks and assign tasks to employees, sending support easily
-                            </p>
-                            <br>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-headphones fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Manage Feedback</h4>
-                            <p class="mb-4">Manage citizen requests and complaints and process requests quickly through task assignment
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
                 <br>
                 <!-- feature for residents -->
@@ -234,52 +205,23 @@
                     <h1 class="display-8 mb-4">For residents</h1>
                 </div>
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="far fa-handshake fa-3x"></i>
+                    <c:forEach var="res" items="${resident}" varStatus="status">
+                        <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="feature-item p-4 pt-0 d-flex flex-column justify-content-between" style="height: 360px;">
+                                <div>
+                                    <div class="feature-icon p-4 mb-4">
+                                        <i class="fa fa-dollar-sign fa-3x"></i>
+                                    </div>
+                                    <h5 class="mb-4">${res.newsTitle}</h5>
+                                    <p class="mb-4">${res.description}</p>
+                                </div>
+                                <div class="mt-auto">
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${res.newsID}">Learn More</a>
+                                </div>
                             </div>
-                            <h4 class="mb-4">Updated News</h4>
-                            <p class="mb-4">Update the latest information about announcements, services, management, and events of the apartment building
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.4s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-dollar-sign fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Cost Lookup</h4>
-                            <p class="mb-4">View monthly expenses, service charges, incidental charges, and other fees
-                            </p>
-                            <br>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-bullseye fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">Sign up for services and amenities</h4>
-                            <p class="mb-4">Register for external services, advanced services, use premium utilities
-                            </p>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.8s">
-                        <div class="feature-item p-4 pt-0" style="height: 360px;">
-                            <div class="feature-icon p-4 mb-4">
-                                <i class="fa fa-headphones fa-3x"></i>
-                            </div>
-                            <h4 class="mb-4">24/7 Fast Support</h4>
-                            <p class="mb-4">Submit support/complaints, get support in a short time, clear information and costs
-                            </p>
-                            <br>
-                            <a class="btn btn-primary rounded-pill py-2 px-4" href="#">Learn More</a>
-                        </div>
-                    </div>
+                    </c:forEach>
+
                 </div>
             </div>
         </div>

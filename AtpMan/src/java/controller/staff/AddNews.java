@@ -40,7 +40,7 @@ public class AddNews extends HttpServlet {
 
         // Set categories to the request
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("addnews.jsp").forward(request, response);
+        request.getRequestDispatcher("newsadd.jsp").forward(request, response);
     }
 
     @Override

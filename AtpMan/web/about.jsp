@@ -132,11 +132,11 @@
                                                     ${newsItem.newsTitle}
                                                 </a></h4><div><p>
                                                 <c:choose>
-                                                    <c:when test="${fn:length(newsItem.newsContent) > 100}">
-                                                            ${fn:substring(newsItem.newsContent, 0, 100)}...
+                                                    <c:when test="${fn:length(newsItem.description) > 100}">
+                                                            ${fn:substring(newsItem.description, 0, 100)}...
                                                     </c:when>
                                                     <c:otherwise>
-                                                        ${newsItem.newsContent}
+                                                        ${newsItem.description}
                                                     </c:otherwise>
                                                 </c:choose>
                                                     </p></div>

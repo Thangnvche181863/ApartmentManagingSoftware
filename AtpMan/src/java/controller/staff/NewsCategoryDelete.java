@@ -41,7 +41,7 @@ public class NewsCategoryDelete extends HttpServlet {
         }
 
         // Check if the newsCategoryID is <= 20
-        if (newsCategoryID <= 20) {
+        if (newsCategoryID <= 10) {
             request.setAttribute("message", "This NewsCategory is part of the system and cannot be deleted.");
             request.getRequestDispatcher("newscategorymanage").forward(request, response);
             return;

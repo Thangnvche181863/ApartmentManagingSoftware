@@ -4,14 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/model/News.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/newsManager.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/staff/AddNews.java</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/home.jsp</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/guest/HomeGuest.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/guest/NewsServlet.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/editNews.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/newsadd.jsp</file>
             <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/DAO/NewsDAO.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/staff/NewsCategoryManager.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/staff/NewsManager.java</file>
-            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/newscategorymanager.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/web/about.jsp</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/staff/AddNewsCategory.java</file>
+            <file>file:/C:/Users/PC/Desktop/SWP%20Project/SWP391_SE1869-NJ_Gr6_Ar-Management/AtpMan/src/java/controller/staff/EditNews.java</file>
         </group>
     </open-files>
 </project-private>
