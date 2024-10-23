@@ -72,6 +72,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="newsTitle">News Description:</label>
+                    <input type="text" class="form-control" id="newsDescription" name="newsDescription" >
+                </div>
+
+                <div class="form-group">
                     <label for="newsContent">News Content:</label>
                     <textarea class="form-control" id="newsContent" name="newsContent" rows="10"></textarea>
                 </div>

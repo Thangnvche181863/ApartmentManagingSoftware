@@ -132,6 +132,18 @@
         <servlet-name>EditNews</servlet-name>
         <servlet-class>controller.EditNews</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewsCategoryManager</servlet-name>
+        <servlet-class>controller.staff.NewsCategoryManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsCategoryDelete</servlet-name>
+        <servlet-class>controller.staff.NewsCategoryDelete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeGuest</servlet-name>
+        <servlet-class>controller.guest.HomeGuest</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -219,6 +231,18 @@
     <servlet-mapping>
         <servlet-name>EditNews</servlet-name>
         <url-pattern>/EditNews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsCategoryManager</servlet-name>
+        <url-pattern>/newscategorymanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsCategoryDelete</servlet-name>
+        <url-pattern>/NewsCategoryDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeGuest</servlet-name>
+        <url-pattern>/homepageGuest</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

@@ -22,7 +22,7 @@ import model.NewsCategory;
  */
 public class NewsManager extends HttpServlet {
 
-    private static final int RECORDS_PER_PAGE = 10;
+    private static final int RECORDS_PER_PAGE = 5;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,7 +30,7 @@ public class NewsManager extends HttpServlet {
         NewsDAO newsDAO = new NewsDAO();
         String searchParam = request.getParameter("search");     
         if (searchParam != null) {
-            searchParam = searchParam.trim();  
+             searchParam = searchParam.trim().replaceAll("\\s+", " ");  
         }
         NewsCategoryDAO categoryDAO = new NewsCategoryDAO();
         List<NewsCategory> categories = categoryDAO.getAll();
@@ -67,7 +67,7 @@ public class NewsManager extends HttpServlet {
                 if (categoryParam.equals("all")) {
                     // Get all news when category is "All"
                     totalRows = newsDAO.getNumberOfRows();
-                    newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
+                    newsList = newsDAO.getNewsByPageManage(currentPage, RECORDS_PER_PAGE);
                 } else {
                     // Filter by specific category
                     totalRows = newsDAO.getNumberOfRowsByCategory(categoryParam);

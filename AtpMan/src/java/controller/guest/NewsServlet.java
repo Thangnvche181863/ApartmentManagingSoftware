@@ -39,7 +39,7 @@ public class NewsServlet extends HttpServlet {
                 currentPage = Integer.parseInt(pageParam);
             }
 
-            int totalRows = newsDAO.getNumberOfRows();
+            int totalRows = newsDAO.getNumberOfRowsForTin();
             // Calculate total pages
             int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
 

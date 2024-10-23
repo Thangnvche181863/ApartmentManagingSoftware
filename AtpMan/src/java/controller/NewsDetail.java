@@ -20,8 +20,10 @@ import model.NewsComment;
 import jakarta.servlet.http.HttpSession;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.MediaData;
 
 /**
  *
@@ -58,16 +60,19 @@ public class NewsDetail extends HttpServlet {
                     String newsContent = newsItem.getNewsContent();
                     System.out.println("News content retrieved, length: " + (newsContent != null ? newsContent.length() : 0));
 
-                    // Extract <img> and <video> tags from newsContent
-                    String mediaTags = extractMediaTags(newsContent);
-                    System.out.println("Media tags extracted: " + mediaTags);
+                    List<MediaData> mediaDataList = extractMediaData(newsContent);
+//                    String mediaTags = extractMediaTags(newsContent);
+//                    System.out.println("Media tags extracted: " + mediaTags);
+//
+//                    List<String> mediaTexts = extractAltTexts(mediaTags);
+//                    System.out.println("Media Texts: " + mediaTexts);
 
                     List<NewsComment> comments = newsCommentDAO.getByNewsID(id);
                     System.out.println("Comments fetched for news ID " + id + ": " + (comments != null ? comments.size() : 0));
 
                     // Set attributes to be forwarded to JSP
                     request.setAttribute("news", newsItem);
-                    request.setAttribute("mediaTags", mediaTags);
+                    request.setAttribute("mediaDataList", mediaDataList);
                     request.setAttribute("comments", comments);
 
                     // Check session user details
@@ -100,26 +105,31 @@ public class NewsDetail extends HttpServlet {
     }
     // Method to extract <img> and <video> tags and format them for the carousel
 
-    private String extractMediaTags(String content) {
-        StringBuilder mediaTags = new StringBuilder();
+    private List<MediaData> extractMediaData(String content) {
+        List<MediaData> mediaDataList = new ArrayList<>();
 
         // Regex for <img> and <video> tags
         String regex = "(<img[^>]+>|<video[^>]+>[\\s\\S]*?<\\/video>)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
-        int index = 0;
 
         while (matcher.find()) {
             String mediaTag = matcher.group();
-            // Wrap each media tag in a carousel item div
-            mediaTags.append("<div class=\"carousel-item")
-                    .append(index == 0 ? " active" : "") // Add active class to the first item
-                    .append("\">")
-                    .append(mediaTag)
-                    .append("</div>");
-            index++;
+
+            // For <img> tags, extract the alt text
+            String altText = "";
+            if (mediaTag.contains("<img")) {
+                Matcher altMatcher = Pattern.compile("\\balt\\s*=\\s*\"([^\"]*)\"").matcher(mediaTag);
+                if (altMatcher.find()) {
+                    altText = altMatcher.group(1);
+                }
+            }
+
+            // Add mediaTag and altText to mediaDataList
+            mediaDataList.add(new MediaData(mediaTag, altText));
         }
-        return mediaTags.toString();
+
+        return mediaDataList;
     }
 
     @Override
@@ -130,12 +140,12 @@ public class NewsDetail extends HttpServlet {
             String newsIDStr = request.getParameter("newsID");
             String customerIDStr = request.getParameter("customerID");
             String staffIDStr = request.getParameter("staffID");
-            
+
             // Parse IDs
             int newsID = Integer.parseInt(newsIDStr);
             Integer customerID = customerIDStr != null && !customerIDStr.isEmpty() ? Integer.parseInt(customerIDStr) : null;
             Integer staffID = staffIDStr != null && !staffIDStr.isEmpty() ? Integer.parseInt(staffIDStr) : null;
-            
+
             java.sql.Timestamp currentTime = new java.sql.Timestamp(System.currentTimeMillis());
             // Create a new NewsComment object
             NewsComment newComment = new NewsComment();
@@ -144,11 +154,11 @@ public class NewsDetail extends HttpServlet {
             newComment.setStaffID(staffID); // Can be null
             newComment.setCommentText(commentText);
             newComment.setCommentDate(currentTime); // Current time as comment date
-            
+
             // Initialize DAO and add the comment
             NewsCommentDAO newsCommentDAO = new NewsCommentDAO();
             boolean result = newsCommentDAO.addNewsComment(newComment);
-            
+
             // Redirect or forward based on the result
             if (result) {
                 // Redirect to the same news detail page to see the new comment

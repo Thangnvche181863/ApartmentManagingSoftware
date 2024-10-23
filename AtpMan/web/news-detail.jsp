@@ -17,18 +17,45 @@
             margin: auto;
         }
 
-        /* Styling for the gallery images */
-        .gallery-image {
-            cursor: pointer;
-            transition: transform 0.3s ease;
+
+    </style>
+    <style>
+        .carousel-item {
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100%; /* Fill the modal body height */
         }
 
-        .gallery-image:hover {
-            transform: scale(1.1);
+        .carousel-item img,
+        .carousel-item video {
+            max-width: 100%; /* Ensure it doesn't exceed the modal width */
+            max-height: 100%; /* Ensure it doesn't exceed the modal height */
+            width: auto; /* Auto width */
+            height: auto; /* Auto height */
+            object-fit: contain; /* Maintain aspect ratio without cropping */
         }
 
-        .modal-content img, .modal-content video {
+        /* Optional: Style for the modal to prevent resizing */
+        .modal-lg {
+            max-width: 800px; /* Set a maximum width for the modal */
+            width: 100%; /* Full width for smaller screens */
+        }
+    </style>
+    <style>
+        /* Style for images */
+        .media-content img {
             max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+        /* Style for videos */
+        .media-content video {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
         }
     </style>
@@ -66,38 +93,38 @@
 
     <body>
 
-       
+
 
 
         <jsp:include page="header.jsp"></jsp:include>
 
-        <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center bg-primary">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+            <!-- Modal Search Start -->
+            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-fullscreen">
+                    <div class="modal-content rounded-0">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body d-flex align-items-center bg-primary">
+                            <div class="input-group w-75 mx-auto d-flex">
+                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                                <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- News Detail Section Start -->
-        <div class="container my-5">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- News Image Thumbnail -->
-                            <div class="text-center mb-4">
-                                <img src="${news.newsImg}" class="img-fluid rounded" alt="News Image" style="max-height: 400px;">
+            <!-- News Detail Section Start -->
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- News Image Thumbnail -->
+                                <div class="text-center mb-4">
+                                    <img src="${news.newsImg}" class="img-fluid rounded" alt="News Image" style="max-height: 400px;">
                             </div>
 
                             <!-- News Title -->
@@ -236,7 +263,7 @@
                                     <textarea id="commentText" name="commentText" class="form-control" rows="10" ></textarea>
 
                                 </div>
-                               
+
                                 <button type="submit" class="btn btn-primary">Submit Comment</button>
                             </form>
                         </c:if>
@@ -248,34 +275,50 @@
 
 
 
+
         <!-- Modal to display media -->
         <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
-            <div class="modal-dialog custom-modal-size"> <!-- Custom class for size -->
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="mediaModalLabel">Media Gallery</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="carousel-container" style="width: 100%; height: 500px;">
-                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 100%;">
-                                <div class="carousel-inner" style="height: 100%;">
-                                    ${mediaTags}
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                    <div class="modal-body" style="height: 500px;">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height: 100%;">
+                            <div class="carousel-inner" style="height: 100%;">
+                                <c:forEach var="mediaData" items="${mediaDataList}" varStatus="status">
+                                    <div class="carousel-item ${status.first ? 'active' : ''}" style="height: 100%;">
+                                        <div class="media-content" style="text-align: center; height: 90%; display: flex; align-items: center; justify-content: center;">
+                                            <!-- Wrap the mediaTag in a div and apply styles -->
+                                            <div style="max-width: 100%; height: 100%; display: flex; align-items: center;">
+                                                ${mediaData.mediaTag}
+
+                                            </div>
+                                        </div>
+                                        <c:if test="${not empty mediaData.altText}">
+                                            <div class="media-text" style="color: black; text-align: center; margin-top: 10px;">
+                                                <p>${mediaData.altText}</p>
+                                            </div>
+                                        </c:if>
+                                    </div>
+                                </c:forEach>
                             </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <script>
             tinymce.init({
                 selector: '#commentText',

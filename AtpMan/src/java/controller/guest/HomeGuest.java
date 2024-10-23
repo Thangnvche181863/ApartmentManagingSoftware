@@ -4,6 +4,7 @@
  */
 package controller.guest;
 
+import DAO.NewsCategoryDAO;
 import DAO.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,21 +14,31 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.News;
+import model.NewsCategory;
 
 /**
  *
- * @author WuanTun
+ * @author PC
  */
-public class Home extends HttpServlet {
+public class HomeGuest extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         NewsDAO newsDAO = new NewsDAO();
+        NewsCategoryDAO ncDAO = new NewsCategoryDAO();
 
         List<News> teamMembers = newsDAO.getTeamMembers();
-
+        List<News> banner = newsDAO.getBannerHomepage();
         request.setAttribute("teamMembers", teamMembers);
+        request.setAttribute("banner", banner);
+        List<NewsCategory> categories = ncDAO.getNewscategoryGreaterThan10();
+        request.setAttribute("categories", categories);
+
+        for (NewsCategory category : categories) {
+            List<News> newsList = newsDAO.getNewsByCategoryId(category.getNewsCategoryID());
+            category.setNewsList(newsList); // Assuming you have a setNewsList method in your NewsCategory model
+        }
 
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
@@ -38,6 +49,11 @@ public class Home extends HttpServlet {
 
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
