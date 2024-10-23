@@ -228,7 +228,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                                        <tr>\n"
                 + "                                            <th>#</th>\n"
                 + "                                            <th>Name</th>\n"
-                + "                                            <th>Age</th>\n"
+                + "                                            <th>Ngày sinh</th>\n"
                 + "                                            <th>Email</th>\n"
                 + "                                            <th>Phone</th>\n"
                 + "                                        </tr>\n"
@@ -240,7 +240,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
             out.print("                                            <tr>\n"
                     + "                                                <td>" + count + "</td>\n"
                     + "                                                <td>" + resident.getName() + "</td>\n"
-                    + "                                                <td>" + resident.getAge() + "</td>\n"
+                    + "                                                <td>" + resident.getDob()+ "</td>\n"
                     + "                                                <td>" + resident.getEmail() + "</td>\n"
                     + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
                     + "                                            </tr>\n");

@@ -110,9 +110,10 @@ public class CustomerDAO {
                             customer.setName(rs.getString("name"));
                             customer.setEmail(rs.getString("email"));
                             customer.setPhoneNumber(rs.getString("phoneNumber"));
-                            customer.setAge(rs.getInt("age"));
+                            customer.setDob(rs.getDate("dob"));
                             customer.setRegistrationDate(rs.getDate("registrationDate"));
                             customer.setIsOwner(rs.getInt("isOwner"));
+                            customer.setStatus(rs.getInt("status"));
                             return customer;
                         }
                     }
@@ -215,9 +216,10 @@ public class CustomerDAO {
                                     resultSet.getString("name"),
                                     resultSet.getString("email"),
                                     resultSet.getString("phoneNumber"),
-                                    resultSet.getInt("age"),
+                                    resultSet.getDate("dob"),
                                     resultSet.getDate("registrationDate"),
-                                    resultSet.getInt("isOwner"));
+                                    resultSet.getInt("isOwner"),
+                                    resultSet.getInt("status"));
                         }
                     }
                 }
@@ -232,7 +234,7 @@ public class CustomerDAO {
     public List<Customer> getLivingInApartment(int apartmentID) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
-        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.age, c.isOwner, c.customerType from Customer c\n"
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.customerType from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
                 + "where l.apartmentID = ?";
         try {
@@ -246,7 +248,7 @@ public class CustomerDAO {
                 customer.setName(rs.getString(2));
                 customer.setEmail(rs.getString(3));
                 customer.setPhoneNumber(rs.getString(4));
-                customer.setAge(rs.getInt(5));
+                customer.setDob(rs.getDate("dob"));
                 customer.setIsOwner(rs.getInt(6));
                 list.add(customer);
             }
