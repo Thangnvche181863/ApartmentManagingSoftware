@@ -38,7 +38,6 @@ public class Customer {
         this.status = status;
     }
 
-    
 
     public int getCustomerID() {
         return customerID;

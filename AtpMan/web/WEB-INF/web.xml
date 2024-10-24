@@ -145,34 +145,6 @@
         <servlet-name>RegistList</servlet-name>
         <servlet-class>controller.RegistListServlet</servlet-class>
     </servlet>
-    <servlet>    
-        <servlet-name>CRUDService</servlet-name>
-        <servlet-class>controller.ServiceListServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServiceDetailServlet</servlet-name>
-        <servlet-class>controller.ServiceDetailServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditService</servlet-name>
-        <servlet-class>controller.EditServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeleteServiceServlet</servlet-name>
-        <servlet-class>controller.DeleteServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServiceAddServlet</servlet-name>
-        <servlet-class>controller.ServiceAddServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UserhomeNewsServlet</servlet-name>
-        <servlet-class>controller.UserhomeNewsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.Home</servlet-class>
-    </servlet>
     <servlet>
         <servlet-name>EditNews</servlet-name>
         <servlet-class>controller.staff.EditNews</servlet-class>
@@ -276,10 +248,6 @@
     <servlet-mapping>
         <servlet-name>NewsDelete</servlet-name>
         <url-pattern>/newsdelete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserApartmentInfoServlet</servlet-name>

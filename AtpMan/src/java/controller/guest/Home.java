@@ -25,9 +25,9 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         NewsDAO newsDAO = new NewsDAO();
 
-        List<News> teamMembers = newsDAO.getTeamMembers();
+//        List<News> teamMembers = newsDAO.getTeamMembers();
 
-        request.setAttribute("teamMembers", teamMembers);
+//        request.setAttribute("teamMembers", teamMembers);
 
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
