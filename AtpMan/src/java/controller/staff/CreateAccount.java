@@ -5,14 +5,25 @@
 
 package controller.staff;
 
+import DAO.ApartmentDAO;
+import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import controller.WebManager;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Apartment;
+import model.Building;
+import utils.EmailHandle;
+import utils.GeneratePassword;
 
 /**
  *
@@ -58,7 +69,40 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // Check if buildingID parameter is present for loading apartments via AJAX
+        String buildingIDStr = request.getParameter("buildingId"); // Get from AJAX request
+
+        if (buildingIDStr != null && !buildingIDStr.isEmpty()) {
+            int buildingID = Integer.parseInt(buildingIDStr);
+
+            // Fetch the apartments for the selected building
+            ApartmentDAO apartmentDAO = new ApartmentDAO();
+            List<Apartment> apartments = apartmentDAO.getAllApartmentByID(buildingID);
+
+            StringBuilder apartmentOptions = new StringBuilder();
+            for (Apartment apartment : apartments) {
+                apartmentOptions
+                        .append("<option value='")
+                        .append(apartment.getApartmentID())
+                        .append("'>")
+                        .append(apartment.getApartmentType())
+                        .append(" - ") // thêm dấu gạch ngang giữa type và number
+                        .append(apartment.getApartmentNumber())
+                        .append(" - Floor: ")
+                        .append(apartment.getFloor())
+                        .append("</option>");
+            }
+
+            response.setContentType("text/html");
+            response.getWriter().write(apartmentOptions.toString());
+        } else {
+            // Fetch buildings for initial page load
+            BuildingDAO buildingDAO = new BuildingDAO();
+            List<Building> listBuilding = buildingDAO.getAllBuildings();
+            request.setAttribute("listBuildings", listBuilding);
+
+            request.getRequestDispatcher("createAccount.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -67,13 +111,14 @@ public class CreateAccount extends HttpServlet {
 
         try {
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+            LivingDAO livingDAO = WebManager.getInstance().livingDAO;
+
             String username = request.getParameter("username");
-            String password = request.getParameter("password");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phoneNumber");
-            String age = request.getParameter("age");
-            String registrationDate = request.getParameter("registrationDate");
+            String buildingId = request.getParameter("building");
+            String apartmentId = request.getParameter("apartment");
             String userType = request.getParameter("userType");
 
             String isOwner = null;
@@ -90,13 +135,40 @@ public class CreateAccount extends HttpServlet {
                 request.getRequestDispatcher("createAccount.jsp").forward(request, response);
                 return;
             }
+            String password = GeneratePassword.generatePass();
+            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, isOwner);
+            int customerID = customerDAO.getCustomerIDByUsername(username);
 
-            
-            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, age, registrationDate, isOwner);
+            System.out.println("Customer ID: " + customerID);
+
+            if (customerID > 0) {
+                int apartmentID = Integer.parseInt(apartmentId);
+                livingDAO.insertResident(customerID, apartmentID);
+            }
+
+            String subject = "Thong tin tai khoan va mat khau cua ban";
+            String body = "<html>"
+                    + "<body>"
+                    + "<p>Dear " + name + ",</p>"
+                    + "<p>Tai khoan và mat khau cua ban:</p>"
+                    + "<table style='border-collapse: collapse;'>"
+                    + "<tr><td><strong>Tai khoan:</strong></td><td>" + username + "</td></tr>"
+                    + "<tr><td><strong>Mat khau:</strong></td><td>" + password + "</td></tr>"
+                    + "</table>"
+                    + "<br>"
+                    + "<p>Xin vui long đang nhap va doi mat khau sau khi truy cap lan đau.</p>"
+                    + "<p>Tran trong,</p>"
+                    + "<p>Doi ngu ho tro : NHOM 6 </p>"
+                    + "</body>"
+                    + "</html>";
+
+            EmailHandle.sendEmail(email, subject, body);
+
             request.setAttribute("successCreate", "Create account successfully");
             request.getRequestDispatcher("createAccount.jsp").forward(request, response);
-            
+
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

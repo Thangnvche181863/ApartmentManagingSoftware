@@ -72,7 +72,7 @@ public class ServiceIntroServlet extends HttpServlet {
         ServiceDAO sdao = new ServiceDAO();
         List<Service> list = sdao.getAll();
         request.setAttribute("list", list);
-        request.getRequestDispatcher("serviceuser.jsp").forward(request, response);
+        request.getRequestDispatcher("serviceintro.jsp").forward(request, response);
     }
 
     /** 

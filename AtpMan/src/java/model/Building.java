@@ -18,11 +18,20 @@ public class Building {
     private int numFloor;
     private int numApartment;
     private String address;
-    private List<Apartment> apartmentList;
+    
+    private List<Apartment> list;
+
 
     public Building() {
     }
 
+    public Building(int buildingID, String name, List<Apartment> list) {
+        this.buildingID = buildingID;
+        this.name = name;
+        this.list = list;
+    }
+    
+    
     public Building(int buildingID, String name, int numFloor, int numApartment, String address) {
         this.buildingID = buildingID;
 
@@ -32,7 +41,16 @@ public class Building {
         this.address = address;
     }
 
+    public List<Apartment> getList() {
+        return list;
+    }
 
+    public void setList(List<Apartment> list) {
+        this.list = list;
+    }
+
+    
+    
     public int getBuildingID() {
         return buildingID;
     }
@@ -75,11 +93,11 @@ public class Building {
     }
 
     public List<Apartment> getApartmentList() {
-        return apartmentList;
+        return list;
     }
 
     public void setApartmentList(List<Apartment> apartmentList) {
-        this.apartmentList = apartmentList;
+        this.list = apartmentList;
     }
 
     @Override

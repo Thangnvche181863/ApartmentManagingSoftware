@@ -7,6 +7,9 @@
     <list default="true" id="30780cf5-fa27-4560-be8e-997e8b958ca4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ServiceListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ServiceListServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/servicelist.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/servicelist.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +29,9 @@
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -282,6 +288,11 @@
       <workItem from="1728520620139" duration="7000" />
       <workItem from="1729671423575" duration="26000" />
       <workItem from="1729671740728" duration="3000" />
+      <workItem from="1727709196197" duration="5246000" />
+      <workItem from="1727748181341" duration="6000" />
+      <workItem from="1727753389390" duration="129000" />
+      <workItem from="1727753719192" duration="2230000" />
+      <workItem from="1728005421375" duration="10000" />
     </task>
     <servers />
   </component>

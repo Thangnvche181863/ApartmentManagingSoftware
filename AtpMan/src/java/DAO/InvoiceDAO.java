@@ -130,7 +130,7 @@ public class InvoiceDAO {
                 serviceContract.setService(service);
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
-                serviceContract.setAmount(rs.getDouble("contractAmount"));
+                serviceContract.setAmount(rs.getBigDecimal("contractAmount"));
 
                 serviceList.add(serviceContract);
 

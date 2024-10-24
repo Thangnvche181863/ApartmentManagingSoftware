@@ -34,10 +34,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav mx-0 mx-lg-auto">
-                        <a href="home.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Home</a>
-                        <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">News</a>
-                        <a href="service.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("service.jsp") ? "active" : "" %>">Services</a>
-                        <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Feedback</a>
+                        <a href="home.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang chủ</a>
+                        <a href="about.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("about.jsp") ? "active" : "" %>">Giới thiệu</a>
+                        <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro.jsp") || request.getRequestURI().endsWith("serviceintro") ? "active" : "" %>">Dịch vụ</a>
+                        <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Nhận xét</a>
                     </div>
                 </div>
                 <div class="d-none d-xl-flex flex-shrink-0 ps-4">
@@ -49,25 +49,23 @@
                         </div>
                     </a>
                     <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                        
                         <c:if test="${sessionScope.user == null}">
-                            <a href="login.jsp" class="btn btn-primary">
+                            <a href="userlogin" class="btn btn-primary">
                                 <i class="bi bi-box-arrow-in-right"></i>Login
                             </a>
                         </c:if>
 
-                        
                         <c:if test="${sessionScope.user != null}">
                             <a class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
-                            </a>
+                            </a>    
                         </c:if>
 
                         <c:if test="${sessionScope.user ==null}">
-                            
-                            <a href="register.jsp" class="btn btn-primary">
+
+<!--                            <a href="register.jsp" class="btn btn-primary">
                                 <i class="fab fa-slack me-2"></i> Sign up
-                            </a>
+                            </a>-->
                         </c:if>
 
                         <c:if test="${sessionScope.user !=null}">

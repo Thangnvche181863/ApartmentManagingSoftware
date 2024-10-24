@@ -9,19 +9,23 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.FinanceType;
+import utils.DBContext;
+import java.sql.*;
 
 /**
  *
  * @author thang
  */
-public class FinanceTypeDAO extends DBContext {
+public class FinanceTypeDAO {
+
+    Connection connection = null;
 
     public List<FinanceType> getAll() {
         List<FinanceType> list = new ArrayList<>();
 
         try {
             String sql = "Select * from FinanceBuilding";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -37,7 +41,7 @@ public class FinanceTypeDAO extends DBContext {
     public void insertFinanceType(String name, String description) {
         try {
             String sql = "Insert into FinanceType (name,description) values(?,?)";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
@@ -52,7 +56,7 @@ public class FinanceTypeDAO extends DBContext {
         try {
             String sql = "ELETE FROM [dbo].[FinanceType]\n"
                     + "      WHERE financeTypeId = ?";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, financeTypeId);
 
@@ -62,13 +66,13 @@ public class FinanceTypeDAO extends DBContext {
         }
     }
 
-    public void updateFinaceType(int financeTypeId,String name, String description) {
+    public void updateFinaceType(int financeTypeId, String name, String description) {
         try {
             String sql = "UPDATE [dbo].[FinanceType]\n"
                     + "   SET [name] = ?\n"
                     + "      ,[description] = ?\n"
                     + " WHERE financeTypeId = ?";
-            
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
@@ -78,7 +82,7 @@ public class FinanceTypeDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     public static void main(String[] args) {
         FinanceTypeDAO fdao = new FinanceTypeDAO();
 //        fdao.insertFinanceBuilding(1, 2);

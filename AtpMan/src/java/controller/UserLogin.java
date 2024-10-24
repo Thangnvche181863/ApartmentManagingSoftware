@@ -7,7 +7,6 @@ package controller;
 import DAO.CustomerDAO;
 import DAO.StaffDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,14 +17,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
 import model.Staff;
-import utils.UtilHashPass;
 
 /**
  *
  * @author WuanTun
  */
 public class UserLogin extends HttpServlet {
-
+    
+    @Override
+    protected  void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,7 +68,8 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", staff);
-                response.sendRedirect("managerHomePage.jsp");
+
+                response.sendRedirect("managerPage");
 
             } else {
 
