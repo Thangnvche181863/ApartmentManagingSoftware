@@ -109,7 +109,7 @@ public class CustomerDAO {
                             customer.setName(rs.getString("name"));
                             customer.setEmail(rs.getString("email"));
                             customer.setPhoneNumber(rs.getString("phoneNumber"));
-                            customer.setAge(rs.getInt("age"));
+                            customer.setDob(rs.getDate("dob"));
                             customer.setRegistrationDate(rs.getDate("registrationDate"));
                             customer.setIsOwner(rs.getInt("isOwner"));
                             return customer;
@@ -214,9 +214,10 @@ public class CustomerDAO {
                                     resultSet.getString("name"),
                                     resultSet.getString("email"),
                                     resultSet.getString("phoneNumber"),
-                                    resultSet.getInt("age"),
+                                    resultSet.getDate("dob"),
                                     resultSet.getDate("registrationDate"),
-                                    resultSet.getInt("isOwner"));
+                                    resultSet.getInt("isOwner"), 1);
+                            
                         }
                     }
                 }

@@ -796,213 +796,13 @@ public class NewsDAO extends DBContext {
         return updated;
     }
 
-    public List<News> getTeamMembers() {
-        List<News> teamMembers = new ArrayList<>();
-        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-                + "FROM News n "
-                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-                + "JOIN Staff s ON n.staffID = s.staffID "
-                + "WHERE nc.name = 'Thành viên'";
+   
 
-        try {
-            // Initialize the connection
-            DBContext.getConnection();
+   
 
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return teamMembers;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            ResultSet rs = pre.executeQuery();
-
-            while (rs.next()) {
-                int newsID = rs.getInt("newsID");
-                int staffID = rs.getInt("staffID");
-                int taskID = rs.getInt("taskID");
-                int newsCategoryID = rs.getInt("newsCategoryID");
-                String newsTitle = rs.getString("newsTitle");
-                String newsContent = rs.getString("newsContent");
-                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
-                Date postDate = new Date(sqlPostDate.getTime());
-                String newsImg = rs.getString("newsImg");
-                String newsCategoryName = rs.getString("newsCategoryName");
-                String staffName = rs.getString("staffName");
-                String description = rs.getString("newsDescription");
-
-                // Create a News object for each team member
-                News member = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, description);
-
-                // Add each member to the list
-                teamMembers.add(member);
-            }
-
-            rs.close();
-            pre.close();
-            LOGGER.log(Level.INFO, "Successfully retrieved {0} team members.", teamMembers.size());
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching team members.", e);
-        }
-
-        return teamMembers;
-    }
-
-    public List<News> getBannerHomepage() {
-        List<News> teamMembers = new ArrayList<>();
-        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-                + "FROM News n "
-                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-                + "JOIN Staff s ON n.staffID = s.staffID "
-                + "WHERE nc.name = 'banner home'";
-
-        try {
-            // Initialize the connection
-            DBContext.getConnection();
-
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return teamMembers;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            ResultSet rs = pre.executeQuery();
-
-            while (rs.next()) {
-                int newsID = rs.getInt("newsID");
-                int staffID = rs.getInt("staffID");
-                int taskID = rs.getInt("taskID");
-                int newsCategoryID = rs.getInt("newsCategoryID");
-                String newsTitle = rs.getString("newsTitle");
-                String newsContent = rs.getString("newsContent");
-                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
-                Date postDate = new Date(sqlPostDate.getTime());
-                String newsImg = rs.getString("newsImg");
-                String newsCategoryName = rs.getString("newsCategoryName");
-                String staffName = rs.getString("staffName");
-                String description = rs.getString("newsDescription");
-
-                // Create a News object for each team member
-                News member = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, description);
-
-                // Add each member to the list
-                teamMembers.add(member);
-            }
-
-            rs.close();
-            pre.close();
-            LOGGER.log(Level.INFO, "Successfully retrieved {0} team members.", teamMembers.size());
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching team members.", e);
-        }
-
-        return teamMembers;
-    }
-
-    public List<News> getManagementFeature() {
-        List<News> teamMembers = new ArrayList<>();
-        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-                + "FROM News n "
-                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-                + "JOIN Staff s ON n.staffID = s.staffID "
-                + "WHERE nc.name = 'management feature'";
-
-        try {
-            // Initialize the connection
-            DBContext.getConnection();
-
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return teamMembers;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            ResultSet rs = pre.executeQuery();
-
-            while (rs.next()) {
-                int newsID = rs.getInt("newsID");
-                int staffID = rs.getInt("staffID");
-                int taskID = rs.getInt("taskID");
-                int newsCategoryID = rs.getInt("newsCategoryID");
-                String newsTitle = rs.getString("newsTitle");
-                String newsContent = rs.getString("newsContent");
-                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
-                Date postDate = new Date(sqlPostDate.getTime());
-                String newsImg = rs.getString("newsImg");
-                String newsCategoryName = rs.getString("newsCategoryName");
-                String staffName = rs.getString("staffName");
-                String description = rs.getString("newsDescription");
-
-                // Create a News object for each team member
-                News member = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, description);
-
-                // Add each member to the list
-                teamMembers.add(member);
-            }
-
-            rs.close();
-            pre.close();
-            LOGGER.log(Level.INFO, "Successfully retrieved {0} team members.", teamMembers.size());
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching team members.", e);
-        }
-
-        return teamMembers;
-    }
-
-    public List<News> getResidentFeature() {
-        List<News> teamMembers = new ArrayList<>();
-        String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
-                + "FROM News n "
-                + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
-                + "JOIN Staff s ON n.staffID = s.staffID "
-                + "WHERE nc.name = 'resident feature'";
-
-        try {
-            // Initialize the connection
-            DBContext.getConnection();
-
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return teamMembers;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            ResultSet rs = pre.executeQuery();
-
-            while (rs.next()) {
-                int newsID = rs.getInt("newsID");
-                int staffID = rs.getInt("staffID");
-                int taskID = rs.getInt("taskID");
-                int newsCategoryID = rs.getInt("newsCategoryID");
-                String newsTitle = rs.getString("newsTitle");
-                String newsContent = rs.getString("newsContent");
-                java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
-                Date postDate = new Date(sqlPostDate.getTime());
-                String newsImg = rs.getString("newsImg");
-                String newsCategoryName = rs.getString("newsCategoryName");
-                String staffName = rs.getString("staffName");
-                String description = rs.getString("newsDescription");
-
-                // Create a News object for each team member
-                News member = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, description);
-
-                // Add each member to the list
-                teamMembers.add(member);
-            }
-
-            rs.close();
-            pre.close();
-            LOGGER.log(Level.INFO, "Successfully retrieved {0} team members.", teamMembers.size());
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching team members.", e);
-        }
-
-        return teamMembers;
-    }
+   
+   
+   
 
     public List<News> getNewsByCategoryId(int newsCategoryID) {
         List<News> newsList = new ArrayList<>(); // Initialize an empty list to hold news articles
@@ -1053,6 +853,8 @@ public class NewsDAO extends DBContext {
 
         return newsList; // Return the list of news articles
     }
+    
+    
 
     public static void main(String[] args) {
         NewsDAO dao = new NewsDAO();

@@ -17,24 +17,28 @@ public class Customer {
     private String name;
     private String email;
     private String phoneNumber;
-    private int age;
+    private Date dob;
     private Date registrationDate;
     private int isOwner;
+    private int status;
 
     public Customer() {
 
     }
 
-    public Customer(int customerID, String username, String name, String email, String phoneNumber, int age, Date registrationDate, int isOwner) {
+    public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner, int status) {
         this.customerID = customerID;
         this.username = username;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.age = age;
+        this.dob = dob;
         this.registrationDate = registrationDate;
         this.isOwner = isOwner;
+        this.status = status;
     }
+
+    
 
     public int getCustomerID() {
         return customerID;
@@ -77,14 +81,23 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getAge() {
-        return age;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    
     public Date getRegistrationDate() {
         return registrationDate;
     }
@@ -101,9 +114,6 @@ public class Customer {
         this.isOwner = isOwner;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", age=" + age + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + '}';
-    }
+    
 
 }
