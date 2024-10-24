@@ -188,7 +188,7 @@ public class UserHomeTableAjax extends HttpServlet {
                         + "                                                                <td>" + dateFormat.format(serviceContract.getStartDate()) + "</td>\n"
                         + "                                                                <td>" + dateFormat.format(serviceContract.getEndDate()) + "</td>\n"
                         + "                                                                <td>" + format.format(serviceContract.getAmount()) + " VNĐ</td>\n"
-                        + "                                                                <td>" + format2.format((serviceContract.getAmount() / invoiceCurrent.getAmount()) * 100) + "%</td>\n"
+//                        + "                                                                <td>" + format2.format((serviceContract.getAmount() / invoiceCurrent.getAmount()) * 100) + "%</td>\n"
                         + "                                                                </tr>\n");
             }
         } else {

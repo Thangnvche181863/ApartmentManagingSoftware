@@ -19,11 +19,12 @@ public class Staff {
     private String phoneNumber;
     private String name;
     private Date hireDate;
+    private int status;
 
     public Staff() {
     }
 
-    public Staff(int staffID, int roleID, String username, String email, String phoneNumber, String name, Date hireDate) {
+    public Staff(int staffID, int roleID, String username, String email, String phoneNumber, String name, Date hireDate, int status) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
@@ -31,6 +32,7 @@ public class Staff {
         this.phoneNumber = phoneNumber;
         this.name = name;
         this.hireDate = hireDate;
+        this.status = status;
     }
 
     public String getName() {

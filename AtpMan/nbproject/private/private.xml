@@ -9,13 +9,16 @@
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/ServiceContract.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/user/UserHomeServlet.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/LoginGoogle.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/ServiceListServlet.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Service.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/model/Customer.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/WEB-INF/web.xml</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/UserHomeUtil.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/DBContext.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/WebManager.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/controller/ChangePassword.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/utils/UtilHashPass.java</file>
+            <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/changemail.jsp</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/InvoiceDAO.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
             <file>file:/D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan/web/login.jsp</file>
