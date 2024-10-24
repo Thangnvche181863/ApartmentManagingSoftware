@@ -29,44 +29,18 @@ public class Apartment {
     public Apartment() {
     }
 
-    public Apartment(String apartmentType) {
-        this.apartmentType = apartmentType;
-    }
-
-    public Apartment(int apartmentID, String name, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, List<ServiceContract> list) {
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, BigDecimal totalAmount, List<ServiceContract> list, String name) {
         this.apartmentID = apartmentID;
-        this.name = name;
+        this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
         this.apartmentType = apartmentType;
         this.price = price;
         this.maintenanceFee = maintenanceFee;
         this.floor = floor;
         this.area = area;
-        this.list = list;
-    }
-
-    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String departmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
-        this.apartmentID = apartmentID;
-        this.buildingID = buildingID;
-        this.apartmentNumber = apartmentNumber;
-        this.apartmentType = departmentType;
-        this.price = price;
-        this.maintenanceFee = maintenanceFee;
-        this.floor = floor;
-        this.area = area;
-    }
-
-    public Apartment(int apartmentID, String apartmentNumber, String apartmentType, int floor, BigDecimal totalAmount, String name) {
-        this.apartmentID = apartmentID;
-        this.apartmentNumber = apartmentNumber;
-        this.apartmentType = apartmentType;
-        this.name = name;
-    }
-
-    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal totalAmount) {
-        this.apartmentID = apartmentID;
-        this.buildingID = buildingID;
         this.totalAmount = totalAmount;
+        this.list = list;
+        this.name = name;
     }
 
     public List<ServiceContract> getList() {

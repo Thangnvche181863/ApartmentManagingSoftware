@@ -31,16 +31,17 @@ public class ApartmentDAO {
             PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int apartmentID = rs.getInt(1);
-                int buildingID = rs.getInt(2);
-                String apartmentNumber = rs.getString(3);
-                String apartmentType = rs.getString(4);
-                BigDecimal price = rs.getBigDecimal(5);
-                BigDecimal maintenanceFee = rs.getBigDecimal(6);
-                int floor = rs.getInt(7);
-                int area = rs.getInt(8);
-                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, apartmentType, price, maintenanceFee, floor, area);
-                vector.add(apartment);
+                Apartment a = new Apartment();
+                a.setApartmentID(rs.getInt(1));
+                a.setBuildingID(rs.getInt(2));
+                a.setApartmentNumber(rs.getString(3));
+                a.setApartmentType(rs.getString(4));
+                a.setPrice(rs.getBigDecimal(5));
+                a.setMaintenanceFee(rs.getBigDecimal(6));
+                a.setFloor(rs.getInt(7));
+                a.setArea(rs.getInt(8));
+     
+                vector.add(a);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -78,7 +79,9 @@ public class ApartmentDAO {
             PreparedStatement pre = conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                vector.add(new Apartment(rs.getString(1)));
+                Apartment a = new Apartment();
+                a.setApartmentType(rs.getString(1));
+                vector.add(a);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -97,15 +100,18 @@ public class ApartmentDAO {
             pre.setInt(1, buildingID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-                int apartmentID = rs.getInt(1);
-                String apartmentNumber = rs.getString(3);
-                String apartmentType = rs.getString(4);
-                BigDecimal price = rs.getBigDecimal(5);
-                BigDecimal maintenanceFee = rs.getBigDecimal(6);
-                int floor = rs.getInt(7);
-                int area = rs.getInt(8);
-                Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, apartmentType, price, maintenanceFee, floor, area);
-                vector.add(apartment);
+                
+                Apartment a = new Apartment();
+                a.setApartmentID(rs.getInt(1));
+                a.setBuildingID(rs.getInt(2));
+                a.setApartmentNumber(rs.getString(3));
+                a.setApartmentType(rs.getString(4));
+                a.setPrice(rs.getBigDecimal(5));
+                a.setMaintenanceFee(rs.getBigDecimal(6));
+                a.setFloor(rs.getInt(7));
+                a.setArea(rs.getInt(8));
+                 
+                vector.add(a);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -201,7 +207,7 @@ public class ApartmentDAO {
 
     public Apartment apartmentDetail(int id) {
         Connection conn = null;
-        Apartment a = new Apartment();
+        Apartment apartment = new Apartment();
         ServiceContractDAO scdao = new ServiceContractDAO();
         BuildingDAO bdaos = new BuildingDAO();
         try {
@@ -211,21 +217,22 @@ public class ApartmentDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                int apartmentId = rs.getInt(1);
-                String name = bdaos.getBuildingName(rs.getInt(2));
-                String apartmentNumber = rs.getString(3);
-                String apartmentType = rs.getString(4);
-                BigDecimal price = rs.getBigDecimal(5);
-                BigDecimal maintenanceFee = rs.getBigDecimal(6);
-                int floor = rs.getInt(7);
-                int area = rs.getInt(8);
-                List<ServiceContract> list = scdao.serviceContractById(apartmentId);
-                a = new Apartment(apartmentId, name, apartmentNumber, apartmentType, price, maintenanceFee, floor, area,list);
+                
+                apartment.setApartmentID(rs.getInt(1));
+                apartment.setName(bdaos.getBuildingName(rs.getInt(2)));
+                apartment.setApartmentNumber(rs.getString(3));
+                apartment.setApartmentType(rs.getString(4));
+                apartment.setPrice(rs.getBigDecimal(5));
+                apartment.setMaintenanceFee(rs.getBigDecimal(6));
+                apartment.setFloor(rs.getInt(7));
+                apartment.setArea(rs.getInt(8));
+                apartment.setList(scdao.serviceContractById(rs.getInt(1)));
+                
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return a;
+        return apartment;
     }
 
     public static void main(String[] args) {
