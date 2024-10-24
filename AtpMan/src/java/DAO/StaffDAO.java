@@ -105,6 +105,7 @@ public class StaffDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Staff staff = new Staff();
+                            staff.setStaffID(rs.getInt("staffID"));
                             staff.setUsername(rs.getString("username"));
                             staff.setName(rs.getString("name"));
                             staff.setEmail(rs.getString("email"));

@@ -57,6 +57,8 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", customer);
+                session.setAttribute("customer", customer);
+                request.getSession().setAttribute("userRole", "customer");
                 response.sendRedirect("user/userhome");
 
             } else if ("3".equals(userType)) { // Manage
@@ -68,7 +70,8 @@ public class UserLogin extends HttpServlet {
                 }
 
                 session.setAttribute("user", staff);
-
+                session.setAttribute("staff", staff);
+                request.getSession().setAttribute("userRole", "staff");
                 response.sendRedirect("managerPage");
 
             } else {

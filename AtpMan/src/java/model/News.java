@@ -22,6 +22,21 @@ public class News {
     private String newsImg;
     private String newsCategoryName;
     private String staffName;
+    private String description;
+
+    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName, String staffName, String description) {
+        this.newsID = newsID;
+        this.staffID = staffID;
+        this.taskID = taskID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.postDate = postDate;
+        this.newsImg = newsImg;
+        this.newsCategoryName = newsCategoryName;
+        this.staffName = staffName;
+        this.description = description;
+    }
 
     public News() {
     }
@@ -57,10 +72,8 @@ public class News {
         this.newsCategoryName = newsCategoryName;
         this.staffName = staffName;
     }
-    
-    
 
-    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName) {
+    public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String description) {
         this.newsID = newsID;
         this.staffID = staffID;
         this.taskID = taskID;
@@ -69,7 +82,7 @@ public class News {
         this.newsContent = newsContent;
         this.postDate = postDate;
         this.newsImg = newsImg;
-        this.newsCategoryName = newsCategoryName;
+        this.description = description;
     }
 
     public News(int newsID, int staffID, int taskID, int newsCategoryID, String newsTitle, String newsContent, Date postDate, String newsImg, String newsCategoryName, String staffName) {
@@ -83,6 +96,22 @@ public class News {
         this.newsImg = newsImg;
         this.newsCategoryName = newsCategoryName;
         this.staffName = staffName;
+    }
+
+    public News(int newsID, String newsTitle, String newsContent, String newsImg, int newsCategoryID) {
+        this.newsID = newsID;
+        this.newsCategoryID = newsCategoryID;
+        this.newsTitle = newsTitle;
+        this.newsContent = newsContent;
+        this.newsImg = newsImg;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStaffName() {

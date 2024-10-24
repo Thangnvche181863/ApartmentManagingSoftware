@@ -130,16 +130,16 @@
                                         <div class="blog-meta big-meta col-md-8">
                                             <h4><a href="NewsDetail?id=${newsItem.newsID}" title="">
                                                     ${newsItem.newsTitle}
-                                                </a></h4><p>
+                                                </a></h4><div><p>
                                                 <c:choose>
-                                                    <c:when test="${fn:length(newsItem.newsContent) > 100}">
-                                                            ${fn:substring(newsItem.newsContent, 0, 100)}...
+                                                    <c:when test="${fn:length(newsItem.description) > 100}">
+                                                            ${fn:substring(newsItem.description, 0, 100)}...
                                                     </c:when>
                                                     <c:otherwise>
-                                                        ${newsItem.newsContent}
+                                                        ${newsItem.description}
                                                     </c:otherwise>
                                                 </c:choose>
-                                            </p>
+                                                    </p></div>
                                             <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
                                             <small>
                                                 <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />

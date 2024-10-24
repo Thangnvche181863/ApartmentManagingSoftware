@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>News Manager</title>
+        <title>News Category Manager</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -372,11 +372,11 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <center><h1 class="h3 mb-4 text-gray-800">News Manager</h1></center>  
+                        <center><h1 class="h3 mb-4 text-gray-800">News Category Manager</h1></center>  
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>
-                                    <c:when test="${message.startsWith('News deleted')}">
+                                    <c:when test="${message.startsWith('News category deleted')}">
                                         <p class="text-center alert alert-success">${message}</p>
                                     </c:when>
                                     <c:otherwise>
@@ -386,18 +386,12 @@
                             </c:if>
                         </center>
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <form class="form-inline d-none d-sm-inline-block mw-100" action="newsmanage" method="get">
+                            <form class="form-inline d-none d-sm-inline-block mw-100" action="newscategorymanage" method="get">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control bg-light border-0 small" 
                                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
 
-                                    <!-- Dropdown for News Categories -->
-                                    <select name="category" class="form-control ml-2">
-                                        <option value="all">All</option>
-                                        <c:forEach var="category" items="${newsCategories}">
-                                            <option value="${category.newsCategoryID}">${category.name}</option>
-                                        </c:forEach>
-                                    </select>
+
 
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
@@ -407,8 +401,8 @@
                                 </div>
                             </form>
                             <div>
-                                <a href="newscategorymanage" class="btn btn-outline-primary mr-2">NewsCategory Manage</a>
-                                <a href="AddNews" class="btn btn-outline-primary">Add News</a>
+                                <a href="newsmanage" class="btn btn-outline-primary mr-2">News Manage</a>
+                                <a href="newscategoryadd.jsp" class="btn btn-outline-primary">Add NewsCategory</a>
                             </div>
 
                         </div>
@@ -416,47 +410,66 @@
                     <!-- /.container-fluid -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">News Table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">
+                                NewsCategory Table
+                                <!-- Add a clickable '?' icon to trigger the modal -->
+                                <a href="#" data-toggle="modal" data-target="#infoModal" class="ml-2">
+                                    <i class="fas fa-question-circle"></i>
+                                </a>
+                            </h6>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="infoModalLabel">Thông tin về NewsCategory</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        -Một số tập tin (NewsCategory) được gắn liền với hệ thống cùng các tính năng riêng biệt nên không thể bị xóa.
+                                        <br></br>
+                                        -Việc thêm NewsCategory sẽ tạo ra một mục tin mới ở trang chủ.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                       
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Author</th>
-                                            <th>Category</th>
-                                            <th>Post Date</th>
+
+                                            <th>ID</th>
+                                            <th>News Category Name</th>
+                                            <th>News Category Description</th>                                       
                                             <th>Actions</th>
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <c:forEach items="${news}" var="newsItem">
+                                        <c:forEach items="${newsCategory}" var="nc">
                                             <tr>
-                                              
-                                                <td>${newsItem.newsTitle}</td>
-                                                <td>${newsItem.description}</td>
-                                                <td>${newsItem.staffName}</td>
-                                                <td><a href="newsmanage?category=${newsItem.newsCategoryID}">${newsItem.newsCategoryName}</a></td>
-                                                <td><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
+                                                <td>${nc.newsCategoryID}</td>
+                                                <td><a href="newsmanage?category=${nc.newsCategoryID}">${nc.name}</a></td>
+                                                <td>${nc.description}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a class="btn btn-sm btn-primary" href="NewsDetail?id=${newsItem.newsID}">View</a>
-                                                        <a class="btn btn-sm btn-warning" href="EditNews?id=${newsItem.newsID}">Edit</a>
-                                                        <a class="btn btn-sm btn-danger" href="newsdelete?id=${newsItem.newsID}" onclick="return confirmDelete();">Delete</a>
+
+                                                        <a class="btn btn-sm btn-warning unpressable-btn" data-id="${nc.newsCategoryID}" href="#">Edit</a>
+                                                        <a class="btn btn-sm btn-danger unpressable-btn" href="NewsCategoryDelete?id=${nc.newsCategoryID}" onclick="return confirmDelete();" data-id="${nc.newsCategoryID}">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>
 
                                         </c:forEach>
-
-
-
-
 
                                     </tbody>
                                 </table>
@@ -467,19 +480,19 @@
                                             <ul class="pagination justify-content-start">
                                                 <c:if test="${currentPage > 1}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="newsmanage?page=${currentPage - 1}&search=${param.search}&category=${param.category}">Previous</a>
+                                                        <a class="page-link" href="newscategorymanage?page=${currentPage - 1}&search=${param.search}">Previous</a>
                                                     </li>
                                                 </c:if>
 
                                                 <c:forEach var="i" begin="1" end="${totalPages}">
                                                     <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                        <a class="page-link" href="newsmanage?page=${i}&search=${param.search}&category=${param.category}">${i}</a>
+                                                        <a class="page-link" href="newscategorymanage?page=${i}&search=${param.search}">${i}</a>
                                                     </li>
                                                 </c:forEach>
 
                                                 <c:if test="${currentPage < totalPages}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="newsmanage?page=${currentPage + 1}&search=${param.search}&category=${param.category}">Next</a>
+                                                        <a class="page-link" href="newscategorymanage?page=${currentPage + 1}&search=${param.search}">Next</a>
                                                     </li>
                                                 </c:if>
                                             </ul>
@@ -562,6 +575,23 @@
                         event.preventDefault(); // Prevent form submission
                     }
                 }
+            });
+        </script>
+
+        <script>
+            // Disable delete button for system categories (newsCategoryID <= 10)
+            document.addEventListener("DOMContentLoaded", function () {
+                const deleteButtons = document.querySelectorAll(".unpressable-btn");
+
+                deleteButtons.forEach(function (button) {
+                    const categoryId = parseInt(button.getAttribute("data-id"));
+
+                    if (categoryId <= 10) {
+                        button.classList.add("disabled");
+                        button.style.pointerEvents = "none";
+                        button.title = "This NewsCategory is part of the system and cannot be deleted.";
+                    }
+                });
             });
         </script>
 

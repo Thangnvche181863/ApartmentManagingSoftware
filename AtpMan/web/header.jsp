@@ -26,7 +26,7 @@
     <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="#" class="navbar-brand p-0">
+                <a href="home.jsp" class="navbar-brand p-0">
                     <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -34,10 +34,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav mx-0 mx-lg-auto">
-                        <a href="home.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang chủ</a>
-                        <a href="about.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("about.jsp") ? "active" : "" %>">Giới thiệu</a>
-                        <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro.jsp") || request.getRequestURI().endsWith("serviceintro") ? "active" : "" %>">Dịch vụ</a>
-                        <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Nhận xét</a>
+                        <a href="homepageGuest" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang Chủ</a>
+                        <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
+                        <a href="service.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("service.jsp") ? "active" : "" %>">Dịch Vụ</a>
+                        <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Phản hồi</a>
                     </div>
                 </div>
                 <div class="d-none d-xl-flex flex-shrink-0 ps-4">

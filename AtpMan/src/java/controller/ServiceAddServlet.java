@@ -4,19 +4,34 @@
  */
 package controller;
 
+import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.math.BigDecimal;
+import java.nio.file.Paths;
 
+//import java.util.List;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import org.apache.commons.fileupload.FileItem;
+//import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+//import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  *
- * @author WuanTun
+ * @author thang
  */
-public class Logout extends HttpServlet {
+@MultipartConfig
+public class ServiceAddServlet extends HttpServlet {
+
+    private static final String UPLOAD_DIR = "uploadFile";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +50,10 @@ public class Logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");
+            out.println("<title>Servlet ServiceAddServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ServiceAddServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,16 +71,7 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getSession().invalidate();
-
-        
-        
-        response.sendRedirect("homepageGuest");
-
-//        HttpSession session = request.getSession();
-//        session.removeAttribute("user");
-//        response.sendRedirect("home");
+        processRequest(request, response);
     }
 
     /**
@@ -79,7 +85,39 @@ public class Logout extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        PrintWriter out = response.getWriter();
+
+        String name = request.getParameter("name");
+        String type = request.getParameter("type");
+        String fee = request.getParameter("fee");
+        String description = request.getParameter("description");
+        String icon = request.getParameter("icon");
+
+        // pick file upload form
+        Part filePart = request.getPart("img"); // "img" is name in input of form
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên file gốc
+
+        // Đường dẫn lưu trữ file
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
+
+        // Tạo thư mục nếu chưa tồn tại
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+
+        // Đường dẫn đầy đủ của file sẽ được lưu
+        String filePath = uploadPath + File.separator + fileName;
+
+        filePart.write(filePath);
+
+        String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
+        ServiceDAO sdao = new ServiceDAO();
+        sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
+        request.setAttribute("listservice", sdao.getAll());
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+
     }
 
     /**

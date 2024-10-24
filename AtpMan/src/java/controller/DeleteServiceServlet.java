@@ -4,19 +4,20 @@
  */
 package controller;
 
+import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import model.Service;
 
 /**
  *
- * @author WuanTun
+ * @author thang
  */
-public class Logout extends HttpServlet {
+public class DeleteServiceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +36,10 @@ public class Logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");
+            out.println("<title>Servlet DeleteServiceServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteServiceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,16 +57,11 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getSession().invalidate();
-
-        
-        
-        response.sendRedirect("homepageGuest");
-
-//        HttpSession session = request.getSession();
-//        session.removeAttribute("user");
-//        response.sendRedirect("home");
+        String id = request.getParameter("id");
+        ServiceDAO sdao = new ServiceDAO();
+        sdao.deleteService(Integer.parseInt(id));
+        request.setAttribute("listservice", sdao.getAll());
+        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
     }
 
     /**

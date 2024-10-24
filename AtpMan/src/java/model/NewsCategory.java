@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author PC
@@ -13,6 +15,7 @@ public class NewsCategory {
     private int newsCategoryID;
     private String name;
     private String description;
+    private List<News> newsList;
 
     public NewsCategory() {
     }
@@ -31,6 +34,16 @@ public class NewsCategory {
         this.newsCategoryID = newsCategoryID;
     }
 
+    public List<News> getNewsList() {
+        return newsList;
+    }
+
+    public void setNewsList(List<News> newsList) {
+        this.newsList = newsList;
+    }
+
+    
+    
     public String getName() {
         return name;
     }
@@ -47,5 +60,4 @@ public class NewsCategory {
         this.description = description;
     }
 
-    
 }
