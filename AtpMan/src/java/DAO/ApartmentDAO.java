@@ -265,7 +265,7 @@ public class ApartmentDAO {
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return null;
+        return apartment;
     }
 
     public Apartment getApartmentByID(int apartmentID) {
@@ -326,9 +326,7 @@ public class ApartmentDAO {
 
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
-        Vector<Apartment> vector = dao.getAllApartment();
-
-        System.out.println(vector.size());
+        System.out.println(dao.apartmentDetail(1));
 
     }
 }
