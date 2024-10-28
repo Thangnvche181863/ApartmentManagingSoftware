@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,35 +84,91 @@ public class RequestComplaintDAO {
 
     }
 
-    public List<RequestComplaint> getAllComplaints(String search, String sort) {
+//    public List<RequestComplaint> getAllComplaints() {
+//        Connection conn = null;
+//        List<RequestComplaint> complaintList = new ArrayList<>();
+//
+//        try {
+//            conn = DBContext.getConnection();
+//            String sql = "SELECT rc.requestID, rc.customerID, rc.title, rc.description, rc.status, rc.dateRequested, rc.type, rc.serviceID, c.name AS customerName "
+//                    + "FROM RequestComplaint rc "
+//                    + "JOIN Customer c ON rc.customerID = c.customerID "
+//                    + "ORDER BY requestID DESC";
+////                    + "JOIN Service s ON rc.serviceID = s.serviceID";
+//            
+//        
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                int requestID = rs.getInt("requestID");
+//                int customerID = rs.getInt("customerID");
+//                String title = rs.getString("title");
+//                String description = rs.getString("description");
+//                int status = rs.getInt("status");
+//                Date dateRequested = rs.getDate("dateRequested");
+//                String type = rs.getString("type");
+//                String customerName = rs.getString("customerName");
+////                String serviceName = rs.getString("serviceName");
+////                String serviceType = rs.getString("serviceType");
+//                RequestComplaint complaint = new RequestComplaint(requestID, customerID, title, description, status, dateRequested, type, customerName);
+//                complaintList.add(complaint);
+//                System.out.println("Complaint:" + complaintList);
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            LOGGER.log(Level.SEVERE, null, e);
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//        return complaintList;
+//    }
+    public List<RequestComplaint> getComplaints(String search, String searchField, String sort) {
         Connection conn = null;
         List<RequestComplaint> complaintList = new ArrayList<>();
 
-        // Danh sách các cột có thể sắp xếp
-        List<String> validSortColumns = Arrays.asList("requestID", "customerName", "dateRequested", "status", "type");
-
-        if (!validSortColumns.contains(sort)) {
-            sort = "requestID"; // Giá trị mặc định nếu sort không hợp lệ
-        }
-
         try {
             conn = DBContext.getConnection();
-            StringBuilder sql = new StringBuilder("SELECT rc.requestID, rc.customerID, rc.title, rc.description, rc.status, rc.dateRequested, rc.type, c.name AS customerName FROM RequestComplaint rc JOIN Customer c ON rc.customerID = c.customerID");
+            String sql = "SELECT rc.requestID, rc.customerID, rc.title, rc.description, rc.status, rc.dateRequested, rc.type, c.name AS customerName "
+                    + "FROM RequestComplaint rc "
+                    + "JOIN Customer c ON rc.customerID = c.customerID ";
 
-            // Thêm điều kiện tìm kiếm
+            // Thêm điều kiện tìm kiếm nếu có
             if (search != null && !search.isEmpty()) {
-                sql.append(" WHERE c.name LIKE ? OR rc.title LIKE ?");
+                sql += "WHERE ";
+                if ("customerName".equals(searchField)) {
+                    sql += "c.name LIKE ?";
+                } else if ("type".equals(searchField)) {
+                    sql += "rc.type LIKE ?";
+                } else if ("status".equals(searchField)) {
+                    sql += "rc.status LIKE ?";
+                } else if ("title".equals(searchField)) {
+                    sql += "rc.title LIKE ?";
+                }
+                sql += " ";  // Thêm khoảng trắng để nối với sắp xếp
             }
 
             // Thêm điều kiện sắp xếp
-            sql.append(" ORDER BY ").append(sort);
+            if (sort != null && !sort.isEmpty()) {
+                sql += " ORDER BY ";
+                if ("date".equals(sort)) {
+                    sql += "rc.dateRequested DESC";
+                } else if ("customerName".equals(sort)) {
+                    sql += "c.name ASC";
+                } else if ("type".equals(sort)) {
+                    sql += "rc.type ASC";
+                } else if ("status".equals(sort)) {
+                    sql += "rc.status ASC";
+                }
+            } else {
+                sql += " ORDER BY rc.requestID DESC";  // Mặc định sắp xếp theo ID
+            }
 
-            PreparedStatement ps = conn.prepareStatement(sql.toString());
+            PreparedStatement ps = conn.prepareStatement(sql);
+            int parameterIndex = 1;
 
-            // Set các tham số tìm kiếm
+            // Thiết lập tham số tìm kiếm
             if (search != null && !search.isEmpty()) {
-                ps.setString(1, "%" + search + "%");
-                ps.setString(2, "%" + search + "%");
+                ps.setString(parameterIndex++, "%" + search + "%");
             }
 
             ResultSet rs = ps.executeQuery();
@@ -127,7 +182,6 @@ public class RequestComplaintDAO {
                 Date dateRequested = rs.getDate("dateRequested");
                 String type = rs.getString("type");
                 String customerName = rs.getString("customerName");
-
                 RequestComplaint complaint = new RequestComplaint(requestID, customerID, title, description, status, dateRequested, type, customerName);
                 complaintList.add(complaint);
             }

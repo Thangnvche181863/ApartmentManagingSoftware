@@ -17,6 +17,9 @@
 
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <style>
+            
+        </style>
     </head>
     <body>
         <!-- Page Wrapper -->
@@ -97,7 +100,7 @@
                             <h6 class="collapse-header">Login Screens:</h6>
                             <a class="collapse-item" href="login.html">Login</a>
                             <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <a class="collapse-item" href="changepassword">Forgot Password</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
                             <a class="collapse-item" href="404.html">404 Page</a>
@@ -115,7 +118,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Tạo tài khoản</h6>
                             <a class="collapse-item" href="createaccount">Người dùng</a>
-                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                            <a class="collapse-item" href="createaccountstaff">Nhân viên</a>
                         </div>
                     </div>
                 </li>
@@ -143,6 +146,7 @@
                 </div>
 
             </ul>
+        
             <!-- End of Sidebar -->
     </body>
 </html>

@@ -23,7 +23,7 @@
                     <h2 class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Change Password
                     </h2>
-                    
+
                     <%-- Hiển thị thông báo lỗi nếu có --%>
                     <% if (request.getAttribute("errNewpass") != null) { %>
                     <div class="alert alert-danger">
@@ -43,30 +43,26 @@
                     </div>
                     <% } %>
 
-
-
                     <form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="changepassword" method="POST">
 
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="name@company.com" required="">
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New Password</label>
-                            <input type="password" name="newPassword" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                            <input type="password" name="newPassword" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required="">
                         </div>
                         <div>
                             <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                            <input type="confirm-password" name="cfPassword" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                            <input type="confirm-password" name="cfPassword" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required="">
                         </div>
 
-                        <button type="submit" class="w-full text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-800">Reset password</button>
+                        <button type="submit" style="background-color: #015fc9;" class="w-full text-white hover:bg-[#014b9b] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-[#015fc9] dark:hover:bg-[#014b9b] dark:focus:ring-blue-800">Reset password</button>
                     </form>
                     <a href="userhome">
-                        <button>Back to home</button>
+                        <button class="mt-4 text-blue-600 hover:underline">Back to home</button>
                     </a>
-
-
                 </div>
             </div>
         </section>
@@ -76,48 +72,12 @@
                 theme: {
                     extend: {
                         colors: {
-                            primary: {"50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a", "950": "#172554"}
+                            'custom-blue': '#015fc9',
                         }
                     },
-                    fontFamily: {
-                        'body': [
-                            'Inter',
-                            'ui-sans-serif',
-                            'system-ui',
-                            '-apple-system',
-                            'system-ui',
-                            'Segoe UI',
-                            'Roboto',
-                            'Helvetica Neue',
-                            'Arial',
-                            'Noto Sans',
-                            'sans-serif',
-                            'Apple Color Emoji',
-                            'Segoe UI Emoji',
-                            'Segoe UI Symbol',
-                            'Noto Color Emoji'
-                        ],
-                        'sans': [
-                            'Inter',
-                            'ui-sans-serif',
-                            'system-ui',
-                            '-apple-system',
-                            'system-ui',
-                            'Segoe UI',
-                            'Roboto',
-                            'Helvetica Neue',
-                            'Arial',
-                            'Noto Sans',
-                            'sans-serif',
-                            'Apple Color Emoji',
-                            'Segoe UI Emoji',
-                            'Segoe UI Symbol',
-                            'Noto Color Emoji'
-                        ]
-                    }
                 }
             };
         </script>
     </body>
-
 </html>
+

@@ -252,7 +252,7 @@ public class CustomerDAO {
             if (conn != null) {
                 String sql = "UPDATE Customer SET password = ? WHERE customerID = ?";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    String hashedPassword = UtilHashPass.EncodePassword(newPassword); // Hash the new password
+                    String hashedPassword = UtilHashPass.EncodePassword(newPassword); 
                     ps.setString(1, hashedPassword);
                     ps.setInt(2, customerID);
                     int rowsUpdated = ps.executeUpdate();
@@ -264,9 +264,9 @@ public class CustomerDAO {
         } catch (SQLException | ClassNotFoundException ex) {
             LOGGER.log(Level.SEVERE, "Error updating password", ex);
         } finally {
-            DBContext.closeConnection(conn); // Ensure connection is closed
+            DBContext.closeConnection(conn); 
         }
-        return false; // Return false if connection is null or if an exception occurs
+        return false; 
     }
 
     // QUAN
