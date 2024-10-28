@@ -4,11 +4,16 @@
  */
 package utils;
 
+import DAO.ApartmentDAO;
+import jakarta.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
+import model.Apartment;
+import model.Building;
+import model.Customer;
 import model.Invoice;
 
 /**
@@ -90,5 +95,16 @@ public class UserHomeUtil {
             }
         }
         return amountList;
+    }
+    
+    public Apartment getApartment(HttpServletRequest request, int apartmentId, Customer customer, ApartmentDAO apartmentDAO){
+        Apartment apartment = null;
+        if(customer.getIsOwner() == 0){
+            apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
+        }else{
+            List<Building> buildingList = new ArrayList<>();
+            
+        }
+        return apartment;
     }
 }

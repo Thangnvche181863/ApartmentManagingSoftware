@@ -4,32 +4,33 @@
  */
 package controller.user;
 
+import DAO.ApartmentDAO;
+import DAO.BuildingDAO;
+import DAO.InvoiceDAO;
+import DAO.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.*;
-import DAO.*;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import java.sql.Date;
-import java.time.Month;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.List;
+import model.Apartment;
+import model.Customer;
+import model.Invoice;
+import model.News;
+import model.ServiceContract;
 import utils.UserHomeUtil;
 
 /**
  *
  * @author ADMIN
  */
-public class UserHomeServlet extends HttpServlet {
-
-    private static final int RECORDS_PER_PAGE = 5;
+public class InvoiceStatisticServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,10 +49,10 @@ public class UserHomeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserHomeServlet</title>");
+            out.println("<title>Servlet InvoiceStatisticServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserHomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet InvoiceStatisticServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -103,10 +104,10 @@ public class UserHomeServlet extends HttpServlet {
         InvoiceDAO invoiceDAO = new InvoiceDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         BuildingDAO buildingDAO = new BuildingDAO();
-        
+
         // get apartment user is living
         Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
-        
+
         // if user is owner
         if (customer.getIsOwner() == 1) {
             List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
@@ -122,7 +123,7 @@ public class UserHomeServlet extends HttpServlet {
             }
             request.setAttribute("apartmentList", apartmentList);
         }
-        
+
         apartmentID = apartment.getApartmentID();
 
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(apartment.getApartmentID());
@@ -158,7 +159,6 @@ public class UserHomeServlet extends HttpServlet {
         double paid = userHomeUtil.paidAmount(iList, year);
         double unpaid = userHomeUtil.unPaidAmount(iList, year);
 
-        NewsDAO newsDAO = new NewsDAO();
 
         //get current page from the request
         String pageParam = request.getParameter("page");
@@ -173,21 +173,12 @@ public class UserHomeServlet extends HttpServlet {
             currentPage = 1;
         }
 
-        //calculate totalPages
-        int totalRows = newsDAO.getNumberOfRows();
-        int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
-        
+
         // calculate for service table
         int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, null);
         int totalServicePages = (int) Math.ceil((double) totalServiceRows / RECORDS_PER_PAGE);
-        
-        List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
-        List<News> bannerList = newsDAO.getNewsForBanner();
 
-        request.setAttribute("newsBanner", bannerList);
-        request.setAttribute("news", newsList);
-        request.setAttribute("currentPage", currentPage);
-        request.setAttribute("totalPages", totalPages);
+
         request.setAttribute("currentServicePage", "1");
         request.setAttribute("totalServicePages", totalServicePages);
 
@@ -223,10 +214,7 @@ public class UserHomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String month = request.getParameter("selectMonth");
-        PrintWriter out = response.getWriter();
-        out.print(month);
+        processRequest(request, response);
     }
 
     /**
@@ -237,5 +225,6 @@ public class UserHomeServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }

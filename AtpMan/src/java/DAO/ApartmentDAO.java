@@ -127,11 +127,12 @@ public class ApartmentDAO {
         return vector.size();
     }
 
-    public Apartment getApartmentByCustomerId(int customerId) {
+    public Apartment getApartmentByLiving(int customerId) {
         Connection connection = null;
-        String sql = "select a.* from Apartment a\n"
+        String sql = "select a.*, b.name from Apartment a\n"
                 + "inner join Living l on a.apartmentID = l.apartmentID\n"
-                + "where l.customerID = ?";
+                + "inner join Building b on a.buildingID = b.buildingID\n"
+                + "where l.customerID = ? and l.endDate is null";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -147,6 +148,7 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
+                apartment.setName(rs.getString(9));
                 return apartment;
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -297,9 +299,10 @@ public class ApartmentDAO {
     public List<Apartment> getAllApartmentByOwner(int customerID) {
         Connection connection = null;
         List<Apartment> list = new ArrayList<>();
-        String sql = "select a.* from apartment a\n"
+        String sql = "select a.*, b.name from apartment a\n"
                 + "inner join Ownership o on a.apartmentID = o.apartmentID\n"
-                + "where o.customerID = ?";
+                + "inner join Building b on a.buildingID = b.buildingID\n"
+                + "where o.customerID = ? and o.endDate is null ";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -315,7 +318,8 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
-                
+                apartment.setName(rs.getString(9));
+
                 list.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException e) {

@@ -129,7 +129,7 @@
         <servlet-name>UserHomeTableAjax</servlet-name>
         <servlet-class>controller.user.UserHomeTableAjax</servlet-class>
     </servlet>
-    <servlet>   
+    <servlet>
         <servlet-name>CreateAccountStaff</servlet-name>
         <servlet-class>controller.CreateAccountStaff</servlet-class>
     </servlet>
@@ -164,6 +164,18 @@
     <servlet>
         <servlet-name>AddNewsCategory</servlet-name>
         <servlet-class>controller.staff.AddNewsCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserApartmentInfoResidentTableAjax</servlet-name>
+        <servlet-class>controller.user.UserApartmentInfoResidentTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserApartmentInfoServiceTableAjax</servlet-name>
+        <servlet-class>controller.user.UserApartmentInfoServiceTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InvoiceStatisticServlet</servlet-name>
+        <servlet-class>controller.user.InvoiceStatisticServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -273,7 +285,7 @@
         <servlet-name>UserHomeTableAjax</servlet-name>
         <url-pattern>/userhometableajax</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>    
+    <servlet-mapping>
         <servlet-name>CreateAccountStaff</servlet-name>
         <url-pattern>/createaccountstaff</url-pattern>
     </servlet-mapping>
@@ -289,7 +301,7 @@
         <servlet-name>RegistList</servlet-name>
         <url-pattern>/registlist</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>    
+    <servlet-mapping>
         <servlet-name>EditNews</servlet-name>
         <url-pattern>/EditNews</url-pattern>
     </servlet-mapping>
@@ -308,6 +320,18 @@
     <servlet-mapping>
         <servlet-name>AddNewsCategory</servlet-name>
         <url-pattern>/AddNewsCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserApartmentInfoResidentTableAjax</servlet-name>
+        <url-pattern>/userapartmentinforesidenttableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserApartmentInfoServiceTableAjax</servlet-name>
+        <url-pattern>/userapartmentinfoservicetableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InvoiceStatisticServlet</servlet-name>
+        <url-pattern>/invoicestatistic</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

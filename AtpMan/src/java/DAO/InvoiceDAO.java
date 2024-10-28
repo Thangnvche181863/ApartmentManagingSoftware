@@ -160,7 +160,7 @@ public class InvoiceDAO {
                 + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
 
         if (searchTermList != null && !searchTermList.isEmpty()) {
-            if (searchTermList.size() <= 1) {
+            if (searchTermList.size() == 1) {
                 //and ((s.name like N'%%' or s.type like N'%%')) in SQL
                 sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
             } else {

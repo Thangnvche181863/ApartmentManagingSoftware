@@ -101,17 +101,44 @@ public class ServiceContractDAO {
         }
     }
 
-    public List<ServiceContract> getCurrentServiceContract(int apartmentId, Date currentDate) {
+    // KhangPM
+    public List<ServiceContract> getCurrentServiceContract(int apartmentId, Date currentDate, int currentPage, int rowsPerPage, List<String> searchTermList) {
         List<ServiceContract> list = new ArrayList<>();
         String sql = "select * from ServiceContract sc\n"
                 + "inner join Service s on sc.serviceID = s.serviceID\n"
-                + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)";
+                + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)\n";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+        sql += "order by sc.serviceContractID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
         try {
+            connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentId);
             statement.setDate(2, currentDate);
+            statement.setInt(3, fetchStart);
+            statement.setInt(4, rowsPerPage);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 // declare service object
                 Service service = new Service();
 
@@ -130,14 +157,55 @@ public class ServiceContractDAO {
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
                 serviceContract.setAmount(rs.getBigDecimal("amount"));
-                
+
                 list.add(serviceContract);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
         }
         return list;
     }
+    // KhangPM
+    public int countCurrentServiceContract(int apartmentId, Date currentDate, List<String> searchTermList) {
+        int count = 0;
+        String sql = "select count(*) from ServiceContract sc\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)\n";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentId);
+            statement.setDate(2, currentDate);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
     public List<ServiceContract> serviceContractById(int apartmentId) {
         List<ServiceContract> scs = new ArrayList<>();
         ServiceDAO sdao = new ServiceDAO();
@@ -195,8 +263,11 @@ public class ServiceContractDAO {
     public static void main(String[] args) {
         ServiceContractDAO sdao = new ServiceContractDAO();
 //       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
-        List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()));
-        System.out.println(list.size());
+        List<String> sList = new ArrayList<>();
+        sList.add("service");
+        List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()), 1, 10, sList);
+        int count = sdao.countCurrentServiceContract(1, Date.valueOf(LocalDate.now()), sList);
+        System.out.println(count);
 
 //        System.out.println(sdao.serviceContractById(1));
         System.out.println(sdao.statisticContract(1).getTotalAmount());

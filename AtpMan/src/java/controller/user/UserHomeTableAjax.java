@@ -99,7 +99,7 @@ public class UserHomeTableAjax extends HttpServlet {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
 
         // get apartment user is living
-        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
+        Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
 
         // if user is owner
         if (customer.getIsOwner() == 1) {
@@ -114,7 +114,6 @@ public class UserHomeTableAjax extends HttpServlet {
             else if (apartment == null) {
                 apartment = apartmentList.get(0);
             }
-            request.setAttribute("apartmentList", apartmentList);
         }
 
         List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());

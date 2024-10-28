@@ -296,7 +296,6 @@ public class CustomerDAO {
     }
 
     // QUAN
-
     public Customer findCustomerByGmail(String gmail) {
         Connection conn = null;
         try {
@@ -352,16 +351,43 @@ public class CustomerDAO {
     }
 
     // KhangPM
-    public List<Customer> getLivingInApartment(int apartmentID) {
+    public List<Customer> getLivingInApartment(int apartmentID, int currentPage, int rowsPerPage, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
-        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.customerType from Customer c\n"
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
-                + "where l.apartmentID = ?";
+                + "where l.apartmentID = ?\n";
+
+        int count = 0;
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like ? ";
+                count++;
+            } else {
+                for (int i = 0; i < searchTermList.size(); i++) {
+                    sql += " and c.name like ? ";
+                    count++;
+                }
+            }
+        }
+        sql += " order by c.customerID asc\n"
+                + "offset ? rows fetch next ? rows only";
+        
+        int fetchStart = (currentPage-1)*rowsPerPage;
+        
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentID);
+            if(count > 0){
+                int index=2;
+                for (int i = 0; i < count; i++) {
+                    statement.setString(index, "%"+searchTermList.get(i)+"%");
+                    index++;
+                }
+            }
+            statement.setInt(count+2, fetchStart);
+            statement.setInt(count+3, rowsPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Customer customer = new Customer();
@@ -371,6 +397,7 @@ public class CustomerDAO {
                 customer.setPhoneNumber(rs.getString(4));
                 customer.setDob(rs.getDate("dob"));
                 customer.setIsOwner(rs.getInt(6));
+                customer.setStatus(rs.getInt(7));
                 list.add(customer);
             }
             return list;
@@ -381,12 +408,58 @@ public class CustomerDAO {
         }
         return null;
     }
+    // KhangPM
+    public int countLivingInApartment(int apartmentID, List<String> searchTermList) {
+        int result = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Customer c\n"
+                + "inner join Living l on l.customerID = c.customerID\n"
+                + "where l.apartmentID = ?\n";
+
+        int count = 0;
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like ? ";
+                count++;
+            } else {
+                for (int i = 0; i < searchTermList.size(); i++) {
+                    sql += " and c.name like ? ";
+                    count++;
+                }
+            }
+        }
+        
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            if(count > 0){
+                int index=2;
+                for (int i = 0; i < count; i++) {
+                    statement.setString(index, "%"+searchTermList.get(i)+"%");
+                    index++;
+                }
+            }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        List<Customer> list = dao.getLivingInApartment(1);
-        for (Customer customer : list) {
-            System.out.println(customer.getName());
-        }
+        List<String> sList = new ArrayList<>();
+        sList.add("khang");
+        sList.add("phạm");
+        List<Customer> list = dao.getLivingInApartment(10, 1, 5, sList);
+        int count = dao.countLivingInApartment(1, sList);
+        System.out.println(count);
+        System.out.println("list: "+list);
     }
 }

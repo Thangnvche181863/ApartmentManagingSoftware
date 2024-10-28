@@ -66,10 +66,12 @@ public class UserApartmentInfoServlet extends HttpServlet {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         BuildingDAO buildingDAO = new BuildingDAO();
         CustomerDAO customerDAO = new CustomerDAO();
+        LivingDAO livingDAO = new LivingDAO();
         ServiceContractDAO serviceContractDAO = new ServiceContractDAO();
         
         String apartmentID_raw = request.getParameter("apartmentID");
         String buildingID_raw = request.getParameter("buildingID");
+        
 
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
@@ -92,7 +94,7 @@ public class UserApartmentInfoServlet extends HttpServlet {
 
         // get apartment that user live in, if user is tenant => always get apartment info through this, no need apartmentID
         // if user is owner can null if not live in
-        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
+        Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
         List<Building> buildingList = null;
         Building building = null;
         if (apartment != null) {
@@ -142,13 +144,6 @@ public class UserApartmentInfoServlet extends HttpServlet {
                 if (apartment == null) {
                     apartment = building.getApartmentList().get(0);
                 }
-//                buildingList = buildingDAO.getAllBuildingByOwnership(customer.getCustomerID());
-//                apartment = apartmentDAO.getApartmentByID(apartmentID);
-//                for (Building building1 : buildingList) {
-//                    if (building1.getBuildingID() == apartment.getBuildingID()) {
-//                        building = building1;
-//                    }
-//                }
             } // apartmentID == 0 and buildingID != 0
             else {
                 for (Building building1 : buildingList) {
@@ -159,10 +154,30 @@ public class UserApartmentInfoServlet extends HttpServlet {
                 apartment = building.getApartmentList().get(0);
             }
         }
-        List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID());
-        LocalDate date = LocalDate.now();
-        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date));
         
+        //pagination parameter
+        int residentPerPage = 5;
+        int servicePerPage = 5;
+        
+        int currentResidentPage = 1;
+        int currentServicePage = 1;
+        
+        List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID(), currentResidentPage, residentPerPage, null);
+        LocalDate date = LocalDate.now();
+        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), currentServicePage, servicePerPage, null);
+        
+        int totalResident = customerDAO.countLivingInApartment(apartmentID, null);
+        int totalService = serviceContractDAO.countCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), null);
+        
+        int totalResidentPage = (int) Math.ceil((double) totalResident/residentPerPage);
+        int totalServicePage = (int) Math.ceil((double) totalService/servicePerPage);
+        
+        Living living = livingDAO.getLivingInfoByUserId(customer.getCustomerID());
+        
+        request.setAttribute("totalResidentPage", totalResidentPage);
+        request.setAttribute("totalServicePage", totalServicePage);
+        
+        request.setAttribute("living", living);
         request.setAttribute("building", building);
         request.setAttribute("buildingList", buildingList);
         request.setAttribute("apartment", apartment);

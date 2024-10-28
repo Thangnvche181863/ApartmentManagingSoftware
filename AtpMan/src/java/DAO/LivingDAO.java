@@ -76,4 +76,28 @@ public class LivingDAO {
         }
     }
 
+    //KhangPM
+    public Living getLivingInfoByUserId(int customerId) {
+        Connection connection = null;
+        String sql = "select * from Living \n"
+                + "where customerID = ? and endDate is null";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                Living living = new Living();
+                living.setLivingID(rs.getInt("livingID"));
+                living.setCustomerID(rs.getInt("customerID"));
+                living.setApartmentID(rs.getInt("apartmentID"));
+                living.setStartDate(rs.getDate("startDate"));
+                living.setEndDate(null);
+                return living;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return null;
+    }
+
 }
