@@ -47,7 +47,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="user/userhome">
+                    <a class="nav-link" href="/AtpMan/user/userhome">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -136,6 +136,13 @@
                     <a class="nav-link" href="tables.html">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
+                </li>
+                
+                <!-- Nav Item - Regist service -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/AtpMan/registServiceTenant">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Register Service</span></a>
                 </li>
 
                 <!-- Divider -->
@@ -463,7 +470,7 @@
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Tên</th>
-                                                    <th>Tuổi</th>
+                                                    <th>Năm Sinh</th>
                                                     <th>Email</th>
                                                     <th>Số điện thoại</th>
                                                 </tr>
@@ -475,7 +482,7 @@
                                                     <tr>
                                                         <td>${count}</td>
                                                         <td>${resident.name}</td>
-                                                        <td>${resident.age}</td>
+                                                        <td>${resident.dob}</td>
                                                         <td>${resident.email}</td>
                                                         <td>${resident.phoneNumber}</td>
                                                     </tr>

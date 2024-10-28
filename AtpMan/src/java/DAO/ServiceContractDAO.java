@@ -101,17 +101,18 @@ public class ServiceContractDAO {
         }
     }
 
-    public List<ServiceContract> getCurrentServiceContract(int apartmentId, Date currentDate) {
+    public List<ServiceContract> getCurrentServiceContract(int apartmentId, Date currentDate) throws ClassNotFoundException {
         List<ServiceContract> list = new ArrayList<>();
         String sql = "select * from ServiceContract sc\n"
                 + "inner join Service s on sc.serviceID = s.serviceID\n"
                 + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)";
         try {
+            connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentId);
             statement.setDate(2, currentDate);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 // declare service object
                 Service service = new Service();
 
@@ -120,6 +121,8 @@ public class ServiceContractDAO {
                 service.setType(rs.getString("type"));
                 service.setDescription(rs.getString("description"));
                 service.setFee(rs.getBigDecimal("fee"));
+                service.setImg(rs.getString("img"));
+                service.setIcon(rs.getString("icon"));
 
                 // declare serviceContract object
                 ServiceContract serviceContract = new ServiceContract();
@@ -130,7 +133,7 @@ public class ServiceContractDAO {
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
                 serviceContract.setAmount(rs.getBigDecimal("amount"));
-                
+
                 list.add(serviceContract);
             }
         } catch (SQLException e) {
@@ -138,6 +141,7 @@ public class ServiceContractDAO {
         }
         return list;
     }
+
     public List<ServiceContract> serviceContractById(int apartmentId) {
         List<ServiceContract> scs = new ArrayList<>();
         ServiceDAO sdao = new ServiceDAO();
@@ -192,14 +196,50 @@ public class ServiceContractDAO {
         return sc;
     }
 
-    public static void main(String[] args) {
-        ServiceContractDAO sdao = new ServiceContractDAO();
-//       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
-        List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()));
-        System.out.println(list.size());
+    public List<Service> unregisteredService(int apartmentID, Date currentDate) {
+        List<Service> list = new ArrayList<>();
+        try {
+            String sql = "SELECT s.* \n"
+                    + "FROM Service s\n"
+                    + "LEFT JOIN ServiceContract sc \n"
+                    + "ON s.serviceID = sc.serviceID \n"
+                    + "   AND sc.apartmentID = ? \n"
+                    + "   AND ? BETWEEN sc.startDate AND sc.endDate\n"
+                    + "WHERE sc.serviceID IS NULL";
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, apartmentID);
+            ps.setDate(2, currentDate);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Service s = new Service();
+                s.setServiceId(rs.getInt(1));
+                s.setName(rs.getString(2));
+                s.setType(rs.getString(3));
+                s.setDescription(rs.getString(4));
+                s.setImg((rs.getString(5)));
+                s.setIcon(rs.getString(6));
+                s.setFee(rs.getBigDecimal(7));
+                
+                list.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+     
 
-//        System.out.println(sdao.serviceContractById(1));
-        System.out.println(sdao.statisticContract(1).getTotalAmount());
+    public static void main(String[] args) throws ClassNotFoundException {
+        ServiceContractDAO sdao = new ServiceContractDAO();
+////       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
+        List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()));
+        System.out.println(list);
+//
+////        System.out.println(sdao.serviceContractById(1));
+//        System.out.println(sdao.statisticContract(1).getTotalAmount());
+//        System.out.println(sdao.unregisteredService(1,Date.valueOf(LocalDate.now())));
 
     }
 }

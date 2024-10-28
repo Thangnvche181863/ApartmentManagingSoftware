@@ -17,6 +17,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -161,7 +163,12 @@ public class UserApartmentInfoServlet extends HttpServlet {
         }
         List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID());
         LocalDate date = LocalDate.now();
-        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date));
+        List<ServiceContract> serviceContractList = null;
+        try {
+            serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date));
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UserApartmentInfoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         request.setAttribute("building", building);
         request.setAttribute("buildingList", buildingList);

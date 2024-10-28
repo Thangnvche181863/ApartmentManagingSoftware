@@ -355,7 +355,7 @@ public class CustomerDAO {
     public List<Customer> getLivingInApartment(int apartmentID) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
-        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.customerType from Customer c\n"
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
                 + "where l.apartmentID = ?";
         try {
@@ -379,14 +379,12 @@ public class CustomerDAO {
         } finally {
             DBContext.closeConnection(connection);
         }
-        return null;
+        return list;
     }
 
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
         List<Customer> list = dao.getLivingInApartment(1);
-        for (Customer customer : list) {
-            System.out.println(customer.getName());
-        }
+        System.out.println(list);
     }
 }

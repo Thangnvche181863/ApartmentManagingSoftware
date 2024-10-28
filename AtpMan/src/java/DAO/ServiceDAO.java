@@ -324,6 +324,7 @@ public class ServiceDAO {
         for (Service elem : list) {
             System.out.println(elem);
         }
-//        System.out.println(sdao.totalService());
+        
+        sdao.insertService("haha", "huhu", BigDecimal.valueOf(312323.1232), "hahaha", "huhu", "hehhe");
     }
 }

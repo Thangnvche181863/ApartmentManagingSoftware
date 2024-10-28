@@ -94,7 +94,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="managerPage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -108,13 +108,13 @@
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                        aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Components</span>
                     </a>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Custom Components:</h6>
@@ -229,7 +229,7 @@
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
                             <li class="nav-item dropdown no-arrow d-sm-none">
                                 <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -374,16 +374,19 @@
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="img/undraw_profile.svg">
-                                </a>
+                                <c:if test="${sessionScope.user != null}">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                            <strong style="color: black;">${sessionScope.user.name}</strong>
+                                        </span>
+                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    </a>
+                                </c:if>
+
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="profile.jsp">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -396,7 +399,7 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
@@ -436,10 +439,10 @@
                                     <option >25</option>
                                     <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
                                     <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="buildingtype">Chọn Tòa Nhà:</label>
-                                <select name="buildingtype" id="buildingType" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option value="">All</option>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="buildingtype">Chọn Tòa Nhà:</label>
+                                    <select name="buildingtype" id="buildingType" style="border-radius: 5px" onchange="this.form.submit()">
+                                        <option value="">All</option>
                                     <c:forEach items="${listbuilding}" var="ls">
                                         <option value="${ls.name}" 
                                                 <c:if test="${buildingtype == ls.name}">selected</c:if>>${ls.name}</option>
@@ -461,8 +464,8 @@
                                     <option value="">All</option>
                                     <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng dần</option>
                                     <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm dần</option>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="hidden" name="page" value="${currentPage}"/>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="hidden" name="page" value="${currentPage}"/>
                             </div>
                         </form>
 
@@ -476,69 +479,69 @@
                                 <div class="card-body">                                  
                                     <div class="table-responsive">
                                         <td class="total-label text-center" style="width: 130px;">
-                                                Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng
-                                        <div class="pagination">
-                                            <%
-                                                int currentPage = (Integer) request.getAttribute("currentPage");
-                                                int totalPages = (Integer) request.getAttribute("totalPages");
-                                                int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
-                                                String buildingtype = (String) request.getAttribute("buildingtype");
-                                                String apartmentType = (String) request.getAttribute("apartmentType");
-                                                String search = (String) request.getAttribute("search");
-                                                String orderBy = (String) request.getAttribute("orderBy");
+                                            Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng
+                                            <div class="pagination">
+                                                <%
+                                                    int currentPage = (Integer) request.getAttribute("currentPage");
+                                                    int totalPages = (Integer) request.getAttribute("totalPages");
+                                                    int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
+                                                    String buildingtype = (String) request.getAttribute("buildingtype");
+                                                    String apartmentType = (String) request.getAttribute("apartmentType");
+                                                    String search = (String) request.getAttribute("search");
+                                                    String orderBy = (String) request.getAttribute("orderBy");
 
-                                                // Hiển thị nút "Previous" nếu không phải trang đầu tiên
-                                                if (currentPage > 1) {
-                                            %>
-                                            <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
-                                            <%
-                                                }
-
-                                                // Hiển thị danh sách các trang
-                                                for (int i = 1; i <= totalPages; i++) {
-                                                    if (i == currentPage) {
-                                            %>
-                                            <strong><%= i %></strong>
-                                            <%
-                                                    } else {
-                                            %>
-                                            <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
-                                            <%
+                                                    // Hiển thị nút "Previous" nếu không phải trang đầu tiên
+                                                    if (currentPage > 1) {
+                                                %>
+                                                <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
+                                                <%
                                                     }
-                                                }
 
-                                                // Hiển thị nút "Next" nếu không phải trang cuối cùng
-                                                if (currentPage < totalPages) {
-                                            %>
-                                            <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
-                                            <%
-                                                }
-                                            %>
-                                        </div>
-                                        <table class="table table-bordered"  width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Số Phòng</th>
-                                                    <th class="text-center">Loại Căn Hộ</th>
-                                                    <th class="text-center">Số Tầng</th>
-                                                    <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
-                                                    <th class="text-center">Thông Tin</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${listapart}" var="ls">
+                                                    // Hiển thị danh sách các trang
+                                                    for (int i = 1; i <= totalPages; i++) {
+                                                        if (i == currentPage) {
+                                                %>
+                                                <strong><%= i %></strong>
+                                                <%
+                                                        } else {
+                                                %>
+                                                <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
+                                                <%
+                                                        }
+                                                    }
+
+                                                    // Hiển thị nút "Next" nếu không phải trang cuối cùng
+                                                    if (currentPage < totalPages) {
+                                                %>
+                                                <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
+                                                <%
+                                                    }
+                                                %>
+                                            </div>
+                                            <table class="table table-bordered"  width="100%" cellspacing="0">
+                                                <thead>
                                                     <tr>
-                                                        <td class="text-center">${ls.apartmentNumber}</td>
-                                                        <td class="text-center">${ls.apartmentType}</td>
-                                                        <td class="text-center">${ls.floor}</td>
-                                                        <td class="text-center">
-                                                            <fmt:formatNumber type="number" value="${ls.totalAmount}" />
-                                                        </td>
-                                                        <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}">Chi tiết</a></td>
+                                                        <th class="text-center">Số Phòng</th>
+                                                        <th class="text-center">Loại Căn Hộ</th>
+                                                        <th class="text-center">Số Tầng</th>
+                                                        <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
+                                                        <th class="text-center">Thông Tin</th>
                                                     </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <c:forEach items="${listapart}" var="ls">
+                                                        <tr>
+                                                            <td class="text-center">${ls.apartmentNumber}</td>
+                                                            <td class="text-center">${ls.apartmentType}</td>
+                                                            <td class="text-center">${ls.floor}</td>
+                                                            <td class="text-center">
+                                                                <fmt:formatNumber type="number" value="${ls.totalAmount}" />
+                                                            </td>
+                                                            <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}">Chi tiết</a></td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
                                     </div>
                                 </div>
                             </div>
@@ -591,7 +594,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>

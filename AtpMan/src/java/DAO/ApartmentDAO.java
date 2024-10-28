@@ -326,7 +326,7 @@ public class ApartmentDAO {
 
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
-        System.out.println(dao.apartmentDetail(1));
+        System.out.println(dao.getAllApartmentByOwner(1));
 
     }
 }
