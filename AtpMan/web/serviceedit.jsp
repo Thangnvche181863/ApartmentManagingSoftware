@@ -30,17 +30,100 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
             />
-            
-            <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
-            <script>
-                tinymce.init({
-                  selector: '#description'
-                });
-            </script>
+
+        <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
+        <script>
+            tinymce.init({
+                selector: '#description'
+            });
+        </script>
         <style>
             .is-invalid {
                 border-color: red;
                 background-color: #f8d7da;
+            }
+
+            /* Phong cách chung */
+            .row {
+                border: 1px solid #b0b0b0;
+                border-radius: 10px;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-control,
+            .form-select {
+                border-radius: 5px;
+                outline: none;
+                box-shadow: none;
+                border: 1px solid #ced4da;
+            }
+
+            input[type="file"] {
+                padding: 6px;
+                border: 1px solid #ced4da;
+            }
+
+            #imgPreview {
+                width: 100%;
+                max-width: 230px;
+                height: auto;
+                margin-top: 10px;
+                border-radius: 10px;
+            }
+
+            .text-center {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            .btn-primary {
+                width: 100px;
+                padding: 8px;
+                font-weight: 600;
+            }
+
+            #feeError {
+                display: none;
+                color: #d9534f;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            .form-label {
+                font-weight: 600;
+                margin-bottom: 8px;
+                display: block;
+                color: #333;
+            }
+
+            .discount-input {
+                width: 150px;
+                padding: 8px;
+                margin-bottom: 8px;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                text-align: center;
+            }
+
+            div > div label {
+                font-weight: 500;
+                display: block;
+                margin-bottom: 4px;
             }
         </style>
 
@@ -390,7 +473,7 @@
                         </div>
 
 
-                        
+
 
 
                         <!-- Hiển thị thông báo lỗi -->
@@ -405,25 +488,44 @@
                             <form action="serviceedit" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data">
                                 <div class="row g-0"> 
                                     <input type="hidden" name="page" value="${page}">
-                                    <div class="col-md-5">
-                                        <div class="form-group mb-4">
-                                            <label for="name" class="form-label">Name:</label>
-                                            <input type="hidden" name="id" value="${service.serviceId}">
-                                            <input type="text" class="form-control w-100" name="name" id="name" value="${service.name}">
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <div>
+                                            <div class="form-group mb-4">
+                                                <label for="name" class="form-label">Name:</label>
+                                                <input type="hidden" name="id" value="${service.serviceId}">
+                                                <input type="text" class="form-control w-100" name="name" id="name" value="${service.name}">
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label for="type" class="form-label">Type:</label>
+                                                <select class="form-select w-100" name="type" id="type" style="border-radius: 5px; outline: none;">
+                                                    <c:forEach items="${serviceType}" var="ls">
+                                                        <option value="${ls.type}" <c:if test="${service.type == ls.type}">selected</c:if>>${ls.type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label for="img" class="form-label">URL img:</label>
+                                                <input type="file" class="form-control w-100" accept="image/*" name="img" id="img"  onchange="previewImg(event)">
+                                                <img src="${service.img}" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
+                                                <input type="hidden" name="imgPath" value="${service.img}">
+                                            </div>
                                         </div>
-                                        <div class="form-group mb-4">
-                                            <label for="type" class="form-label">Type:</label>
-                                            <select class="form-select w-100" name="type" id="type" style="border-radius: 5px; outline: none;">
-                                                <c:forEach items="${serviceType}" var="ls">
-                                                    <option value="${ls.type}" <c:if test="${service.type == ls.type}">selected</c:if>>${ls.type}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label for="img" class="form-label">URL img:</label>
-                                            <input type="file" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
-                                            <img src="${service.img}" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
-                                            <input type="hidden" name="imgPath" value="${service.img}">
+                                        <div class="mr-5">
+                                            <label class="form-label">Giảm giá (%):</label>
+                                            <div>
+                                                <div>
+                                                    <label for="discount1Month">1 tháng:</label>
+                                                    <input type="number" id="discount1Month" min="0" name="discount1Month" value="${discount1Month}" class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                                <div>
+                                                    <label for="discount2Month">2 tháng:</label>
+                                                    <input type="number" id="discount2Month" min="0" name="discount2Month" value="${discount2Month}" class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                                <div>
+                                                    <label for="discount3Month">3 tháng:</label>
+                                                    <input type="number" id="discount3Month" min="0" name="discount3Month" value="${discount3Month}" class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -499,17 +601,17 @@
             </div>
         </div>
 
-        
+
 
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
-        
+
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
         <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-        
+
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script src="js/main.js"></script>

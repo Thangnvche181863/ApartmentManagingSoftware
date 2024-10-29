@@ -4,6 +4,7 @@
  */
 package controller.staff;
 
+import DAO.DiscountDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -98,8 +99,15 @@ public class ServiceAddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         int page = 1;
         int recordsPerPage = 10;
+
+        String discount1Month = request.getParameter("discount1Month");
+        String discount2Month = request.getParameter("discount2Month");
+        String discount3Month = request.getParameter("discount3Month");
+        
+        DiscountDAO ddao = new DiscountDAO();
 
         String name = request.getParameter("name");
         String type = request.getParameter("type");
@@ -145,6 +153,7 @@ public class ServiceAddServlet extends HttpServlet {
         fee = fee.replace(",", ""); // Loại bỏ dấu phẩy
 
         sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replace("\n", "<br>"), fileURL, icon);
+        ddao.insertDiscount(Integer.parseInt(discount1Month), Integer.parseInt(discount2Month), Integer.parseInt(discount3Month));
         request.setAttribute("type", "");
         request.setAttribute("search", "");
         request.setAttribute("orderBy", "");

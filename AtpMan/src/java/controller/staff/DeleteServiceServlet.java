@@ -4,6 +4,7 @@
  */
 package controller.staff;
 
+import DAO.DiscountDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,11 +66,14 @@ public class DeleteServiceServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+        
+        DiscountDAO ddao = new DiscountDAO();
         String id = request.getParameter("id");
         ServiceDAO sdao = new ServiceDAO();
         request.setAttribute("type", "");
         request.setAttribute("search", "");
         request.setAttribute("orderBy", "");
+        ddao.deleteDiscount(Integer.parseInt(id));
         sdao.deleteService(Integer.parseInt(id));
         int totalRecords = sdao.getTotalService("", "", "");
         request.setAttribute("totalservice", totalRecords);

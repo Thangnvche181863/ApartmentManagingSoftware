@@ -4,6 +4,7 @@
  */
 package controller.staff;
 
+import DAO.DiscountDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.math.BigDecimal;
 import java.nio.file.Paths;
+import model.Discount;
 import model.Service;
 
 /**
@@ -61,9 +63,19 @@ public class EditServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        PrintWriter out = response.getWriter();
         String id = request.getParameter("id");
+
         ServiceDAO sdao = new ServiceDAO();
+        DiscountDAO ddao = new DiscountDAO();
+
+        Discount discount = ddao.getDiscountById(Integer.parseInt(id));
         Service service = sdao.findById(Integer.parseInt(id));
+
+        request.setAttribute("discount1Month", discount.getOneMonth());
+        request.setAttribute("discount2Month", discount.getTwoMonth());
+        request.setAttribute("discount3Month", discount.getThreeMonth());
+//        out.print(discount);
         request.setAttribute("page", request.getParameter("page"));
         request.setAttribute("service", service);
         request.setAttribute("serviceType", sdao.getAllType());
@@ -81,11 +93,22 @@ public class EditServiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+//PrintWriter out = response.getWriter();
         int page = 1;
         int recordsPerPage = 10;
 
+        String discount1Month = request.getParameter("discount1Month");
+        String discount2Month = request.getParameter("discount2Month");
+        String discount3Month = request.getParameter("discount3Month");
+//        out.print(discount1Month);
+//                out.print(discount2Month);
+//        out.print(discount3Month);
+
         String id = request.getParameter("id");
+
+        DiscountDAO ddao = new DiscountDAO();
+        ddao.updateDiscountById(Integer.parseInt(id), Integer.parseInt(discount1Month), Integer.parseInt(discount2Month), Integer.parseInt(discount3Month));
+
         String name = request.getParameter("name");
         String type = request.getParameter("type");
         String fee = request.getParameter("fee");

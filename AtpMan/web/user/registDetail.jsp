@@ -446,17 +446,17 @@
                                     <a href="registService?apartmentId=${apartmentID}&serviceId=${service.getServiceId()}" style="color: red" onclick="return confirmDelete();"> Đây!</a>
                                 </span>
                             <p>
-                                </c:if>
+                            </c:if>
 
-                        <%--<c:if test="${serviceContract == null}">--%>
-                        <!--<p class="text-primary m-0">Vui lòng--> 
-                        <!--<span>-->
-                            <!--<a href="registService?apartmentID=${apartmentID}&serviceID=${service.getServiceId()}" class="text-danger">đăng kí</a>-->
-                        <!--</span> để sử dụng dịch vụ </p>-->
-                        <%--</c:if>--%>
+                            <%--<c:if test="${serviceContract == null}">--%>
+                            <!--<p class="text-primary m-0">Vui lòng--> 
+                            <!--<span>-->
+                                <!--<a href="registService?apartmentID=${apartmentID}&serviceID=${service.getServiceId()}" class="text-danger">đăng kí</a>-->
+                            <!--</span> để sử dụng dịch vụ </p>-->
+                            <%--</c:if>--%>
 
-                        <!-- Trigger link for registration form -->
-                        <c:if test="${serviceContract == null}">
+                            <!-- Trigger link for registration form -->
+                            <c:if test="${serviceContract == null}">
                             <p class="text-primary m-0">
                                 Vui lòng 
                                 <span>
@@ -465,7 +465,7 @@
                                 để sử dụng dịch vụ 
                             </p>
                         </c:if>
-                         
+
                         <!-- Overlay and Registration Form (Hidden by Default) -->
                         <div id="overlay" class="overlay" style="display: none;">
                             <div id="registrationForm" class="registration-form">
@@ -488,9 +488,9 @@
                                     <div class="form-group mb-3">
                                         <label for="subscriptionPlan" class="text-primary">Chọn gói dịch vụ</label>
                                         <select class="form-control" id="subscriptionPlan" name="subscriptionPlan" required style="color: red" onchange="updateFee()">
-                                            <option value="1">Gói 1 tháng</option>
-                                            <option value="2">Gói 2 tháng</option>
-                                            <option value="3">Gói 3 tháng</option>
+                                            <option value="1">Gói 1 tháng ưu đãi ${discount1Month}%</option>
+                                            <option value="2">Gói 2 tháng ưu đãi ${discount2Month}%</option>
+                                            <option value="3">Gói 3 tháng ưu đãi ${discount3Month}%</option>
                                         </select>
                                     </div>
 
@@ -584,11 +584,21 @@
                 // Lưu giá gốc vào biến toàn cục
                 let baseFee;
 
+                // Các biến lưu trữ tỷ lệ giảm giá
+                let discount1Month;
+                let discount2Month;
+                let discount3Month;
+
                 // Hàm này sẽ được gọi khi trang được tải
                 function initializeFee() {
                     // Lấy giá dịch vụ từ input fee (xóa phần " VND")
                     let baseFeeStr = document.getElementById('fee').value.replace(" VND/tháng", "");
                     baseFee = parseFloat(baseFeeStr.replace(/\./g, "").replace(",", ".")); // Chuyển đổi sang số
+
+                    // Lưu các giá trị giảm giá vào biến
+                    discount1Month = 1 - (parseFloat('${discount1Month}') / 100);
+                    discount2Month = 1 - (parseFloat('${discount2Month}') / 100);
+                    discount3Month = 1 - (parseFloat('${discount3Month}') / 100);
                     updateFee(); // Cập nhật giá ban đầu
                 }
 
@@ -605,11 +615,11 @@
 
                     // Tính toán giá dựa trên gói dịch vụ
                     if (subscriptionPlan === "1") {
-                        updatedFee = baseFee; // 100%
+                        updatedFee = baseFee * discount1Month; 
                     } else if (subscriptionPlan === "2") {
-                        updatedFee = baseFee * 0.95; // 95%
+                        updatedFee = baseFee * discount2Month; 
                     } else if (subscriptionPlan === "3") {
-                        updatedFee = baseFee * 0.90; // 90%
+                        updatedFee = baseFee * discount3Month; 
                     }
 
                     // Cập nhật giá vào input fee

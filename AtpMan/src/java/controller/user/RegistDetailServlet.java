@@ -4,6 +4,7 @@
  */
 package controller.user;
 
+import DAO.DiscountDAO;
 import DAO.ServiceContractDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Discount;
 import model.Service;
 import model.ServiceContract;
 
@@ -61,10 +63,17 @@ public class RegistDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-//        String registed = request.getParameter("registed");
         String serviceID = request.getParameter("serviceID");
         String apartmentID = request.getParameter("apartmentID");
         ServiceContractDAO scdao = new ServiceContractDAO();
+        
+        DiscountDAO ddao = new DiscountDAO();
+        
+        Discount discount =  ddao.getDiscountById(Integer.parseInt(serviceID));
+        
+        request.setAttribute("discount1Month", discount.getOneMonth());
+        request.setAttribute("discount2Month", discount.getTwoMonth());
+        request.setAttribute("discount3Month", discount.getThreeMonth());
 
         ServiceDAO sdao = new ServiceDAO();
 
