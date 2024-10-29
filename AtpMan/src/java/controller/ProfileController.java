@@ -106,9 +106,15 @@ public class ProfileController extends HttpServlet {
         String fileURL;
 
         // Kiểm tra xem người dùng có tải lên file ảnh mới không
-        if (fileName != null && !fileName.isEmpty()) {
-            // Kiểm tra loại file
-            String fileType = filePart.getContentType();
+       if (fileName != null && !fileName.isEmpty()) {
+        // Kiểm tra loại file
+        String fileType = filePart.getContentType();
+        if (!fileType.equals("image/jpeg") && !fileType.equals("image/png") && !fileType.equals("image/gif")) {
+            // Không phải là file ảnh -> báo lỗi và quay lại trang profile
+            request.setAttribute("message", "Chỉ được upload file ảnh (JPG, PNG, GIF).");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
             
 
             // Lưu ảnh mới

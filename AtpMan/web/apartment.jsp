@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
     <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -12,7 +13,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Dashboard</title>
+        <title>Các căn hộ</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,7 +46,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Căn hộ</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -66,15 +67,15 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     ID: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Type: ${o.apartmentType}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Number: ${o.apartmentNumber}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Service fee: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Area: ${o.area} m� </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Floor: ${o.floor}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">No. of Resident: ${countList.get(pageScope.count)} </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Unpaid Invoice: ${invoiceList.get(pageScope.invoice)} </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Loại: ${o.apartmentType}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số: ${o.apartmentNumber}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Phí dịch vụ: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Diện tích: ${o.area} m² </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Tầng: ${o.floor}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số cư dân: ${countList.get(pageScope.count)} </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Hóa đơn chưa trả: ${invoiceList.get(pageScope.invoice)} </div>
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="residentofapartment?apartmentID=${o.apartmentID}" class ="text-warning" style="text-decoration: none" >View all Resident</a></div>
+                                                    <a href="residentofapartment?apartmentID=${o.apartmentID}" class ="text-warning" style="text-decoration: none" >Xem tất cả người ở</a></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-home fa-2x text-gray-400"></i>
@@ -96,7 +97,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">�</span>
+                                            <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

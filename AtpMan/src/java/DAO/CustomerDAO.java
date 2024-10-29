@@ -108,14 +108,14 @@ public class CustomerDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Customer customer = new Customer();
-                            customer.setCustomerID(rs.getInt("customerID")); // Lấy customerID từ kết quả
-                            customer.setUsername(rs.getString("username"));
-                            customer.setName(rs.getString("name"));
-                            customer.setEmail(rs.getString("email"));
-                            customer.setPhoneNumber(rs.getString("phoneNumber"));
-                            customer.setAge(rs.getInt("age"));
-                            customer.setRegistrationDate(rs.getDate("registrationDate"));
-                            customer.setIsOwner(rs.getInt("isOwner"));
+                            customer.setCustomerID(rs.getInt(1)); // Lấy customerID từ kết quả
+                            customer.setUsername(rs.getString(2));
+                            customer.setName(rs.getString(4));
+                            customer.setEmail(rs.getString(5));
+                            customer.setPhoneNumber(rs.getString(6));
+                            customer.setAge(rs.getInt(7));
+                            customer.setRegistrationDate(rs.getDate(8));
+                            customer.setIsOwner(rs.getInt(9));
                             return customer;
                         }
                     }
@@ -123,8 +123,6 @@ public class CustomerDAO {
             }
         } catch (Exception e) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "Error retrieving customer information", e);
-        } finally {
-            DBContext.closeConnection(conn);
         }
         return null; // Trả về null nếu không tìm thấy hoặc có lỗi xảy ra
     }
@@ -380,5 +378,8 @@ public class CustomerDAO {
         }
         return customer;
     }
-
+    public static void main(String[] args) {
+        CustomerDAO dao = new CustomerDAO();
+        System.out.println(" "+dao.getAllInformationCustomer("bbb", "xoor3tJBQLmByDp6Clp70RgcAs0="));
+    }
 }

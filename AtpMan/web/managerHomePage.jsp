@@ -56,7 +56,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Trang chủ</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -72,7 +72,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Building Managerment</div>
+                                                    Quản lý tòa nhà</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">${amountBuilding}</div>
                                             </div>
                                             <div class="col-auto">
@@ -91,7 +91,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Apartment Managerment</div>
+                                                #</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">${amountApartment}</div>
                                         </div>
                                         <div class="col-auto">
@@ -108,7 +108,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Service Managerment
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Quản lý dịch vụ
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -139,7 +139,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Assignment Managerment</div>
+                                                Quản lý công việc</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">${amountOfTask}</div>
                                         </div>
                                         <div class="col-auto">
@@ -158,7 +158,7 @@
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Staff Managerment</div>
+                                                    Quản lý nhân viên</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">${amountStaff}</div>
                                             </div>
                                             <div class="col-auto">
@@ -175,7 +175,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                News</div>
+                                                Quản lý tin tức</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -191,7 +191,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Request Service</div>
+                                                Dịch vụ được yêu cầu</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -207,7 +207,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Feedback</div>
+                                                Phản hồi</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">

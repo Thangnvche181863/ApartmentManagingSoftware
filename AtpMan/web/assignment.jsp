@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -8,15 +8,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Danh Sách Nhân viên</title>
+        <title>Danh Sách Công Việc</title>
 
         <!-- Custom fonts and stylesheets -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700" rel="stylesheet">
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     </head>
 
     <style>
@@ -96,35 +95,30 @@
         }
 
     </style>
-    <script>
-        function setEditRoleData(staffID, roleID) {
-            $('#staffID').val(staffID);
-            $('#roleID').val(roleID); // Cập nhật giá trị cho roleID
-        }
-    </script>
 
     <body id="page-top">
-        <!-- Include sidebar -->
         <%@include file="sidebar.jsp" %>
 
-        <!-- Main content -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Include topbar -->
                 <%@include file="topbar.jsp" %>
 
-                <!-- Page content -->
                 <div class="container-fluid">
-                    <!-- Page heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Danh Sách Công Việc</h1>
-                        <a class="btn btn-info" href="registlist">Danh Sách Đăng Kí</a>
-                        <a class="btn btn-primary" href="#">Thêm công việc</a>
+                        <a class="btn btn-primary" href="createTask.jsp">Thêm công việc</a>
+                        <!-- Hiển thị thông báo nếu có -->
+                        <c:if test="${not empty sessionScope.mess}">
+                            <div class="alert alert-success" role="alert">
+                                ${sessionScope.mess}
+                            </div>
+                            <c:remove var="mess" scope="session"/> <!-- Xóa thông báo sau khi hiển thị -->
+                        </c:if>
                     </div>
 
-                    <!-- Form for filtering staff -->
+                    <!-- Form lọc công việc -->
                     <div class="form-container">
-                        <form action="staff" method="POST">
+                        <form action="assignment" method="POST">
                             <table>
                                 <thead>
                                     <tr>
@@ -145,18 +139,19 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="roleID" onchange="this.form.submit()" style="width: 100px;">
-                                                    <option value="0" <c:if test="${roleID == 0}">selected</c:if>>Tất cả</option>
-                                                <c:forEach items="${staffType}" var="ls">
-                                                    <option value="${ls.roleID}" <c:if test="${roleID == ls.roleID}">selected</c:if>>${ls.role_name}</option>
+                                                <select name="taskType" onchange="this.form.submit()" style="width: 100px;">
+                                                    <option value="0" <c:if test="${selectedTaskType == '0'}">selected</c:if>>Tất cả</option>
+                                                <c:forEach items="${taskType}" var="type">
+                                                    <option value="${type}" <c:if test="${type == selectedTaskType}">selected</c:if>>${type}</option>
                                                 </c:forEach>
                                             </select>
+
                                         </td>
                                         <td>
                                             <input type="text" value="${search}" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()" />
                                         </td>
                                         <td class="total-label text-center">
-                                            ${AmountOfTask} Công việc
+                                            ${totalTask} Công việc
                                         </td>
                                     </tr>
                                 </tbody>
@@ -164,130 +159,103 @@
                         </form>
                     </div>
 
-                </div>
+                    <!-- Bảng công việc -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="pagination">
+                                    <c:if test="${currentPage > 1}">
+                                        <a href="assignment?page=${currentPage - 1}">Previous</a>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${totalPages}" var="i">
+                                        <c:choose>
+                                            <c:when test="${i == currentPage}">
+                                                <strong>${i}</strong>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="assignment?page=${i}">${i}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:if test="${currentPage < totalPages}">
+                                        <a href="assignment?page=${currentPage + 1}">Next</a>
+                                    </c:if>
+                                </div>
 
-                <!-- Staff table -->
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <!-- Pagination logic -->
-                            <div class="pagination">
-                                <% int currentPage = (Integer) request.getAttribute("currentPage");
-                                   int totalPages = (Integer) request.getAttribute("totalPages");
-                                   if (currentPage > 1) { %>
-                                <a href="staff?page=<%= currentPage - 1 %>">Previous</a>
-                                <% }
-                                   for (int i = 1; i <= totalPages; i++) {
-                                       if (i == currentPage) { %>
-                                <strong><%= i %></strong>
-                                <% } else { %>
-                                <a href="staff?page=<%= i %>"><%= i %></a>
-                                <% }
-                                   }
-                                   if (currentPage < totalPages) { %>
-                                <a href="staff?page=<%= currentPage + 1 %>">Next</a>
-                                <% } %>
-                            </div>
-
-                            <table class="table table-bordered" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Mã nhân viên</th>
-                                        <th>Họ và tên</th>
-                                        <th>Chức vụ</th>
-                                        <th>Email</th>
-                                        <th>Số điện thoại</th>
-                                        <th class="text-center">Chức năng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${listTask}" var="ls">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
                                         <tr>
-                                            <td>${ls.taskID}</td>
-                                            <td>${ls.taskName}</td>
-                                            <td>${ls.description}</td>
-                                            <td>${ls.taskType}</td>
-                                           
-
-                                            <!-- Dismiss button -->
-                                            <td class="text-center">
-                                                <div class="d-flex justify-content-center">
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dismissModal-${ls.taskID}">
-                                                        Sa thải
+                                            <th>Mã công việc</th>
+                                            <th>Tên</th>
+                                            <th>Mô tả</th>
+                                            <th>Loại công việc</th>
+                                            <th class="text-center">Giao việc</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listTask}" var="ls">
+                                            <tr>
+                                                <td>${ls.taskID}</td>
+                                                <td>${ls.taskName}</td>
+                                                <td>${ls.description}</td>
+                                                <td>${ls.taskType}</td>
+                                                <td class="text-center">
+                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#assignTaskModal-${ls.taskID}">
+                                                        Giao việc
                                                     </a>
-                                                    <!--                                                    <button class="btn btn-warning btn-sm ml-2" data-toggle="modal" data-target="#editRoleModal" 
-                                                                                                                data-staff-id="${ls.staffID}" data-role-id="${ls.roleID}" 
-                                                                                                                onclick="setEditRoleData(${ls.staffID}, ${ls.roleID})">
-                                                                                                            Chỉnh Sửa
-                                                                                                        </button>-->
-                                                </div>
-                                            </td>
+                                                </td>
+                                            </tr>
+                                            <!-- Modal giao việc -->
+                                        <div class="modal fade" id="assignTaskModal-${ls.taskID}" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Chọn nhân viên giao việc cho công việc ${ls.taskName}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="assignment" method="POST">
+                                                            <input type="hidden" name="taskType" value="${ls.taskType}" />
+                                                            <input type="hidden" name="taskID" value="${ls.taskID}" />
+                                                            <input type="hidden" name="service" value="assign" />
 
+                                                            <!-- Danh sách nhân viên -->
+                                                            <select name="staffID" class="form-control">
+                                                                <c:forEach items="${listStaff}" var="o">
+                                                                    <c:if test="${ls.taskType == o.roleAuthority}">
+                                                                        <option value="${o.staffID}">${o.name}</option>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </select>
 
+                                                            <!-- Người dùng nhập số ngày cho endTime -->
+                                                            <label for="endDays">Nhập số ngày để hoàn thành công việc:</label>
+                                                            <input type="number" id="endDays" name="endDays" class="form-control" min="1" placeholder="Nhập số ngày" required>
 
-                                            <!-- Dismiss confirmation modal -->
-                                    <div class="modal fade" id="dismissModal-${ls.taskID}" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Xác nhận</h5>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Bạn có chắc chắn muốn sa thải nhân viên này không?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                                                    <form action="staff" method="post" class="d-inline">
-                                                        <input type="hidden" name="staffID" value="${ls.taskID}" />
-                                                        <input type="hidden" name="service" value="dismiss" />
-                                                        <button type="submit" class="btn btn-danger">Sa thải</button>
-                                                    </form>
+                                                            <p class="mt-2">Bạn có chắc muốn giao công việc này cho nhân viên đã chọn?</p>
+
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                                                                <button type="submit" class="btn btn-primary">Giao việc</button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
+
+                                        </c:forEach>
+                                        </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!--Modal de sua vai tro cua nhan vien
-                                <div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editRoleModalLabel">Chỉnh Sửa Vai Trò Nhân Viên</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="editRoleForm" action="staff?service=edit" method="POST">
-                                                    <input type="hidden" name="id" id="staffID" value="">
-                                                    <div class="form-group">
-                                                        <label for="roleID">Chọn Vai Trò</label>
-                                                        <select name="roleID" id="roleID" class="form-control" required>
-                <c:forEach items="${roleTypes}" var="role">
-                    <option value="${role.roleID}">${role.role_name}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Cập nhật vai trò</button>
-    </form>
-</div>
-</div>
-</div>
-</div>-->
-
-
-
             </div>
         </div>
+
+
 
         <!-- Scripts -->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -295,10 +263,5 @@
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="js/sb-admin-2.min.js"></script>
-    </div>
-</body>
-
+    </body>
 </html>
-
-
-

@@ -118,8 +118,8 @@
                     <!-- Page heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Danh Sách Nhân viên</h1>
-                        <a class="btn btn-info" href="registlist">Danh Sách Đăng Kí</a>
                         <a class="btn btn-primary" href="#">Thêm Nhân viên</a>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#bannedStaffModal">Danh Sách Bị Ban</button>
                     </div>
 
                     <!-- Form for filtering staff -->
@@ -149,6 +149,7 @@
                                                     <option value="0" <c:if test="${roleID == 0}">selected</c:if>>Tất cả</option>
                                                 <c:forEach items="${staffType}" var="ls">
                                                     <option value="${ls.roleID}" <c:if test="${roleID == ls.roleID}">selected</c:if>>${ls.role_name}</option>
+
                                                 </c:forEach>
                                             </select>
                                         </td>
@@ -237,11 +238,11 @@
                                                     <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#dismissModal-${ls.staffID}">
                                                         Ban
                                                     </a>
-                                                    <!--                                                    <button class="btn btn-warning btn-sm ml-2" data-toggle="modal" data-target="#editRoleModal" 
-                                                                                                                data-staff-id="${ls.staffID}" data-role-id="${ls.roleID}" 
-                                                                                                                onclick="setEditRoleData(${ls.staffID}, ${ls.roleID})">
-                                                                                                            Chỉnh Sửa
-                                                                                                        </button>-->
+                                                    <button class="btn btn-primary btn-sm ml-2" data-toggle="modal" data-target="#editRoleModal" 
+                                                            data-staff-id="${ls.staffID}" data-role-id="${ls.roleID}" 
+                                                            onclick="setEditRoleData(${ls.staffID}, ${ls.roleID})">
+                                                        Chỉnh Sửa
+                                                    </button>
                                                 </div>
                                             </td>
 
@@ -263,7 +264,7 @@
                                                     <form action="staff" method="post" class="d-inline">
                                                         <input type="hidden" name="staffID" value="${ls.staffID}" />
                                                         <input type="hidden" name="service" value="dismiss" />
-                                                        <button type="submit" class="btn btn-danger">Sa thải</button>
+                                                        <button type="submit" class="btn btn-danger">Chặn</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -278,39 +279,141 @@
                     </div>
                 </div>
 
-                <!--Modal de sua vai tro cua nhan vien
-                                <div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editRoleModalLabel">Chỉnh Sửa Vai Trò Nhân Viên</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                <!--Đây là Model để chỉnh sửa vai trò nhân viên -->
+                <div class="modal fade" id="editRoleModal" tabindex="-1" role="dialog" aria-labelledby="editRoleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editRoleModalLabel">Chỉnh Sửa Vai Trò Nhân Viên</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="editRoleForm" action="staff?service=edit" method="POST">
+                                    <input type="hidden" name="id" id="staffID" value="${ls.staffID}">
+                                    <div class="form-group">
+                                        <label for="roleID">Chọn Vai Trò</label>
+                                        <select name="roleID" id="roleID" class="form-control" required>
+                                            <c:forEach items="${staffType}" var="role">
+                                                <option value="${role.roleID}">${role.role_name}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Cập nhật vai trò</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Modal hiển thị danh sách nhân viên bị ban -->
+                <div class="modal fade" id="bannedStaffModal" tabindex="-1" role="dialog" aria-labelledby="bannedStaffModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> <!-- Add modal-dialog-centered for vertical centering -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bannedStaffModalLabel">Danh Sách Nhân Viên Bị Ban</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã nhân viên</th>
+                                            <th>Họ và tên</th>
+                                            <th>Chức vụ</th>
+                                            <th>Email</th>
+                                            <th>Gỡ ban</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="${listban}" var="staff">
+                                            <tr>
+                                                <td>${staff.staffID}</td>
+                                                <td>${staff.name}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${staff.roleID == 1}">Quản lý</c:when>
+                                                        <c:when test="${staff.roleID == 2}">Kế toán</c:when>
+                                                        <c:when test="${staff.roleID == 6}">Nhân viên hành chính</c:when>
+                                                        <c:when test="${staff.roleID == 8}">Kĩ thuật</c:when>
+                                                        <c:when test="${staff.roleID == 9}">Bảo vệ</c:when>
+                                                        <c:otherwise>Unknown role</c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td>${staff.email}</td>
+                                                <td class="text-center">
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="#" class="btn btn-success btn-sm" data-toggle="modal" data-target="#unbanModal-${staff.staffID}">
+                                                            Unban
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Unban confirmation modal -->
+                                        <div class="modal fade" id="unbanModal-${staff.staffID}" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Xác nhận</h5>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Bạn có chắc chắn muốn gỡ chặn nhân viên này không?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                                                        <form action="staff" method="post" class="d-inline">
+                                                            <input type="hidden" name="staffID" value="${staff.staffID}" />
+                                                            <input type="hidden" name="service" value="unban" />
+                                                            <button type="submit" class="btn btn-danger">Unban</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="modal-body">
-                                                <form id="editRoleForm" action="staff?service=edit" method="POST">
-                                                    <input type="hidden" name="id" id="staffID" value="">
-                                                    <div class="form-group">
-                                                        <label for="roleID">Chọn Vai Trò</label>
-                                                        <select name="roleID" id="roleID" class="form-control" required>
-                <c:forEach items="${roleTypes}" var="role">
-                    <option value="${role.roleID}">${role.role_name}</option>
-                </c:forEach>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Cập nhật vai trò</button>
-    </form>
-</div>
-</div>
-</div>
-</div>-->
+                                        </div>
+                                    </c:forEach>
 
-
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--   Cai nay de unban-->
+<!--                <div class="modal fade" id="unbanModal-${staff.staffID}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Xác nhận</h5>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                Bạn có chắc chắn muốn gỡ chặn nhân viên này không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                                <form action="staff" method="post" class="d-inline">
+                                    <input type="hidden" name="staffID" value="${staff.staffID}" />
+                                    <input type="hidden" name="service" value="unban" />
+                                    <button type="submit" class="btn btn-danger">Unban</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
 
             </div>
         </div>
-
         <!-- Scripts -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
     <head>
 
@@ -10,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Dashboard</title>
+        <title>Tòa nhà</title>
         
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -42,7 +43,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">CÁC TÒA NHÀ</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -61,13 +62,13 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     ${o.name}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">No. of floor: ${o.numFloor}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">No. of apartment: ${o.numApartment}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-danger">Available: ${countList.get(pageScope.count)}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Address: ${o.address}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số tầng: ${o.numFloor}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số căn hộ: ${o.numApartment}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-danger">Còn trống: ${countList.get(pageScope.count)}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Địa chỉ: ${o.address}</div>
 
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >View all apartment</a></div>
+                                                    <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-building fa-2x text-gray-400"></i>
@@ -88,7 +89,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">�</span>
+                                        <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

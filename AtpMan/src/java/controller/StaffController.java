@@ -78,7 +78,7 @@ public class StaffController extends HttpServlet {
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("totalPages", sdao.count(recordsPerPage));
         request.setAttribute("listStaff", sdao.staffPaging(page, recordsPerPage));
-
+        request.setAttribute("listban", sdao.getALlBan());
         request.setAttribute("staffType", rdao.getAllRole());
 
         request.getRequestDispatcher("staff.jsp").forward(request, response);
@@ -111,18 +111,24 @@ public class StaffController extends HttpServlet {
             boolean isUpdated = dao.updateStaffRole(staffID, roleID);
 
             if (isUpdated) {
-                request.setAttribute("roleTypes", roleTypes);
-                request.getRequestDispatcher("staff?service=filter"); // Chuyển hướng đến danh sách nhân viên
+                request.setAttribute("successMessage", "Change staff's role successfully!");
+                response.sendRedirect("staff");
             } else {
                 // Xử lý trường hợp cập nhật không thành công
                 request.setAttribute("errorMessage", "Failed to update staff role.");
                 request.getRequestDispatcher("staff.jsp").forward(request, response);
             }
+        } 
+        if(service.equals("unban")){
+            int staffID = Integer.parseInt(request.getParameter("staffID"));
+            boolean isUnban = dao.unban(staffID);
+            response.sendRedirect("staff");
         }
         if (service.equals("dismiss")) {
             int staffID = Integer.parseInt(request.getParameter("staffID"));
             int n = dao.dismissStaff(staffID);
             response.sendRedirect("staff");
+        
         } else if (service.equals("filter")) {
             int page = 1;
             int recordsPerPage = 10;
@@ -167,6 +173,7 @@ public class StaffController extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
+        
     }// </editor-fold>
 
 }

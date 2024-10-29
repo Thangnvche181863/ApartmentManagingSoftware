@@ -130,7 +130,7 @@ public class StaffDAO {
     public List<Staff> getAllStaff() {
         List<Staff> list = new ArrayList<>();
         Connection conn = null;
-        String sql = "select * from Staff";
+        String sql = "select * from Staff where status != -1";
         try {
             conn = DBContext.getConnection();
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -144,7 +144,41 @@ public class StaffDAO {
                 String phoneNumber = rs.getString(7);
                 String name = rs.getString(5);
                 Date hireDate = rs.getDate(8);
-                Staff staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate);
+                String staffImg = rs.getString(9);
+                int status = rs.getInt(10);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                list.add(staff);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public List<Staff> getAllStaffHaveRole() {
+        List<Staff> list = new ArrayList<>();
+        Connection conn = null;
+        String sql = "select * from Staff s\n"
+                + "Join Role r ON s.roleID = r.roleID\n"
+                + "where status != -1";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int staffID = rs.getInt(1);
+                int roleID = rs.getInt(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(6);
+                String phoneNumber = rs.getString(7);
+                String name = rs.getString(5);
+                Date hireDate = rs.getDate(8);
+                String staffImg = rs.getString(9);
+                int status = rs.getInt(10);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                staff.setRoleAuthority(rs.getString("roleAuthority"));
                 list.add(staff);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -175,7 +209,8 @@ public class StaffDAO {
 
     public int dismissStaff(int staffID) {
         int n = 0;
-        String sql = "DELETE FROM Staff\n"
+        String sql = "UPDATE Staff\n"
+                + "SET status = -1\n"
                 + "WHERE staffID = ?";
         Connection conn = null;
         try {
@@ -208,7 +243,7 @@ public class StaffDAO {
             // Thiết lập các giá trị cho câu lệnh SQL
             pre.setString(1, name);
             pre.setString(2, phoneNumber);
-            pre.setString(3,staffImg);
+            pre.setString(3, staffImg);
             pre.setInt(4, staffID);
 
             // Thực thi câu lệnh SQL và trả về số dòng được cập nhật
@@ -224,7 +259,7 @@ public class StaffDAO {
     public Staff getStaffByID(int staffID) {
         Staff staff = new Staff();
         Connection conn = null;
-        String sql = "select * from Staff where staffID = ?";
+        String sql = "select * from Staff where staffID = ? and status !=-1 ";
         try {
             conn = DBContext.getConnection();
             PreparedStatement pre = conn.prepareStatement(sql);
@@ -239,7 +274,9 @@ public class StaffDAO {
                 String phoneNumber = rs.getString(6);
                 String name = rs.getString(7);
                 Date hireDate = rs.getDate(8);
-                staff = new Staff(staffID, roleID, username, password, email, phoneNumber, name, hireDate);
+                String staffImg = rs.getString(9);
+                int status = rs.getInt(10);
+                staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -253,7 +290,7 @@ public class StaffDAO {
         Connection conn = null;
         try {
             int offset = (page - 1) * recordsPerPage;
-            String sql = "select * from Staff order by staffID offset ? rows fetch next ? rows only";
+            String sql = "select * from Staff where status!=-1 order by staffID offset ? rows fetch next ? rows only";
             conn = DBContext.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, offset);
@@ -282,7 +319,7 @@ public class StaffDAO {
         int totalPages = 0;
         Connection conn = null;
         try {
-            String sql = "select count(*) from staff";
+            String sql = "select count(*) from staff where status!=-1 ";
             conn = DBContext.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -301,7 +338,7 @@ public class StaffDAO {
         try {
             conn = DBContext.getConnection();
             int offset = (page - 1) * recordsPerPage;
-            StringBuilder sql = new StringBuilder("SELECT * FROM Staff WHERE 1 = 1 ");
+            StringBuilder sql = new StringBuilder("SELECT * FROM Staff WHERE 1 = 1 and status!=-1");
 
             // Nếu roleID không phải là 0, thêm điều kiện lọc theo roleID
             if (roleID > 0) {
@@ -368,7 +405,7 @@ public class StaffDAO {
         try {
             conn = DBContext.getConnection();
             // Xây dựng câu lệnh SQL động tùy thuộc vào roleID và name
-            StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Staff WHERE 1=1");
+            StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Staff WHERE 1=1 and  status!=-1");
 
             // Nếu roleID không bằng 0, thêm điều kiện lọc theo roleID
             if (roleID > 0) {
@@ -402,25 +439,100 @@ public class StaffDAO {
         return totalPages;
     }
 
-    public boolean updateStaffRole(int staffID, int roleID)   {
+    public boolean updateStaffRole(int staffID, int roleID) {
         String query = "UPDATE Staff SET roleID = ? WHERE staffID = ?";
-        try (Connection conn = DBContext.getConnection(); 
-            PreparedStatement ps = conn.prepareStatement(query)) {
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, roleID);
             ps.setInt(2, staffID);
 
             return ps.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
-        } catch (SQLException |ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace(); // Xử lý ngoại lệ một cách hợp lý trong sản xuất
         }
         return false;
     }
 
+    public List<Staff> getALlBan() {
+        List<Staff> list = new ArrayList<>();
+        Connection conn = null;
+        String sql = "select * from Staff where status = -1";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int staffID = rs.getInt(1);
+                int roleID = rs.getInt(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(6);
+                String phoneNumber = rs.getString(7);
+                String name = rs.getString(5);
+                Date hireDate = rs.getDate(8);
+                String staffImg = rs.getString(9);
+                int status = rs.getInt(10);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                list.add(staff);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public boolean unban(int staffID) {
+        String query = "UPDATE Staff SET status = 1 WHERE staffID = ?";
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, staffID);
+
+            return ps.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ một cách hợp lý trong sản xuất
+        }
+        return false;
+    }
+
+    public List<Staff> getStaffByTaskType(String taskType) {
+        List<Staff> staffList = new ArrayList<>();
+        String query = "SELECT DISTINCT s.staffID, s.name, s.email, s.phoneNumber, s.hireDate, r.role_name "
+                + "FROM Staff s "
+                + "JOIN Role r ON s.roleID = r.roleID "
+                + "JOIN Task t ON r.roleAuthority = t.taskType "
+                + "WHERE t.taskType = ?";
+
+        try (Connection connection = DBContext.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, taskType);  // Thiết lập giá trị cho taskType
+
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Staff staff = new Staff();
+                staff.setStaffID(resultSet.getInt("staffID"));
+                staff.setName(resultSet.getString("name"));
+                staff.setEmail(resultSet.getString("email"));
+                staff.setPhoneNumber(resultSet.getString("phoneNumber"));
+                staff.setHireDate(resultSet.getDate("hireDate"));
+                // Lưu ý: staffImg không được lấy từ truy vấn, nên bạn có thể bỏ qua hoặc lấy từ một nguồn khác nếu cần
+                // staff.setStaffImg(resultSet.getString("staffImg")); // Dòng này có thể bỏ qua
+
+                // Nếu bạn cần thiết lập thêm các thuộc tính khác, bạn có thể thêm ở đây
+                staffList.add(staff);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return staffList;
+    }
     public static void main(String[] args) {
 
         StaffDAO dao = new StaffDAO();
-        List<Staff> n = dao.getStaffByRole(0, "0", "0", 0, 0);
-        System.out.println("Húp" + n);
+        List<Staff> n = dao.getAllStaffHaveRole();
+        System.out.println("Húp" + n.get(1).getRoleAuthority());
+        System.out.println(""+dao.getAllInformationstaff("Nghia", "sRY4rMY8/DtYD2+OQLAkTVClzcY="));
 
     }
 }

@@ -49,6 +49,7 @@ public class UserLogin extends HttpServlet {
 
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);
+                System.out.println("++++++++++" +customer.toString());
                 if (customer == null) {
                     request.setAttribute("loginerr", "Username or password is incorrect for Resident.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);

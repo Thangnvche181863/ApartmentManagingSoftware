@@ -22,6 +22,11 @@ public class Task {
         this.taskType = taskType;
     }
 
+    public Task(int taskID, String taskType) {
+        this.taskID = taskID;
+        this.taskType = taskType;
+    }
+
     public int getTaskID() {
         return taskID;
     }

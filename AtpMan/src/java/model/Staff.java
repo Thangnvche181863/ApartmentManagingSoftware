@@ -11,7 +11,6 @@ import java.util.Date;
  * @author WuanTun
  */
 public class Staff {
-
     private int staffID;
     private int roleID;
     private String username;
@@ -19,12 +18,35 @@ public class Staff {
     private String name;
     private String email;
     private String phoneNumber;
-    
     private Date hireDate;
     private String staffImg;
+    private int status;
+    private String roleAuthority;
+    
     public Staff() {
     }
 
+    public String getRoleAuthority() {
+        return roleAuthority;
+    }
+
+    public void setRoleAuthority(String roleAuthority) {
+        this.roleAuthority = roleAuthority;
+    }
+
+    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String staffImg, int status) {
+        this.staffID = staffID;
+        this.roleID = roleID;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.hireDate = hireDate;
+        this.staffImg = staffImg;
+        this.status = status;
+    }
+    
     public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate) {
         this.staffID = staffID;
         this.roleID = roleID;
@@ -50,6 +72,14 @@ public class Staff {
 
     public int getStaffID() {
         return staffID;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public void setStaffID(int staffID) {
@@ -122,9 +152,10 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", staffImg=" + staffImg + '}';
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", staffImg=" + staffImg + ", status=" + status + '}';
     }
-   
+
+  
 
     
 }

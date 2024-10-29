@@ -157,7 +157,12 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h4 class="text-right">Profile Settings</h4>
                                     </div>
-
+                                    <!-- Hiển thị thông báo lỗi nếu có -->
+                                    <c:if test="${not empty message}">
+                                        <div class="alert alert-danger" role="alert">
+                                            ${message}
+                                        </div>
+                                    </c:if>
                                     <div class="row mt-3">
                                         <div class="col-md-12"><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="first name" value="${user.name}"></div>
                                         <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
@@ -185,8 +190,8 @@
                                     </div>
                                     <label for="img" class="form-label">Change your avatar:</label>
                                     <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
-                                            
-                                            <input type="hidden" name="imgPath" value="${user.staffImg}">
+
+                                    <input type="hidden" name="imgPath" value="${user.staffImg}">
 
                                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
 

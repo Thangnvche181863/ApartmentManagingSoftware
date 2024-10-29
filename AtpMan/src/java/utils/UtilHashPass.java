@@ -29,4 +29,9 @@ public class UtilHashPass {
         System.out.println();
         return result;
     }
+    public static void main(String[] args) {
+        String pass = "123";
+        System.out.println(""+UtilHashPass.EncodePassword(pass));
+        
+    }
 }
