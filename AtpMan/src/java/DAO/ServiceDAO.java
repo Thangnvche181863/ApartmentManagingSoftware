@@ -17,7 +17,7 @@ import utils.DBContext;
  */
 public class ServiceDAO {
 
-    Connection connection = null;
+    private Connection connection = null;
 
     public List<Service> getAllService() throws ClassNotFoundException {
         List<Service> list = new ArrayList<>();
@@ -320,11 +320,12 @@ public class ServiceDAO {
         ServiceDAO sdao = new ServiceDAO();
 
 
-        List<Service> list = sdao.servicePaging(1, 25);
-        for (Service elem : list) {
-            System.out.println(elem);
-        }
+//        List<Service> list = sdao.servicePaging(1, 25);
+//        for (Service elem : list) {
+//            System.out.println(elem);
+//        }
         
         sdao.insertService("haha", "huhu", BigDecimal.valueOf(312323.1232), "hahaha", "huhu", "hehhe");
+//        sdao.updateService(1, "Thu Gom Rác", "hàng ngày", BigDecimal.valueOf(	150,000), "", "abc", "huhu");
     }
 }

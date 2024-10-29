@@ -75,7 +75,7 @@ public class ServiceAddServlet extends HttpServlet {
         int recordsPerPage = 10;
         ServiceDAO sdao = new ServiceDAO();
         if (request.getParameter("page") != null) {
-page = Integer.parseInt(request.getParameter("page"));
+            page = Integer.parseInt(request.getParameter("page"));
         }
         request.setAttribute("page", page);
         request.setAttribute("totalservice", sdao.totalService());
@@ -142,7 +142,7 @@ page = Integer.parseInt(request.getParameter("page"));
             request.getRequestDispatcher("serviceadd.jsp").forward(request, response);
             return;
         }
-fee = fee.replace(",", ""); // Loại bỏ dấu phẩy
+        fee = fee.replace(",", ""); // Loại bỏ dấu phẩy
 
         sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replace("\n", "<br>"), fileURL, icon);
         request.setAttribute("type", "");

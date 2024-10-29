@@ -416,7 +416,7 @@
                                                     </div>
                                                 </div>
                                                 <!--</a>-->
-                                                
+
                                                 <c:if test="${requestScope.apartmentList.size() > 1}">
                                                     <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                                         <span class="visually-hidden">Toggle Dropright</span>
@@ -465,7 +465,7 @@
                                 <div class="row">
                                     <c:forEach items="${serviceContractList}" var="serviceContract">
                                         <div class="col-xl-3 col-md-6 mb-4">
-                                            <a href="registDetail?apartmentID=${apartmentID}&serviceID=${serviceContract.getService().getServiceId()}&registed=true" style="text-decoration: none">
+                                            <a href="registDetail?apartmentID=${apartmentID}&serviceID=${serviceContract.getService().getServiceId()}" style="text-decoration: none">
                                                 <div class="card border-left-primary shadow-sm h-100 py-2" style="border-radius: 10px;">
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
@@ -513,29 +513,31 @@
                                 <div class="row">
                                     <c:forEach items="${list}" var="service">
                                         <div class="col-xl-3 col-md-6 mb-4">
-                                            <div class="card border-left-warning shadow-sm h-100 py-2" style="border-radius: 10px;">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col ml-4">
-                                                            <!-- Tăng kích thước chữ của tên dịch vụ và giảm padding -->
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 1rem; margin-bottom: 0.5rem;">
-                                                                ${service.getName()}
+                                            <a href="registDetail?apartmentID=${apartmentID}&serviceID=${service.getServiceId()}" style="text-decoration: none">
+                                                <div class="card border-left-warning shadow-sm h-100 py-2" style="border-radius: 10px;">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col ml-4">
+                                                                <!-- Tăng kích thước chữ của tên dịch vụ và giảm padding -->
+                                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size: 1rem; margin-bottom: 0.5rem;">
+                                                                    ${service.getName()}
+                                                                </div>
+
+                                                                <!-- Thêm màu đỏ và giảm kích thước chữ cho số tiền -->
+                                                                <div class="h5 mb-0 font-weight-bold text-danger" style="font-size: 1.25rem; opacity: 0.5;">
+                                                                    <fmt:setLocale value="en_US" />
+                                                                    <fmt:formatNumber type="number" maxFractionDigits="3" value="${service.getFee()}"/>₫
+                                                                </div>
                                                             </div>
 
-                                                            <!-- Thêm màu đỏ và giảm kích thước chữ cho số tiền -->
-                                                            <div class="h5 mb-0 font-weight-bold text-danger" style="font-size: 1.25rem; opacity: 0.5;">
-                                                                <fmt:setLocale value="en_US" />
-                                                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${service.getFee()}"/>₫
+                                                            <!-- Giảm kích thước icon và căn chỉnh lại để nhỏ gọn hơn -->
+                                                            <div class="col-auto">
+                                                                <i class="${service.getIcon()}" style="font-size: 2.5rem; color: lightgray;"></i>
                                                             </div>
-                                                        </div>
-
-                                                        <!-- Giảm kích thước icon và căn chỉnh lại để nhỏ gọn hơn -->
-                                                        <div class="col-auto">
-                                                            <i class="${service.getIcon()}" style="font-size: 2.5rem; color: lightgray;"></i>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </c:forEach>
 

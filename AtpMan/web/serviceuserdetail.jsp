@@ -68,12 +68,12 @@
             <div class="container">
                 <div class="row g-5">
                     <!-- Service Image -->
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
-                        <img class="img-fluid rounded" src="${service.img}" alt="${service.name}" style="height: 500px;width: 600px" />
+                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                        <img class="img-fluid rounded" src="${service.img}" alt="${service.name}" style="width: 100%" />
                     </div>
 
                     <!-- Service Details -->
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="d-flex justify-content-between">
                             <h2 class="mb-4 text-primary">${service.name}</h2>
                             <a href="serviceintro"><button class="btn-primary btn" style="height: 40px">Quay trở lại</button></a>

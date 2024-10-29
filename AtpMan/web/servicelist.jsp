@@ -38,7 +38,7 @@
 
         <script>
             function confirmDelete() {
-                return confirm("Sure delete?");
+                return confirm("Bạn muốn xóa chứ?");
             }
         </script>
         <style>

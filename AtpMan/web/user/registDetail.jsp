@@ -42,6 +42,42 @@
 
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+        <!-- CSS for overlay and form positioning -->
+        <style>
+            /* Overlay styling */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+
+            /* Centered form styling */
+            .registration-form {
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                width: 100%;
+                max-width: 500px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+            .registration-form h3 {
+                margin-bottom: 20px;
+            }
+        </style>
+        <script>
+            function confirmDelete() {
+                return confirm("Bạn muốn hủy đăng kí ?");
+            }
+        </script>
     </head>
     <body id="page-top">
 
@@ -395,27 +431,102 @@
                             data-wow-delay="0.2s"
                             style="max-width: 800px"
                             >
-                            <h2 class="text-primary">Thông tin đăng kí</h2>  
+                            <h2 class="text-primary m-0">Thông tin đăng kí</h2>  
                         </div>
-                        <p>Ngày đăng kí: </p>
+                        <c:if test="${serviceContract != null}">
+                            <p class="text-primary m-0">Hiệu lực: <span style="color: red"><fmt:formatDate
+                                        value="${serviceContract.getStartDate()}"
+                                        pattern="dd/MM/yyyy"
+                                        /> - <fmt:formatDate
+                                        value="${serviceContract.getEndDate()}"
+                                        pattern="dd/MM/yyyy"
+                                        /></span></p>
+                            <p class="text-primary">Hủy đăng kí vui lòng bấm vào 
+                                <span>
+                                    <a href="registService?apartmentId=${apartmentID}&serviceId=${service.getServiceId()}" style="color: red" onclick="return confirmDelete();"> Đây!</a>
+                                </span>
+                            <p>
+                                </c:if>
+
+                        <%--<c:if test="${serviceContract == null}">--%>
+                        <!--<p class="text-primary m-0">Vui lòng--> 
+                        <!--<span>-->
+                            <!--<a href="registService?apartmentID=${apartmentID}&serviceID=${service.getServiceId()}" class="text-danger">đăng kí</a>-->
+                        <!--</span> để sử dụng dịch vụ </p>-->
+                        <%--</c:if>--%>
+
+                        <!-- Trigger link for registration form -->
+                        <c:if test="${serviceContract == null}">
+                            <p class="text-primary m-0">
+                                Vui lòng 
+                                <span>
+                                    <a href="javascript:void(0)" onclick="toggleForm()" class="text-danger">đăng kí</a>
+                                </span> 
+                                để sử dụng dịch vụ 
+                            </p>
+                        </c:if>
+                         
+                        <!-- Overlay and Registration Form (Hidden by Default) -->
+                        <div id="overlay" class="overlay" style="display: none;">
+                            <div id="registrationForm" class="registration-form">
+                                <h3 class="text-center text-primary mb-3">Đăng Ký Dịch Vụ</h3>
+                                <form action="registService" method="POST">
+                                    <input type="hidden" name="apartmentID" value="${apartmentID}">
+                                    <input type="hidden" name="serviceID" value="${service.getServiceId()}">
+
+                                    <!-- Fields for displaying user info -->
+                                    <div class="form-group mb-3">
+                                        <label for="userName" class="text-primary">Tên người dùng</label>
+                                        <input type="text" class="form-control" id="userName" value="${customer.getName()}" name="userName" readonly="" />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="phone" class="text-primary">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" value="${customer.getPhoneNumber()}" readonly="" />
+                                    </div>
+
+                                    <!-- Subscription plan field -->
+                                    <div class="form-group mb-3">
+                                        <label for="subscriptionPlan" class="text-primary">Chọn gói dịch vụ</label>
+                                        <select class="form-control" id="subscriptionPlan" name="subscriptionPlan" required style="color: red" onchange="updateFee()">
+                                            <option value="1">Gói 1 tháng</option>
+                                            <option value="2">Gói 2 tháng</option>
+                                            <option value="3">Gói 3 tháng</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="fee" class="text-primary">Giá</label>
+                                        <input type="text" class="form-control" id="fee" name="fee" style="color: red"
+                                               value="<fmt:formatNumber value='${service.getFee()}' type='number' pattern='#,##0'/> VND/tháng" readonly />
+                                    </div>
+
+                                    <!-- Buttons for submitting or canceling -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                                        <button type="button" class="btn btn-secondary" onclick="toggleForm()">Hủy</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
 
                         <!-- Service Detail Section Start -->
                         <div class="container-fluid py-5">
                             <div class="container">
                                 <div class="row g-5">
                                     <!-- Service Image -->
-                                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
-                                        <img class="img-fluid rounded" src="${service.img}" alt="${service.name}" style="height: 500px;width: 600px" />
+                                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                                        <img class="img-fluid rounded" src="${service.img}" alt="${service.name}" style="width: 100%" />
                                     </div>
 
                                     <!-- Service Details -->
-                                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                                    <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.3s">
                                         <div class="d-flex justify-content-between">
                                             <h2 class="mb-4 text-primary">${service.name}</h2>
                                             <a href="registServiceTenant?apartmentID=${apartmentID}"><button class="btn-primary btn" style="height: 40px">Quay trở lại</button></a>
                                         </div>
-                                        <p class="mb-4"><strong><span style="color: #015DC5">Loại dịch vụ:  </span></strong> ${service.type}</p>
-                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber  value="${service.fee}" /> VND</p>
+                                        <p class="mb-4"><strong><span style="color: #015DC5">Loại dịch vụ:  </span></strong><span style="color: #4CA64C"> ${service.type}</span></p>
+                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber  value="${amount.getTotalAmount()}" /> VND</p>
                                         <div class="feature-icon p-4 mb-4">
                                             <i class="${service.icon}" style="font-size: 3rem; color: #015DC5"></i>
                                         </div>
@@ -460,7 +571,57 @@
                 </div>
             </div>
 
+
+            <!-- JavaScript to toggle the overlay and form -->
+            <script>
+                function toggleForm() {
+                    const overlay = document.getElementById("overlay");
+                    overlay.style.display = overlay.style.display === "none" ? "flex" : "none";
+                }
+            </script>
+
+            <script>
+                // Lưu giá gốc vào biến toàn cục
+                let baseFee;
+
+                // Hàm này sẽ được gọi khi trang được tải
+                function initializeFee() {
+                    // Lấy giá dịch vụ từ input fee (xóa phần " VND")
+                    let baseFeeStr = document.getElementById('fee').value.replace(" VND/tháng", "");
+                    baseFee = parseFloat(baseFeeStr.replace(/\./g, "").replace(",", ".")); // Chuyển đổi sang số
+                    updateFee(); // Cập nhật giá ban đầu
+                }
+
+                function updateFee() {
+                    // Kiểm tra nếu baseFee chưa được thiết lập
+                    if (baseFee === undefined) {
+                        console.error("Base fee is not defined.");
+                        return;
+                    }
+
+                    // Lấy giá trị gói dịch vụ đã chọn
+                    let subscriptionPlan = document.getElementById('subscriptionPlan').value;
+                    let updatedFee;
+
+                    // Tính toán giá dựa trên gói dịch vụ
+                    if (subscriptionPlan === "1") {
+                        updatedFee = baseFee; // 100%
+                    } else if (subscriptionPlan === "2") {
+                        updatedFee = baseFee * 0.95; // 95%
+                    } else if (subscriptionPlan === "3") {
+                        updatedFee = baseFee * 0.90; // 90%
+                    }
+
+                    // Cập nhật giá vào input fee
+                    document.getElementById('fee').value = new Intl.NumberFormat().format(updatedFee) + " VND/tháng";
+                }
+
+                // Gọi hàm initializeFee khi trang được tải
+                window.onload = initializeFee;
+            </script>
+
             <!-- Bootstrap core JavaScript-->
+
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
