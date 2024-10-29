@@ -159,7 +159,9 @@ public class UserApartmentInfoAjax extends HttpServlet {
                     check = true;
                 }
             }
-            if(!check) apartment = building.getApartmentList().get(0);
+            if (!check) {
+                apartment = building.getApartmentList().get(0);
+            }
         }
 
         List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID(), currentResidentPage, residentPerPage, null);
@@ -223,7 +225,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
             for (Apartment apartment1 : building.getApartmentList()) {
                 out.println("<option " + (apartment.getApartmentID() == apartment1.getApartmentID() ? "selected" : "") + " value=\"" + apartment1.getApartmentID() + "\">" + apartment1.getApartmentNumber() + "</option>\n");
             }
-        }else{
+        } else {
             out.println("<option selected value=\"" + apartment.getApartmentID() + "\">" + apartment.getApartmentNumber() + "</option>\n");
         }
         out.println("                                                                </select>\n"
@@ -265,17 +267,12 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                            </div>\n"
                 + "                            <div class=\"card shadow mb-4\">\n"
                 + "                                    <div class=\"card-header py-3 row\">\n"
-                + "                                        <h5 class=\"m-0 font-weight-bold text-primary col-md-6\">Danh sách cư dân đăng ký trong căn hộ</h5>\n"
-                + "                                        <div class=\"row col-md-2\">\n"
-                + "                                            <div class=\"\" style=\"display: flex;\">\n"
-                + "                                                <b style=\"margin: 0; align-content: center;\">Số lượng hiển thị</b>\n"
-                + "                                            </div>\n"
-                + "                                            <div class=\"col-md-8\">\n"
-                + "                                                <select id=\"residentPerPage\" name=\"residentPerPage\" class=\"form-select h2 font-weight-bold text-primary text-uppercase mb-1\" aria-label=\"Default select example\" onchange=\"handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())\">\n"
-                + "                                                    <option value=\"5\">5</option>\n"
-                + "                                                    <option value=\"10\">10</option>\n"
-                + "                                                </select>\n"
-                + "                                            </div>\n"
+                + "                                        <h5 class=\"m-0 font-weight-bold text-primary col-md-5\">Danh sách cư dân đăng ký trong căn hộ</h5>\n"
+                + "                                        <div class=\"col-md-3\">\n"
+                + "                                            <select id=\"residentPerPage\" name=\"residentPerPage\" class=\"form-select h2 font-weight-bold text-primary text-uppercase mb-1\" aria-label=\"Default select example\" onchange=\"handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())\">\n"
+                + "                                                <option value=\"5\">Số lượng hiển thị: 5</option>\n"
+                + "                                                <option value=\"10\">Số lượng hiển thị: 10</option>\n"
+                + "                                            </select>\n"
                 + "                                        </div>"
                 + "                                        <div class=\"col-md-4\">\n"
                 + "                                            <div class=\"input-group rounded \">\n"
@@ -312,7 +309,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
                         + "                                                <td>" + count + "</td>\n"
                         + "                                                <td>" + resident.getName() + "</td>\n"
                         + "                                                <td>" + dateFormat.format(resident.getDob()) + "</td>\n"
-                        + "                                                <td>" + ((resident.getEmail()!=null) ? resident.getEmail() : "") + "</td>\n"
+                        + "                                                <td>" + ((resident.getEmail() != null) ? resident.getEmail() : "") + "</td>\n"
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
                         + "                                                <td>" + dateFormat.format(living.getStartDate()) + "</td>\n"
                         + "                                            </tr>\n");
@@ -358,17 +355,13 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                            </div>\n"
                 + "                            <div class=\"card shadow mb-4\">\n"
                 + "                                <div class=\"card-header py-3 row\">\n"
-                + "                                    <h5 class=\"m-0 font-weight-bold text-primary col-md-6\">Danh sách dịch vụ đã đăng ký trong căn hộ</h5>\n<div class=\"row col-md-2\">\n"
-                + "                                        <div class=\"\" style=\"display: flex;\">\n"
-                + "                                            <b style=\"margin: 0; align-content: center;\">Số lượng hiển thị</b>\n"
-                + "                                        </div>\n"
-                + "                                        <div class=\"col-md-8\">\n"
-                + "                                            <select id=\"servicePerPage\" name=\"servicePerPage\" class=\"form-select h2 font-weight-bold text-primary text-uppercase mb-1\" aria-label=\"Default select example\" onchange=\"handleServiceTable($('#serviceTable .pagination .page-item.active button.page-link').val())\">\n"
-                + "                                                <option value=\"5\">5</option>\n"
-                + "                                                <option value=\"10\">10</option>\n"
-                + "                                            </select>\n"
-                + "                                        </div>\n"
-                + "                                    </div>"
+                + "                                    <h5 class=\"m-0 font-weight-bold text-primary col-md-5\">Danh sách dịch vụ đã đăng ký trong căn hộ</h5>\n"
+                + "                                    <div class=\"col-md-3\">\n"
+                + "                                        <select id=\"servicePerPage\" name=\"servicePerPage\" class=\"form-select font-weight-bold text-primary text-uppercase\" aria-label=\"Default select example\" onchange=\"handleServiceTable($('#serviceTable .pagination .page-item.active button.page-link').val())\">\n"
+                + "                                            <option value=\"5\">Số lượng hiển thị: 5</option>\n"
+                + "                                            <option value=\"10\">Số lượng hiển thị: 10</option>\n"
+                + "                                        </select>\n"
+                + "                                    </div>\n"
                 + "                                    <div class=\"col-md-4\">\n"
                 + "                                        <div class=\"input-group rounded \">\n"
                 + "                                            <!--reset the current page to 1 cause of search can reduce the number of page-->\n"

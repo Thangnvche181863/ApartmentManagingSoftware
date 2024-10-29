@@ -47,8 +47,10 @@
             if (fields.containsKey("vnp_SecureHash")) {
                 fields.remove("vnp_SecureHash");
             }
+            if (fields.containsKey("invoiceId")) {
+                fields.remove("invoiceId");
+            }
             String signValue = Config.hashAllFields(fields);
-
         %>
         <!--Begin display -->
         <div class="container">

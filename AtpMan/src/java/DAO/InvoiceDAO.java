@@ -239,6 +239,46 @@ public class InvoiceDAO {
         return invoice;
     }
 
+    public Invoice getInvoiceByApartmentIDandMonthYear(int apartmentID, int month, int year) {
+        Invoice invoice = null;
+        String sql = "select ins.invoiceID, ins.serviceContractID, i.apartmentID, i.amount, i.issueDate, i.dueDate, i.status, i.transactionDate, sc.serviceID, sc.startDate, sc.endDate, sc.amount as contractAmount, s.name, s.type, s.description, s.fee from InvoiceService ins\n"
+                + "inner join Invoice i on ins.invoiceID = i.invoiceID\n"
+                + "inner join ServiceContract sc on ins.serviceContractID = sc.serviceContractID\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            statement.setInt(2, month);
+            statement.setInt(3, year);
+
+            ResultSet rs = statement.executeQuery();
+            LinkedHashMap<Integer, Invoice> map = new LinkedHashMap<>();
+            while (rs.next()) {
+                int invoiceID = rs.getInt(1);
+                invoice = map.get(invoiceID);
+
+                if (invoice == null) {
+                    invoice = new Invoice();
+                    invoice.setInvoiceId(invoiceID);
+                    invoice.setApartmentId(rs.getInt(3));
+                    invoice.setAmount(rs.getDouble(4));
+                    invoice.setIssueDate(rs.getDate(5));
+                    invoice.setDueDate(rs.getDate(6));
+                    invoice.setStatus(rs.getInt(7));
+                    invoice.setTransactionDate(rs.getDate(8));
+                    map.put(invoiceID, invoice);
+                } else {
+                    return invoice;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return invoice;
+    }
+
     public int countInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, List<String> searchTermList) {
         int count = 0;
         String sql = "select count(*) from InvoiceService ins\n"
@@ -318,6 +358,24 @@ public class InvoiceDAO {
         return list;
     }
 
+    // KhangPM
+    public int updateInvoiceTransaction(int invoiceId, Date date) {
+        int i = 0;
+        String sql = "update Invoice\n"
+                + "set status = 1, transactionDate = ?\n"
+                + "where invoiceID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, date);
+            statement.setInt(2, invoiceId);
+            i = statement.executeUpdate();
+            return i;
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return i;
+    }
+
     // public void insertInvoice(int apartmentId, double amount, Date issueDate, Date dueDate, int status,
     //         Date transactionDate) {
     //     try {
@@ -378,7 +436,7 @@ public class InvoiceDAO {
         List<String> sList = new ArrayList<>();
         sList.add("service");
         sList.add("b");
-        
+
         List<ServiceContract> serviceContractsList = dao.getAllServiceInvoiceByApartmentIDandMonth(1, 11, 2024);
         Invoice i = dao.getInvoiceByApartmentIDandMonth(1, 11, 2024, 1, 5, null);
         // System.out.println(i.getServiceContractList().get(0).getService().getName());
@@ -386,7 +444,10 @@ public class InvoiceDAO {
         // System.out.println(serviceContract.getService().getName());
         // }
 
-        int count = dao.countInvoiceByApartmentIDandMonth(1, 9, 2024, null);
-        System.out.println(serviceContractsList.size());
+        int i3 = dao.updateInvoiceTransaction(13, Date.valueOf(LocalDate.now()));
+        System.out.println(i3);
+        Invoice i2 = dao.getInvoiceByApartmentIDandMonthYear(1, 11, 2024);
+        System.out.println(i2.toString());
+
     }
 }

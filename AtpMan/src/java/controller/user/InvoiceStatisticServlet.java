@@ -22,7 +22,6 @@ import java.util.List;
 import model.Apartment;
 import model.Customer;
 import model.Invoice;
-import model.News;
 import model.ServiceContract;
 import utils.UserHomeUtil;
 
@@ -86,6 +85,8 @@ public class InvoiceStatisticServlet extends HttpServlet {
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
         int apartmentID = 0;
 
+        int rowsPerPage = 5;
+        
         if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
@@ -150,7 +151,7 @@ public class InvoiceStatisticServlet extends HttpServlet {
             }
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, 1, RECORDS_PER_PAGE, null);
+        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, 1, rowsPerPage, null);
         List<ServiceContract> serviceList = invoiceDAO.getAllServiceInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
 
         // parameter for current year
@@ -176,7 +177,7 @@ public class InvoiceStatisticServlet extends HttpServlet {
 
         // calculate for service table
         int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, null);
-        int totalServicePages = (int) Math.ceil((double) totalServiceRows / RECORDS_PER_PAGE);
+        int totalServicePages = (int) Math.ceil((double) totalServiceRows / rowsPerPage);
 
 
         request.setAttribute("currentServicePage", "1");
@@ -200,7 +201,7 @@ public class InvoiceStatisticServlet extends HttpServlet {
         request.setAttribute("serviceList", serviceList);
 
         request.setAttribute("apartment", apartment);
-        request.getRequestDispatcher("/user/userhome.jsp").forward(request, response);
+        request.getRequestDispatcher("/user/invoicestatistic.jsp").forward(request, response);
     }
 
     /**

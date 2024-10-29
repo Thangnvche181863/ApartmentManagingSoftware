@@ -126,8 +126,8 @@
         <servlet-class>controller.user.UserApartmentInfoAjax</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserHomeTableAjax</servlet-name>
-        <servlet-class>controller.user.UserHomeTableAjax</servlet-class>
+        <servlet-name>InvoiceStatisticTableAjax</servlet-name>
+        <servlet-class>controller.user.InvoiceStatisticTableAjax</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CreateAccountStaff</servlet-name>
@@ -176,6 +176,22 @@
     <servlet>
         <servlet-name>InvoiceStatisticServlet</servlet-name>
         <servlet-class>controller.user.InvoiceStatisticServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserInvoiceAjax</servlet-name>
+        <servlet-class>controller.user.UserInvoiceAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserChangeApartmentAjax</servlet-name>
+        <servlet-class>controller.user.UserChangeApartmentAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayInvoiceServlet</servlet-name>
+        <servlet-class>controller.vnpay.PayInvoiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayReturnServlet</servlet-name>
+        <servlet-class>controller.vnpay.PayReturnServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -282,8 +298,8 @@
         <url-pattern>/userapartmentinfoajax</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserHomeTableAjax</servlet-name>
-        <url-pattern>/userhometableajax</url-pattern>
+        <servlet-name>InvoiceStatisticTableAjax</servlet-name>
+        <url-pattern>/invoicestatistictableajax</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateAccountStaff</servlet-name>
@@ -332,6 +348,22 @@
     <servlet-mapping>
         <servlet-name>InvoiceStatisticServlet</servlet-name>
         <url-pattern>/invoicestatistic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserInvoiceAjax</servlet-name>
+        <url-pattern>/userinvoiceajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserChangeApartmentAjax</servlet-name>
+        <url-pattern>/userchangeapartmentajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayInvoiceServlet</servlet-name>
+        <url-pattern>/payinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayReturnServlet</servlet-name>
+        <url-pattern>/payreturn</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
