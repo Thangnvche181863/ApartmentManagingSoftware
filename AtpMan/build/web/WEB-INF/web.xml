@@ -178,6 +178,10 @@
         <servlet-name>RegistServiceServlet</servlet-name>
         <servlet-class>controller.user.RegistServiceServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterResidentToApartment</servlet-name>
+        <servlet-class>controller.user.RegisterResidentToApartment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -333,6 +337,10 @@
     <servlet-mapping>
         <servlet-name>RegistServiceServlet</servlet-name>
         <url-pattern>/registService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterResidentToApartment</servlet-name>
+        <url-pattern>/RegisResidentApartment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

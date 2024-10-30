@@ -80,7 +80,7 @@ public class UserhomeNewsServlet extends HttpServlet {
                     + "  <h4><a href=\"NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
                     + "      " + news.getNewsTitle() + "\n"
                     + "      </a></h4>\n"
-                    + "  <p>" + news.getNewsContent() + "</p>\n"
+                    + "  <p>" + news.getDescription() + "</p>\n"
                     + "  <small class=\"firstsmall\"><a class=\"bg-orange\" href=\"#\" title=\"\">" + news.getNewsCategoryName() + " - </a></small>\n"
                     + "  <small>\n"
                     + "    "+ formatter.format(news.getPostDate()) +"\n"
