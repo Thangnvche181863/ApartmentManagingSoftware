@@ -17,6 +17,33 @@
 
         <!-- Font Awesome -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+        <style>
+            .back-home-btn {
+                background: linear-gradient(45deg, #6a0dad, #00bfff); /* Từ màu tím (#6a0dad) sang xanh dương nhạt (#00bfff) */
+                color: white;
+                font-size: 1.1rem;
+                font-weight: bold;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Tạo hiệu ứng đổ bóng */
+            }
+
+            .back-home-btn img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .back-home-btn:hover {
+                background: linear-gradient(45deg, #7b1fa2, #1e90ff); /* Thay đổi màu gradient khi hover */
+            }
+        </style>
     </head>
 
     <body>
@@ -27,7 +54,7 @@
                         <div class="card bg-dark text-white" style="border-radius: 1rem;">
                             <div class="card-body p-5 text-center">
 
-                                <div class="mb-md-5 mt-md-4 pb-5">
+                                <div class="mb-md-5 mt-md-4">
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
 
                                     <form action="userlogin" method="post">
@@ -45,10 +72,10 @@
                                         <!-- Phần hiển thị lỗi nếu có -->
                                         <div class="text-danger mb-3">
                                             <c:if test="${not empty loginerr}">
-                                                <p>${loginerr}</p>
+                                                <p id="err">${loginerr}</p>
                                             </c:if>
                                             <c:if test="${not empty err}">
-                                                <p>${err}</p>
+                                                <p id="err">${err}</p>
                                             </c:if>
 
                                         </div>
@@ -63,7 +90,7 @@
                                             <label class="form-label" for="typePasswordX">Password</label>
                                         </div>
 
-                                        <p class="small mb-5 pb-lg-2">
+                                        <p class="small mb-2 pb-lg-2">
                                             <a class="text-white-50" href="#!">Forgot password?</a>
                                         </p>
 
@@ -77,6 +104,15 @@
                                             <img src="media/ggicon.png" alt="alt"/>
                                             Sign in with Google
                                         </button>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                        <a href="homepageGuest">
+                                            <button type="button" class="back-home-btn" id="backHomeBtn">
+                                                <i class="fab fa-slack me-2"></i>
+                                                Quay lại trang chủ
+                                            </button>
+                                        </a>                 
                                     </div>
                                 </div>
 

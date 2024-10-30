@@ -4,6 +4,7 @@
  */
 package controller.staff;
 
+import DAO.DiscountDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -71,7 +72,20 @@ public class ServiceAddServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int page = 1;
+        int recordsPerPage = 10;
+        ServiceDAO sdao = new ServiceDAO();
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        request.setAttribute("page", page);
+        request.setAttribute("totalservice", sdao.totalService());
+        request.setAttribute("currentPage", page);
+        request.setAttribute("recordsPerPage", recordsPerPage);
+        request.setAttribute("totalPages", sdao.count(recordsPerPage));
+        request.setAttribute("listservice", sdao.servicePaging(page, recordsPerPage));
+        request.setAttribute("serviceType", sdao.getAllType());
+        request.getRequestDispatcher("serviceadd.jsp").forward(request, response);
     }
 
     /**
@@ -86,6 +100,14 @@ public class ServiceAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        int page = 1;
+        int recordsPerPage = 10;
+
+        String discount1Month = request.getParameter("discount1Month");
+        String discount2Month = request.getParameter("discount2Month");
+        String discount3Month = request.getParameter("discount3Month");
+        
+        DiscountDAO ddao = new DiscountDAO();
 
         String name = request.getParameter("name");
         String type = request.getParameter("type");
@@ -97,6 +119,7 @@ public class ServiceAddServlet extends HttpServlet {
         Part filePart = request.getPart("img"); // "img" is name in input of form
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên file gốc
 
+        // Kiểm tra loại file
         // Đường dẫn lưu trữ file
         String applicationPath = request.getServletContext().getRealPath("");
         String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
@@ -111,11 +134,35 @@ public class ServiceAddServlet extends HttpServlet {
         String filePath = uploadPath + File.separator + fileName;
 
         filePart.write(filePath);
-
-        String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
         ServiceDAO sdao = new ServiceDAO();
-        sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
-        request.setAttribute("listservice", sdao.getAll());
+        String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
+        String fileType = filePart.getContentType();
+
+        if (!fileType.startsWith("image/")) {
+            request.setAttribute("name", name);
+            request.setAttribute("type", type);
+            request.setAttribute("fee", fee);
+            request.setAttribute("description", description);
+            request.setAttribute("icon", icon);
+            request.setAttribute("img", fileURL);
+            request.setAttribute("serviceType", sdao.getAllType());
+            request.setAttribute("errorMessage", "Please upload a valid image file.");
+            request.getRequestDispatcher("serviceadd.jsp").forward(request, response);
+            return;
+        }
+        fee = fee.replace(",", ""); // Loại bỏ dấu phẩy
+
+        sdao.insertService(name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replace("\n", "<br>"), fileURL, icon);
+        ddao.insertDiscount(Integer.parseInt(discount1Month), Integer.parseInt(discount2Month), Integer.parseInt(discount3Month));
+        request.setAttribute("type", "");
+        request.setAttribute("search", "");
+        request.setAttribute("orderBy", "");
+        request.setAttribute("totalservice", sdao.totalService());
+        request.setAttribute("currentPage", page);
+        request.setAttribute("recordsPerPage", recordsPerPage);
+        request.setAttribute("totalPages", sdao.count(recordsPerPage));
+        request.setAttribute("listservice", sdao.servicePaging(page, recordsPerPage));
+        request.setAttribute("serviceType", sdao.getAllType());
         request.getRequestDispatcher("servicelist.jsp").forward(request, response);
 
     }

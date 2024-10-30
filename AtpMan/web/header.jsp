@@ -36,7 +36,7 @@
                     <div class="navbar-nav mx-0 mx-lg-auto">
                         <a href="homepageGuest" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang Chủ</a>
                         <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
-                        <a href="service.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("service.jsp") ? "active" : "" %>">Dịch Vụ</a>
+                        <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro") ? "active" : "" %>">Dịch Vụ</a>
                         <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Phản hồi</a>
                     </div>
                 </div>
@@ -49,25 +49,23 @@
                         </div>
                     </a>
                     <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
-                        
                         <c:if test="${sessionScope.user == null}">
-                            <a href="login.jsp" class="btn btn-primary">
+                            <a href="userlogin" class="btn btn-primary">
                                 <i class="bi bi-box-arrow-in-right"></i>Login
                             </a>
                         </c:if>
 
-                        
                         <c:if test="${sessionScope.user != null}">
                             <a class="btn btn-primary">
                                 <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
-                            </a>
+                            </a>    
                         </c:if>
 
                         <c:if test="${sessionScope.user ==null}">
-                            
-                            <a href="register.jsp" class="btn btn-primary">
+
+<!--                            <a href="register.jsp" class="btn btn-primary">
                                 <i class="fab fa-slack me-2"></i> Sign up
-                            </a>
+                            </a>-->
                         </c:if>
 
                         <c:if test="${sessionScope.user !=null}">

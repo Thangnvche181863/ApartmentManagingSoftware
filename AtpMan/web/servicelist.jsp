@@ -1,6 +1,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,9 +38,88 @@
 
         <script>
             function confirmDelete() {
-                return confirm("Sure delete?");
+                return confirm("Bạn muốn xóa chứ?");
             }
         </script>
+        <style>
+            table {
+                width: 110%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            th, td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+
+            thead th {
+                background-color: #f2f2f2;
+                font-weight: bold;
+            }
+
+            select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            form label {
+                margin-right: 10px;
+                font-weight: bold;
+            }
+
+            .form-container {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            td:last-child {
+                font-weight: bold;
+                color: #333;
+            }
+
+            .total-label {
+                font-weight: bold;
+                color: #666;
+            }
+
+            .search-box {
+                padding: 8px;
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .pagination {
+                font-size: 0.8em; /* Adjust font size as needed */
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .pagination a {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                text-decoration: none;
+                color: #333;
+            }
+
+            .pagination a:hover {
+                background-color: #f0f0f0;
+            }
+
+            .pagination strong {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #f0f0f0;
+                color: #333;
+            }
+        </style>
 
     </head>
 
@@ -64,7 +144,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="managerPage">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -78,13 +158,13 @@
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                        aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Components</span>
                     </a>
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Custom Components:</h6>
@@ -150,11 +230,12 @@
                 </li>
 
                 <!-- Nav Item - Tables -->
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="servicelist">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Service List</span></a>
+                        <span>Danh Sách Dịch Vụ</span></a>
                 </li>
+
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
@@ -168,12 +249,15 @@
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
+
             <div id="content-wrapper" class="d-flex flex-column">
 
                 <!-- Main Content -->
                 <div id="content">
 
+
                     <!-- Topbar -->
+
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
@@ -198,7 +282,7 @@
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 
-                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+
                             <li class="nav-item dropdown no-arrow d-sm-none">
                                 <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -296,7 +380,7 @@
                                         <div class="font-weight-bold">
                                             <div class="text-truncate">Hi there! I am wondering if you can help me with a
                                                 problem I've been having.</div>
-                                            <div class="small text-gray-500">Emily Fowler � 58m</div>
+                                            <div class="small text-gray-500">Emily Fowler · 58m</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -308,7 +392,7 @@
                                         <div>
                                             <div class="text-truncate">I have the photos that you ordered last month, how
                                                 would you like them sent to you?</div>
-                                            <div class="small text-gray-500">Jae Chun � 1d</div>
+                                            <div class="small text-gray-500">Jae Chun · 1d</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -320,7 +404,7 @@
                                         <div>
                                             <div class="text-truncate">Last month's report looks great, I am very happy with
                                                 the progress so far, keep up the good work!</div>
-                                            <div class="small text-gray-500">Morgan Alvarez � 2d</div>
+                                            <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item d-flex align-items-center" href="#">
@@ -332,27 +416,30 @@
                                         <div>
                                             <div class="text-truncate">Am I a good boy? The reason I ask is because someone
                                                 told me that people say this to all dogs, even if they aren't good...</div>
-                                            <div class="small text-gray-500">Chicken the Dog � 2w</div>
+                                            <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                         </div>
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                 </div>
                             </li>
 
+                            <!--abc-->
                             <div class="topbar-divider d-none d-sm-block"></div>
-
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="img/undraw_profile.svg">
-                                </a>
+                                <c:if test="${sessionScope.user != null}">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                            <strong style="color: black;">${sessionScope.user.name}</strong>
+                                        </span>
+                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    </a>
+                                </c:if>
+
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="profile.jsp">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -365,7 +452,7 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
@@ -375,18 +462,76 @@
                         </ul>
 
                     </nav>
+
                     <!-- End of Topbar -->
+
+
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
+
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Service List</h1>
+                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Dịch Vụ</h1>
                             <p>
-                                <a class="btn btn-primary" href="serviceadd.jsp">ADD SERVICE</a>
+                                <a class="btn btn-info" href="registlist">Danh Sách Đăng Kí</a>
+                            </p>
+                            <p>
+                                <a class="btn btn-primary" href="serviceadd?page=${currentPage}">Thêm Dịch Vụ</a>
                             </p>
                         </div>
+
+                        <div class="form-container">
+                            <form action="servicelist" method="POST">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Số Dòng</th>
+                                            <th class="text-center">Phân Loại</th>
+                                            <th class="text-center">Tìm Kiếm</th>
+                                            <th class="text-center">Sắp Xếp Phí</th>
+                                            <th class="text-center">Tổng</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <select name="recordsPerPage" id="recordsPerPage" onchange="this.form.submit()" style="width: 80px;">
+                                                    <option >10</option>
+                                                    <option value="25" <c:if test="${recordsPerPage == 25}">selected</c:if>>25</option>
+                                                    <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
+                                                    <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="type" id="type" onchange="this.form.submit()" style="width: 100px;">
+                                                        <option value="">All</option>
+                                                    <c:forEach items="${serviceType}" var="ls">
+                                                        <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${search}" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()"/>
+                                            </td>
+                                            <td>
+                                                <select name="orderBy" id="orderBy" style="width: 110px;" onchange="this.form.submit()">
+                                                    <option value="">All</option>
+                                                    <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng Dần</option>
+                                                    <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm Dần</option>
+                                                    </select>
+                                                </td>
+                                                <td class="total-label text-center" style="width: 130px;">
+                                                    <input type="hidden" name="page" value="${currentPage}"/>
+                                                <%=  (Integer) request.getAttribute("totalservice") %> dịch vụ
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
@@ -395,13 +540,51 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <div class="pagination">
+                                            <%
+                                                int currentPage = (Integer) request.getAttribute("currentPage");
+                                                int totalPages = (Integer) request.getAttribute("totalPages");
+                                                int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
+                                                String search = (String) request.getAttribute("search");
+                                                String type = (String) request.getAttribute("type");
+                                                String orderBy = (String) request.getAttribute("orderBy");
+
+
+                                                // Hiển thị nút "Previous" nếu không phải trang đầu tiên
+                                                if (currentPage > 1) {
+                                            %>
+                                            <a href="servicelist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
+                                            <%
+                                                }
+
+                                                // Hiển thị danh sách các trang
+                                                for (int i = 1; i <= totalPages; i++) {
+                                                    if (i == currentPage) {
+                                            %>
+                                            <strong><%= i %></strong>
+                                            <%
+                                                    } else {
+                                            %>
+                                            <a href="servicelist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
+                                            <%
+                                                    }
+                                                }
+
+                                                // Hiển thị nút "Next" nếu không phải trang cuối cùng
+                                                if (currentPage < totalPages) {
+                                            %>
+                                            <a href="servicelist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&type=<%= type %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
+                                            <%
+                                                }
+                                            %>
+                                        </div>
+                                        <table class="table table-bordered"  width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Name</th>
-                                                    <th>Type</th>
-                                                    <th>Fee</th>
-                                                    <th class="action">Action</th>
+                                                    <th>Tên</th>
+                                                    <th>Loại</th>
+                                                    <th>Phí (VND)</th>
+                                                    <th class="action text-center">Chức Năng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -409,14 +592,15 @@
                                                     <tr>
                                                         <td>${ls.name}</td>
                                                         <td>${ls.type}</td>
-<!--                                                        data-order: add to save addition infomation about data-->
-                                                        <td data-order="${ls.fee}">
-                                                            <fmt:formatNumber type="number" value="${ls.fee}" />
+                                                        <!--                                                        data-order: add to save addition infomation about data-->
+                                                        <td>
+                                                            <fmt:setLocale value="en_US" />
+                                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.fee}"/>
                                                         </td>
                                                         <td style="width: 150px" class="text-center">
-                                                            <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${ls.serviceId}" style="height: 30px; width: 50px">Edit</a>
-                                                            <a class="btn btn-danger btn-sm text-center" href="servicedelete?id=${ls.serviceId}" style="height: 30px; width: 50px"
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                            <a class="btn btn-primary btn-sm text-center" href="serviceedit?id=${ls.serviceId}&page=${currentPage}" style="height: 30px; width: 50px">Sửa</a>
+                                                            <a class="btn btn-danger btn-sm text-center" href="servicedelete?id=${ls.serviceId}&page=${currentPage}" style="height: 30px; width: 50px"
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -428,10 +612,9 @@
 
                         </div>
 
-
-
                     </div>
                     <!-- /.container-fluid -->
+
 
                 </div>
                 <!-- End of Main Content -->
@@ -457,17 +640,19 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">�</span>
+                            <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" href="logout">Logout</a>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>

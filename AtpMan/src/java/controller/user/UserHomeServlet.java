@@ -75,7 +75,7 @@ public class UserHomeServlet extends HttpServlet {
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
         String apartmentID_raw = request.getParameter("apartmentID");
-        
+
         // get session resident account
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
@@ -84,15 +84,15 @@ public class UserHomeServlet extends HttpServlet {
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
         int apartmentID = 0;
-        
+
         if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
             } catch (NumberFormatException e) {
             }
         }
-        
-        if(apartmentID_raw != null){
+
+        if (apartmentID_raw != null) {
             try {
                 apartmentID = Integer.parseInt(apartmentID_raw);
             } catch (NumberFormatException e) {
@@ -102,25 +102,29 @@ public class UserHomeServlet extends HttpServlet {
         // create dao
         InvoiceDAO invoiceDAO = new InvoiceDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
-
+        BuildingDAO buildingDAO = new BuildingDAO();
+        
         // get apartment user is living
         Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
         
         // if user is owner
         if (customer.getIsOwner() == 1) {
             List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
-            if(apartmentID != 0){
+            if (apartmentID != 0) {
                 for (Apartment apartment1 : apartmentList) {
-                    if(apartment1.getApartmentID() == apartmentID){
+                    if (apartment1.getApartmentID() == apartmentID) {
                         apartment = apartment1;
                     }
                 }
-            }
+            } // if owner not living
             else if (apartment == null) {
                 apartment = apartmentList.get(0);
             }
             request.setAttribute("apartmentList", apartmentList);
         }
+        
+        apartmentID = apartment.getApartmentID();
+        Building building = buildingDAO.getBuildingByApartmentID(apartment.getApartmentID());
 
         List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(apartment.getApartmentID());
         List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());
@@ -137,15 +141,17 @@ public class UserHomeServlet extends HttpServlet {
                     }
                 }
                 if (!contain) {
-                    month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
+                    if (!listOfMonth.isEmpty()) {
+                        Date firstElement = listOfMonth.iterator().next();
+                        month = firstElement.toLocalDate().getMonthValue();
+                    }
                 }
             } catch (NumberFormatException e) {
             }
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getAllInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
-
-        List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
+        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, 1, RECORDS_PER_PAGE, null);
+        List<ServiceContract> serviceList = invoiceDAO.getAllServiceInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
 
         // parameter for current year
         double total = userHomeUtil.totalAmount(iList, year);
@@ -171,7 +177,11 @@ public class UserHomeServlet extends HttpServlet {
         int totalRows = newsDAO.getNumberOfRows();
         //calculate totalPages
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
-
+        
+        // calculate for service table
+        int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, null);
+        int totalServicePages = (int) Math.ceil((double) totalServiceRows / RECORDS_PER_PAGE);
+        
         List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
         List<News> bannerList = newsDAO.getNewsForBanner();
 
@@ -179,6 +189,8 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("news", newsList);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentServicePage", "1");
+        request.setAttribute("totalServicePages", totalServicePages);
 
         // area chart
         List<Double> amoutMonth = userHomeUtil.listAmountByMonth(iList, year);
@@ -198,6 +210,8 @@ public class UserHomeServlet extends HttpServlet {
         request.setAttribute("serviceList", serviceList);
 
         request.setAttribute("apartment", apartment);
+        request.setAttribute("apartmentID", apartmentID);
+        request.setAttribute("building", building);
         request.getRequestDispatcher("/user/userhome.jsp").forward(request, response);
     }
 

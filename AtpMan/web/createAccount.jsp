@@ -72,61 +72,69 @@
                                 </c:if>
                                 <form action="createaccount" method="post">
 
+
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="username">Username</label>
-                                            <input type="text" id="username" class="form-control form-control-lg" name="username"/>
+                                            <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
                                             <small class="text-danger" id="usernameError"></small>
                                         </div>
 
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="password">Password</label>
-                                            <input type="password" id="password" class="form-control form-control-lg" name="password" />
-                                            <small class="text-danger" id="passwordError"></small>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
                                             <label class="form-label" for="name">Name</label>
-                                            <input type="text" id="name" class="form-control form-control-lg" name="name"/>
-                                        </div>
-
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="email">Email</label>
-                                            <input type="text" id="email" class="form-control form-control-lg" name="email"/>
-                                            <small class="text-danger" id="emailError"></small>
+                                            <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
                                         </div>
                                     </div>
+
 
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <label class="form-label" for="phoneNumber">Phone Number</label>
-                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber"/>
+                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
                                             <small class="text-danger" id="phoneNumberError"></small>
                                         </div>
-
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="age">Age</label>
-                                            <input type="text" id="age" class="form-control form-control-lg" name="age" />
-                                            <small class="text-danger" id="ageError"></small>
+                                            <label class="form-label" for="email">Email</label>
+                                            <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
+                                            <small class="text-danger" id="emailError"></small>
                                         </div>
                                     </div>
+
 
                                     <div class="row">
+
                                         <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="regDate">Registration Date</label>
-                                            <input type="date" id="regDate" class="form-control form-control-lg" name="registrationDate" />
+                                            <label class="form-label select-label">Building</label>
+                                            <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
+                                                <option value="" selected>Choose building</option>
+                                                <c:forEach items="${listBuildings}" var="b">
+                                                    <option value="${b.buildingID}">${b.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <small class="text-danger" id="buildingError"></small>
                                         </div>
+
+
+                                        <div class="col-md-6 mb-4">
+                                            <label class="form-label select-label">Apartment</label>
+                                            <select class="select form-control-lg" name="apartment" id="apartment" required>
+                                                <option value="" selected>Choose apartment</option>
+                                            </select>
+                                            <small class="text-danger" id="apartmentError"></small>
+                                        </div>
+                                        
                                     </div>
+
 
                                     <div class="row">
                                         <div class="col-12 mb-4">
                                             <label class="form-label select-label">Type</label>
-                                            <select class="select form-control-lg" name="userType">
+                                            <select class="select form-control-lg" name="userType" required>
                                                 <option value="" selected>Choose option</option>
                                                 <option value="2">Resident</option>
                                                 <option value="3">Owner</option>
                                             </select>
+                                            <small class="text-danger" id="userTypeError"></small>
                                         </div>
                                     </div>
 
@@ -207,7 +215,8 @@
 
             function validateEmail() {
                 const email = document.getElementById("email").value;
-                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$/;
+                // Updated email pattern to allow general emails (like gmail.com) and .edu.vn
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu)(\.vn)?$/;
                 const emailError = document.getElementById('emailError');
 
                 if (!emailPattern.test(email)) {
@@ -220,6 +229,7 @@
                     emailError.classList.add('text-success');
                 }
             }
+
 
             function validatePhone() {
                 const phone = document.getElementById("phoneNumber").value;
@@ -254,10 +264,27 @@
 
             // Attach the validate functions to the input fields
             document.getElementById("username").addEventListener("input", validateUsername);
-            document.getElementById("password").addEventListener("input", validatePassword);
+//            document.getElementById("password").addEventListener("input", validatePassword);
             document.getElementById("email").addEventListener("input", validateEmail);
             document.getElementById("phoneNumber").addEventListener("input", validatePhone);
-            document.getElementById("age").addEventListener("input", validateAge);
+//            document.getElementById("age").addEventListener("input", validateAge);
+
+            function loadApartments() {
+                var buildingId = document.getElementById("building").value;
+
+                if (buildingId !== "") {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) { //404, 400, 500
+                            // Replace apartment select box options with the response from the server
+                            document.getElementById("apartment").innerHTML = xhr.responseText;
+                        }
+                    };
+                    xhr.send();
+                }
+            }
+
         </script>
 
 

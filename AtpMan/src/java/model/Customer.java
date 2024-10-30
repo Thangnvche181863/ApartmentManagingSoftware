@@ -21,7 +21,7 @@ public class Customer {
     private Date registrationDate;
     private int isOwner;
     private int status;
-
+    
     public Customer() {
 
     }
@@ -38,7 +38,6 @@ public class Customer {
         this.status = status;
     }
 
-    
 
     public int getCustomerID() {
         return customerID;
@@ -112,6 +111,11 @@ public class Customer {
 
     public void setIsOwner(int isOwner) {
         this.isOwner = isOwner;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + ", status=" + status + '}';
     }
 
     

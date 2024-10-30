@@ -423,8 +423,8 @@
                                         <div class="m-b-25">
                                             <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius" alt="User-Profile-Image">
                                         </div>
-                                        <h6 class="f-w-600">Hembo Tingor</h6>
-                                        <p>Web Designer</p>
+                                        <h6 class="f-w-600"></h6>${sessionScope.user.name}
+                                        
                                         <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     </div>
                                 </div>
@@ -434,11 +434,11 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Email</p>
-                                                <h6 class="text-muted f-w-400">rntng@gmail.com</h6>
+                                                <h6 class="text-muted f-w-400"></h6>${sessionScope.user.email}
                                             </div>
                                             <div class="col-sm-6">
                                                 <p class="m-b-10 f-w-600">Phone</p>
-                                                <h6 class="text-muted f-w-400">98979989898</h6>
+                                                <h6 class="text-muted f-w-400"></h6>${sessionScope.user.phoneNumber}
                                             </div>
                                         </div>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>

@@ -9,18 +9,22 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.Finance;
+import java.sql.*;
+import utils.DBContext;
 
 /**
  *
  * @author thang
  */
-public class FinanceDAO extends DBContext {
+public class FinanceDAO {
+
+    Connection connection = null;
 
     public List<Finance> getAll() {
         List<Finance> list = new ArrayList<>();
         try {
             String sql = "Select * from Finance";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -36,7 +40,7 @@ public class FinanceDAO extends DBContext {
     public void insertFinance(int buildingId, int financeTypeId, double amount, int month) {
         try {
             String sql = "Insert into Finance(buildingId,financeTypeId,amount,month) values(?,?,?,?)";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
 
             ps.setInt(1, buildingId);
@@ -54,6 +58,7 @@ public class FinanceDAO extends DBContext {
         try {
             String sql = "DELETE FROM [dbo].[Finance]\n"
                     + "      WHERE financeId = ?";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, financeId);
 
@@ -71,7 +76,7 @@ public class FinanceDAO extends DBContext {
                     + "      ,[amount] = ?\n"
                     + "      ,[month] = ?\n"
                     + " WHERE financeId = ?";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, buildingId);
             ps.setInt(2, financeId);

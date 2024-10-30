@@ -87,7 +87,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
                        aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Pages</span>
@@ -105,12 +105,19 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="register.jsp">
-                        <i class="fas fa-fw fa-user-plus"></i>
-                        <span>Create new account</span></a>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCreateAccount"
+                       aria-expanded="true" aria-controls="collapseCreateAccount">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Tạo tài khoản</span>
+                    </a>
+                    <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Tạo tài khoản</h6>
+                            <a class="collapse-item" href="createaccount">Người dùng</a>
+                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Nav Item - Tables -->
@@ -118,6 +125,13 @@
                     <a class="nav-link" href="managerPage">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
+                </li>
+
+                <!-- Nav Item - Tables -->
+                <li class="nav-item">
+                    <a class="nav-link" href="servicelist">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Service List</span></a>
                 </li>
 
                 <!-- Divider -->
