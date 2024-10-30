@@ -97,10 +97,6 @@
         <servlet-class>controller.user.UserhomeNewsServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.guest.Home</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CRUDService</servlet-name>
         <servlet-class>controller.ServiceListServlet</servlet-class>
     </servlet>
@@ -227,10 +223,6 @@
     <servlet-mapping>
         <servlet-name>NewsDelete</servlet-name>
         <url-pattern>/newsdelete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Home</servlet-name>
-        <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditNews</servlet-name>
