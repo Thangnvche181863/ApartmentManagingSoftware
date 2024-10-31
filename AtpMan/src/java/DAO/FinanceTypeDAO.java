@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.FinanceType;
+import utils.DBContext;
+import java.sql.*;
 
 /**
  *
@@ -18,13 +20,15 @@ import model.FinanceType;
  */
 public class FinanceTypeDAO {
 
+    Connection connection = null;
+
     public List<FinanceType> getAll() {
         List<FinanceType> list = new ArrayList<>();
         Connection conn = null;
         try {
             String sql = "Select * from FinanceBuilding";
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -40,8 +44,8 @@ public class FinanceTypeDAO {
         Connection conn = null;
         try {
             String sql = "Insert into FinanceType (name,description) values(?,?)";
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
 
@@ -56,8 +60,8 @@ public class FinanceTypeDAO {
         try {
             String sql = "ELETE FROM [dbo].[FinanceType]\n"
                     + "      WHERE financeTypeId = ?";
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, financeTypeId);
 
             ps.executeUpdate();
@@ -67,14 +71,13 @@ public class FinanceTypeDAO {
     }
 
     public void updateFinaceType(int financeTypeId, String name, String description) {
-        Connection conn = null;
         try {
             String sql = "UPDATE [dbo].[FinanceType]\n"
                     + "   SET [name] = ?\n"
                     + "      ,[description] = ?\n"
                     + " WHERE financeTypeId = ?";
-            conn = DBContext.getConnection();
-            PreparedStatement ps = conn.prepareStatement(sql);
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, description);
             ps.setInt(3, financeTypeId);

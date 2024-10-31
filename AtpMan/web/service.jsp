@@ -43,7 +43,6 @@
 
 
 
-
     </head>
 
     <body>
@@ -118,14 +117,14 @@
                                 >
                                 Marry Christmas
                             </h4>
-<!--                            <ol
-                                class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
-                                data-wow-delay="0.3s"
-                                >
-                                <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Manage</a></li>
-                                <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>-->
+                            <!--                            <ol
+                                                            class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
+                                                            data-wow-delay="0.3s"
+                                                            >
+                                                            <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
+                                                            <li class="breadcrumb-item"><a href="#">Manage</a></li>
+                                                            <li class="breadcrumb-item active text-primary">Service</li>
+                                                        </ol>-->
                         </div>
                     </div>
                     <div class="bg-breadcrumb carousel-item third" data-bs-interval="5000">
@@ -136,14 +135,14 @@
                                 >
                                 Affected by Storm
                             </h4>
-<!--                            <ol
-                                class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
-                                data-wow-delay="0.3s"
-                                >
-                                <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#">Manage</a></li>
-                                <li class="breadcrumb-item active text-primary">Service</li>
-                            </ol>-->
+                            <!--                            <ol
+                                                            class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown"
+                                                            data-wow-delay="0.3s"
+                                                            >
+                                                            <li class="breadcrumb-item"><a href="home.jsp">Home</a></li>
+                                                            <li class="breadcrumb-item"><a href="#">Manage</a></li>
+                                                            <li class="breadcrumb-item active text-primary">Service</li>
+                                                        </ol>-->
                         </div>
                     </div>
                 </div>
@@ -470,7 +469,7 @@
                             <div class="col-md-6 col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.6s">
                                 <div class="feature-item p-4 pt-0">
                                     <div class="feature-icon p-4 mb-4">
-                                       <i class="fa fa-headphones fa-3x"></i>
+                                        <i class="fa fa-headphones fa-3x"></i>
                                     </div>
                                     <h4 class="mb-4">Concierge Services</h4>
                                     <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea hic laborum odit pariatur...

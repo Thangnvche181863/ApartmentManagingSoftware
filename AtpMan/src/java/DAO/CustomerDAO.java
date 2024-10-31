@@ -12,6 +12,8 @@ import utils.DBContext;
  import java.util.Date;
 import java.sql.*;
 import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
@@ -108,14 +110,15 @@ public class CustomerDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Customer customer = new Customer();
-                            customer.setCustomerID(rs.getInt(1)); // Lấy customerID từ kết quả
-                            customer.setUsername(rs.getString(2));
-                            customer.setName(rs.getString(4));
-                            customer.setEmail(rs.getString(5));
-                            customer.setPhoneNumber(rs.getString(6));
-                            customer.setAge(rs.getInt(7));
-                            customer.setRegistrationDate(rs.getDate(8));
-                            customer.setIsOwner(rs.getInt(9));
+                            customer.setCustomerID(rs.getInt("customerID")); // Lấy customerID từ kết quả
+                            customer.setUsername(rs.getString("username"));
+                            customer.setName(rs.getString("name"));
+                            customer.setEmail(rs.getString("email"));
+                            customer.setPhoneNumber(rs.getString("phoneNumber"));
+                            customer.setDob(rs.getDate("dob"));
+                            customer.setRegistrationDate(rs.getDate("registrationDate"));
+                            customer.setIsOwner(rs.getInt("isOwner"));
+                            customer.setStatus(rs.getInt("status"));
                             return customer;
                         }
                     }
@@ -366,9 +369,10 @@ public class CustomerDAO {
                                     resultSet.getString("name"),
                                     resultSet.getString("email"),
                                     resultSet.getString("phoneNumber"),
-                                    resultSet.getInt("age"),
+                                    resultSet.getDate("dob"),
                                     resultSet.getDate("registrationDate"),
-                                    resultSet.getInt("isOwner"));
+                                    resultSet.getInt("isOwner"),
+                                    resultSet.getInt("status"));
                         }
                     }
                 }
@@ -378,8 +382,41 @@ public class CustomerDAO {
         }
         return customer;
     }
+
+    // KhangPM
+    public List<Customer> getLivingInApartment(int apartmentID) {
+        List<Customer> list = new ArrayList<>();
+        Connection connection = null;
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner from Customer c\n"
+                + "inner join Living l on l.customerID = c.customerID\n"
+                + "where l.apartmentID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentID);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt(1));
+                customer.setName(rs.getString(2));
+                customer.setEmail(rs.getString(3));
+                customer.setPhoneNumber(rs.getString(4));
+                customer.setDob(rs.getDate("dob"));
+                customer.setIsOwner(rs.getInt(6));
+                list.add(customer);
+            }
+            return list;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        System.out.println(" "+dao.getAllInformationCustomer("bbb", "xoor3tJBQLmByDp6Clp70RgcAs0="));
+        List<Customer> list = dao.getLivingInApartment(1);
+        System.out.println(list);
     }
 }

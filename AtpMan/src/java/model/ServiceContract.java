@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
+import java.math.BigDecimal;
 import java.sql.Date;
 /**
  *
@@ -14,13 +15,24 @@ public class ServiceContract {
     private int serviceId;
     private Date startDate;
     private Date endDate;
-    private double amount;
+    private BigDecimal amount;
     private Service service;
-
+    private int totalContract;
+    private BigDecimal totalAmount;
+    
+   
     public ServiceContract() {
     }
 
-    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, double amount, Service service) {
+    public ServiceContract(int apartmentId, int totalContract, BigDecimal totalAmount) {
+        this.apartmentId = apartmentId;
+        this.totalContract = totalContract;
+        this.totalAmount = totalAmount;
+    }
+    
+    
+
+    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, BigDecimal amount, Service service) {
         this.serviceContractId = serviceContractId;
         this.apartmentId = apartmentId;
         this.serviceId = serviceId;
@@ -70,11 +82,11 @@ public class ServiceContract {
         this.endDate = endDate;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
     public Service getService() {
@@ -85,8 +97,27 @@ public class ServiceContract {
         this.service = service;
     }
 
+    public int getTotalContract() {
+        return totalContract;
+    }
+
+    public void setTotalContract(int totalContract) {
+        this.totalContract = totalContract;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
     @Override
     public String toString() {
-        return "ServiceContract{" + "serviceContractId=" + serviceContractId + ", apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + '}';
+        return "ServiceContract{" + "serviceContractId=" + serviceContractId + ", apartmentId=" + apartmentId + ", serviceId=" + serviceId + ", startDate=" + startDate + ", endDate=" + endDate + ", amount=" + amount + ", service=" + service + ", totalContract=" + totalContract + ", totalAmount=" + totalAmount + '}';
     }
+    
+    
+    
 }

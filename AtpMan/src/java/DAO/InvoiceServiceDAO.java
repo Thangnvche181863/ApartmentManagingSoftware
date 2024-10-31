@@ -10,19 +10,20 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.InvoiceService;
-
+import utils.DBContext;
+import java.sql.*;
 /**
  *
  * @author thang
  */
-public class InvoiceServiceDAO {
+public class InvoiceServiceDAO   {
     Connection connection = null;
     public List<InvoiceService> getAll() {
         List<InvoiceService> list = new ArrayList<>();
 
         try {
             String sql = "Select * from InvoiceService";
-
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -43,7 +44,7 @@ public class InvoiceServiceDAO {
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?)";
-            
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, invoiceId);
             ps.setInt(2, serviceContractId);

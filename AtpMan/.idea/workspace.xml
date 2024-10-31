@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="30780cf5-fa27-4560-be8e-997e8b958ca4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/web/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/java/controller/UserHomeServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/UserHomeServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/img/testimonial-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/web/img/testimonial-2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/userhome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/userhome.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/DAO/ServiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/java/controller/ServiceListServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/java/controller/ServiceListServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/servicelist.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/web/servicelist.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +30,9 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -49,7 +50,7 @@
     &quot;git-widget-placeholder&quot;: &quot;khangpm&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Chuyen_nganh_SE_ki4_su24/PRJ301/Project/StudentFeedback&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Chuyen_nganh_SE_ki5_fa24/SWP391/AtpMan/ApartmentManagingSoftware/AtpMan&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -278,6 +279,20 @@
       <workItem from="1727867401287" duration="5000" />
       <workItem from="1727886402108" duration="264000" />
       <workItem from="1727915591196" duration="6000" />
+      <workItem from="1728024457779" duration="13000" />
+      <workItem from="1728032965357" duration="46000" />
+      <workItem from="1728033520593" duration="86000" />
+      <workItem from="1728235523017" duration="609000" />
+      <workItem from="1728353167766" duration="15000" />
+      <workItem from="1728493372110" duration="646000" />
+      <workItem from="1728520620139" duration="7000" />
+      <workItem from="1729671423575" duration="26000" />
+      <workItem from="1729671740728" duration="3000" />
+      <workItem from="1727709196197" duration="5246000" />
+      <workItem from="1727748181341" duration="6000" />
+      <workItem from="1727753389390" duration="129000" />
+      <workItem from="1727753719192" duration="2230000" />
+      <workItem from="1728005421375" duration="10000" />
     </task>
     <servers />
   </component>

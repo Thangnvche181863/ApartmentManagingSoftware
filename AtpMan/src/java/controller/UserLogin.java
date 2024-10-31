@@ -60,6 +60,9 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("user", customer);
                 session.setAttribute("name", userName);
                 response.sendRedirect("userhome");
+                session.setAttribute("customer", customer);
+                request.getSession().setAttribute("userRole", "customer");
+                response.sendRedirect("user/userhome");
 
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
@@ -72,6 +75,8 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("user", staff);
                 session.setAttribute("name", staffName);
                 //phan loai nguoi dung: staff
+                session.setAttribute("staff", staff);
+                request.getSession().setAttribute("userRole", "staff");
                 response.sendRedirect("managerPage");
 
             } else {

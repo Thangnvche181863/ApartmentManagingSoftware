@@ -5,25 +5,26 @@
 package DAO;
 import utils.DBContext;
 import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.*;
 import java.sql.Connection;
 
+import utils.DBContext;
 
 /**
  *
  * @author thang
  */
-public class ServiceContractDAO  {
+public class ServiceContractDAO {
+
     Connection connection = null;
-    public List<ServiceContract> getAllServiceByAparmentID(int apartmentID) {
+
+    public List<ServiceContract> getAllServiceByAparmentID(int apartmentID) throws ClassNotFoundException {
         List<ServiceContract> list = new ArrayList<>();
         String sql = "select * from ServiceContract sc, Service s where sc.serviceID = s.serviceID and apartmentID = ?";
         try {
+            connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentID);
             ResultSet rs = statement.executeQuery();
@@ -42,7 +43,7 @@ public class ServiceContractDAO  {
                 serviceContract.setService(service);
                 serviceContract.setStartDate(rs.getDate("startDate"));
                 serviceContract.setEndDate(rs.getDate("endDate"));
-                serviceContract.setAmount(rs.getDouble("amount"));
+                serviceContract.setAmount(rs.getBigDecimal("amount"));
 
                 list.add(serviceContract);
             }
@@ -51,15 +52,16 @@ public class ServiceContractDAO  {
         return list;
     }
 
-    public List<ServiceContract> getAll(){
+    public List<ServiceContract> getAll() {
         List<ServiceContract> list = new ArrayList<>();
-        
+
         try {
             String sql = "Select * from ServiceContract";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                list.add(new ServiceContract(rs.getInt("serviceContractID"),rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getDouble("amount"), null));
+            while (rs.next()) {
+                list.add(new ServiceContract(rs.getInt("serviceContractID"), rs.getInt("apartmentID"), rs.getInt("serviceID"), rs.getDate("startDate"), rs.getDate("endDate"), rs.getBigDecimal("amount"), null));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -70,6 +72,7 @@ public class ServiceContractDAO  {
     public void insertServiceContract(int apartmentId, int serviceId, Date startDate, Date endDate, double amount) {
         try {
             String sql = "Insert into ServiceContract values(?,?,?,?,?)";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, apartmentId);
             ps.setInt(2, serviceId);
@@ -85,7 +88,8 @@ public class ServiceContractDAO  {
 
     public void deleteServiceContract(int apartmentId, int serviceId) {
         try {
-            String sql = "Delete * from ServiceContract where apartmentId = ? AND serviceId = ?";
+            String sql = "Delete from ServiceContract where apartmentId = ? AND serviceId = ?";
+            connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, apartmentId);
             ps.setInt(2, serviceId);
@@ -95,9 +99,175 @@ public class ServiceContractDAO  {
         }
     }
 
-    public static void main(String[] args) {
-       ServiceContractDAO sdao = new ServiceContractDAO();
-//       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
-        System.out.println(sdao.getAll());
+    public List<ServiceContract> getCurrentServiceContract(int apartmentId, Date currentDate) throws ClassNotFoundException {
+        List<ServiceContract> list = new ArrayList<>();
+        String sql = "select * from ServiceContract sc\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentId);
+            statement.setDate(2, currentDate);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                // declare service object
+                Service service = new Service();
+
+                service.setServiceId(rs.getInt("serviceID"));
+                service.setName(rs.getString("name"));
+                service.setType(rs.getString("type"));
+                service.setDescription(rs.getString("description"));
+                service.setFee(rs.getBigDecimal("fee"));
+                service.setImg(rs.getString("img"));
+                service.setIcon(rs.getString("icon"));
+
+                // declare serviceContract object
+                ServiceContract serviceContract = new ServiceContract();
+
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
+                serviceContract.setService(service);
+                serviceContract.setStartDate(rs.getDate("startDate"));
+                serviceContract.setEndDate(rs.getDate("endDate"));
+                serviceContract.setAmount(rs.getBigDecimal("amount"));
+
+                list.add(serviceContract);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<ServiceContract> serviceContractById(int apartmentId) {
+        List<ServiceContract> scs = new ArrayList<>();
+        ServiceDAO sdao = new ServiceDAO();
+        List<Service> services = sdao.getAll();
+        try {
+            String sql = "Select * from ServiceContract where apartmentId = ?";
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, apartmentId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ServiceContract sc = new ServiceContract();
+                sc.setServiceContractId(rs.getInt("serviceContractID"));
+                sc.setApartmentId(rs.getInt("apartmentID"));
+                sc.setServiceId(rs.getInt("serviceID"));
+                sc.setStartDate(rs.getDate("startDate"));
+                sc.setEndDate(rs.getDate("endDate"));
+                sc.setAmount(rs.getBigDecimal("amount"));
+                sc.setService(services.get(rs.getInt("serviceID") - 1));
+                scs.add(sc);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return scs;
+    }
+
+    public ServiceContract statisticContract(int id) {
+        ServiceContract sc = new ServiceContract();
+        try {
+            String sql = "SELECT \n"
+                    + "    apartmentID, \n"
+                    + "    COUNT(serviceContractID) AS totalContracts, \n"
+                    + "    SUM(amount) AS totalAmount\n"
+                    + "FROM \n"
+                    + "    ServiceContract where apartmentID = ?\n"
+                    + "GROUP BY \n"
+                    + "    apartmentID";
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+                sc.setApartmentId(rs.getInt(1));
+                sc.setTotalContract(rs.getInt(2));
+                sc.setTotalAmount(rs.getBigDecimal(3));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return sc;
+    }
+
+    public List<Service> unregisteredService(int apartmentID, Date currentDate) {
+        List<Service> list = new ArrayList<>();
+        try {
+            String sql = "SELECT s.* \n"
+                    + "FROM Service s\n"
+                    + "LEFT JOIN ServiceContract sc \n"
+                    + "ON s.serviceID = sc.serviceID \n"
+                    + "   AND sc.apartmentID = ? \n"
+                    + "   AND ? BETWEEN sc.startDate AND sc.endDate\n"
+                    + "WHERE sc.serviceID IS NULL";
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, apartmentID);
+            ps.setDate(2, currentDate);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Service s = new Service();
+                s.setServiceId(rs.getInt(1));
+                s.setName(rs.getString(2));
+                s.setType(rs.getString(3));
+                s.setDescription(rs.getString(4));
+                s.setImg((rs.getString(5)));
+                s.setIcon(rs.getString(6));
+                s.setFee(rs.getBigDecimal(7));
+
+                list.add(s);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    public ServiceContract pickServiceContract(int apartmentID, int serviceID){
+        ServiceContract sc = new ServiceContract();
+        String sql = "select * from ServiceContract where serviceID = ? and apartmentID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, serviceID);
+            ps.setInt(2, apartmentID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                sc.setTotalAmount(rs.getBigDecimal(6));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return sc;
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        ServiceContractDAO sdao = new ServiceContractDAO();
+        ////       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
+        // List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()));
+        // System.out.println(list);
+        List<ServiceContract> list = sdao.getAll();
+
+sdao.deleteServiceContract(1, 1);
+//        for (ServiceContract sc : list) {
+//            if (sc.getServiceId() == 1 && sc.getApartmentId() == 1) {
+//                System.out.println(sc);
+//                }
+//        }
+
+        
+        
+
+
+
+            //
+////        System.out.println(sdao.serviceContractById(1));
+//        System.out.println(sdao.statisticContract(1).getTotalAmount());
+//        System.out.println(sdao.unregisteredService(1,Date.valueOf(LocalDate.now())));
+
     }
 }

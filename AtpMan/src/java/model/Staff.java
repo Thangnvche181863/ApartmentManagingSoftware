@@ -56,6 +56,7 @@ public class Staff {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
+        this.status = status;
     }
 
     public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String staffImg) {
