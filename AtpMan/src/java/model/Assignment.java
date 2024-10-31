@@ -15,6 +15,7 @@ public class Assignment {
     private int taskID;
     private Date startTime;
     private Date endTime;
+    
 
     public Assignment(int staffID, int taskID, Date startTime, Date endTime) {
         this.staffID = staffID;

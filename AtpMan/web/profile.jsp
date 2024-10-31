@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Your profile</title>
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css"
@@ -155,7 +155,7 @@
 
                                 <div class="p-3 py-5">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Profile Settings</h4>
+                                        <h4 class="text-right">Trang cá nhân</h4>
                                     </div>
                                     <!-- Hiển thị thông báo lỗi nếu có -->
                                     <c:if test="${not empty message}">
@@ -164,21 +164,21 @@
                                         </div>
                                     </c:if>
                                     <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Name</label><input type="text" name="name" class="form-control" placeholder="first name" value="${user.name}"></div>
-                                        <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
-                                        <div class="col-md-12"><label class="labels">User Name</label><input type="text" class="form-control" placeholder="username" value="${user.username}" readonly></div>
-                                        <div class="col-md-12"><label class="labels">Password</label><input type="text" class="form-control" placeholder="password" value="********" readonly>
+                                        <div class="col-md-12"><label class="labels">Tên</label><input type="text" name="name" class="form-control" placeholder="first name" value="${user.name}"></div>
+                                        <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
+                                        <div class="col-md-12"><label class="labels">Tên đăng nhập</label><input type="text" class="form-control" placeholder="username" value="${user.username}" readonly></div>
+                                        <div class="col-md-12"><label class="labels">Mật khẩu</label><input type="text" class="form-control" placeholder="password" value="********" readonly>
                                             <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> </div>
-                                        Change password
+                                        Đổi mật khẩu
                                         </a>
 
 
                                         <div class="col-md-12"><label class="labels">Email </label><input type="text" name="email" class="form-control" placeholder="enter email " value="${user.email}" readonly></div>
                                         <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
-                                            Change Email
+                                            Đổi Email
                                         </a>
                                         <div class="col-md-12">
-                                            <label class="labels">Start Date(Hire/Register) </label>
+                                            <label class="labels">Ngày bắt đầu(Công việc/Đăng kí) </label>
                                             <input type="text" class="form-control" 
                                                    placeholder="enter hire date" 
                                                    value="${userType == 'staff' ? user.hireDate : (userType == 'customer' ? user.registrationDate : '')}"
@@ -188,12 +188,12 @@
 
 
                                     </div>
-                                    <label for="img" class="form-label">Change your avatar:</label>
+                                    <label for="img" class="form-label">Đổi ảnh đại diện:</label>
                                     <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
 
                                     <input type="hidden" name="imgPath" value="${user.staffImg}">
 
-                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Lưu thay đổi </button></div>
 
                                 </div>
 

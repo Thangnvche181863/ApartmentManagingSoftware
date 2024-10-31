@@ -93,7 +93,7 @@ public class AssignmentController extends HttpServlet {
         // Lấy loại công việc để hiển thị trong form lọc
         request.setAttribute("taskType", dao.getAllTaskType());
 
-        request.getRequestDispatcher("assignment.jsp").forward(request, response);
+        request.getRequestDispatcher("task.jsp").forward(request, response);
     }
 
     @Override
@@ -178,7 +178,7 @@ public class AssignmentController extends HttpServlet {
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", dao.countActive(taskType, search, recordsPerPage));
             request.setAttribute("taskType", dao.getAllTaskType());
-            request.getRequestDispatcher("assignment.jsp").forward(request, response);
+            request.getRequestDispatcher("task.jsp").forward(request, response);
         }
     }
 
