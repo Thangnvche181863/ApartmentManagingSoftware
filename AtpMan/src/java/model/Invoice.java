@@ -18,21 +18,63 @@ public class Invoice {
     private Date dueDate;
     private int status;
     private Date transactionDate;
+    private String invoiceCode;
+    private String transactionNo;
+    private String bankCode;
+    private String orderInfo;
     private List<ServiceContract> serviceContractList;
 
     public Invoice() {
     }
 
-    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, List<ServiceContract> serviceContractList) {
-        this.invoiceId = invoiceID;
-        this.apartmentId = apartmentID;
+    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo, List<ServiceContract> serviceContractList) {
+        this.invoiceId = invoiceId;
+        this.apartmentId = apartmentId;
         this.amount = amount;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
         this.status = status;
         this.transactionDate = transactionDate;
+        this.invoiceCode = invoiceCode;
+        this.transactionNo = transactionNo;
+        this.bankCode = bankCode;
+        this.orderInfo = orderInfo;
         this.serviceContractList = serviceContractList;
     }
+
+    public String getInvoiceCode() {
+        return invoiceCode;
+    }
+
+    public void setInvoiceCode(String invoiceCode) {
+        this.invoiceCode = invoiceCode;
+    }
+
+    public String getTransactionNo() {
+        return transactionNo;
+    }
+
+    public void setTransactionNo(String transactionNo) {
+        this.transactionNo = transactionNo;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getOrderInfo() {
+        return orderInfo;
+    }
+
+    public void setOrderInfo(String orderInfo) {
+        this.orderInfo = orderInfo;
+    }
+
+
 
     public int getInvoiceId() {
         return invoiceId;

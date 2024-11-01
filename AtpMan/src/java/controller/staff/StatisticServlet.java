@@ -2,50 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
 
-import DAO.ApartmentDAO;
-import DAO.ServiceContractDAO;
-import DAO.ServiceDAO;
+package controller.staff;
+
+import DAO.InvoiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Service;
+import java.time.LocalDate;
+import java.util.List;
+import model.Statistic;
 
 /**
  *
  * @author thang
  */
-public class InforApartmentService extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class StatisticServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            String id = request.getParameter("id");
-//            ServiceDAO sdao = new ServiceDAO();
-//            Service service = sdao.findById(Integer.parseInt(id));
-//            request.setAttribute("service", service);
-//            request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet StatisticServlet</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet StatisticServlet at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -53,21 +56,20 @@ public class InforApartmentService extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        ApartmentDAO adao = new ApartmentDAO();
-        ServiceContractDAO sdao = new ServiceContractDAO();
-        int id = Integer.parseInt(request.getParameter("id"));
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
+    throws ServletException, IOException {
+        int year = LocalDate.now().getYear();
         
-        request.setAttribute("apart", adao.apartmentDetail(id,month,year));
-        request.setAttribute("statistic", sdao.statisticContract(id,month,year));
-        request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
-    }
+        InvoiceDAO idao = new InvoiceDAO();
+//        Statistic s = idao.statisticInvoice(year);
+        
+//        request.setAttribute("statistic", s);
+        request.setAttribute("currentYear", year);
+        request.getRequestDispatcher("charts.jsp").forward(request, response);
+        
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -75,13 +77,12 @@ public class InforApartmentService extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

@@ -38,6 +38,10 @@ public class InvoiceDAO {
                 invoice.setDueDate(rs.getDate(5));
                 invoice.setStatus(rs.getInt(6));
                 invoice.setTransactionDate(rs.getDate(7));
+                invoice.setInvoiceCode(rs.getString(8));
+                invoice.setTransactionNo(rs.getString(9));
+                invoice.setBankCode(rs.getString(9));
+                invoice.setOrderInfo(rs.getString(10));
                 list.add(invoice);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -369,24 +373,53 @@ public class InvoiceDAO {
     //         System.out.println(e);
     //     }
     // }
+//    public Statistic statisticInvoice(int year) {
+//        Statistic s = new Statistic();
+//        String sql = "SELECT \n"
+//                + "    COUNT(*) AS tong_hoa_don, \n"
+//                + "    SUM(amount) AS tong_so_tien,\n"
+//                + "    COUNT(CASE WHEN status = 0 THEN 1 END) AS tong_hoa_don_chua_thanh_toan,\n"
+//                + "    SUM(CASE WHEN status = 0 THEN amount ELSE 0 END) AS tong_so_tien_chua_thanh_toan\n"
+//                + "FROM \n"
+//                + "    Invoice\n"
+//                + "WHERE \n"
+//                + "    YEAR(issueDate) = ?";
+//        try {
+//            connection = DBContext.getConnection();
+//            PreparedStatement ps = connection.prepareStatement(sql);
+//            ps.setInt(1, year);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                s.setTotalBill(rs.getInt(1));
+//                s.setTotalAmount(rs.getBigDecimal(2));
+//                s.setTotalUnBill(rs.getInt(3));
+//                s.setTotalUnPay(rs.getBigDecimal(4));
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return s;
+//    }
+
     public static void main(String[] args) {
         InvoiceDAO dao = new InvoiceDAO();
-        List<Invoice> list = dao.getAllInvoiceByApartmentID(1);
-        List<Date> dList = dao.getAllApartmentInvoiceDate(1);
-        List<Integer> yList = dao.getAllApartmentInvoiceYear(1);
-
-        List<String> sList = new ArrayList<>();
-        sList.add("service");
-        sList.add("b");
-        
-        List<ServiceContract> serviceContractsList = dao.getAllServiceInvoiceByApartmentIDandMonth(1, 11, 2024);
-        Invoice i = dao.getInvoiceByApartmentIDandMonth(1, 11, 2024, 1, 5, null);
-        // System.out.println(i.getServiceContractList().get(0).getService().getName());
-        // for (ServiceContract serviceContract : i.getServiceContractList()) {
-        // System.out.println(serviceContract.getService().getName());
-        // }
-
-        int count = dao.countInvoiceByApartmentIDandMonth(1, 9, 2024, null);
-        System.out.println(serviceContractsList.size());
+//        System.out.println(dao.statisticInvoice(2024));
+//        List<Invoice> list = dao.getAllInvoiceByApartmentID(1);
+//        List<Date> dList = dao.getAllApartmentInvoiceDate(1);
+//        List<Integer> yList = dao.getAllApartmentInvoiceYear(1);
+//
+//        List<String> sList = new ArrayList<>();
+//        sList.add("service");
+//        sList.add("b");
+//        
+//        List<ServiceContract> serviceContractsList = dao.getAllServiceInvoiceByApartmentIDandMonth(1, 11, 2024);
+//        Invoice i = dao.getInvoiceByApartmentIDandMonth(1, 11, 2024, 1, 5, null);
+//        // System.out.println(i.getServiceContractList().get(0).getService().getName());
+//        // for (ServiceContract serviceContract : i.getServiceContractList()) {
+//        // System.out.println(serviceContract.getService().getName());
+//        // }
+//
+//        int count = dao.countInvoiceByApartmentIDandMonth(1, 9, 2024, null);
+//        System.out.println(serviceContractsList.size());
     }
 }

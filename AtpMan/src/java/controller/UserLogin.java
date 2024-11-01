@@ -72,6 +72,9 @@ public class UserLogin extends HttpServlet {
                 session.setAttribute("user", staff);
                 session.setAttribute("staff", staff);
                 request.getSession().setAttribute("userRole", "staff");
+                if(staff.getRoleID() == 2){
+                    response.sendRedirect("managerPage");
+                }
                 response.sendRedirect("managerPage");
 
             } else {

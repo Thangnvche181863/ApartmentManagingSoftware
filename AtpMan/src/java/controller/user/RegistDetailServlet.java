@@ -86,7 +86,7 @@ public class RegistDetailServlet extends HttpServlet {
 
         Service service = sdao.findById(Integer.parseInt(serviceID));
 
-        request.setAttribute("amount", scdao.pickServiceContract(Integer.parseInt(apartmentID), Integer.parseInt(serviceID)));
+        request.setAttribute("amount", scdao.pickServiceContract(Integer.parseInt(serviceID)));
         request.setAttribute("apartmentID", apartmentID);
         request.setAttribute("service", service);
         request.getRequestDispatcher("/user/registDetail.jsp").forward(request, response);

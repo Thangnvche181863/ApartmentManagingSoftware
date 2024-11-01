@@ -584,7 +584,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                         <fmt:formatNumber
                           type="number"
                           maxFractionDigits="3"
-                          value="${apart.getService().getFee()}"
+                          value="${apart.getAmount()}"
                         />
                       </td>
                       <td>

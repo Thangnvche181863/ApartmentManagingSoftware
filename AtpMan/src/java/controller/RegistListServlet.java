@@ -5,12 +5,14 @@
 package controller;
 
 import DAO.ApartmentDAO;
+import DAO.ServiceContractDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.Vector;
 import model.Apartment;
 
@@ -58,6 +60,8 @@ public class RegistListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String year = LocalDate.now().getYear()+"";
+        String month = LocalDate.now().getMonthValue()+"";
         int page = 1;
         int recordsPerPage = 25;
         String buildingtype = "";
@@ -82,20 +86,30 @@ public class RegistListServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+        if (request.getParameter("year") != null) {
+            year = request.getParameter("year");
+        }
+        if (request.getParameter("month") != null) {
+            month = request.getParameter("month");
+        }
 
+        ServiceContractDAO sdao = new ServiceContractDAO();
         ApartmentDAO adao = new ApartmentDAO();
+        request.setAttribute("year", year);
+        request.setAttribute("month", month);
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("buildingtype", buildingtype);
         request.setAttribute("apartmentType", apartmentType);
         request.setAttribute("search", search);
         request.setAttribute("orderBy", orderBy);
-        int totalRecords = adao.getTotalApartment(buildingtype, apartmentType, search, orderBy);
+        int totalRecords = adao.getTotalApartment(buildingtype, apartmentType, search, LocalDate.now().getYear(), LocalDate.now().getMonthValue(), orderBy);
         request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
         request.setAttribute("totalRoom", totalRecords);
         request.setAttribute("listbuilding", adao.getAllBuilding());
         request.setAttribute("listdepartment", adao.getAllDepartmentType());
-        request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, apartmentType, search, orderBy));
+        request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, apartmentType, search, Integer.parseInt(year), Integer.parseInt(month), orderBy));
+        request.setAttribute("totalFinance", sdao.totalBuildingFinance(Integer.parseInt(month), Integer.parseInt(year)));
         request.getRequestDispatcher("registlist.jsp").forward(request, response);
     }
 
@@ -110,7 +124,10 @@ public class RegistListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // PrintWriter out = response.getWriter();
+//         PrintWriter out = response.getWriter();
+        String year = request.getParameter("year");
+        String month = request.getParameter("month");
+
         int page = 1;
         int recordsPerPage = 25;
         if (request.getParameter("recordsPerPage") != null) {
@@ -127,19 +144,23 @@ public class RegistListServlet extends HttpServlet {
         String search = request.getParameter("search").trim().replaceAll("\\s+", " ");
         String orderBy = request.getParameter("orderBy");
 
-        request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, apartmentType, search, orderBy));
+        request.setAttribute("listapart", adao.allApartmentPaging(page, recordsPerPage, buildingtype, apartmentType, search, Integer.parseInt(year), Integer.parseInt(month), orderBy));
         request.setAttribute("buildingtype", buildingtype);
         request.setAttribute("apartmentType", apartmentType);
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("orderBy", orderBy);
         request.setAttribute("search", search);
-        int totalRecords = adao.getTotalApartment(buildingtype, apartmentType, search, orderBy);
+        int totalRecords = adao.getTotalApartment(buildingtype, apartmentType, search, Integer.parseInt(year), Integer.parseInt(month), orderBy);
         request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
-         if(page > (int) Math.ceil((double) totalRecords / recordsPerPage)){
-             request.setAttribute("currentPage", (int) Math.ceil((double) totalRecords / recordsPerPage)-1);
-        }else{
+        if (page > (int) Math.ceil((double) totalRecords / recordsPerPage)) {
+            request.setAttribute("currentPage", (int) Math.ceil((double) totalRecords / recordsPerPage) - 1);
+        } else {
             request.setAttribute("currentPage", page);
         }
+        ServiceContractDAO sdao = new ServiceContractDAO();
+        request.setAttribute("year", year);
+        request.setAttribute("month", month);
+        request.setAttribute("totalFinance", sdao.totalBuildingFinance(Integer.parseInt(month), Integer.parseInt(year)));
         request.setAttribute("totalRoom", totalRecords);
         request.setAttribute("listbuilding", adao.getAllBuilding());
         request.setAttribute("listdepartment", adao.getAllDepartmentType());

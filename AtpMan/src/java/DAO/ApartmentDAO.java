@@ -157,7 +157,7 @@ public class ApartmentDAO {
 
     // thang
     public Vector<Apartment> allApartmentPaging(int page, int recordsPerPage, String buildingtype, String apartmentType,
-            String search, String orderBy) {
+            String search,int year, int month, String orderBy) {
         Vector<Apartment> vector = new Vector<>();
         Connection conn = null;
 
@@ -165,8 +165,7 @@ public class ApartmentDAO {
                 "SELECT A.apartmentID, b.name AS buildingName, A.apartmentNumber, A.apartmentType, A.floor, ");
         sql.append("CASE WHEN SUM(SC.amount) IS NULL THEN 0 ELSE SUM(SC.amount) END AS totalAmount ")
                 .append("FROM Apartment A ")
-                .append("LEFT JOIN ServiceContract SC ON A.apartmentID = SC.apartmentID ")
-                .append("LEFT JOIN Service S ON SC.serviceID = S.serviceID ")
+                .append("LEFT JOIN ServiceContract SC ON A.apartmentID = SC.apartmentID AND YEAR(SC.startDate) = ? AND MONTH(SC.startDate) = ? ")
                 .append("LEFT JOIN Building b ON A.buildingID = b.buildingID ")
                 .append("WHERE 1=1 ");
 
@@ -194,6 +193,8 @@ public class ApartmentDAO {
             PreparedStatement ps = conn.prepareStatement(sql.toString());
 
             int paramIndex = 1;
+            ps.setInt(paramIndex++, year);
+            ps.setInt(paramIndex++, month);
             if (buildingtype != null && !buildingtype.isEmpty()) {
                 ps.setString(paramIndex++, buildingtype);
             }
@@ -231,14 +232,14 @@ public class ApartmentDAO {
         return vector;
     }
 
-    public int getTotalApartment(String buildingtype, String apartmentType, String search, String orderBy) {
+    public int getTotalApartment(String buildingtype, String apartmentType, String search,int year,int month, String orderBy) {
         ApartmentDAO dao = new ApartmentDAO();
         Vector<Apartment> vector = dao.allApartmentPaging(1, dao.getAmountOfApartment(), buildingtype, apartmentType,
-                search, orderBy);
+                search,year,month, orderBy);
         return vector.size();
     }
 
-    public Apartment apartmentDetail(int id) {
+    public Apartment apartmentDetail(int id, int month, int year) {
         Connection conn = null;
         Apartment apartment = new Apartment();
         ServiceContractDAO scdao = new ServiceContractDAO();
@@ -259,7 +260,7 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
-                apartment.setList(scdao.serviceContractById(rs.getInt(1)));
+                apartment.setList(scdao.serviceContractById(rs.getInt(1),month,year));
 
             }
         } catch (SQLException | ClassNotFoundException ex) {
