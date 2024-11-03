@@ -295,7 +295,7 @@
                                             <ul class="dropdown-menu">
                                                 <!-- Dropdown menu links -->
                                                 <c:forEach items="${requestScope.apartmentList}" var="apartment">
-                                                    <a class="chooseApt" href="userhome?apartmentID=${apartment.apartmentID}" style="text-decoration: none">
+                                                    <a class="chooseApt" href="/AtpMan/invoicestatistic?apartmentID=${apartment.apartmentID}" style="text-decoration: none">
                                                         <li>
                                                             <div class="card-body">
                                                                 <div class="row no-gutters align-items-center">
@@ -524,7 +524,7 @@
                             <div class="card-header py-3 row">
                                 <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách dịch vụ trong hóa đơn</h5>
                                 <div class="col-md-3">
-                                    <select id="servicePerPage" name="servicePerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleServiceTable($('#serviceTable .pagination .page-item.active button.page-link').val())">
+                                    <select id="servicePerPage" name="servicePerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleSearch()">
                                         <option value="5">Số lượng hiển thị: 5</option>
                                         <option value="10">Số lượng hiển thị: 10</option>
                                     </select>
@@ -532,7 +532,7 @@
                                 <div class="col-md-4">
                                     <div class="input-group rounded ">
                                         <!--reset the current page to 1 cause of search can reduce the number of page-->
-                                        <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#searchTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                        <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#serviceTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                                         <div class="input-group-append">
                                             <span class="input-group-text btn-primary border-0" id="search-addon">
                                                 <i class="fas fa-search"></i>
@@ -570,6 +570,13 @@
                                                     </tr>
                                             </c:forEach>
                                         </tbody>
+                                        <tfoot style="background-color: #4e73df; color: white" class="h5">
+                                            <tr>
+                                                <th colspan="7">
+                                                    Tổng tiền dịch vụ: <fmt:formatNumber value="${requestScope.invoiceCurrent.amount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
+                                                </th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
                                     <div class="d-flex flex-row-reverse">
                                         <nav aria-label="Page navigation">
@@ -636,6 +643,7 @@
                                                                 console.log("year ", selectYears);
                                                                 console.log("aptId ", apartmentID);
                                                                 console.log("current ", currentPage);
+                                                                console.log("servicePerPage ", servicePerPage);
                                                                 $.ajax({
                                                                     url: "/AtpMan/invoicestatistictableajax",
                                                                     type: "get", //send it through post method
@@ -644,12 +652,12 @@
                                                                         selectMonth: selectMonth,
                                                                         selectYear: selectYears,
                                                                         apartmentID: apartmentID,
-                                                                        currentPage: currentPage
+                                                                        currentPage: currentPage,
+                                                                        servicePerPage: servicePerPage
                                                                     },
                                                                     success: function (data) {
-                                                                        $("#searchTable").html(data);
-                                                                        //                                                                                console.log("data",data);
-                                                                        //                                                            generate.innerHTML = data;
+                                                                        $("#serviceTable").html(data);
+
                                                                     },
                                                                     error: function (xhr) {
                                                                         //Do Something to handle error

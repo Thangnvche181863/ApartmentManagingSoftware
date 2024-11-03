@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.Date;
@@ -165,6 +166,7 @@ public class ServiceContractDAO {
         }
         return list;
     }
+
     // KhangPM
     public int countCurrentServiceContract(int apartmentId, Date currentDate, List<String> searchTermList) {
         int count = 0;
@@ -196,6 +198,152 @@ public class ServiceContractDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentId);
             statement.setDate(2, currentDate);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
+    // KhangPM
+    public BigDecimal totalAmountCurrentServiceContract(int apartmentId, Date currentDate, List<String> searchTermList) {
+        BigDecimal totalAmount = null;
+        String sql = "select SUM(sc.amount) as totalAmount from ServiceContract sc\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "where sc.apartmentID = ? and (? between sc.startDate and sc.endDate)\n";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentId);
+            statement.setDate(2, currentDate);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                totalAmount = rs.getBigDecimal(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return totalAmount;
+    }
+
+    // KhangPM
+    public List<ServiceContract> getCurrentServiceContractByInvoiceId(int invoiceId, int currentPage, int rowsPerPage, List<String> searchTermList) {
+        List<ServiceContract> list = new ArrayList<>();
+        String sql = "select * from ServiceContract sc\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "inner join InvoiceService isc on isc.serviceContractID = sc.serviceContractID\n"
+                + "where isc.invoiceID = ?\n";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+        sql += "order by sc.serviceContractID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, invoiceId);
+            statement.setInt(2, fetchStart);
+            statement.setInt(3, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                // declare service object
+                Service service = new Service();
+
+                service.setServiceId(rs.getInt("serviceID"));
+                service.setName(rs.getString("name"));
+                service.setType(rs.getString("type"));
+                service.setDescription(rs.getString("description"));
+                service.setFee(rs.getBigDecimal("fee"));
+
+                // declare serviceContract object
+                ServiceContract serviceContract = new ServiceContract();
+
+                serviceContract.setServiceContractId(rs.getInt("serviceContractID"));
+                serviceContract.setApartmentId(rs.getInt("apartmentID"));
+                serviceContract.setService(service);
+                serviceContract.setStartDate(rs.getDate("startDate"));
+                serviceContract.setEndDate(rs.getDate("endDate"));
+                serviceContract.setAmount(rs.getBigDecimal("amount"));
+
+                list.add(serviceContract);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    // KhangPM
+    public int countCurrentServiceContractByInvoiceId(int invoiceId, List<String> searchTermList) {
+        int count = 0;
+        String sql = "select count(*) from ServiceContract sc\n"
+                + "inner join Service s on sc.serviceID = s.serviceID\n"
+                + "inner join InvoiceService isc on isc.serviceContractID = sc.serviceContractID\n"
+                + "where isc.invoiceID = ?\n";
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() <= 1) {
+                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+            } else {
+                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') ";
+
+                sql += " or (s.type like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " and s.type like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " and s.type like N'%" + searchTermList.get(searchTermList.size() - 1) + "%')) ";
+            }
+        }
+        
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, invoiceId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 count = rs.getInt(1);
@@ -264,13 +412,17 @@ public class ServiceContractDAO {
         ServiceContractDAO sdao = new ServiceContractDAO();
 //       sdao.insertServiceContract(7, 1, Date.valueOf("2004-07-08"), Date.valueOf("2004-03-12"), 1);
         List<String> sList = new ArrayList<>();
-        sList.add("service");
-        List<ServiceContract> list = sdao.getCurrentServiceContract(1, Date.valueOf(LocalDate.now()), 1, 10, sList);
-        int count = sdao.countCurrentServiceContract(1, Date.valueOf(LocalDate.now()), sList);
+        sList.add("");
+        List<ServiceContract> list = sdao.getCurrentServiceContractByInvoiceId(13, 1, 10, sList);
+        int count = sdao.countCurrentServiceContractByInvoiceId(15, sList);
+        System.out.println(list.size());
         System.out.println(count);
 
 //        System.out.println(sdao.serviceContractById(1));
         System.out.println(sdao.statisticContract(1).getTotalAmount());
+
+        BigDecimal a = sdao.totalAmountCurrentServiceContract(1, Date.valueOf(LocalDate.now()), null);
+        System.out.println(a);
 
     }
 }

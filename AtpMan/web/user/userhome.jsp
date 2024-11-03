@@ -44,6 +44,12 @@
                 width: auto;
                 margin: auto;
             }
+            .pay div{
+                text-decoration: none;
+            }
+            .pay div:hover{
+                color: #015fc9 !important;
+            }
         </style>
     </head>
     <body>
@@ -523,27 +529,49 @@
                                 <c:if test="${requestScope.invoiceCurrent.status == 0}">
                                     <c:set var="colorTab" value="danger"></c:set>
                                     <c:set var="status" value="Chưa thanh toán"/>
+                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
+                                                        Trạng thái
+                                                    </div>
+                                                        <a class="pay" style="text-decoration: none" href="#" onclick="submitPayment()">
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status} (Bấm để thanh toán)</div>
+                                                    </a>
+                                                    <form id="paysubmit" action="/AtpMan/payinvoice" method="post" style="display: none">
+                                                        <input type="hidden" name ="amount" value="${requestScope.invoiceCurrent.amount}"/>
+                                                        <input type="hidden" name ="invoiceId" value="${requestScope.invoiceCurrent.invoiceId}"/>
+                                                    </form>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </c:if>
                                 <c:if test="${requestScope.invoiceCurrent.dueDate == null}">
                                     <c:set var="colorTab" value="secondary"></c:set>
                                     <c:set var="status" value="Không khả dụng"/>
                                 </c:if>
-                                <div class="card border-left-${colorTab} shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
-                                                    Trạng thái
+                                <c:if test="${requestScope.invoiceCurrent.status != 0}">
+                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
+                                                        Trạng thái
+                                                    </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
-                                                <a href="/AtpMan/payinvoice?amount=${requestScope.invoiceCurrent.amount}&invoiceId=${requestScope.invoiceCurrent.invoiceId}">Thanh toán</a>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </c:if>
                             </div>
                         </div>
                         <!--End Current month's billing information-->
@@ -725,6 +753,10 @@
 
                                                                     function submitMonth() {
                                                                         document.getElementById('chooseMonthYear').submit();
+                                                                    }
+                                                                    
+                                                                    function submitPayment() {
+                                                                        document.getElementById("paysubmit").submit();
                                                                     }
             </script>
     </body>

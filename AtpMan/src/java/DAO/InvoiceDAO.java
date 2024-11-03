@@ -4,11 +4,14 @@
  */
 package DAO;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import model.Invoice;
 import utils.DBContext;
 import model.*;
@@ -37,7 +40,11 @@ public class InvoiceDAO {
                 invoice.setIssueDate(rs.getDate(4));
                 invoice.setDueDate(rs.getDate(5));
                 invoice.setStatus(rs.getInt(6));
-                invoice.setTransactionDate(rs.getDate(7));
+                invoice.setTransactionDate(rs.getTimestamp(7));
+                invoice.setInvoiceCode(rs.getString(8));
+                invoice.setTransactionNo(rs.getString(9));
+                invoice.setBankCode(rs.getString(10));
+                invoice.setOrderInfo(rs.getString(11));
                 list.add(invoice);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -141,7 +148,7 @@ public class InvoiceDAO {
                 invoice.setIssueDate(rs.getDate(5));
                 invoice.setDueDate(rs.getDate(6));
                 invoice.setStatus(rs.getInt(7));
-                invoice.setTransactionDate(rs.getDate(8));
+                invoice.setTransactionDate(rs.getTimestamp(8));
                 invoice.setServiceContractList(serviceList);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -153,7 +160,9 @@ public class InvoiceDAO {
     public Invoice getInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, int page, int rowPerPage, List<String> searchTermList) {
         Invoice invoice = new Invoice();
         List<ServiceContract> serviceList = new ArrayList<>();
-        String sql = "select ins.invoiceID, ins.serviceContractID, i.apartmentID, i.amount, i.issueDate, i.dueDate, i.status, i.transactionDate, sc.serviceID, sc.startDate, sc.endDate, sc.amount as contractAmount, s.name, s.type, s.description, s.fee from InvoiceService ins\n"
+        String sql = "select ins.invoiceID, ins.serviceContractID, i.apartmentID, i.amount, i.issueDate,\n"
+                + "i.dueDate, i.status, i.transactionDate, i.invoiceCode, i.transactionNo, i.bankCode, i.orderInfo,\n"
+                + "sc.serviceID, sc.startDate, sc.endDate, sc.amount as contractAmount, s.name, s.type, s.description, s.fee from InvoiceService ins\n"
                 + "inner join Invoice i on ins.invoiceID = i.invoiceID\n"
                 + "inner join ServiceContract sc on ins.serviceContractID = sc.serviceContractID\n"
                 + "inner join Service s on sc.serviceID = s.serviceID\n"
@@ -194,18 +203,22 @@ public class InvoiceDAO {
             ResultSet rs = statement.executeQuery();
             LinkedHashMap<Integer, Invoice> map = new LinkedHashMap<>();
             while (rs.next()) {
-                int invoiceID = rs.getInt(1);
+                int invoiceID = rs.getInt("invoiceID");
                 invoice = map.get(invoiceID);
 
                 if (invoice == null) {
                     invoice = new Invoice();
                     invoice.setInvoiceId(invoiceID);
-                    invoice.setApartmentId(rs.getInt(3));
-                    invoice.setAmount(rs.getDouble(4));
-                    invoice.setIssueDate(rs.getDate(5));
-                    invoice.setDueDate(rs.getDate(6));
-                    invoice.setStatus(rs.getInt(7));
-                    invoice.setTransactionDate(rs.getDate(8));
+                    invoice.setApartmentId(rs.getInt("apartmentID"));
+                    invoice.setAmount(rs.getDouble("amount"));
+                    invoice.setIssueDate(rs.getDate("issueDate"));
+                    invoice.setDueDate(rs.getDate("dueDate"));
+                    invoice.setStatus(rs.getInt("status"));
+                    invoice.setTransactionDate(rs.getTimestamp("transactionDate"));
+//                    invoice.setInvoiceCode(rs.getString("invoiceCode"));
+//                    invoice.setTransactionNo(rs.getString("transactionNo"));
+//                    invoice.setBankCode(rs.getString("bankCode"));
+//                    invoice.setOrderInfo(rs.getString("orderInfo"));
                     map.put(invoiceID, invoice);
                 }
 
@@ -267,7 +280,7 @@ public class InvoiceDAO {
                     invoice.setIssueDate(rs.getDate(5));
                     invoice.setDueDate(rs.getDate(6));
                     invoice.setStatus(rs.getInt(7));
-                    invoice.setTransactionDate(rs.getDate(8));
+                    invoice.setTransactionDate(rs.getTimestamp(8));
                     map.put(invoiceID, invoice);
                 } else {
                     return invoice;
@@ -359,21 +372,297 @@ public class InvoiceDAO {
     }
 
     // KhangPM
-    public int updateInvoiceTransaction(int invoiceId, Date date) {
+    public int updateInvoiceTransaction(int invoiceId, Timestamp transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo) {
         int i = 0;
         String sql = "update Invoice\n"
-                + "set status = 1, transactionDate = ?\n"
+                + "set status = 1, transactionDate =  ?, invoiceCode = ?, transactionNo = ?, bankCode = ?, orderInfo = ?\n"
                 + "where invoiceID = ?";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setDate(1, date);
-            statement.setInt(2, invoiceId);
+            statement.setTimestamp(1, transactionDate);
+            statement.setString(2, invoiceCode);
+            statement.setString(3, transactionNo);
+            statement.setString(4, bankCode);
+            statement.setString(5, orderInfo);
+            statement.setInt(6, invoiceId);
             i = statement.executeUpdate();
             return i;
         } catch (SQLException | ClassNotFoundException e) {
         }
         return i;
+    }
+
+    public BigDecimal totalPaidInvoice() {
+        double total = 0;
+        String sql = "select sum(amount) from Invoice\n"
+                + "where status = 1";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return BigDecimal.valueOf(total);
+    }
+
+    public int totalInvoiceByStatus(int status) {
+        int total = 0;
+        String sql = "select count(*) from Invoice\n"
+                + "where status = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return total;
+    }
+
+    public Date getEarliestDateInvoice() {
+        Date date = null;
+        String sql = "SELECT MIN(CONVERT(DATE, transactionDate )) AS transactionDate from Invoice\n"
+                + "where status = 1";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                date = rs.getDate(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return date;
+    }
+
+    public List<Invoice> getInvoiceForStaff(int status, int currentPage, int rowPerPage, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+        List<Invoice> list = new ArrayList<>();
+        String sql = "select i.*, a.apartmentNumber from Invoice i "
+                + "inner join Apartment a on a.apartmentID = i.apartmentID "
+                + "where status = ? ";
+
+        // Tạo truy vấn động theo điều kiện có giá trị khác null
+        if (toDate != null) {
+            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+        }
+        if (fromDate != null) {
+            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+        }
+        if (invoiceCode != null && !invoiceCode.isBlank()) {
+            sql += " and i.invoiceCode = ? ";
+        }
+        if (transactionNo != null && !transactionNo.isBlank()) {
+            sql += " and i.transactionNo = ? ";
+        }
+        if (orderInfo != null && !orderInfo.isBlank()) {
+            sql += " and i.orderInfo like ? ";
+        }
+
+        sql += "order by i.transactionDate desc offset ? rows fetch next ? rows only";
+
+        int fetchNext = (currentPage - 1) * rowPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+
+            // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
+            statement.setInt(index++, status);
+
+            if (toDate != null) {
+                statement.setDate(index++, toDate);
+            }
+            if (fromDate != null) {
+                statement.setDate(index++, fromDate);
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                statement.setString(index++, invoiceCode.trim());
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                statement.setString(index++, transactionNo.trim());
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                statement.setString(index++, "%" + orderInfo.trim() + "%");
+            }
+
+            // Phân trang
+            statement.setInt(index++, fetchNext);
+            statement.setInt(index, rowPerPage);
+
+            ResultSet rs = statement.executeQuery();
+
+            // Xử lý dữ liệu từ kết quả truy vấn
+            while (rs.next()) {
+                Invoice invoice = new Invoice();
+                invoice.setInvoiceId(rs.getInt(1));
+                invoice.setApartmentId(rs.getInt(2));
+                invoice.setAmount(rs.getDouble(3));
+                invoice.setIssueDate(rs.getDate(4));
+                invoice.setDueDate(rs.getDate(5));
+                invoice.setStatus(rs.getInt(6));
+                invoice.setTransactionDate(rs.getTimestamp(7));
+                invoice.setInvoiceCode(rs.getString(8));
+                invoice.setTransactionNo(rs.getString(9));
+                invoice.setBankCode(rs.getString(10));
+                invoice.setOrderInfo(rs.getString(11));
+                invoice.setApartmentName(rs.getString(12));
+                list.add(invoice);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+        return list;
+    }
+
+    public int countInvoiceForStaff(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+        int count = 0;
+        String sql = "select count(*) from Invoice i "
+                + "inner join Apartment a on a.apartmentID = i.apartmentID "
+                + "where status = ? ";
+
+        // Tạo truy vấn động theo điều kiện có giá trị khác null
+        if (toDate != null) {
+            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+        }
+        if (fromDate != null) {
+            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+        }
+        if (invoiceCode != null && !invoiceCode.isBlank()) {
+            sql += " and i.invoiceCode = ? ";
+        }
+        if (transactionNo != null && !transactionNo.isBlank()) {
+            sql += " and i.transactionNo = ? ";
+        }
+        if (orderInfo != null && !orderInfo.isBlank()) {
+            sql += " and i.orderInfo like ? ";
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+
+            // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
+            statement.setInt(index++, status);
+
+            if (toDate != null) {
+                statement.setDate(index++, toDate);
+            }
+            if (fromDate != null) {
+                statement.setDate(index++, fromDate);
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                statement.setString(index++, invoiceCode.trim());
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                statement.setString(index++, transactionNo.trim());
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                statement.setString(index, "%" + orderInfo.trim() + "%");
+            }
+
+            ResultSet rs = statement.executeQuery();
+
+            // Xử lý dữ liệu từ kết quả truy vấn
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+        return count;
+    }
+
+    public double totalAmountPaidInvoice(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+        double total = 0;
+        String sql = "select SUM(i.amount) from Invoice i "
+                + "inner join Apartment a on a.apartmentID = i.apartmentID "
+                + "where status = ? ";
+
+        // Tạo truy vấn động theo điều kiện có giá trị khác null
+        if (toDate != null) {
+            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+        }
+        if (fromDate != null) {
+            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+        }
+        if (invoiceCode != null && !invoiceCode.isBlank()) {
+            sql += " and i.invoiceCode = ? ";
+        }
+        if (transactionNo != null && !transactionNo.isBlank()) {
+            sql += " and i.transactionNo = ? ";
+        }
+        if (orderInfo != null && !orderInfo.isBlank()) {
+            sql += " and i.orderInfo like ? ";
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+
+            // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
+            statement.setInt(index++, status);
+
+            if (toDate != null) {
+                statement.setDate(index++, toDate);
+            }
+            if (fromDate != null) {
+                statement.setDate(index++, fromDate);
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                statement.setString(index++, invoiceCode.trim());
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                statement.setString(index++, transactionNo.trim());
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                statement.setString(index, "%" + orderInfo.trim() + "%");
+            }
+
+            ResultSet rs = statement.executeQuery();
+
+            // Xử lý dữ liệu từ kết quả truy vấn
+            if (rs.next()) {
+                total = rs.getDouble(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+        return total;
+    }
+
+    public Map<String, Double> getAmountByInvoiceId(int invoiceId) {
+        Map<String, Double> map = new LinkedHashMap<>();
+        double amount = 1;
+        String invoiceCode = "";
+        String sql = "select invoiceCode, amount from Invoice\n"
+                + "where invoiceID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, invoiceId);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                invoiceCode = rs.getString(1);
+                amount = rs.getDouble(2);
+                
+                map.put(invoiceCode, amount);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return map;
     }
 
     // public void insertInvoice(int apartmentId, double amount, Date issueDate, Date dueDate, int status,
@@ -403,30 +692,6 @@ public class InvoiceDAO {
     //         System.out.println(e);
     //     }
     // }
-    // public void updateInvoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status,
-    //         Date transactionDate) {
-    //     try {
-    //         String sql = "UPDATE [dbo].[Invoice]\n"
-    //                 + "   SET [apartmentID] = ?\n"
-    //                 + "      ,[amount] = ?\n"
-    //                 + "      ,[issueDate] = ?\n"
-    //                 + "      ,[dueDate] = ?\n"
-    //                 + "      ,[status] = ?\n"
-    //                 + "      ,[transactionDate] = ?\n"
-    //                 + " WHERE invoiceId = ?";
-    //         PreparedStatement ps = connection.prepareStatement(sql);
-    //         ps.setInt(1, apartmentId);
-    //         ps.setDouble(2, amount);
-    //         ps.setDate(3, issueDate);
-    //         ps.setDate(4, dueDate);
-    //         ps.setInt(5, status);
-    //         ps.setDate(6, transactionDate);
-    //         ps.setInt(7, invoiceId);
-    //         ps.executeUpdate();
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
-    // }
     public static void main(String[] args) {
         InvoiceDAO dao = new InvoiceDAO();
         List<Invoice> list = dao.getAllInvoiceByApartmentID(1);
@@ -439,15 +704,19 @@ public class InvoiceDAO {
 
         List<ServiceContract> serviceContractsList = dao.getAllServiceInvoiceByApartmentIDandMonth(1, 11, 2024);
         Invoice i = dao.getInvoiceByApartmentIDandMonth(1, 11, 2024, 1, 5, null);
-        // System.out.println(i.getServiceContractList().get(0).getService().getName());
-        // for (ServiceContract serviceContract : i.getServiceContractList()) {
-        // System.out.println(serviceContract.getService().getName());
-        // }
 
-        int i3 = dao.updateInvoiceTransaction(13, Date.valueOf(LocalDate.now()));
-        System.out.println(i3);
-        Invoice i2 = dao.getInvoiceByApartmentIDandMonthYear(1, 11, 2024);
-        System.out.println(i2.toString());
+        System.out.println(i);
+
+        LocalDate fromDate = LocalDate.of(2024, 10, 15);
+        LocalDate toDate = LocalDate.of(2024, 10, 31);
+
+        System.out.println(Date.valueOf(fromDate));
+
+        List<Invoice> iList = dao.getInvoiceForStaff(1, 1, 10, Date.valueOf(fromDate), Date.valueOf(toDate), "25742162", "14642203", null);
+        System.out.println(iList.size());
+
+        int count = dao.countInvoiceForStaff(1, Date.valueOf(fromDate), Date.valueOf(toDate), "  ", "  ", null);
+        System.out.println(count);
 
     }
 }

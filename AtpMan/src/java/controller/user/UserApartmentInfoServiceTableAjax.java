@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -97,6 +98,12 @@ public class UserApartmentInfoServiceTableAjax extends HttpServlet {
         }
 
         List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContract(apartmentID, Date.valueOf(date), currentServicePage, servicePerPage, serviceSearchTermList);
+        BigDecimal totalAmount = serviceContractDAO.totalAmountCurrentServiceContract(apartmentID, Date.valueOf(date), null);
+        double totalA = 0;
+
+        if (totalAmount != null) {
+            totalA = totalAmount.doubleValue();
+        }
 
         Locale locale = Locale.US;
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
@@ -117,13 +124,11 @@ public class UserApartmentInfoServiceTableAjax extends HttpServlet {
                 + "                                            </thead>\n"
                 + "                                            <tbody>\n");
         int count = (currentServicePage - 1) * servicePerPage;
-        int totalAmount = 0;
         if (serviceContractList.isEmpty()) {
             out.println("<tr><td colspan=\"6\">Không có dữ liệu dịch vụ</td></tr>");
         } else {
             for (ServiceContract serviceContract : serviceContractList) {
                 count++;
-                totalAmount += serviceContract.getAmount().intValue();
                 out.println("                                                   <tr>\n"
                         + "                                                        <td>" + count + "</td>\n"
                         + "                                                        <td>" + serviceContract.getService().getName() + "</td>\n"
@@ -135,9 +140,9 @@ public class UserApartmentInfoServiceTableAjax extends HttpServlet {
             }
         }
         out.println("                                   </tbody>\n"
-                + "                                            <tfoot style=\"background-color: #4e73df; color: white\">\n"
+                + "                                            <tfoot style=\"background-color: #4e73df; color: white\"  class=\"h5\">\n"
                 + "                                                <tr>\n"
-                + "                                                    <th colspan=\"6\">Tổng tiền dịch vụ: " + decimalFormat.format(totalAmount) + "</fmt:formatNumber> VNĐ</th>\n"
+                + "                                                    <th colspan=\"6\">Tổng tiền dịch vụ: " + decimalFormat.format(totalA) + " VNĐ</th>\n"
                 + "                                                    </tr>\n"
                 + "                                                </tfoot>"
                 + "                                </table>\n");

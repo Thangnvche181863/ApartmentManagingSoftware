@@ -41,26 +41,45 @@
         <link href="../assets/jumbotron-narrow.css" rel="stylesheet">      
         <script src="../assets/jquery-1.11.3.min.js"></script>
         <style>
-
-            .gradient-custom {
-                /* fallback for old browsers */
-                background: #f093fb;
-
-                /* Chrome 10-25, Safari 5.1-6 */
-                background: -webkit-linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1));
-
-                /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                background: linear-gradient(to bottom right, rgba(240, 147, 251, 1), rgba(245, 87, 108, 1))
+            .payment-result-container {
+                background-color: #ffffff;
+                border-radius: 12px;
+                padding: 30px 40px;
+                max-width: 700px;
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+                text-align: center;
+                color: #003366;
             }
-
-            .card-registration .select-input.form-control[readonly]:not([disabled]) {
-                font-size: 1rem;
-                line-height: 2.15;
-                padding-left: .75em;
-                padding-right: .75em;
+            .payment-result-container h2 {
+                color: #0066cc;
+                font-size: 26px;
+                margin-bottom: 25px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
             }
-            .card-registration .select-arrow {
-                top: 13px;
+            .payment-result-container .status-icon {
+                font-size: 48px;
+                color: #4a90e2;
+                margin-bottom: 20px;
+            }
+            .payment-result-container .detail {
+                text-align: left;
+                margin-bottom: 15px;
+                line-height: 1.6;
+            }
+            .detail p {
+                font-size: 15px;
+                margin: 5px 0;
+                color: #333;
+            }
+            .detail p span {
+                font-weight: bold;
+                color: #0066cc;
+            }
+            .status-success {
+                color: #0066cc;
+                font-weight: bold;
+                font-size: 16px;
             }
         </style>
     </head>
@@ -273,70 +292,40 @@
                         </ul>
 
                     </nav>
-                    <!--End of Topbar--> 
-                    <div class="container py-5 ">
-                        <div class="row justify-content-center align-items-center h-100">
-                            <div class="col-12 col-lg-9 col-xl-7">
-                                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                                    <div class="card-body p-4 p-md-5">
-                                        <h2 class="mb-4 pb-2 pb-md-0 mb-md-5 h1 text-gray-900 fw-bold">Tạo thông tin thanh toán</h2>
-                                        <form action="/AtpMan/vnpayajax" id="frmCreateOrder" method="post">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div data-mdb-input-init class="form-outline">
-                                                        <label class="form-label h4" for="firstName">Số tiền</label>
-                                                        <fmt:setLocale value = "en_US"/>
-                                                        <input class="form-control form-control-lg" 
-                                                               data-val="true" 
-                                                               data-val-number="The field Amount must be a number." 
-                                                               data-val-required="The Amount field is required." 
-                                                               max="100000000" 
-                                                               min="1" 
-                                                               type="text" 
-                                                               value="<fmt:formatNumber value="${requestScope.amount}" type="number" maxFractionDigits="0"/> VNĐ"
-                                                               disabled=""
-                                                               />
-                                                        <input id="amount" name="amount" type="hidden" value="${requestScope.amount}">
-                                                        <input id="invoiceId" name="invoiceId" type="hidden" value="${requestScope.invoiceId}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label class="form-label select-label h4">Chọn phương thức thanh toán</label>
-                                                    <select name="bankCode" class="form-select form-control-lg">
-                                                        <option selected value="">Cổng thanh toán VNPAYQR</option>
-                                                        <option value="VNPAYQR">Thanh toán bằng ứng dụng hỗ trợ VNPAYQR</option>
-                                                        <option value="VNBANK">Thanh toán qua thẻ ATM/Tài khoản nội địa</option>
-                                                        <option value="INTCARD">Thanh toán qua thẻ quốc tế</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h4 class="mb-2 pb-1">Chọn ngôn ngữ thanh toán: </h4>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="language" id="languageVN"
-                                                               value="vn" checked />
-                                                        <label class="form-check-label" for="languageVN">Tiếng Việt</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio" name="language" id="languageEN"
-                                                               value="en" />
-                                                        <label class="form-check-label" for="languageEN">Tiếng Anh</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-4 pt-2">
-                                                <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Thanh toán" />
-                                            </div>
-                                        </form>
-                                    </div>
+                    <!--End of Topbar-->
+
+                    <fmt:setLocale value = "en_US"/>
+                    <div class="payment-result-container container">
+                        <div class="header clearfix">
+                            <h2 class="fw-bold">Kết quả thanh toán</h2>
+                        </div>
+                        <div class="detail table-responsive">
+                            <div class="form-group">
+                                <p><span>Mã giao dịch thanh toán (Số hóa đơn):</span> <label>${requestScope.vnp_TxnRef}</label></p>
+                            </div>
+                            <div class="form-group">
+                                <p><span>Số tiền:</span> <label><fmt:formatNumber value="${requestScope.vnp_Amount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</label></p>
                                 </div>
+                                <div class="form-group">
+                                    <p><span>Mô tả giao dịch:</span> <label>${requestScope.vnp_OrderInfo}</label></label></p>
+                            </div>
+                            <div class="form-group">
+                                <p><span>Mã lỗi thanh toán:</span> <label>${requestScope.vnp_ResponseCode}</label></p>
+                            </div>
+                            <div class="form-group">
+                                <p><span>Mã ngân hàng thanh toán:</span> <label>${requestScope.vnp_BankCode}</label></p>
+                            </div>
+                            <div class="form-group">
+                                <p><span>Thời gian thanh toán:</span> <label>${requestScope.vnp_PayDate}</label></p>
+                            </div>
+                            <div class="form-group">
+                                <p>
+                                    <span>Tình trạng giao dịch:</span> 
+                                    <span class="${ requestScope.vnp_ResponseCode == 0 ?'text-success' : 'text-danger'}">${requestScope.message}</span>
+                                </p>
                             </div>
                         </div>
+                        <a href="/AtpMan/user/userhome" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Quay lại</a>
                     </div>
                 </div>
             </div>
@@ -358,34 +347,7 @@
         <link href="https://pay.vnpay.vn/lib/vnpay/vnpay.css" rel="stylesheet" />
         <script src="https://pay.vnpay.vn/lib/vnpay/vnpay.min.js"></script>
         <script type="text/javascript">
-            $("#frmCreateOrder").submit(function () {
-                var postData = $("#frmCreateOrder").serialize();
-                var submitUrl = $("#frmCreateOrder").attr("action");
-                console.log(submitUrl);
-                console.log(postData);
-                $.ajax({
-                    type: "POST",
-                    url: submitUrl,
-                    data: postData,
-                    dataType: 'JSON',
-                    success: function (x) {
-                        if (x.code === '00') {
-                            if (window.vnpay) {
-                                vnpay.open({width: 768, height: 600, url: x.data});
-                            } else {
-                                location.href = x.data;
-                            }
-                            return false;
-                        } else {
-                            alert(x.Message);
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("Error:", textStatus, errorThrown); // Kiểm tra lỗi
-                    }
-                });
-                return false;
-            });
+
         </script> 
     </body>
 </html>

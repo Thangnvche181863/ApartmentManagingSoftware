@@ -152,13 +152,13 @@ public class InvoiceStatisticServlet extends HttpServlet {
         }
 
         Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, 1, rowsPerPage, null);
-        List<ServiceContract> serviceList = invoiceDAO.getAllServiceInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
+        List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
 
         // parameter for current year
-        double total = userHomeUtil.totalAmount(iList, year);
-        int numOfInvoice = userHomeUtil.numInvoiceInYear(iList, year);
-        double paid = userHomeUtil.paidAmount(iList, year);
-        double unpaid = userHomeUtil.unPaidAmount(iList, year);
+//        double total = userHomeUtil.totalAmount(iList, year);
+//        int numOfInvoice = userHomeUtil.numInvoiceInYear(iList, year);
+//        double paid = userHomeUtil.paidAmount(iList, year);
+//        double unpaid = userHomeUtil.unPaidAmount(iList, year);
 
 
         //get current page from the request
@@ -192,10 +192,10 @@ public class InvoiceStatisticServlet extends HttpServlet {
         request.setAttribute("currentYear", year);
         request.setAttribute("listOfYear", listOfYear);
 
-        request.setAttribute("totalBill", total);
-        request.setAttribute("numOfInvoice", numOfInvoice);
-        request.setAttribute("paid", paid);
-        request.setAttribute("unpaid", unpaid);
+//        request.setAttribute("totalBill", total);
+//        request.setAttribute("numOfInvoice", numOfInvoice);
+//        request.setAttribute("paid", paid);
+//        request.setAttribute("unpaid", unpaid);
 
         request.setAttribute("invoiceCurrent", invoiceCurrent);
         request.setAttribute("serviceList", serviceList);

@@ -247,82 +247,84 @@
                             </div>
                             <div class="col-xl-12 col-md-12 mb-12">
                                 <div class="row">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="btn-group dropend">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <!--building information-->
-                                                        <div class="row">
-                                                            <div class="h2 font-weight-bold text-success text-uppercase mb-1 col-xxl-2 col-xl-3 col-lg-4 col-md-5">
-                                                                Tòa Nhà:
+                                    <!--<form id="submitForm" action="/AtpMan/userapartmentinfo" method="get">-->
+                                        <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="btn-group dropend">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <!--building information-->
+                                                            <div class="row">
+                                                                <div class="h2 font-weight-bold text-success text-uppercase mb-1 col-xxl-2 col-xl-3 col-lg-4 col-md-5">
+                                                                    Tòa Nhà:
+                                                                </div>
+                                                                <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
+                                                                    <select id="buildingID" name="buildingID" class="form-select h2 font-weight-bold text-success text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
+                                                                        <c:if test="${sessionScope.user.isOwner == 1}">
+                                                                            <c:forEach items="${requestScope.buildingList}" var="building">
+                                                                                <option ${(requestScope.building.buildingID == building.buildingID) ? 'selected':''} value="${building.buildingID}">${building.name}</option>
+                                                                            </c:forEach>
+                                                                        </c:if>
+                                                                        <c:if test="${sessionScope.user.isOwner == 0}">
+                                                                            <option value="${requestScope.building.buildingID}">${requestScope.building.name}</option>
+                                                                        </c:if>
+                                                                    </select>
+                                                                </div>
                                                             </div>
-                                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
-                                                                <select id="buildingID" name="buildingID" class="form-select h2 font-weight-bold text-success text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
-                                                                    <c:if test="${sessionScope.user.isOwner == 1}">
-                                                                        <c:forEach items="${requestScope.buildingList}" var="building">
-                                                                            <option ${(requestScope.building.buildingID == building.buildingID) ? 'selected':''} value="${building.buildingID}">${building.name}</option>
-                                                                        </c:forEach>
-                                                                    </c:if>
-                                                                    <c:if test="${sessionScope.user.isOwner == 0}">
-                                                                        <option value="${requestScope.building.buildingID}">${requestScope.building.name}</option>
-                                                                    </c:if>
-                                                                </select>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900">
+                                                                Số Tầng:  &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.numFloor} tầng</span>
                                                             </div>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900">
-                                                            Số Tầng:  &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.numFloor} tầng</span>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900">
-                                                            Số Căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.numApartment} căn hộ</span> 
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900">
-                                                            Địa chỉ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.address}</span>
-                                                        </div>
-                                                        <br>
-                                                        <!--apartment information-->
-                                                        <div class="row">
-                                                            <div class="h3 font-weight-bold text-primary text-uppercase mb-1 col-xxl-2 col-xl-3 col-lg-4 col-md-5">
-                                                                Căn hộ:
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900">
+                                                                Số Căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.numApartment} căn hộ</span> 
                                                             </div>
-                                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
-                                                                <select id="apartmentID" name="apartmentID" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
-                                                                    <c:if test="${sessionScope.user.isOwner == 1}">
-                                                                        <c:forEach items="${requestScope.building.apartmentList}" var="apartment">
-                                                                            <option ${(requestScope.apartment.apartmentID == apartment.apartmentID) ? 'selected' : ''} value="${apartment.apartmentID}">${apartment.apartmentNumber}</option>
-                                                                        </c:forEach>
-                                                                    </c:if>
-                                                                    <c:if test="${sessionScope.user.isOwner == 0}">
-                                                                        <option value="${requestScope.apartment.apartmentID}">${requestScope.apartment.apartmentNumber}</option>
-                                                                    </c:if>
-                                                                </select>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900">
+                                                                Địa chỉ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.building.address}</span>
                                                             </div>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                            Loại căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.apartmentType}</span>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                            Tầng: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.floor} </span>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                            Tổng diện tích: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.area} m2   </span>
-                                                        </div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                            Giá trị căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700"><fmt:formatNumber value=" ${requestScope.apartment.price}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ   </span>
+                                                            <br>
+                                                            <!--apartment information-->
+                                                            <div class="row">
+                                                                <div class="h3 font-weight-bold text-primary text-uppercase mb-1 col-xxl-2 col-xl-3 col-lg-4 col-md-5">
+                                                                    Căn hộ:
+                                                                </div>
+                                                                <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
+                                                                    <select id="apartmentID" name="apartmentID" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
+                                                                        <c:if test="${sessionScope.user.isOwner == 1}">
+                                                                            <c:forEach items="${requestScope.building.apartmentList}" var="apartment">
+                                                                                <option ${(requestScope.apartment.apartmentID == apartment.apartmentID) ? 'selected' : ''} value="${apartment.apartmentID}">${apartment.apartmentNumber}</option>
+                                                                            </c:forEach>
+                                                                        </c:if>
+                                                                        <c:if test="${sessionScope.user.isOwner == 0}">
+                                                                            <option value="${requestScope.apartment.apartmentID}">${requestScope.apartment.apartmentNumber}</option>
+                                                                        </c:if>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                             <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                                Tổng số người ở: &nbsp; 
-                                                            <c:if test="${requestScope.customerList.size()>0}"><span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.customerList.size()} người</span></c:if>
-                                                            <c:if test="${requestScope.customerList.size()==0}"><span class="h5 mb-0 font-weight-bold text-gray-700">chưa có người ở</span></c:if>
+                                                                Loại căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.apartmentType}</span>
                                                             </div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
+                                                                Tầng: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.floor} </span>
+                                                            </div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
+                                                                Tổng diện tích: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.apartment.area} m2   </span>
+                                                            </div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
+                                                                Giá trị căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700"><fmt:formatNumber value=" ${requestScope.apartment.price}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ   </span>
+                                                                </div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
+                                                                    Tổng số người ở: &nbsp; 
+                                                                <c:if test="${requestScope.customerList.size()>0}"><span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.customerList.size()} người</span></c:if>
+                                                                <c:if test="${requestScope.customerList.size()==0}"><span class="h5 mb-0 font-weight-bold text-gray-700">Chưa có người ở</span></c:if>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-building fa-10x text-gray-300"></i>
+                                                            </div> 
                                                         </div>
-                                                        <div class="col-auto">
-                                                            <i class="fas fa-building fa-10x text-gray-300"></i>
-                                                        </div> 
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <!--</form>-->
                                     </div>
                                 </div> 
                                 <br>
@@ -332,17 +334,17 @@
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 row">
                                         <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách cư dân đăng ký trong căn hộ</h5>
-<!--                                        <div class="row col-md-2">
-                                            <div class="" style="display: flex;">
-                                                <b style="margin: 0; align-content: center;">Số lượng hiển thị</b>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
-                                                    <option value="5">5</option>
-                                                    <option value="10">10</option>
-                                                </select>
-                                            </div>
-                                        </div>-->
+                                        <!--                                        <div class="row col-md-2">
+                                                                                    <div class="" style="display: flex;">
+                                                                                        <b style="margin: 0; align-content: center;">Số lượng hiển thị</b>
+                                                                                    </div>
+                                                                                    <div class="col-md-8">
+                                                                                        <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
+                                                                                            <option value="5">5</option>
+                                                                                            <option value="10">10</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>-->
                                         <div class="col-md-3">
                                             <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
                                                 <option value="5">Số lượng hiển thị: 5</option>
@@ -460,10 +462,8 @@
                                             <tbody>
                                                 <c:if test="${not empty requestScope.serviceContractList}">
                                                     <c:set var="countServiceTable" value="0"/>
-                                                    <c:set var="total" value="0"/>
                                                     <c:forEach items="${requestScope.serviceContractList}" var="serviceContract">
                                                         <c:set var="countServiceTable" value="${countServiceTable + 1}"/>
-                                                        <c:set var="total" value="${total + serviceContract.getAmount()}"/>
                                                         <tr>
                                                             <td>${countServiceTable}</td>
                                                             <td>${serviceContract.getService().getName()}</td>
@@ -480,9 +480,9 @@
                                                     </tr>
                                                 </c:if>
                                             </tbody>
-                                            <tfoot style="background-color: #4e73df; color: white">
+                                            <tfoot style="background-color: #4e73df; color: white" class="h5">
                                                 <tr>
-                                                    <th colspan="6">Tổng tiền dịch vụ: <fmt:formatNumber value="${total}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</th>
+                                                    <th colspan="6">Tổng tiền dịch vụ: <fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -616,6 +616,9 @@
                                                                             //Do Something to handle error
                                                                         }
                                                                     });
+                                                                }
+                                                                function submit() {
+                                                                    document.getElementById("submitForm").submit();
                                                                 }
         </script>
     </body>

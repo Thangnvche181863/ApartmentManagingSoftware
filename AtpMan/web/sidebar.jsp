@@ -25,7 +25,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="managerHomePage.jsp">
+                <a class="nav-link" href="/AtpMan/managerPage">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -73,6 +73,19 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#income_expenditure" 
+                   aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Quản lý thu chi</span>
+                </a>
+                <div id="income_expenditure" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/AtpMan/managerinvoicestatistic">Quản lý hóa đơn</a>
+                        <a class="collapse-item" href="blank.html">Quản lý chi tiêu</a>
+                    </div>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
                    aria-expanded="true" aria-controls="collapsePages">
@@ -232,10 +245,23 @@
         </li>
 
         <!-- Nav Item - Charts -->
-        <li class="nav-item">
+<!--        <li class="nav-item">
             <a class="nav-link" href="/AtpMan/invoicestatistic">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Thống kê hóa đơn</span></a>
+        </li>-->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoiceStat"
+               aria-expanded="true" aria-controls="collapseInvoiceStat">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Thống kê</span>
+            </a>
+            <div id="collapseInvoiceStat" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/AtpMan/invoicestatistic">Thống kê hóa đơn</a>
+                    <a class="collapse-item" href="changeemail">Tổng hợp hóa đơn</a>
+                </div>
+            </div>
         </li>
 
         <!-- Nav Item - Tables -->

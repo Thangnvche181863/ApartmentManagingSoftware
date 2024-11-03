@@ -1,21 +1,27 @@
+package controller.staff;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.vnpay;
 
+import DAO.InvoiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.List;
+import model.Invoice;
 
 /**
  *
  * @author ADMIN
  */
-public class PayInvoiceServlet extends HttpServlet {
+public class UnpaidInvoiceStatServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,10 +40,10 @@ public class PayInvoiceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PayInvoiceServlet</title>");
+            out.println("<title>Servlet UnpaidInvoiceStatServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PayInvoiceServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UnpaidInvoiceStatServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +61,28 @@ public class PayInvoiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        InvoiceDAO invoiceDAO = new InvoiceDAO();
+
+        int invoicePerPage = 5;
+        int currentPage = 1;
+
+        double totalAmount = invoiceDAO.totalAmountPaidInvoice(0, null, null, null, null, null);
+        int totalUnPaidInvoice = invoiceDAO.totalInvoiceByStatus(0);
+        Date minDate = invoiceDAO.getEarliestDateInvoice();
+
+        List<Invoice> invoiceList = invoiceDAO.getInvoiceForStaff(0, 1, invoicePerPage, null, null, null, null, null);
+
+//        int totalPaidInvoice = invoiceDAO.countInvoiceForStaff(null, null, null, null, null);
+        int totalPaidInvoicePage = (int) Math.ceil((double) totalUnPaidInvoice / invoicePerPage);
+
+        request.setAttribute("totalAmount", totalAmount);
+        request.setAttribute("totalUnPaidInvoice", totalUnPaidInvoice);
+        request.setAttribute("invoiceList", invoiceList);
+        request.setAttribute("minDate", minDate);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPaidInvoicePage", totalPaidInvoicePage);
+        request.getRequestDispatcher("/staff/unpaidinvoicestat.jsp").forward(request, response);
     }
 
     /**
@@ -69,20 +96,7 @@ public class PayInvoiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String amount_raw = request.getParameter("amount");
-        String invoiceId = request.getParameter("invoiceId");
-        double amount = 0;
-        try {
-            amount = Double.parseDouble(amount_raw);
-        } catch (NumberFormatException e) {
-        }
-
-        int amt = (int) amount;
-
-        request.setAttribute("amount", amt);
-        request.setAttribute("invoiceId", invoiceId);
-        request.getRequestDispatcher("vnpay/payinvoice.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

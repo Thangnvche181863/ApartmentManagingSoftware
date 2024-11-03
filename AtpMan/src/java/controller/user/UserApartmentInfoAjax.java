@@ -22,6 +22,7 @@ import model.Building;
 import model.Customer;
 import model.ServiceContract;
 import DAO.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -174,6 +175,11 @@ public class UserApartmentInfoAjax extends HttpServlet {
         int totalResidentPage = (int) Math.ceil((double) totalResident / residentPerPage);
         int totalServicePage = (int) Math.ceil((double) totalService / servicePerPage);
 
+        BigDecimal totalAmount = serviceContractDAO.totalAmountCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), null);
+        double totalA = 0;
+        
+        if(totalAmount != null) totalA = totalAmount.doubleValue();
+        
         Locale locale = Locale.US;
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
         DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
@@ -389,13 +395,11 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                                            </thead>\n"
                 + "                                            <tbody>\n");
         count = 0;
-        int totalAmount = 0;
         if (serviceContractList.isEmpty()) {
             out.println("<tr><td colspan=\"6\">Không có dữ liệu dịch vụ</td></tr>");
         } else {
             for (ServiceContract serviceContract : serviceContractList) {
                 count++;
-                totalAmount += serviceContract.getAmount().intValue();
                 out.println("                                                   <tr>\n"
                         + "                                                        <td>" + count + "</td>\n"
                         + "                                                        <td>" + serviceContract.getService().getName() + "</td>\n"
@@ -407,9 +411,9 @@ public class UserApartmentInfoAjax extends HttpServlet {
             }
         }
         out.println("                                   </tbody>\n"
-                + "                                            <tfoot style=\"background-color: #4e73df; color: white\">\n"
+                + "                                            <tfoot style=\"background-color: #4e73df; color: white\"  class=\"h5\">\n"
                 + "                                                <tr>\n"
-                + "                                                    <th colspan=\"6\">Tổng tiền dịch vụ: " + decimalFormat.format(totalAmount) + "</fmt:formatNumber> VNĐ</th>\n"
+                + "                                                    <th colspan=\"6\">Tổng tiền dịch vụ: " + decimalFormat.format(totalA) + " VNĐ</th>\n"
                 + "                                                    </tr>\n"
                 + "                                                </tfoot>"
                 + "                                </table>\n");
