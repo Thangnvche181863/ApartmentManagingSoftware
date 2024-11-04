@@ -1,12 +1,15 @@
-
+<%-- 
+    Document   : registServiceTenant
+    Created on : Oct 26, 2024, 4:07:21 PM
+    Author     : thang
+--%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ page import="DAO.ServiceDAO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,8 +24,6 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
-        <!-- Custom styles for this template-->
-        <link href="css/sb-admin-2.min.css" rel="stylesheet">
         <!-- Icon Font Stylesheet -->
         <link
             rel="stylesheet"
@@ -32,47 +33,52 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
             rel="stylesheet"
             />
+
+        <!-- Libraries Stylesheet -->
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-
-        <script>
-            function confirmDelete() {
-                return confirm("Sure delete?");
-            }
-        </script>
-
+        <!-- CSS for overlay and form positioning -->
         <style>
-            .pagination {
-                font-size: 0.8em; /* Adjust font size as needed */
-                margin: 0;
-                padding: 0;
-                list-style: none;
+            /* Overlay styling */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
             }
 
-            .pagination a {
-                padding: 5px 10px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                text-decoration: none;
-                color: #333;
+            /* Centered form styling */
+            .registration-form {
+                background: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                width: 100%;
+                max-width: 500px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             }
 
-            .pagination a:hover {
-                background-color: #f0f0f0;
-            }
-
-            .pagination strong {
-                padding: 5px 10px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                background-color: #f0f0f0;
-                color: #333;
+            .registration-form h3 {
+                margin-bottom: 20px;
             }
         </style>
-
+        <script>
+            function confirmDelete() {
+                return confirm("Bạn muốn hủy đăng kí ?");
+            }
+        </script>
     </head>
-
     <body id="page-top">
 
         <!-- Page Wrapper -->
@@ -94,7 +100,7 @@
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item">
-                    <a class="nav-link" href="managerPage">
+                    <a class="nav-link" href="/AtpMan/user/userhome">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -119,7 +125,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Custom Components:</h6>
                             <a class="collapse-item" href="buttons.html">Buttons</a>
-                            <a class="collapse-item active" href="cards.html">Cards</a>
+                            <a class="collapse-item" href="cards.html">Cards</a>
                         </div>
                     </div>
                 </li>
@@ -178,19 +184,12 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Charts</span></a>
                 </li>
-                
-                                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="costStatistic">
-                        <i class="bi bi-cash-coin"></i>
-                        <span>Tổng Hợp Phụ Phí</span></a>
-                </li>
 
                 <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="servicelist">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/AtpMan/registServiceTenant">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Danh Sách Dịch Vụ</span></a>
+                        <span>Đăng Kí Dịch Vụ</span></a>
                 </li>
 
 
@@ -211,7 +210,9 @@
                 <!-- Main Content -->
                 <div id="content">
 
+
                     <!-- Topbar -->
+
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
@@ -376,13 +377,13 @@
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                 </div>
                             </li>
+                            <!--abc-->
 
                             <div class="topbar-divider d-none d-sm-block"></div>
-
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <c:if test="${sessionScope.user != null}">
-                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                             <strong style="color: black;">${sessionScope.user.name}</strong>
                                         </span>
@@ -416,238 +417,236 @@
                         </ul>
 
                     </nav>
+
                     <!-- End of Topbar -->
 
 
 
-
-
-
-
-
-
-
-
                     <!-- Begin Page Content -->
-                    <div class="container-fluid">
 
-                        <!-- Page Heading -->
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800"><b>Danh Sách Đăng Kí Năm ${year}</b></h1>
+                    <!--////////////////-->
+                    <div class="container">
+                        <div
+                            class="text-center mx-auto wow fadeInUp"
+                            data-wow-delay="0.2s"
+                            style="max-width: 800px"
+                            >
+                            <h2 class="text-primary m-0">Thông tin đăng kí</h2>  
+                        </div>
+                        <c:if test="${serviceContract != null}">
+                            <p class="text-primary m-0">Hiệu lực: <span style="color: red"><fmt:formatDate
+                                        value="${serviceContract.getStartDate()}"
+                                        pattern="dd/MM/yyyy"
+                                        /> - <fmt:formatDate
+                                        value="${serviceContract.getEndDate()}"
+                                        pattern="dd/MM/yyyy"
+                                        /></span></p>
+                            <p class="text-primary">Hủy đăng kí vui lòng bấm vào 
+                                <span>
+                                    <a href="registService?apartmentId=${apartmentID}&serviceId=${service.getServiceId()}" style="color: red" onclick="return confirmDelete();"> Đây!</a>
+                                </span>
                             <p>
-                                <a class="btn btn-info" href="servicelist">Danh Sách Dịch Vụ</a>
+                            </c:if>
+
+                            <%--<c:if test="${serviceContract == null}">--%>
+                            <!--<p class="text-primary m-0">Vui lòng--> 
+                            <!--<span>-->
+                                <!--<a href="registService?apartmentID=${apartmentID}&serviceID=${service.getServiceId()}" class="text-danger">đăng kí</a>-->
+                            <!--</span> để sử dụng dịch vụ </p>-->
+                            <%--</c:if>--%>
+
+                            <!-- Trigger link for registration form -->
+                            <c:if test="${serviceContract == null}">
+                            <p class="text-primary m-0">
+                                Vui lòng 
+                                <span>
+                                    <a href="javascript:void(0)" onclick="toggleForm()" class="text-danger">đăng kí</a>
+                                </span> 
+                                để sử dụng dịch vụ 
                             </p>
+                        </c:if>
+
+                        <!-- Overlay and Registration Form (Hidden by Default) -->
+                        <div id="overlay" class="overlay" style="display: none;">
+                            <div id="registrationForm" class="registration-form">
+                                <h3 class="text-center text-primary mb-3">Đăng Ký Dịch Vụ</h3>
+                                <form action="registService" method="POST">
+                                    <input type="hidden" name="apartmentID" value="${apartmentID}">
+                                    <input type="hidden" name="serviceID" value="${service.getServiceId()}">
+
+                                    <!-- Fields for displaying user info -->
+                                    <div class="form-group mb-3">
+                                        <label for="userName" class="text-primary">Tên người dùng</label>
+                                        <input type="text" class="form-control" id="userName" value="${customer.getName()}" name="userName" readonly="" />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="phone" class="text-primary">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone" value="${customer.getPhoneNumber()}" readonly="" />
+                                    </div>
+
+                                    <!-- Subscription plan field -->
+                                    <div class="form-group mb-3">
+                                        <label for="subscriptionPlan" class="text-primary">Chọn gói dịch vụ</label>
+                                        <select class="form-control" id="subscriptionPlan" name="subscriptionPlan" required style="color: red" onchange="updateFee()">
+                                            <option value="1">Gói 1 tháng ưu đãi ${discount1Month}%</option>
+                                            <option value="2">Gói 2 tháng ưu đãi ${discount2Month}%</option>
+                                            <option value="3">Gói 3 tháng ưu đãi ${discount3Month}%</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="fee" class="text-primary">Giá</label>
+                                        <input type="text" class="form-control" id="fee" name="fee" style="color: red"
+                                               value="<fmt:formatNumber value='${service.getFee()}' type='number' pattern='#,##0'/> VND/tháng" readonly />
+                                    </div>
+
+                                    <!-- Buttons for submitting or canceling -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Đăng Ký</button>
+                                        <button type="button" class="btn btn-secondary" onclick="toggleForm()">Hủy</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
-                        <form action="registlist" method="POST">
-                            <div>
-                                <label for="year">Năm:</label>
-                                <select name="year" id="year" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <c:forEach var="i" begin="2022" end="2024">
-                                        <option value="${i}" <c:if test="${i == year}">selected</c:if>>${i}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="month">Tháng:</label>
-                                <select name="month" id="month" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <!-- Lặp qua các tháng từ 1 đến 12 -->
-                                    <c:forEach var="i" begin="1" end="12">
-                                        <option value="${i}" <c:if test="${i == month}">selected</c:if>>${i}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="row">số dòng:</label>
-                                <select name="recordsPerPage" id="recordsPerPage" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option >25</option>
-                                    <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
-                                    <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
-                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="buildingtype">Chọn Tòa Nhà:</label>
-                                    <select name="buildingtype" id="buildingType" style="border-radius: 5px" onchange="this.form.submit()">
-                                        <option value="">All</option>
-                                    <c:forEach items="${listbuilding}" var="ls">
-                                        <option value="${ls.name}" 
-                                                <c:if test="${buildingtype == ls.name}">selected</c:if>>${ls.name}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="apartmentType">Loại Căn Hộ:</label>
-                                <select name="apartmentType" id="apartmentType" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option value="">All</option>
-                                    <c:forEach items="${listdepartment}" var="ls">
-                                        <option value="${ls.apartmentType}" 
-                                                <c:if test="${apartmentType == ls.apartmentType}">selected</c:if>>${ls.apartmentType}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="search">Tìm kiếm:</label>
-                                <input type="text" name="search" value="${search}" id="search" placeholder="Nhập số phòng" style="border-radius: 5px"  onchange="this.form.submit()"/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="serviceType">Xếp Theo Tổng Tiền</label>
-                                <select name="orderBy" id="serviceType" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option value="">All</option>
-                                    <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng dần</option>
-                                    <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm dần</option>
-                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="hidden" name="page" value="${currentPage}"/>
-                            </div>
-                        </form>
 
-                        <!-- Begin Page Content -->
+                        <!-- Service Detail Section Start -->
+                        <div class="container-fluid py-5">
+                            <div class="container">
+                                <div class="row g-5">
+                                    <!-- Service Image -->
+                                    <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+                                        <img class="img-fluid rounded" src="${service.img}" alt="${service.name}" style="width: 100%" />
+                                    </div>
 
-
-                        <div class="container-fluid">
-
-                            <!-- DataTales Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-body">                                  
-                                    <div class="table-responsive">
-                                        Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <!-- Service Details -->
+                                    <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.3s">
                                         <div class="d-flex justify-content-between">
-                                            <div class="pagination">
-                                                <%
-                                                    int currentPage = (Integer) request.getAttribute("currentPage");
-                                                    int totalPages = (Integer) request.getAttribute("totalPages");
-                                                    int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
-                                                    String buildingtype = (String) request.getAttribute("buildingtype");
-                                                    String apartmentType = (String) request.getAttribute("apartmentType");
-                                                    String search = (String) request.getAttribute("search");
-                                                    String orderBy = (String) request.getAttribute("orderBy");
-                                                    String month = (String) request.getAttribute("month");
-                                                    String year = (String) request.getAttribute("year");
-    //                                                int month = (Integer) request.getAttribute("month");
-    //                                                int year = (Integer) request.getAttribute("year");
-
-                                                    // Hiển thị nút "Previous" nếu không phải trang đầu tiên
-                                                    if (currentPage > 1) {
-                                                %>
-                                                <a href="registlist?page=<%= currentPage - 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
-                                                <%
-                                                    }
-
-                                                    // Hiển thị danh sách các trang
-                                                    for (int i = 1; i <= totalPages; i++) {
-                                                        if (i == currentPage) {
-                                                %>
-                                                <strong><%= i %></strong>
-                                                <%
-                                                        } else {
-                                                %>
-                                                <a href="registlist?page=<%= i %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
-                                                <%
-                                                        }
-                                                    }
-
-                                                    // Hiển thị nút "Next" nếu không phải trang cuối cùng
-                                                    if (currentPage < totalPages) {
-                                                %>
-                                                <a href="registlist?page=<%= currentPage + 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
-                                                <%
-                                                    }
-                                                %>
-                                            </div>
-                                            <div>Tổng thu:  
-                                                <fmt:setLocale value="en_US" />
-                                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalFinance}"/>
-                                            </div>
+                                            <h2 class="mb-4 text-primary">${service.name}</h2>
+                                            <a href="registServiceTenant?apartmentID=${apartmentID}"><button class="btn-primary btn" style="height: 40px">Quay trở lại</button></a>
                                         </div>
-                                        <table class="table table-bordered"  width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Số Phòng</th>
-                                                    <th class="text-center">Loại Căn Hộ</th>
-                                                    <th class="text-center">Số Tầng</th>
-                                                    <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
-                                                    <th class="text-center">Thông Tin</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${listapart}" var="ls">
-                                                    <tr>
-                                                        <td class="text-center">${ls.apartmentNumber}</td>
-                                                        <td class="text-center">${ls.apartmentType}</td>
-                                                        <td class="text-center">${ls.floor}</td>
-                                                        <td class="text-center">
-                                                            <fmt:setLocale value="en_US" />
-                                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.totalAmount}"/>
-                                                        </td>
-                                                        <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}&month=${month}&year=${year}">Chi tiết</a></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
+                                        <p class="mb-4"><strong><span style="color: #015DC5">Loại dịch vụ:  </span></strong><span style="color: #4CA64C"> ${service.type}</span></p>
+                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber  value="${amount.getTotalAmount()}" /> VND</p>
+                                        <div class="feature-icon p-4 mb-4">
+                                            <i class="${service.icon}" style="font-size: 3rem; color: #015DC5"></i>
+                                        </div>
+                                        <p class="mb-4 " style="color: black">${service.description}</p>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
-
-
                     </div>
-                    <!-- /.container-fluid -->
 
-
-
-
-
-
-
-
-
-
-
+                    <!-- End of Main Content -->
 
                 </div>
-                <!-- End of Main Content -->
-
-
+                <!-- End of Content Wrapper -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Page Wrapper -->
 
-        </div>
-        <!-- End of Page Wrapper -->
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="logout">Logout</a>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="logout">Logout</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- JavaScript to toggle the overlay and form -->
+            <script>
+                function toggleForm() {
+                    const overlay = document.getElementById("overlay");
+                    overlay.style.display = overlay.style.display === "none" ? "flex" : "none";
+                }
+            </script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
-        <!-- Page level plugins -->
-        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script>
+                // Lưu giá gốc vào biến toàn cục
+                let baseFee;
 
-        <!-- Page level custom scripts -->
-        <script src="js/demo/datatables-demo.js"></script>
+                // Các biến lưu trữ tỷ lệ giảm giá
+                let discount1Month;
+                let discount2Month;
+                let discount3Month;
+
+                // Hàm này sẽ được gọi khi trang được tải
+                function initializeFee() {
+                    // Lấy giá dịch vụ từ input fee (xóa phần " VND")
+                    let baseFeeStr = document.getElementById('fee').value.replace(" VND/tháng", "");
+                    baseFee = parseFloat(baseFeeStr.replace(/\./g, "").replace(",", ".")); // Chuyển đổi sang số
+
+                    // Lưu các giá trị giảm giá vào biến
+                    discount1Month = 1 - (parseFloat('${discount1Month}') / 100);
+                    discount2Month = 1 - (parseFloat('${discount2Month}') / 100);
+                    discount3Month = 1 - (parseFloat('${discount3Month}') / 100);
+                    updateFee(); // Cập nhật giá ban đầu
+                }
+
+                function updateFee() {
+                    // Kiểm tra nếu baseFee chưa được thiết lập
+                    if (baseFee === undefined) {
+                        console.error("Base fee is not defined.");
+                        return;
+                    }
+
+                    // Lấy giá trị gói dịch vụ đã chọn
+                    let subscriptionPlan = document.getElementById('subscriptionPlan').value;
+                    let updatedFee;
+
+                    // Tính toán giá dựa trên gói dịch vụ
+                    if (subscriptionPlan === "1") {
+                        updatedFee = baseFee * discount1Month; 
+                    } else if (subscriptionPlan === "2") {
+                        updatedFee = baseFee * discount2Month; 
+                    } else if (subscriptionPlan === "3") {
+                        updatedFee = baseFee * discount3Month; 
+                    }
+
+                    // Cập nhật giá vào input fee
+                    document.getElementById('fee').value = new Intl.NumberFormat().format(updatedFee) + " VND/tháng";
+                }
+
+                // Gọi hàm initializeFee khi trang được tải
+                window.onload = initializeFee;
+            </script>
+
+            <!-- Bootstrap core JavaScript-->
+
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+            <!-- Core plugin JavaScript-->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="js/sb-admin-2.min.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+            <!-- Page level custom scripts -->
+            <script src="js/demo/datatables-demo.js"></script>
 
     </body>
-
 </html>

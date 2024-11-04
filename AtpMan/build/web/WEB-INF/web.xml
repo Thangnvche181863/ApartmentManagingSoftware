@@ -19,6 +19,7 @@
         <url-pattern>/invoicestatistic</url-pattern>
         <url-pattern>/payinvoice</url-pattern>
         <url-pattern>/payreturn</url-pattern>
+        <url-pattern>/registServiceTenant</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>StaffPermissionFilter</filter-name>
@@ -121,10 +122,6 @@
     <servlet>
         <servlet-name>DeleteServiceServlet</servlet-name>
         <servlet-class>controller.staff.DeleteServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServiceAddServlet</servlet-name>
-        <servlet-class>controller.staff.ServiceAddServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
@@ -250,6 +247,38 @@
         <servlet-name>UnPaidInvoiceServiceAjax</servlet-name>
         <servlet-class>controller.staff.UnPaidInvoiceServiceAjax</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegistServiceTenant</servlet-name>
+        <servlet-class>controller.user.RegistServiceTenant</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistDetailServlet</servlet-name>
+        <servlet-class>controller.user.RegistDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceAddServlet</servlet-name>
+        <servlet-class>controller.staff.ServiceAddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegistServiceServlet</servlet-name>
+        <servlet-class>controller.user.RegistServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticServlet</servlet-name>
+        <servlet-class>controller.staff.StatisticServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddFinanceServlet</servlet-name>
+        <servlet-class>controller.staff.AddFinanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CostStatisticServlet</servlet-name>
+        <servlet-class>controller.staff.CostStatisticServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticDetailServlet</servlet-name>
+        <servlet-class>controller.staff.StatisticDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -313,10 +342,6 @@
     <servlet-mapping>
         <servlet-name>DeleteServiceServlet</servlet-name>
         <url-pattern>/servicedelete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServiceAddServlet</servlet-name>
-        <url-pattern>/serviceadd</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserhomeNewsServlet</servlet-name>
@@ -449,6 +474,38 @@
     <servlet-mapping>
         <servlet-name>UnPaidInvoiceServiceAjax</servlet-name>
         <url-pattern>/unpaidinvoiceserviceajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistServiceTenant</servlet-name>
+        <url-pattern>/registServiceTenant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistDetailServlet</servlet-name>
+        <url-pattern>/registDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServiceAddServlet</servlet-name>
+        <url-pattern>/serviceadd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegistServiceServlet</servlet-name>
+        <url-pattern>/registService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticServlet</servlet-name>
+        <url-pattern>/statistic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFinanceServlet</servlet-name>
+        <url-pattern>/addFinance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CostStatisticServlet</servlet-name>
+        <url-pattern>/costStatistic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticDetailServlet</servlet-name>
+        <url-pattern>/statisticdetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

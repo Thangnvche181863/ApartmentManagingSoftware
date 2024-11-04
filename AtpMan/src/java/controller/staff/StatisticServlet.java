@@ -2,24 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.staff;
 
-import DAO.ApartmentDAO;
-import DAO.ServiceContractDAO;
-import DAO.ServiceDAO;
+import DAO.BuildingDAO;
+import DAO.FinanceDAO;
+import DAO.InvoiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Service;
+import java.time.LocalDate;
+import java.util.List;
+import model.Building;
+import model.Finance;
+import model.Statistic;
 
 /**
  *
  * @author thang
  */
-public class InforApartmentService extends HttpServlet {
+public class StatisticServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +38,16 @@ public class InforApartmentService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            String id = request.getParameter("id");
-//            ServiceDAO sdao = new ServiceDAO();
-//            Service service = sdao.findById(Integer.parseInt(id));
-//            request.setAttribute("service", service);
-//            request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet StatisticServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet StatisticServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -54,15 +63,23 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ApartmentDAO adao = new ApartmentDAO();
-        ServiceContractDAO sdao = new ServiceContractDAO();
-        int id = Integer.parseInt(request.getParameter("id"));
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();
         
-        request.setAttribute("apart", adao.apartmentDetail(id,month,year));
-        request.setAttribute("statistic", sdao.statisticContract(id,month,year));
-        request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+        BuildingDAO buildingDAO = new BuildingDAO();
+        List<Building> buildings = buildingDAO.getAllBuilding();
+
+        FinanceDAO fdao = new FinanceDAO();
+        List<Finance> finances = fdao.getAllByTime(year, month, 1);
+        request.setAttribute("buildings", buildings);
+        request.setAttribute("finances", finances);
+        
+        request.setAttribute("year", year);
+        request.setAttribute("month", month);
+        request.setAttribute("buildingId", 1);
+
+        request.getRequestDispatcher("charts.jsp").forward(request, response);
+
     }
 
     /**
@@ -76,7 +93,26 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        
+        FinanceDAO fdao = new FinanceDAO();
+
+        String year = request.getParameter("year");
+        String month = request.getParameter("month");
+        String buildingId = request.getParameter("buildingId");
+
+        BuildingDAO buildingDAO = new BuildingDAO();
+        List<Building> buildings = buildingDAO.getAllBuilding();
+        request.setAttribute("buildings", buildings);
+
+        List<Finance> finances = fdao.getAllByTime(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(buildingId));
+        request.setAttribute("finances", finances);
+
+        request.setAttribute("year", year);
+        request.setAttribute("month", month);
+        request.setAttribute("buildingId", buildingId);
+
+        request.getRequestDispatcher("charts.jsp").forward(request, response);
     }
 
     /**

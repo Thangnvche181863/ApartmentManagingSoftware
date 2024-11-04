@@ -11,15 +11,13 @@ package model;
 public class FinanceType {
     private int financeTypeId;
     private String name;
-    private String description;
 
     public FinanceType() {
     }
 
-    public FinanceType(int financeTypeId, String name, String description) {
+    public FinanceType(int financeTypeId, String name) {
         this.financeTypeId = financeTypeId;
         this.name = name;
-        this.description = description;
     }
 
     public int getFinanceTypeId() {
@@ -38,20 +36,10 @@ public class FinanceType {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     @Override
     public String toString() {
-        return "FinanceType{" + "financeTypeId=" + financeTypeId + ", name=" + name + ", description=" + description + '}';
+        return "FinanceType{" + "financeTypeId=" + financeTypeId + ", name=" + name + '}';
     }
-
-    
     
     
 }

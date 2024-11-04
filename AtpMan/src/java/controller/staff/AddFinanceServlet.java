@@ -2,24 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.staff;
 
-import DAO.ApartmentDAO;
-import DAO.ServiceContractDAO;
-import DAO.ServiceDAO;
+import DAO.FinanceTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Service;
 
 /**
  *
  * @author thang
  */
-public class InforApartmentService extends HttpServlet {
+public class AddFinanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +31,16 @@ public class InforApartmentService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            String id = request.getParameter("id");
-//            ServiceDAO sdao = new ServiceDAO();
-//            Service service = sdao.findById(Integer.parseInt(id));
-//            request.setAttribute("service", service);
-//            request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet AddFinanceServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet AddFinanceServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -54,15 +56,7 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ApartmentDAO adao = new ApartmentDAO();
-        ServiceContractDAO sdao = new ServiceContractDAO();
-        int id = Integer.parseInt(request.getParameter("id"));
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
-        
-        request.setAttribute("apart", adao.apartmentDetail(id,month,year));
-        request.setAttribute("statistic", sdao.statisticContract(id,month,year));
-        request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -76,7 +70,14 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        FinanceTypeDAO fdao = new FinanceTypeDAO();
+        fdao.insertFinanceType(name);
+
+        // Thêm thuộc tính để xác định trạng thái thành công
+        request.setAttribute("status", "success");
+
+        response.sendRedirect("costStatistic?status=success");
     }
 
     /**

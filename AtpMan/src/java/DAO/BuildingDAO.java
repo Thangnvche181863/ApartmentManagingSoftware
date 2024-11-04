@@ -193,7 +193,7 @@ public class BuildingDAO {
     public static void main(String[] args) {
 
         BuildingDAO buildingDAO = new BuildingDAO();
-        System.out.println(buildingDAO.getBuildingName(1));
+        System.out.println(buildingDAO.getAllBuilding());
 
     }
 }

@@ -39,15 +39,98 @@
 
 
         <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
-            <script>
-                tinymce.init({
-                  selector: '#description1'
-                });
-            </script>    
+        <script>
+            tinymce.init({
+                selector: '#description1'
+            });
+        </script>    
         <style>
             .is-invalid {
                 border-color: red;
                 background-color: #f8d7da;
+            }
+
+            /* Phong cách chung */
+            .row {
+                border: 1px solid #b0b0b0;
+                border-radius: 10px;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-control,
+            .form-select {
+                border-radius: 5px;
+                outline: none;
+                box-shadow: none;
+                border: 1px solid #ced4da;
+            }
+
+            input[type="file"] {
+                padding: 6px;
+                border: 1px solid #ced4da;
+            }
+
+            #imgPreview {
+                width: 100%;
+                max-width: 230px;
+                height: auto;
+                margin-top: 10px;
+                border-radius: 10px;
+            }
+
+            .text-center {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            .btn-primary {
+                width: 100px;
+                padding: 8px;
+                font-weight: 600;
+            }
+
+            #feeError {
+                display: none;
+                color: #d9534f;
+            }
+
+            textarea {
+                resize: none;
+            }
+            
+                       .form-label {
+                font-weight: 600;
+                margin-bottom: 8px;
+                display: block;
+                color: #333;
+            }
+
+            .discount-input {
+                width: 150px;
+                padding: 8px;
+                margin-bottom: 8px;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                text-align: center;
+            }
+
+            div > div label {
+                font-weight: 500;
+                display: block;
+                margin-bottom: 4px;
             }
         </style>
     </head>
@@ -192,6 +275,13 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Charts</span></a
                     >
+                </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
                 </li>
 
                 <!-- Nav Item - Tables -->
@@ -456,29 +546,19 @@
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="userDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    >
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                                          >Douglas McGee</span
-                                    >
-                                    <img
-                                        class="img-profile rounded-circle"
-                                        src="img/undraw_profile.svg"
-                                        />
-                                </a>
+                                <c:if test="${sessionScope.user != null}">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                            <strong style="color: black;">${sessionScope.user.name}</strong>
+                                        </span>
+                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    </a>
+                                </c:if>
+
                                 <!-- Dropdown - User Information -->
-                                <div
-                                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                    aria-labelledby="userDropdown"
-                                    >
-                                    <a class="dropdown-item" href="#">
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="profile.jsp">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -491,19 +571,13 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a
-                                        class="dropdown-item"
-                                        href="#"
-                                        data-toggle="modal"
-                                        data-target="#logoutModal"
-                                        >
-                                        <i
-                                            class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                                            ></i>
+                                    <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
                                 </div>
                             </li>
+
                         </ul>
                     </nav>
                     <!-- End of Topbar -->
@@ -545,55 +619,74 @@
                                 enctype="multipart/form-data"
                                 >
                                 <div class="row g-0">
-                                    <div class="col-md-5">
-                                        <div class="form-group mb-4">
-                                            <label for="name" class="form-label">Name:</label>
-                                            <input
-                                                type="text"
-                                                class="form-control w-100"
-                                                name="name"
-                                                id="name"
-                                                required
-                                                value="${name}"
-                                                />
+                                    <div class="col-md-12 d-flex justify-content-between">
+                                        <div>
+                                            <div class="form-group mb-4">
+                                                <label for="name" class="form-label">Tên:</label>
+                                                <input
+                                                    type="text"
+                                                    class="form-control w-100"
+                                                    name="name"
+                                                    id="name"
+                                                    required
+                                                    value="${name}"
+                                                    />
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label for="type" class="form-label">Loại dịch vụ:</label>
+                                                <select class="form-select w-100" name="type" id="type">
+                                                    <c:forEach items="${serviceType}" var="ls">
+                                                        <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label for="img" class="form-label">URL ảnh:</label>
+                                                <input
+                                                    type="file"
+                                                    class="form-control w-100"
+                                                    name="img"
+                                                    id="img"
+                                                    accept="image/*"
+                                                    value="${ls.img}"
+                                                    onchange="previewImg(event)"
+                                                    required
+                                                    />
+                                                <img
+                                                    src=""
+                                                    id="imgPreview"
+                                                    style="
+                                                    width: 230px;
+                                                    height: 200px;
+                                                    margin-top: 20px;
+                                                    border-radius: 10px;
+                                                    display: none;
+                                                    "
+                                                    />
+                                            </div>
                                         </div>
-                                        <div class="form-group mb-4">
-                                            <label for="type" class="form-label">Type:</label>
-                                            <select class="form-select w-100" name="type" id="type">
-                                                <c:forEach items="${serviceType}" var="ls">
-                                                    <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                            <label for="img" class="form-label">URL img:</label>
-                                            <input
-                                                type="file"
-                                                class="form-control w-100"
-                                                name="img"
-                                                id="img"
-                                                accept="image/*"
-                                                value="${ls.img}"
-                                                onchange="previewImg(event)"
-                                                required
-                                                />
-                                            <img
-                                                src=""
-                                                id="imgPreview"
-                                                style="
-                                                width: 230px;
-                                                height: 200px;
-                                                margin-top: 20px;
-                                                border-radius: 10px;
-                                                display: none;
-                                                "
-                                                />
-                                        </div>
+                                        <div class="mr-5">
+                                            <label class="form-label">Giảm giá (%):</label>
+                                            <div>
+                                                <div>
+                                                    <label for="discount1Month">1 tháng:</label>
+                                                    <input type="number" id="discount1Month" min="0" value="0" name="discount1Month"  class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                                <div>
+                                                    <label for="discount2Months">2 tháng:</label>
+                                                    <input type="number" id="discount2Months" min="0" value="0" name="discount2Month" class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                                <div>
+                                                    <label for="discount3Months">3 tháng:</label>
+                                                    <input type="number" id="discount3Months" min="0" value="0" name="discount3Month" class="discount-input" placeholder="Nhập giá"/>
+                                                </div>
+                                            </div>
+                                        </div>    
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group mb-4">
-                                            <label for="fee" class="form-label">Fee:</label>
+                                            <label for="fee" class="form-label">Giá:</label>
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
@@ -623,14 +716,14 @@
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="description" class="form-label"
-                                                   >Description:</label
+                                                   >Mô tả:</label
                                             >
                                             <textarea
                                                 class="form-control w-100"
                                                 name="description"
                                                 id="description1"
                                                 rows="9"
-                                              
+
                                                 >${description}</textarea>
                                         </div>
                                     </div>

@@ -30,14 +30,18 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(int invoiceID, int apartmentID, double amount, Date issueDate, Date dueDate, int status, Timestamp transactionDate, List<ServiceContract> serviceContractList) {
-        this.invoiceId = invoiceID;
-        this.apartmentId = apartmentID;
+    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Timestamp transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo, List<ServiceContract> serviceContractList) {
+        this.invoiceId = invoiceId;
+        this.apartmentId = apartmentId;
         this.amount = amount;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
         this.status = status;
         this.transactionDate = transactionDate;
+        this.invoiceCode = invoiceCode;
+        this.transactionNo = transactionNo;
+        this.bankCode = bankCode;
+        this.orderInfo = orderInfo;
         this.serviceContractList = serviceContractList;
     }
 

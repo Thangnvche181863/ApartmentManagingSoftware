@@ -113,6 +113,11 @@ public class Customer {
         this.isOwner = isOwner;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + ", status=" + status + '}';
+    }
+
     
 
 }

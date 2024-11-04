@@ -406,7 +406,7 @@ public class CustomerDAO {
         } finally {
             DBContext.closeConnection(connection);
         }
-        return null;
+        return list;
     }
     // KhangPM
     public int countLivingInApartment(int apartmentID, List<String> searchTermList) {

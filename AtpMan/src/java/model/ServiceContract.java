@@ -13,6 +13,7 @@ public class ServiceContract {
     private int serviceContractId;
     private int apartmentId;
     private int serviceId;
+    private String name;
     private Date startDate;
     private Date endDate;
     private BigDecimal amount;
@@ -24,23 +25,22 @@ public class ServiceContract {
     public ServiceContract() {
     }
 
-    public ServiceContract(int apartmentId, int totalContract, BigDecimal totalAmount) {
-        this.apartmentId = apartmentId;
-        this.totalContract = totalContract;
-        this.totalAmount = totalAmount;
-    }
-    
-    
-
-    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, Date startDate, Date endDate, BigDecimal amount, Service service) {
+    public ServiceContract(int serviceContractId, int apartmentId, int serviceId, String name, Date startDate, Date endDate, BigDecimal amount, Service service, int totalContract, BigDecimal totalAmount) {
         this.serviceContractId = serviceContractId;
         this.apartmentId = apartmentId;
         this.serviceId = serviceId;
+        this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.amount = amount;
         this.service = service;
+        this.totalContract = totalContract;
+        this.totalAmount = totalAmount;
     }
+
+    
+    
+    
 
     public int getServiceContractId() {
         return serviceContractId;
@@ -112,6 +112,16 @@ public class ServiceContract {
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 
     @Override
     public String toString() {

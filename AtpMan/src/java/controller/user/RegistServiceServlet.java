@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.staff;
+package controller.user;
 
-import DAO.DiscountDAO;
+import DAO.ServiceContractDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,13 +12,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import model.Customer;
 import model.Service;
 
 /**
  *
  * @author thang
  */
-public class DeleteServiceServlet extends HttpServlet {
+public class RegistServiceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +43,10 @@ public class DeleteServiceServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteServiceServlet</title>");
+            out.println("<title>Servlet RegistServiceServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteServiceServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RegistServiceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,31 +64,16 @@ public class DeleteServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = 1;
-        int recordsPerPage = 10;
-        if (request.getParameter("recordsPerPage") != null) {
-            recordsPerPage = Integer.parseInt(request.getParameter("recordsPerPage"));
-        }
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
+//        PrintWriter out = response.getWriter();
+        String apartmentId = request.getParameter("apartmentId");
+        String serviceId = request.getParameter("serviceId");
+//        out.println(apartmentId);
+//                out.println(serviceId);
+
+        ServiceContractDAO scdao = new ServiceContractDAO();
         
-        DiscountDAO ddao = new DiscountDAO();
-        String id = request.getParameter("id");
-        ServiceDAO sdao = new ServiceDAO();
-        request.setAttribute("type", "");
-        request.setAttribute("search", "");
-        request.setAttribute("orderBy", "");
-        ddao.deleteDiscount(Integer.parseInt(id));
-        sdao.deleteService(Integer.parseInt(id));
-        int totalRecords = sdao.getTotalService("", "", "");
-        request.setAttribute("totalservice", totalRecords);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("recordsPerPage", recordsPerPage);
-        request.setAttribute("totalPages", (int) Math.ceil((double) totalRecords / recordsPerPage));
-        request.setAttribute("listservice", sdao.getServiceByType("", "", "", page, recordsPerPage));
-        request.setAttribute("serviceType", sdao.getAllType());
-        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+        scdao.deleteServiceContract(Integer.parseInt(apartmentId), Integer.parseInt(serviceId));
+        response.sendRedirect("registServiceTenant");
     }
 
     /**
@@ -96,7 +87,33 @@ public class DeleteServiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        PrintWriter out = response.getWriter();
+        String apartmentID = request.getParameter("apartmentID");
+        String serviceID = request.getParameter("serviceID");
+        String fee = request.getParameter("fee");
+        String subscriptionPlan = request.getParameter("subscriptionPlan");
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.now();
+
+        // Kiểm tra giá trị của subscriptionPlan
+        if ("1".equals(subscriptionPlan)) {
+            endDate = startDate.plus(1, ChronoUnit.MONTHS);; // Nếu là gói 1 tháng,
+        } else if ("2".equals(subscriptionPlan)) {
+            endDate = startDate.plus(2, ChronoUnit.MONTHS); // Gói 2 tháng
+        } else if ("3".equals(subscriptionPlan)) {
+            endDate = startDate.plus(3, ChronoUnit.MONTHS); // Gói 3 tháng
+        }
+        fee = fee.replace(",", "").replace(" VND/tháng", "");
+        out.println(startDate);
+        out.println(endDate);
+        out.println(apartmentID);
+        out.println(serviceID);
+
+        ServiceContractDAO scdao = new ServiceContractDAO();
+//        
+        scdao.insertServiceContract(Integer.parseInt(apartmentID), Integer.parseInt(serviceID), Date.valueOf(startDate), Date.valueOf(endDate), Double.parseDouble(fee));
+        response.sendRedirect("registServiceTenant?status=success");
     }
 
     /**

@@ -157,7 +157,8 @@ public class InvoiceDAO {
         return invoice;
     }
 
-    public Invoice getInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, int page, int rowPerPage, List<String> searchTermList) {
+    public Invoice getInvoiceByApartmentIDandMonth(int apartmentID, int month, int year, int page, int rowPerPage,
+            List<String> searchTermList) {
         Invoice invoice = new Invoice();
         List<ServiceContract> serviceList = new ArrayList<>();
         String sql = "select ins.invoiceID, ins.serviceContractID, i.apartmentID, i.amount, i.issueDate,\n"
@@ -170,10 +171,12 @@ public class InvoiceDAO {
 
         if (searchTermList != null && !searchTermList.isEmpty()) {
             if (searchTermList.size() == 1) {
-                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
-                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+                // and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0)
+                        + "%')";
             } else {
-                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                // and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and
+                // s.type like N'%%')) in SQL
                 sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
                 for (int i = 1; i < searchTermList.size() - 1; i++) {
                     sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
@@ -215,10 +218,10 @@ public class InvoiceDAO {
                     invoice.setDueDate(rs.getDate("dueDate"));
                     invoice.setStatus(rs.getInt("status"));
                     invoice.setTransactionDate(rs.getTimestamp("transactionDate"));
-//                    invoice.setInvoiceCode(rs.getString("invoiceCode"));
-//                    invoice.setTransactionNo(rs.getString("transactionNo"));
-//                    invoice.setBankCode(rs.getString("bankCode"));
-//                    invoice.setOrderInfo(rs.getString("orderInfo"));
+                    // invoice.setInvoiceCode(rs.getString("invoiceCode"));
+                    // invoice.setTransactionNo(rs.getString("transactionNo"));
+                    // invoice.setBankCode(rs.getString("bankCode"));
+                    // invoice.setOrderInfo(rs.getString("orderInfo"));
                     map.put(invoiceID, invoice);
                 }
 
@@ -301,10 +304,12 @@ public class InvoiceDAO {
                 + "where i.apartmentID = ? and MONTH(i.issueDate) = ? and YEAR(i.issueDate) = ?";
         if (searchTermList != null && !searchTermList.isEmpty()) {
             if (searchTermList.size() <= 1) {
-                //and ((s.name like N'%%' or s.type like N'%%')) in SQL
-                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0) + "%')";
+                // and ((s.name like N'%%' or s.type like N'%%')) in SQL
+                sql += " and (s.name like N'%" + searchTermList.get(0) + "%' or s.type like N'%" + searchTermList.get(0)
+                        + "%')";
             } else {
-                //and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and s.type like N'%%')) in SQL
+                // and ((s.name like N'%%' and s.name like N'%%') or (s.type like N'%%' and
+                // s.type like N'%%')) in SQL
                 sql += " and ((s.name like N'%" + searchTermList.get(0) + "%' ";
                 for (int i = 1; i < searchTermList.size() - 1; i++) {
                     sql += " and s.name like N'%" + searchTermList.get(i) + "%' ";
@@ -372,7 +377,8 @@ public class InvoiceDAO {
     }
 
     // KhangPM
-    public int updateInvoiceTransaction(int invoiceId, Timestamp transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo) {
+    public int updateInvoiceTransaction(int invoiceId, Timestamp transactionDate, String invoiceCode,
+            String transactionNo, String bankCode, String orderInfo) {
         int i = 0;
         String sql = "update Invoice\n"
                 + "set status = 1, transactionDate =  ?, invoiceCode = ?, transactionNo = ?, bankCode = ?, orderInfo = ?\n"
@@ -465,7 +471,8 @@ public class InvoiceDAO {
     }
 
     // KhangPM
-    public List<Invoice> getInvoiceForStaff(int status, int currentPage, int rowPerPage, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+    public List<Invoice> getInvoiceForStaff(int status, int currentPage, int rowPerPage, Date fromDate, Date toDate,
+            String invoiceCode, String transactionNo, String orderInfo) {
         List<Invoice> list = new ArrayList<>();
         String sql = "select i.*, a.apartmentNumber from Invoice i "
                 + "inner join Apartment a on a.apartmentID = i.apartmentID "
@@ -564,7 +571,8 @@ public class InvoiceDAO {
     }
 
     // KhangPM
-    public int countInvoiceForStaff(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+    public int countInvoiceForStaff(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo,
+            String orderInfo) {
         int count = 0;
         String sql = "select count(*) from Invoice i "
                 + "inner join Apartment a on a.apartmentID = i.apartmentID "
@@ -642,7 +650,8 @@ public class InvoiceDAO {
     }
 
     // KhangPM
-    public double totalAmountPaidInvoice(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
+    public double totalAmountPaidInvoice(int status, Date fromDate, Date toDate, String invoiceCode,
+            String transactionNo, String orderInfo) {
         double total = 0;
         String sql = "select SUM(i.amount) from Invoice i "
                 + "inner join Apartment a on a.apartmentID = i.apartmentID "
@@ -719,7 +728,7 @@ public class InvoiceDAO {
         return total;
     }
 
-    //KhangPM
+    // KhangPM
     public Map<String, Double> getAmountByInvoiceId(int invoiceId) {
         Map<String, Double> map = new LinkedHashMap<>();
         double amount = 1;
@@ -742,33 +751,92 @@ public class InvoiceDAO {
         return map;
     }
 
-    // public void insertInvoice(int apartmentId, double amount, Date issueDate, Date dueDate, int status,
-    //         Date transactionDate) {
-    //     try {
-    //         String sql = "insert into Invoice(apartmentId,amount,issueDate,dueDate,status,transactionDate) values(?,?,?,?,?,?)";
-    //         PreparedStatement ps = connection.prepareStatement(sql);
-    //         ps.setInt(1, apartmentId);
-    //         ps.setDouble(2, amount);
-    //         ps.setDate(3, issueDate);
-    //         ps.setDate(4, dueDate);
-    //         ps.setInt(5, status);
-    //         ps.setDate(6, transactionDate);
-    //         ps.executeUpdate();
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
+    // public void insertInvoice(int apartmentId, double amount, Date issueDate,
+    // Date dueDate, int status,
+    // Date transactionDate) {
+    // try {
+    // String sql = "insert into
+    // Invoice(apartmentId,amount,issueDate,dueDate,status,transactionDate)
+    // values(?,?,?,?,?,?)";
+    // PreparedStatement ps = connection.prepareStatement(sql);
+    // ps.setInt(1, apartmentId);
+    // ps.setDouble(2, amount);
+    // ps.setDate(3, issueDate);
+    // ps.setDate(4, dueDate);
+    // ps.setInt(5, status);
+    // ps.setDate(6, transactionDate);
+    // ps.executeUpdate();
+    // } catch (Exception e) {
+    // System.out.println(e);
+    // }
     // }
     // public void deleteInvoice(int invoiceId) {
-    //     try {
-    //         String sql = "DELETE FROM [dbo].[Invoice]\n"
-    //                 + "      WHERE invoiceId = ?";
-    //         PreparedStatement ps = connection.prepareStatement(sql);
-    //         ps.setInt(1, invoiceId);
-    //         ps.executeUpdate();
-    //     } catch (Exception e) {
-    //         System.out.println(e);
-    //     }
+    // try {
+    // String sql = "DELETE FROM [dbo].[Invoice]\n"
+    // + " WHERE invoiceId = ?";
+    // PreparedStatement ps = connection.prepareStatement(sql);
+    // ps.setInt(1, invoiceId);
+    // ps.executeUpdate();
+    // } catch (Exception e) {
+    // System.out.println(e);
     // }
+    // }
+
+    // public void updateInvoice(int invoiceId, int apartmentId, double amount, Date
+    // issueDate, Date dueDate, int status,
+    // Date transactionDate) {
+    // try {
+    // String sql = "UPDATE [dbo].[Invoice]\n"
+    // + " SET [apartmentID] = ?\n"
+    // + " ,[amount] = ?\n"
+    // + " ,[issueDate] = ?\n"
+    // + " ,[dueDate] = ?\n"
+    // + " ,[status] = ?\n"
+    // + " ,[transactionDate] = ?\n"
+    // + " WHERE invoiceId = ?";
+    // PreparedStatement ps = connection.prepareStatement(sql);
+    // ps.setInt(1, apartmentId);
+    // ps.setDouble(2, amount);
+    // ps.setDate(3, issueDate);
+    // ps.setDate(4, dueDate);
+    // ps.setInt(5, status);
+    // ps.setDate(6, transactionDate);
+    // ps.setInt(7, invoiceId);
+    // ps.executeUpdate();
+    // } catch (Exception e) {
+    // System.out.println(e);
+    // }
+    // }
+    // public Statistic statisticInvoice(int year) {
+    // Statistic s = new Statistic();
+    // String sql = "SELECT \n"
+    // + " COUNT(*) AS tong_hoa_don, \n"
+    // + " SUM(amount) AS tong_so_tien,\n"
+    // + " COUNT(CASE WHEN status = 0 THEN 1 END) AS
+    // tong_hoa_don_chua_thanh_toan,\n"
+    // + " SUM(CASE WHEN status = 0 THEN amount ELSE 0 END) AS
+    // tong_so_tien_chua_thanh_toan\n"
+    // + "FROM \n"
+    // + " Invoice\n"
+    // + "WHERE \n"
+    // + " YEAR(issueDate) = ?";
+    // try {
+    // connection = DBContext.getConnection();
+    // PreparedStatement ps = connection.prepareStatement(sql);
+    // ps.setInt(1, year);
+    // ResultSet rs = ps.executeQuery();
+    // while (rs.next()) {
+    // s.setTotalBill(rs.getInt(1));
+    // s.setTotalAmount(rs.getBigDecimal(2));
+    // s.setTotalUnBill(rs.getInt(3));
+    // s.setTotalUnPay(rs.getBigDecimal(4));
+    // }
+    // } catch (Exception e) {
+    // System.out.println(e);
+    // }
+    // return s;
+    // }
+
     public static void main(String[] args) {
         InvoiceDAO dao = new InvoiceDAO();
         List<Invoice> list = dao.getAllInvoiceByApartmentID(1);
@@ -789,11 +857,11 @@ public class InvoiceDAO {
 
         System.out.println(Date.valueOf(fromDate));
 
-        List<Invoice> iList = dao.getInvoiceForStaff(0, 1, 10, null, Date.valueOf(toDate), "25742162", "14642203", null);
+        List<Invoice> iList = dao.getInvoiceForStaff(0, 1, 10, null, Date.valueOf(toDate), "25742162", "14642203",
+                null);
         System.out.println("invoiceList size: " + iList.size());
 
         int count = dao.countInvoiceForStaff(1, Date.valueOf(fromDate), Date.valueOf(toDate), "  ", "  ", null);
         System.out.println(count);
-
     }
 }

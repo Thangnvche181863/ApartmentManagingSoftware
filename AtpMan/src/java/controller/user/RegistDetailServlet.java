@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.user;
 
-import DAO.ApartmentDAO;
+import DAO.DiscountDAO;
 import DAO.ServiceContractDAO;
 import DAO.ServiceDAO;
 import java.io.IOException;
@@ -13,13 +13,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Discount;
 import model.Service;
+import model.ServiceContract;
 
 /**
  *
  * @author thang
  */
-public class InforApartmentService extends HttpServlet {
+public class RegistDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,11 +37,16 @@ public class InforApartmentService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            String id = request.getParameter("id");
-//            ServiceDAO sdao = new ServiceDAO();
-//            Service service = sdao.findById(Integer.parseInt(id));
-//            request.setAttribute("service", service);
-//            request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RegistDetailServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RegistDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -54,15 +62,34 @@ public class InforApartmentService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ApartmentDAO adao = new ApartmentDAO();
-        ServiceContractDAO sdao = new ServiceContractDAO();
-        int id = Integer.parseInt(request.getParameter("id"));
-        int month = Integer.parseInt(request.getParameter("month"));
-        int year = Integer.parseInt(request.getParameter("year"));
+
+        String serviceID = request.getParameter("serviceID");
+        String apartmentID = request.getParameter("apartmentID");
+        ServiceContractDAO scdao = new ServiceContractDAO();
         
-        request.setAttribute("apart", adao.apartmentDetail(id,month,year));
-        request.setAttribute("statistic", sdao.statisticContract(id,month,year));
-        request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
+        DiscountDAO ddao = new DiscountDAO();
+        
+        Discount discount =  ddao.getDiscountById(Integer.parseInt(serviceID));
+        
+        request.setAttribute("discount1Month", discount.getOneMonth());
+        request.setAttribute("discount2Month", discount.getTwoMonth());
+        request.setAttribute("discount3Month", discount.getThreeMonth());
+
+        ServiceDAO sdao = new ServiceDAO();
+
+        List<ServiceContract> list = scdao.getAll();
+        for (ServiceContract sc : list) {
+            if (sc.getServiceId() == Integer.parseInt(serviceID) && sc.getApartmentId() == Integer.parseInt(apartmentID)) { //if (sc.getServiceId() == serviceID && sc.getApartmentId() == apartmentID) {
+                request.setAttribute("serviceContract", sc);
+            }
+        }
+
+        Service service = sdao.findById(Integer.parseInt(serviceID));
+
+        request.setAttribute("amount", scdao.pickServiceContract(Integer.parseInt(serviceID)));
+        request.setAttribute("apartmentID", apartmentID);
+        request.setAttribute("service", service);
+        request.getRequestDispatcher("/user/registDetail.jsp").forward(request, response);
     }
 
     /**

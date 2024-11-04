@@ -36,7 +36,7 @@
                     <div class="navbar-nav mx-0 mx-lg-auto">
                         <a href="homepageGuest" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang Chủ</a>
                         <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
-                        <a href="service.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("service.jsp") ? "active" : "" %>">Dịch Vụ</a>
+                        <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro") ? "active" : "" %>">Dịch Vụ</a>
                         <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Phản hồi</a>
                     </div>
                 </div>

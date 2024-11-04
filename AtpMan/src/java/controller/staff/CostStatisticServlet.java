@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.staff;
 
-import DAO.ServiceDAO;
+import DAO.BuildingDAO;
+import DAO.FinanceDAO;
+import DAO.FinanceTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,20 +14,19 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
 import java.math.BigDecimal;
-import java.nio.file.Paths;
-import model.Service;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import model.Building;
+import model.FinanceType;
 
 /**
  *
  * @author thang
  */
 @MultipartConfig
-public class EditServiceServlet extends HttpServlet {
-
-    private static final String UPLOAD_DIR = "uploadFile";
+public class CostStatisticServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,12 +41,16 @@ public class EditServiceServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            String id = request.getParameter("id");
-//            ServiceDAO sdao = new ServiceDAO();
-//            Service service = sdao.findById(Integer.parseInt(id));
-//            request.setAttribute("service", service);
-//            request.getRequestDispatcher("serviceedit.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CostStatisticServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CostStatisticServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -61,11 +66,22 @@ public class EditServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        ServiceDAO sdao = new ServiceDAO();
-        Service service = sdao.findById(Integer.parseInt(id));
-        request.setAttribute("service", service);
-        request.getRequestDispatcher("serviceedit.jsp").forward(request, response);
+        String status = request.getParameter("status");
+
+        // Kiểm tra tham số status và hiển thị thông báo nếu thành công
+        if ("success".equals(status)) {
+            request.setAttribute("message", "Tạo thành công!");
+        }
+
+        FinanceTypeDAO ftdao = new FinanceTypeDAO();
+        BuildingDAO bdao = new BuildingDAO();
+
+        List<Building> buildings = bdao.getAllBuilding();
+        List<FinanceType> financeTypes = ftdao.getAll();
+
+        request.setAttribute("buildings", buildings);
+        request.setAttribute("financeTypes", financeTypes);
+        request.getRequestDispatcher("costStatistics.jsp").forward(request, response);
     }
 
     /**
@@ -79,40 +95,23 @@ public class EditServiceServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         PrintWriter out = response.getWriter();
-        String id = request.getParameter("id");
-        String name = request.getParameter("name");
-        String type = request.getParameter("type");
+        String typeBuilding = request.getParameter("typeBuilding");
+        String typeFee = request.getParameter("typeFee");
         String fee = request.getParameter("fee");
+        fee = fee.replace(",", "");
         String description = request.getParameter("description");
-        String icon = request.getParameter("icon");
 
-        // pick file upload form
-        Part filePart = request.getPart("img"); // "img" is name in input of form
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // Lấy tên file gốc
+//        out.print(typeBuilding);
+//        out.print(typeFee);
+//        out.print(fee);
+//        out.print(description);
 
-        // Đường dẫn lưu trữ file
-        String applicationPath = request.getServletContext().getRealPath("");
-        String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-
-//         Tạo thư mục nếu chưa tồn tại
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdir();
-        }
-//
-//        // Đường dẫn đầy đủ của file sẽ được lưu
-        String filePath = uploadPath + File.separator + fileName;
-//
-        filePart.write(filePath);
-//
-        String fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
-
-        ServiceDAO sdao = new ServiceDAO();
-        sdao.updateService(Integer.parseInt(id), name, type, BigDecimal.valueOf(Double.parseDouble(fee)), description.replaceAll("\n", "<br>"), fileURL, icon);
-        request.setAttribute("listservice", sdao.getAll());
-        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
-//        out.print(uploadPath);
+        FinanceDAO fdao = new FinanceDAO();
+        fdao.insertFinance(Integer.parseInt(typeBuilding), Integer.parseInt(typeFee), BigDecimal.valueOf(Double.parseDouble(fee)), Date.valueOf(LocalDate.now()), description);
+        
+        response.sendRedirect("costStatistic?status=success");
     }
 
     /**
