@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller.staff;
 
 import DAO.InvoiceDAO;
@@ -15,8 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -26,37 +25,25 @@ import model.ServiceContract;
  *
  * @author ADMIN
  */
-public class InvoiceStatServiceSearchAjax extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class UnPaidInvoiceServiceAjax extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-
-        InvoiceDAO invoiceDAO = new InvoiceDAO();
+        
         ServiceContractDAO serviceContractDAO = new ServiceContractDAO();
+        InvoiceDAO invoiceDAO = new InvoiceDAO();
 
         String invoiceId_raw = request.getParameter("invoiceId");
-        String searchTerm = request.getParameter("searchTerm");
-        String currentPage_raw = request.getParameter("currentPage");
-        String servicePerPage_raw = request.getParameter("servicePerPage");
-
-        List<String> searchTermList = new ArrayList<>();
-
-        if (searchTerm != null && !searchTerm.trim().isEmpty() && !searchTerm.trim().equalsIgnoreCase("")) {
-            String[] searchTermArray = searchTerm.trim().split("\\s+");
-            searchTermList = Arrays.asList(searchTermArray);
-        }
 
         int invoiceId = 0;
         try {
@@ -64,23 +51,10 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
         } catch (NumberFormatException e) {
         }
 
-        int currentPage = 1;
-        if (currentPage_raw != null) {
-            try {
-                currentPage = Integer.parseInt(currentPage_raw);
-            } catch (NumberFormatException e) {
-                System.out.println(e);
-            }
-        }
-
+        int currentServicePage = 1;
         int servicePerPage = 5;
-        try {
-            servicePerPage = Integer.parseInt(servicePerPage_raw);
-        } catch (NumberFormatException e) {
-            System.out.println(e.getMessage());
-        }
 
-        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContractByInvoiceId(invoiceId, currentPage, servicePerPage, searchTermList);
+        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContractByInvoiceId(invoiceId, currentServicePage, servicePerPage, null);
         int serviceCount = serviceContractDAO.countCurrentServiceContractByInvoiceId(invoiceId, null);
         Map<String, Double> invoiceMap = invoiceDAO.getAmountByInvoiceId(invoiceId);
         double invoiceAmount = 1;
@@ -97,7 +71,31 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         if (invoiceId != 0) {
-            out.print("                            <div class=\"table-responsive\">\n"
+            out.print("<div class=\"card-header py-3 d-flex flex-row align-items-center justify-content-between\">\n"
+                    + "                            <h5 class=\"m-0 font-weight-bold text-primary text-gray-800 col-md-5\">Chi tiết dịch vụ hóa đơn: </h5>\n"
+                    + "                            <div class=\"col-md-2\">\n"
+                    + "                                <select id=\"servicePerPage\" name=\"servicePerPage\" class=\"form-select font-weight-bold text-primary text-uppercase\" aria-label=\"Default select example\" onchange=\"handleSearchDetails($('#serviceTable .pagination .page-item.active button.page-link').val())\">\n"
+                    + "                                    <option value=\"5\">Số lượng hiển thị: 5</option>\n"
+                    + "                                    <option value=\"10\">Số lượng hiển thị: 10</option>\n"
+                    + "                                    <option value=\"25\">Số lượng hiển thị: 25</option>\n"
+                    + "                                    <option value=\"50\">Số lượng hiển thị: 50</option>\n"
+                    + "                                </select>\n"
+                    + "                            </div>\n"
+                    + "                            <div class=\"col-md-4\">\n"
+                    + "                                <div class=\"input-group rounded \">\n"
+                    + "                                    <!--reset the current page to 1 cause of search can reduce the number of page-->\n"
+                    + "                                    <input id=\"searchService\" name=\"searchService\" type=\"text\" value=\"\" oninput=\"handleSearchDetails($('#serviceTable .pagination .page-item.active button.page-link').val())\" class=\"form-control\" placeholder=\"Search\" aria-label=\"Search\" aria-describedby=\"search-addon\" />\n"
+                    + "                                    <input id=\"invoiceID\" type=\"hidden\" name=\"invoiceID\" value=\""+ invoiceId +"\" />                            "
+                    + "                                     <div class=\"input-group-append\">\n"
+                    + "                                        <span class=\"input-group-text btn-primary border-0\" id=\"search-addon\">\n"
+                    + "                                            <i class=\"fas fa-search\"></i>\n"
+                    + "                                        </span>\n"
+                    + "                                    </div>\n"
+                    + "                                </div>\n"
+                    + "                            </div>\n"
+                    + "                        </div>\n"
+                    + "                        <div id=\"serviceTable\" class=\"card-body\">\n"
+                    + "                            <div class=\"table-responsive\">\n"
                     + "                                <table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">\n"
                     + "                                    <thead style=\"background-color: #4e73df; color: white\">\n"
                     + "                                        <tr>\n"
@@ -112,7 +110,7 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
                     + "                                    </thead>\n"
                     + "                                    <tbody>\n");
             if (serviceContractList != null && !serviceContractList.isEmpty()) {
-                int count = (currentPage - 1) * servicePerPage;
+                int count = (currentServicePage - 1) * servicePerPage;
                 for (ServiceContract serviceContract : serviceContractList) {
                     count++;
                     out.println("                                            <tr>\n"
@@ -143,13 +141,13 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
                     + "                                    <div class=\"d-flex flex-row-reverse\">\n"
                     + "                                        <nav aria-label=\"Page navigation\">\n"
                     + "                                            <ul class=\"pagination justify-content-start\">\n");
-            if (currentPage > 1) {
+            if (currentServicePage > 1) {
                 out.println("<li class=\"page-item\">\n"
-                        + "   <button class=\"page-link\" value=\"" + (currentPage - 1) + "\" onclick=\"handleSearchDetails(this.value)\">Previous</button>\n"
+                        + "   <button class=\"page-link\" value=\"" + (currentServicePage - 1) + "\" onclick=\"handleSearchDetails(this.value)\">Previous</button>\n"
                         + "   </li>");
             }
             for (int i = 1; i <= totalPages; i++) {
-                if (i == currentPage) {
+                if (i == currentServicePage) {
                     out.println("<li class=\"page-item active\">\n"
                             + "      <button class=\"page-link\" value=\"" + i + "\" onclick=\"handleSearchDetails(this.value)\">" + i + "</button>\n"
                             + " </li>");
@@ -159,27 +157,27 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
                             + " </li>");
                 }
             }
-            if (currentPage < totalPages) {
+            if (currentServicePage < totalPages) {
                 out.println("<li class=\"page-item\">\n"
-                        + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearchDetails(this.value)\">Previous</button>\n"
+                        + "   <button class=\"page-link\" value=\"" + (currentServicePage + 1) + "\" onclick=\"handleSearchDetails(this.value)\">Next</button>\n"
                         + "   </li>");
             }
             out.println("                                        </ul>\n"
                     + "                                    </nav>\n"
                     + "                                </div>\n"
                     + "                            </div>\n"
+                    + "                        </div>   "
             );
         } else {
-            out.println("                                                <tr>\n"
-                    + "                                                    <td colspan=\"7\"><h4>Không tìm thấy dịch vụ có tên hoặc loại tương ứng</h4></td>\n"
-                    + "                                                  </tr>\n");
+            out.println("<div class=\"card-header py-3 d-flex flex-row align-items-center justify-content-between\">"
+                    + "<h5 class=\"m-0 font-weight-bold text-primary col-md-5\">Có lỗi xảy ra</h5>\n"
+                    + "</div>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -187,13 +185,12 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -201,13 +198,12 @@ public class InvoiceStatServiceSearchAjax extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

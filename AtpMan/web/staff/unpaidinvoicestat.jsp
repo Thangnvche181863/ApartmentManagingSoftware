@@ -260,7 +260,7 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h1 mb-0 text-gray-800"><b>Thống kê hóa đơn cần thu</b></h1>
                         <a href="/AtpMan/managerinvoicestatistic" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                        Hóa đơn đã thu        
+                            Hóa đơn đã thu        
                         </a>
                     </div>
                     <!-- Split dropend button -->
@@ -373,28 +373,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
                             <div class="col-md-6 row">
                                 <div class="col-12 row">
                                     <label for="toDate" class="col-sm-4 col-form-label font-weight-bold">Đến ngày</label>
                                     <div class="col-sm-8">
-                                        <input type="date" class="form-control" id="toDate" name="toDate" min="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 row">
-                                <div class="col-12 row">
-                                    <label for="invoiceCode" class="col-sm-4 col-form-label font-weight-bold">Mã hóa đơn</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="invoiceCode" name="invoiceCode" min="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 row">
-                                <div class="col-12 row">
-                                    <label for="transactionNo" class="col-sm-4 col-form-label font-weight-bold">Mã giao dịch</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="transactionNo" name="transactionNo" min="">
+                                        <input type="date" class="form-control" id="toDate" name="toDate" min="" max="${requestScope.maxDate}" onchange="maxDate()">
                                     </div>
                                 </div>
                             </div>
@@ -428,19 +411,17 @@
                                 </select>
                             </div>
                         </div>
-                        <div id="serviceTable" class="card-body">
+                        <div id="invoiceTable" class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead style="background-color: #4e73df; color: white">
                                         <tr>
                                             <th>#</th>
-                                            <th>Mã giao dịch</th>
-                                            <th>Mã hóa đơn</th>
                                             <th>Đơn giá</th>
-                                            <th>Ngân hàng</th>
-                                            <th>Nội dung</th>
                                             <th>Căn hộ</th>
-                                            <th>Ngày thanh toán</th>
+                                            <th>Ngày tạo hóa đơn</th>
+                                            <th>Ngày hết hạn thanh toán</th>
+                                            <th>Trạng thái</th>
                                             <th>Thông tin</th>
                                         </tr>
                                     </thead>
@@ -450,15 +431,13 @@
                                             <c:set var="countServiceTable" value="${countServiceTable+1}"/>
                                             <tr>
                                                 <td>${countServiceTable}</td>
-                                                <td>${invoice.transactionNo}</td>
-                                                <td>${invoice.invoiceCode}</td>
                                                 <td><fmt:formatNumber value="${invoice.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
-                                                <td>${invoice.bankCode}</td>
-                                                <td>${invoice.orderInfo}</td>
                                                 <td>${invoice.apartmentName}</td>
-                                                <td><fmt:formatDate pattern="dd/MM/YYY HH:mm:ss" value="${invoice.transactionDate}"></fmt:formatDate></td>
-                                                    <td><a href="#">Chi tiết</a></td>
-                                                </tr>
+                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${invoice.issueDate}"></fmt:formatDate></td>
+                                                <td><fmt:formatDate pattern="dd/MM/YYY" value="${invoice.dueDate}"></fmt:formatDate></td>
+                                                    <td></td>
+                                                    <td><input class="btn btn-primary" type="submit" value="Chi tiết" onclick="handleDetails(${invoice.invoiceId})"></td>
+                                            </tr>
                                         </c:forEach>
                                     </tbody>
                                     <tfoot style="background-color: #4e73df; color: white" class="h5">
@@ -466,10 +445,10 @@
                                             <th colspan="9">
                                                 <div  class="d-flex justify-content-between">
                                                     <span>
-                                                        Tổng hóa đơn thanh toán: ${requestScope.totalPaidInvoice}
+                                                        Tổng số hóa đơn cần thanh toán: ${requestScope.totalUnPaidInvoice}
                                                     </span>
                                                     <span class="d-flex flex-row-reverse">
-                                                        Tổng tiền thanh toán: <fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
+                                                        Tổng tiền: <fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
                                                         </span>
                                                     </div>
                                                 </th>
@@ -481,19 +460,19 @@
                                             <ul class="pagination justify-content-start">
                                             <c:if test="${1 > 1}">
                                                 <li class="page-item">
-                                                    <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                    <button class="page-link" value="${requestScope.currentPage - 1}" onclick="handleSearch(this.value)">Previous</button>
                                                 </li>
                                             </c:if>
 
-                                            <c:forEach var="i" begin="1" end="${requestScope.totalPaidInvoicePage}">
+                                            <c:forEach var="i" begin="1" end="${requestScope.totalUnPaidInvoicePage}">
                                                 <li class="page-item ${i == 1 ? 'active' : ''}">
                                                     <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
                                                 </li>
                                             </c:forEach>
 
-                                            <c:if test="${1 < requestScope.totalPaidInvoicePage}">
+                                            <c:if test="${1 < requestScope.totalUnPaidInvoicePage}">
                                                 <li class="page-item">
-                                                    <button class="page-link" value="${1 + 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                    <button class="page-link" value="${1 + 1}" onclick="handleSearch(this.value)">Next</button>
                                                 </li>
                                             </c:if>
                                         </ul>
@@ -502,7 +481,8 @@
                             </div>
                         </div>   
                     </div>
-
+                    <div class="card shadow mb-4" id="serviceCard">
+                    </div>
                 </div>
             </div>
 
@@ -531,30 +511,67 @@
                                                         function handleSearch(page) {
                                                             let fromDate = $("#fromDate").val();
                                                             let toDate = $("#toDate").val();
-                                                            let invoiceCode = $("#invoiceCode").val();
-                                                            let transactionNo = $("#transactionNo").val();
-                                                            let orderInfo = $("#orderInfo").val();
                                                             let currentPage = page;
                                                             let invoicePerPage = $("#invoicePerPage").val();
 
                                                             console.log("fromdate ", fromDate);
                                                             console.log("toDate ", toDate);
-                                                            console.log("invoiceCode ", invoiceCode);
-                                                            console.log("transactionNo ", transactionNo);
-                                                            console.log("orderInfo ", orderInfo);
                                                             console.log("currentPage ", currentPage);
                                                             console.log("invoicePerPage ", invoicePerPage);
                                                             $.ajax({
-                                                                url: "/AtpMan/managerinvoicestatajax",
+                                                                url: "/AtpMan/unpaidinvoicetableajax",
                                                                 type: "get", //send it through post method
                                                                 data: {
                                                                     fromDate: fromDate,
                                                                     toDate: toDate,
-                                                                    invoiceCode: invoiceCode,
-                                                                    transactionNo: transactionNo,
-                                                                    orderInfo: orderInfo,
-//                                                                    currentPage: currentPage,
+                                                                    currentPage: currentPage,
                                                                     invoicePerPage: invoicePerPage
+                                                                },
+                                                                success: function (data) {
+                                                                    $("#invoiceTable").html(data);
+                                                                },
+                                                                error: function (xhr) {
+                                                                    //Do Something to handle error
+                                                                }
+                                                            });
+                                                        }
+
+                                                        function handleDetails(invoiceID) {
+                                                            let invoiceId = invoiceID;
+
+                                                            console.log("invoiceId ", invoiceId);
+                                                            $.ajax({
+                                                                url: "/AtpMan/unpaidinvoiceserviceajax",
+                                                                type: "get", //send it through post method
+                                                                data: {
+                                                                    invoiceId: invoiceId
+                                                                },
+                                                                success: function (data) {
+                                                                    $("#serviceCard").html(data);
+                                                                },
+                                                                error: function (xhr) {
+                                                                    //Do Something to handle error
+                                                                }
+                                                            });
+                                                        }
+
+                                                        function handleSearchDetails(page) {
+                                                            let invoiceId = $("#invoiceID").val();
+                                                            let currentPage = page;
+                                                            let searchTerm = $("#searchService").val();
+                                                            let servicePerPage = $("#servicePerPage").val();
+                                                            console.log("invoiceId ", invoiceId);
+                                                            console.log("currentPage ", currentPage);
+                                                            console.log("searchTerm ", searchTerm);
+                                                            console.log("invoicePerPage ", invoicePerPage);
+                                                            $.ajax({
+                                                                url: "/AtpMan/invoicestatservicesearchajax",
+                                                                type: "get", //send it through post method
+                                                                data: {
+                                                                    invoiceId: invoiceId,
+                                                                    currentPage: currentPage,
+                                                                    searchTerm: searchTerm,
+                                                                    servicePerPage: servicePerPage
                                                                 },
                                                                 success: function (data) {
                                                                     $("#serviceTable").html(data);
@@ -576,15 +593,22 @@
                                                             // Cập nhật thuộc tính min cho toDate bằng giá trị của fromDate
                                                             toDateInput.min = fromDateValue;
                                                         }
+                                                        function maxDate() {
+                                                            const toDateValue = $("#toDate").val();
+                                                            const fromDateInput = document.getElementById('fromDate');
 
-                                                        document.getElementById('fromDate').addEventListener('change', function () {
-                                                            const fromDateValue = $("#fromDate").val();
-                                                            const toDateInput = document.getElementById('toDate');
-
-                                                            // Cập nhật thuộc tính min cho toDate bằng giá trị của fromDate
-                                                            toDateInput.min = fromDateValue;
+                                                            // Cập nhật thuộc tính max cho fromDate bằng giá trị của toDate
+                                                            fromDateInput.max = toDateValue;
                                                         }
-                                                        );
+
+//                                                        document.getElementById('fromDate').addEventListener('change', function () {
+//                                                            const fromDateValue = $("#fromDate").val();
+//                                                            const toDateInput = document.getElementById('toDate');
+//
+//                                                            // Cập nhật thuộc tính min cho toDate bằng giá trị của fromDate
+//                                                            toDateInput.min = fromDateValue;
+//                                                        }
+//                                                        );
 
             </script>
     </body>

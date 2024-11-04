@@ -242,6 +242,14 @@
         <servlet-name>InvoiceStatServiceSearchAjax</servlet-name>
         <servlet-class>controller.staff.InvoiceStatServiceSearchAjax</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UnPaidInvoiceTableAjax</servlet-name>
+        <servlet-class>controller.staff.UnPaidInvoiceTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnPaidInvoiceServiceAjax</servlet-name>
+        <servlet-class>controller.staff.UnPaidInvoiceServiceAjax</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -433,6 +441,14 @@
     <servlet-mapping>
         <servlet-name>InvoiceStatServiceSearchAjax</servlet-name>
         <url-pattern>/invoicestatservicesearchajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnPaidInvoiceTableAjax</servlet-name>
+        <url-pattern>/unpaidinvoicetableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnPaidInvoiceServiceAjax</servlet-name>
+        <url-pattern>/unpaidinvoiceserviceajax</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

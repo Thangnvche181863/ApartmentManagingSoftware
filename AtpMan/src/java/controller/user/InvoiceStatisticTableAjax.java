@@ -215,7 +215,7 @@ public class InvoiceStatisticTableAjax extends HttpServlet {
 
         if (currentPage < totalPages) {
             out.println("<li class=\"page-item\">\n"
-                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Previous</button>\n"
+                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Next</button>\n"
                     + "   </li>");
 
         }

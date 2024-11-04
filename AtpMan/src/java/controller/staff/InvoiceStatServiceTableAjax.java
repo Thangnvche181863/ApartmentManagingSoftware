@@ -146,23 +146,23 @@ public class InvoiceStatServiceTableAjax extends HttpServlet {
                     + "                                            <ul class=\"pagination justify-content-start\">\n");
             if (currentServicePage > 1) {
                 out.println("<li class=\"page-item\">\n"
-                        + "   <button class=\"page-link\" value=\"" + (currentServicePage - 1) + "\" onclick=\"\">Previous</button>\n"
+                        + "   <button class=\"page-link\" value=\"" + (currentServicePage - 1) + "\" onclick=\"handleSearchDetails(this.value)\">Previous</button>\n"
                         + "   </li>");
             }
             for (int i = 1; i <= totalPages; i++) {
                 if (i == currentServicePage) {
                     out.println("<li class=\"page-item active\">\n"
-                            + "      <button class=\"page-link\" value=\"" + i + "\" onclick=\"\">" + i + "</button>\n"
+                            + "      <button class=\"page-link\" value=\"" + i + "\" onclick=\"handleSearchDetails(this.value)\">" + i + "</button>\n"
                             + " </li>");
                 } else {
                     out.println("<li class=\"page-item\">\n"
-                            + "      <button class=\"page-link\" value=\"" + i + "\" onclick=\"\">" + i + "</button>\n"
+                            + "      <button class=\"page-link\" value=\"" + i + "\" onclick=\"handleSearchDetails(this.value)\">" + i + "</button>\n"
                             + " </li>");
                 }
             }
             if (currentServicePage < totalPages) {
                 out.println("<li class=\"page-item\">\n"
-                        + "   <button class=\"page-link\" value=\"" + (currentServicePage + 1) + "\" onclick=\"\">Previous</button>\n"
+                        + "   <button class=\"page-link\" value=\"" + (currentServicePage + 1) + "\" onclick=\"handleSearchDetails(this.value)\">Next</button>\n"
                         + "   </li>");
             }
             out.println("                                        </ul>\n"

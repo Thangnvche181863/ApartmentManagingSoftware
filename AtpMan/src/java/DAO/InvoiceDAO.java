@@ -428,6 +428,7 @@ public class InvoiceDAO {
         return total;
     }
 
+    // KhangPM
     public Date getEarliestDateInvoice() {
         Date date = null;
         String sql = "SELECT MIN(CONVERT(DATE, transactionDate )) AS transactionDate from Invoice\n"
@@ -445,6 +446,25 @@ public class InvoiceDAO {
         return date;
     }
 
+    // KhangPM
+    public Date getEarliestIssueDateInvoice() {
+        Date date = null;
+        String sql = "SELECT MIN(CONVERT(DATE, issueDate )) AS issueDate from Invoice\n"
+                + "where status = 0";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                date = rs.getDate(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return date;
+    }
+
+    // KhangPM
     public List<Invoice> getInvoiceForStaff(int status, int currentPage, int rowPerPage, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
         List<Invoice> list = new ArrayList<>();
         String sql = "select i.*, a.apartmentNumber from Invoice i "
@@ -452,23 +472,32 @@ public class InvoiceDAO {
                 + "where status = ? ";
 
         // Tạo truy vấn động theo điều kiện có giá trị khác null
-        if (toDate != null) {
-            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+        if (status == 1) {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                sql += " and i.invoiceCode = ? ";
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                sql += " and i.transactionNo = ? ";
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                sql += " and i.orderInfo like ? ";
+            }
+            sql += "order by i.transactionDate desc offset ? rows fetch next ? rows only";
+        } else {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.issueDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.issueDate) ";
+            }
+            sql += "order by i.issueDate desc offset ? rows fetch next ? rows only";
         }
-        if (fromDate != null) {
-            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
-        }
-        if (invoiceCode != null && !invoiceCode.isBlank()) {
-            sql += " and i.invoiceCode = ? ";
-        }
-        if (transactionNo != null && !transactionNo.isBlank()) {
-            sql += " and i.transactionNo = ? ";
-        }
-        if (orderInfo != null && !orderInfo.isBlank()) {
-            sql += " and i.orderInfo like ? ";
-        }
-
-        sql += "order by i.transactionDate desc offset ? rows fetch next ? rows only";
 
         int fetchNext = (currentPage - 1) * rowPerPage;
 
@@ -480,20 +509,29 @@ public class InvoiceDAO {
             // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
             statement.setInt(index++, status);
 
-            if (toDate != null) {
-                statement.setDate(index++, toDate);
-            }
-            if (fromDate != null) {
-                statement.setDate(index++, fromDate);
-            }
-            if (invoiceCode != null && !invoiceCode.isBlank()) {
-                statement.setString(index++, invoiceCode.trim());
-            }
-            if (transactionNo != null && !transactionNo.isBlank()) {
-                statement.setString(index++, transactionNo.trim());
-            }
-            if (orderInfo != null && !orderInfo.isBlank()) {
-                statement.setString(index++, "%" + orderInfo.trim() + "%");
+            if (status == 1) {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
+                if (invoiceCode != null && !invoiceCode.isBlank()) {
+                    statement.setString(index++, invoiceCode.trim());
+                }
+                if (transactionNo != null && !transactionNo.isBlank()) {
+                    statement.setString(index++, transactionNo.trim());
+                }
+                if (orderInfo != null && !orderInfo.isBlank()) {
+                    statement.setString(index++, "%" + orderInfo.trim() + "%");
+                }
+            } else {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
             }
 
             // Phân trang
@@ -525,6 +563,7 @@ public class InvoiceDAO {
         return list;
     }
 
+    // KhangPM
     public int countInvoiceForStaff(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
         int count = 0;
         String sql = "select count(*) from Invoice i "
@@ -532,20 +571,29 @@ public class InvoiceDAO {
                 + "where status = ? ";
 
         // Tạo truy vấn động theo điều kiện có giá trị khác null
-        if (toDate != null) {
-            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
-        }
-        if (fromDate != null) {
-            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
-        }
-        if (invoiceCode != null && !invoiceCode.isBlank()) {
-            sql += " and i.invoiceCode = ? ";
-        }
-        if (transactionNo != null && !transactionNo.isBlank()) {
-            sql += " and i.transactionNo = ? ";
-        }
-        if (orderInfo != null && !orderInfo.isBlank()) {
-            sql += " and i.orderInfo like ? ";
+        if (status == 1) {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                sql += " and i.invoiceCode = ? ";
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                sql += " and i.transactionNo = ? ";
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                sql += " and i.orderInfo like ? ";
+            }
+        } else {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.issueDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.issueDate) ";
+            }
         }
 
         try {
@@ -556,20 +604,29 @@ public class InvoiceDAO {
             // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
             statement.setInt(index++, status);
 
-            if (toDate != null) {
-                statement.setDate(index++, toDate);
-            }
-            if (fromDate != null) {
-                statement.setDate(index++, fromDate);
-            }
-            if (invoiceCode != null && !invoiceCode.isBlank()) {
-                statement.setString(index++, invoiceCode.trim());
-            }
-            if (transactionNo != null && !transactionNo.isBlank()) {
-                statement.setString(index++, transactionNo.trim());
-            }
-            if (orderInfo != null && !orderInfo.isBlank()) {
-                statement.setString(index, "%" + orderInfo.trim() + "%");
+            if (status == 1) {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
+                if (invoiceCode != null && !invoiceCode.isBlank()) {
+                    statement.setString(index++, invoiceCode.trim());
+                }
+                if (transactionNo != null && !transactionNo.isBlank()) {
+                    statement.setString(index++, transactionNo.trim());
+                }
+                if (orderInfo != null && !orderInfo.isBlank()) {
+                    statement.setString(index++, "%" + orderInfo.trim() + "%");
+                }
+            } else {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
             }
 
             ResultSet rs = statement.executeQuery();
@@ -584,6 +641,7 @@ public class InvoiceDAO {
         return count;
     }
 
+    // KhangPM
     public double totalAmountPaidInvoice(int status, Date fromDate, Date toDate, String invoiceCode, String transactionNo, String orderInfo) {
         double total = 0;
         String sql = "select SUM(i.amount) from Invoice i "
@@ -591,20 +649,29 @@ public class InvoiceDAO {
                 + "where status = ? ";
 
         // Tạo truy vấn động theo điều kiện có giá trị khác null
-        if (toDate != null) {
-            sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
-        }
-        if (fromDate != null) {
-            sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
-        }
-        if (invoiceCode != null && !invoiceCode.isBlank()) {
-            sql += " and i.invoiceCode = ? ";
-        }
-        if (transactionNo != null && !transactionNo.isBlank()) {
-            sql += " and i.transactionNo = ? ";
-        }
-        if (orderInfo != null && !orderInfo.isBlank()) {
-            sql += " and i.orderInfo like ? ";
+        if (status == 1) {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.transactionDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.transactionDate) ";
+            }
+            if (invoiceCode != null && !invoiceCode.isBlank()) {
+                sql += " and i.invoiceCode = ? ";
+            }
+            if (transactionNo != null && !transactionNo.isBlank()) {
+                sql += " and i.transactionNo = ? ";
+            }
+            if (orderInfo != null && !orderInfo.isBlank()) {
+                sql += " and i.orderInfo like ? ";
+            }
+        } else {
+            if (toDate != null) {
+                sql += " and CONVERT(DATE, i.issueDate) <= ? ";
+            }
+            if (fromDate != null) {
+                sql += " and ? <= CONVERT(DATE, i.issueDate) ";
+            }
         }
 
         try {
@@ -615,20 +682,29 @@ public class InvoiceDAO {
             // Gán giá trị cho các tham số trong thứ tự tương ứng với truy vấn SQL
             statement.setInt(index++, status);
 
-            if (toDate != null) {
-                statement.setDate(index++, toDate);
-            }
-            if (fromDate != null) {
-                statement.setDate(index++, fromDate);
-            }
-            if (invoiceCode != null && !invoiceCode.isBlank()) {
-                statement.setString(index++, invoiceCode.trim());
-            }
-            if (transactionNo != null && !transactionNo.isBlank()) {
-                statement.setString(index++, transactionNo.trim());
-            }
-            if (orderInfo != null && !orderInfo.isBlank()) {
-                statement.setString(index, "%" + orderInfo.trim() + "%");
+            if (status == 1) {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
+                if (invoiceCode != null && !invoiceCode.isBlank()) {
+                    statement.setString(index++, invoiceCode.trim());
+                }
+                if (transactionNo != null && !transactionNo.isBlank()) {
+                    statement.setString(index++, transactionNo.trim());
+                }
+                if (orderInfo != null && !orderInfo.isBlank()) {
+                    statement.setString(index++, "%" + orderInfo.trim() + "%");
+                }
+            } else {
+                if (toDate != null) {
+                    statement.setDate(index++, toDate);
+                }
+                if (fromDate != null) {
+                    statement.setDate(index++, fromDate);
+                }
             }
 
             ResultSet rs = statement.executeQuery();
@@ -643,6 +719,7 @@ public class InvoiceDAO {
         return total;
     }
 
+    //KhangPM
     public Map<String, Double> getAmountByInvoiceId(int invoiceId) {
         Map<String, Double> map = new LinkedHashMap<>();
         double amount = 1;
@@ -654,10 +731,10 @@ public class InvoiceDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, invoiceId);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 invoiceCode = rs.getString(1);
                 amount = rs.getDouble(2);
-                
+
                 map.put(invoiceCode, amount);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -708,12 +785,12 @@ public class InvoiceDAO {
         System.out.println(i);
 
         LocalDate fromDate = LocalDate.of(2024, 10, 15);
-        LocalDate toDate = LocalDate.of(2024, 10, 31);
+        LocalDate toDate = LocalDate.of(2024, 3, 31);
 
         System.out.println(Date.valueOf(fromDate));
 
-        List<Invoice> iList = dao.getInvoiceForStaff(1, 1, 10, Date.valueOf(fromDate), Date.valueOf(toDate), "25742162", "14642203", null);
-        System.out.println(iList.size());
+        List<Invoice> iList = dao.getInvoiceForStaff(0, 1, 10, null, Date.valueOf(toDate), "25742162", "14642203", null);
+        System.out.println("invoiceList size: " + iList.size());
 
         int count = dao.countInvoiceForStaff(1, Date.valueOf(fromDate), Date.valueOf(toDate), "  ", "  ", null);
         System.out.println(count);

@@ -481,7 +481,7 @@
                                             <ul class="pagination justify-content-start">
                                             <c:if test="${1 > 1}">
                                                 <li class="page-item">
-                                                    <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                    <button class="page-link" value="${requestScope.currentPage - 1}" onclick="handleSearch(this.value)">Previous</button>
                                                 </li>
                                             </c:if>
 
