@@ -799,6 +799,56 @@ public class NewsDAO extends DBContext {
    
 
    
+public List<News> getTopNewsByCategoryId(int newsCategoryID, int limit) {
+    List<News> newsList = new ArrayList<>(); // Initialize an empty list to hold news articles
+    String sql = "SELECT TOP " + limit + " n.*, nc.name AS newsCategoryName, s.name AS staffName "
+               + "FROM News n "
+               + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+               + "JOIN Staff s ON n.staffID = s.staffID "
+               + "WHERE n.newsCategoryID = ?";
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return null;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setInt(1, newsCategoryID);
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) { // Iterate through the ResultSet
+            int newsID = rs.getInt("newsID");
+            int staffID = rs.getInt("staffID");
+            int taskID = rs.getInt("taskID");
+
+            String newsTitle = rs.getString("newsTitle");
+            String newsContent = rs.getString("newsContent");
+            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+            Date postDate = new Date(sqlPostDate.getTime());
+            String newsImg = rs.getString("newsImg");
+            String newsCategoryName = rs.getString("newsCategoryName");
+            String staffName = rs.getString("staffName");
+            String description = rs.getString("newsDescription");
+
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, description);
+            newsList.add(news); // Add each news article to the list
+        }
+
+        rs.close();
+        pre.close();
+        LOGGER.log(Level.INFO, "Successfully retrieved top {0} news for category ID {1}.", new Object[]{limit, newsCategoryID});
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching top news by category ID.", e);
+    }
+
+    return newsList; // Return the list of news articles
+}
+
 
    
    
@@ -877,67 +927,6 @@ public class NewsDAO extends DBContext {
             }
         }
 
-//        newNews.setStaffID(1); // Assuming staffID 1 exists
-//        newNews.setTaskID(1); // Assuming taskID 1 exists
-//        newNews.setNewsCategoryID(1); // Assuming newsCategoryID 1 exists
-//        newNews.setNewsTitle("New Feature Released");
-//        newNews.setNewsContent("We have released a new feature that allows users to...");
-//        newNews.setPostDate(new java.util.Date());
-//        newNews.setNewsImg("img/cutepic.png");
-//
-//        boolean isAdded = dao.addNews(newNews);
-//    if (isAdded) {
-//        System.out.println("Added News with ID: " + newNews.getNewsID());
-//    } else {
-//        System.out.println("Failed to add News.");
-//    }
-        //test get all
-//        List<News> newsList = dao.getAll();
-//        if (!newsList.isEmpty()) {
-//            for (News news : newsList) {
-//                System.out.println("ID: " + news.getNewsID()
-//                        + ", Title: " + news.getNewsTitle()
-//                        + ", Content: " + news.getNewsContent()
-//                        + ", Post Date: " + news.getPostDate()
-//                        + ", Image URL: " + news.getNewsImg());
-//            }
-//        } else {
-//            System.out.println("No news records found.");
-//        }
-        // Test getNumberOfRows
-//        int totalRows = dao.getNumberOfRows();
-//        System.out.println("Total number of news records: " + totalRows);
-//
-//        // Determine number of pages
-//        int recordsPerPage = 5;
-//        int totalPages = (int) Math.ceil((double) totalRows / recordsPerPage);
-//        System.out.println("Total number of pages: " + totalPages);
-//
-//        // Test getNewsByPage for page 1
-//        int pageToTest = 1; // You can change this to test different pages
-//        System.out.println("Fetching news for page " + pageToTest);
-//        List<News> paginatedNews = dao.getNewsByPage(pageToTest, recordsPerPage);
-//
-//        if (!paginatedNews.isEmpty()) {
-//            for (News news : paginatedNews) {
-//                System.out.println("ID: " + news.getNewsID()
-//                        + ", Title: " + news.getNewsTitle()
-//                        + ", Content: " + news.getNewsContent()
-//                        + ", Post Date: " + news.getPostDate()
-//                        + ", Image URL: " + news.getNewsImg());
-//            }
-//        } else {
-//            System.out.println("No news records found for page " + pageToTest);
-//        }
-        //test delete
-//        int testNewsID = 31;  // Replace with a valid newsID that exists in your database for testing
-//
-//        boolean isDeleted = dao.deleteByNewsID(testNewsID);
-//
-//        if (isDeleted) {
-//            System.out.println("Test passed! News with ID " + testNewsID + " was deleted successfully.");
-//        } else {
-//            System.out.println("Test failed! News with ID " + testNewsID + " was not found or couldn't be deleted.");
-//        }
+    
     }
 }

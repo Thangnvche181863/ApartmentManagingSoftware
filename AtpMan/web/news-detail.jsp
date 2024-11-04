@@ -133,13 +133,13 @@
                             <!-- News Metadata (Post Date, Category) -->
                             <div class="text-muted mb-3">
                                 <small>
-                                    <strong>Posted on:</strong>
+                                    <strong>Thời gian:</strong>
                                     <fmt:formatDate value="${news.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />
                                     <br>
-                                    <strong>Category:</strong>
+                                    <strong>Loại:</strong>
                                     <a href="#" class="text-primary">${news.newsCategoryName}</a> 
                                     <br>
-                                    <strong>Posted by: </strong>
+                                    <strong>Tác giả: </strong>
                                     <a>${news.staffName}</a>
                                 </small> 
                             </div>
@@ -169,14 +169,14 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h4 class="card-title">Latest Comments</h4>
+                        <h4 class="card-title">Bình luận mới nhất</h4>
                     </div>
                     <div class="comment-widgets">
                         <c:if test="${not empty comments}">
                             <c:forEach var="comment" items="${comments}">
                                 <div class="d-flex flex-row comment-row m-t-0 mt-3">
                                     <div class="p-2">
-                                        <img src="data:image/png;base64,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" alt="user" width="50" class="rounded-circle"> 
+                                        <img src="data:image/png;base64,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" alt="user" width="50" class="rounded-circle"> 
                                     </div>
                                     <div class="comment-text w-100">
                                         <h6 class="font-medium">
@@ -206,7 +206,11 @@
                                                         <c:when test="${ comment.customerID == sessionCustomer.customerID}">
                                                             <!-- Buttons for the customer who made the comment -->
                                                             <button type="button" class="btn btn-cyan btn-sm">Edit</button>
-                                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                                            <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
+                                                               onclick="return confirmDelete();">Delete</a>
+                                                            <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
+                                                               onclick="return confirmReport();">Report</a>
+
                                                         </c:when>
 
                                                     </c:choose>
@@ -220,11 +224,18 @@
                                                         <c:when test="${sessionStaff.staffID != null && comment.staffID == sessionStaff.staffID}">
                                                             <!-- Buttons for the customer who made the comment -->
                                                             <button type="button" class="btn btn-cyan btn-sm">Edit</button>
-                                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                                            <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
+                                                               onclick="return confirmDelete();">Delete</a>
+                                                            <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
+                                                               onclick="return confirmReport();"  >Report</a>
+
                                                         </c:when>
                                                         <c:when test="${userRole == 'staff'}">
                                                             <!-- Staff can delete comments made by others -->
-                                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                                            <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
+                                                               onclick="return confirmDelete();">Delete</a>
+                                                            <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
+                                                               onclick="return confirmReport();"  >Report</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:if>  
@@ -241,7 +252,7 @@
                         </c:if>
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">Post a Comment:</h4>
+                        <h4 class="card-title">Đăng bình luận:</h4>
                         <c:if test="${not empty userRole}">
                             <form action="NewsDetail" method="post">
                                 <input type="hidden" name="newsID" value="${param.id}"/>
@@ -397,6 +408,35 @@
                     });
                 });
             });
+        </script>
+        <script>
+            function confirmDelete() {
+                return confirm("Are you sure you want to delete this comment?");
+            }
+        </script>
+
+        <script>
+            function confirmReport() {
+                return confirm("Are you sure you want to report this comment?");
+            }
+        </script>
+        <script>
+            // Function to retrieve the value of a query parameter
+            function getQueryParam(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
+            }
+
+            // Check if 'ReportMessage' parameter exists and show alert if it does
+            function showReportMessage() {
+                const reportMessage = getQueryParam('ReportMessage');
+                if (reportMessage) {
+                    alert(decodeURIComponent(reportMessage));
+                }
+            }
+
+            // Run the function when the page loads
+            window.onload = showReportMessage;
         </script>
     </body>
 

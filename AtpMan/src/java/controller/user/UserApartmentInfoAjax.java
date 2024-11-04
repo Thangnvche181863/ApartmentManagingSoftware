@@ -221,6 +221,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                            <br>\n"
                 + "                            <div class=\"d-sm-flex align-items-center justify-content-between mb-4\">\n"
                 + "                                <h1 class=\"h1 mb-0 text-gray-800\"><b>Thông tin cư dân</b></h1>\n"
+                + "   <button class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#addResidentModal\">Thêm cư dân</button>     \n"
                 + "                            </div>\n"
                 + "                            <div class=\"col-xl-12 col-md-12 mb-12\">\n"
                 + "                                <table class=\"table table-striped table-hover table-bordered\">\n"

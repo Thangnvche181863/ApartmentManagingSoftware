@@ -46,8 +46,8 @@ public class RegisterResidentToApartment extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             request.setAttribute("key", "Failed to add resident. Invalid apartment ID.");
-            request.getRequestDispatcher("forbiddenpage.jsp").forward(request, response); // Change to your error page
-            return; // Exit the method early if there's an error
+            request.getRequestDispatcher("forbiddenpage.jsp").forward(request, response);
+            return;
         }
 
         java.util.Date dob = null;
@@ -67,10 +67,14 @@ public class RegisterResidentToApartment extends HttpServlet {
 
         boolean isAdded = cusDAO.addCustomerToApartment(customer, apartmentID, currentDate);
         if (isAdded) {
-            response.sendRedirect("./user/userhome"); // Change to your success page
+            String referer = request.getHeader("referer");
+
+            if (referer != null) {
+                response.sendRedirect(referer); // Preserves query parameters
+            }
         } else {
             request.setAttribute("key", "Failed to add resident.");
-            request.getRequestDispatcher("forbiddenpage.jsp").forward(request, response); // Change to your error page
+            request.getRequestDispatcher("forbiddenpage.jsp").forward(request, response);
         }
 
     }

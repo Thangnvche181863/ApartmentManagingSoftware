@@ -114,6 +114,89 @@ public class NewsCommentDAO extends DBContext {
         return list;
     }
 
+    public List<NewsComment> getReportedCommentWithPagination(int page, int recordsPerPage) {
+        List<NewsComment> list = new ArrayList<>();
+        String sql = "SELECT nc.*, c.username AS customerName, s.username AS staffName "
+                + "FROM NewsComment nc "
+                + "LEFT JOIN Customer c ON nc.customerID = c.customerID "
+                + "LEFT JOIN Staff s ON nc.staffID = s.staffID "
+                + "WHERE nc.status = 1 "
+                + "ORDER BY nc.commentDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return list;
+            }
+
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+
+            pre.setInt(1, (page - 1) * recordsPerPage); // Calculate offset
+            pre.setInt(2, recordsPerPage); // Set the limit
+
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int commentID = rs.getInt("commentID");
+                int newsID = rs.getInt("newsID");
+                Integer customerID = rs.getObject("customerID") != null ? rs.getInt("customerID") : null;
+                Integer staffID = rs.getObject("staffID") != null ? rs.getInt("staffID") : null;
+                String commentText = rs.getString("commentText");
+                java.sql.Timestamp commentDate = rs.getTimestamp("commentDate");
+                String customerName = rs.getString("customerName"); // Retrieve customer name
+                String staffName = rs.getString("staffName"); // Retrieve staff name
+
+                // Create a new NewsComment object with the retrieved data
+                NewsComment comment = new NewsComment(commentID, newsID, customerID, staffID, commentText, commentDate, customerName, staffName);
+                list.add(comment);
+            }
+
+            // Close resources
+            rs.close();
+            pre.close();
+
+            LOGGER.log(Level.INFO, "Successfully retrieved {0} reported comment records for page: {1}.", new Object[]{list.size(), page});
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error fetching paginated reported comment records:", e);
+        }
+
+        return list;
+    }
+    
+    public int getTotalReportedComments() {
+    String sql = "SELECT COUNT(*) FROM NewsComment WHERE status = 1";
+    int count = 0;
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return count;
+        }
+
+        try (PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+             ResultSet rs = pre.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        }
+
+        LOGGER.log(Level.INFO, "Total number of reported comments: {0}", count);
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error counting reported comments with status = 1.", e);
+    }
+
+    return count;
+}
+
+
     public boolean addNewsComment(NewsComment comment) throws ClassNotFoundException {
         String sql = "INSERT INTO NewsComment (newsID, customerID, staffID, commentDate, commentText) VALUES (?, ?, ?, ?, ?)";
         boolean isAdded = false;
@@ -166,6 +249,84 @@ public class NewsCommentDAO extends DBContext {
         return isAdded;
     }
 
+    public boolean deleteCommentById(int commentID) {
+        String sql = "DELETE FROM NewsComment WHERE commentID = ?";
+        boolean isDeleted = false;
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return isDeleted;
+            }
+
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            pre.setInt(1, commentID); // Set the commentID parameter
+
+            // Execute the delete
+            int rowsAffected = pre.executeUpdate();
+
+            if (rowsAffected > 0) {
+                LOGGER.log(Level.INFO, "Deleted comment with ID: {0}", commentID);
+                isDeleted = true;
+            } else {
+                LOGGER.log(Level.WARNING, "No comment found with ID: {0}", commentID);
+            }
+
+            // Close resources
+            pre.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting comment with ID: " + commentID, e);
+        }
+
+        return isDeleted;
+    }
+
+    public boolean reportComment(int commentID) {
+        String sql = "UPDATE NewsComment SET status = 1 WHERE commentID = ?";
+        boolean isUpdated = false;
+        PreparedStatement pre = null;
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return isUpdated;
+            }
+
+            pre = DBContext.connection.prepareStatement(sql);
+            pre.setInt(1, commentID); // Set the commentID parameter
+
+            // Execute the update
+            int rowsAffected = pre.executeUpdate();
+
+            if (rowsAffected > 0) {
+                LOGGER.log(Level.INFO, "Updated status to 1 for comment with ID: {0}", commentID);
+                isUpdated = true;
+            } else {
+                LOGGER.log(Level.WARNING, "No comment found with ID: {0} to update status.", commentID);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error updating status for comment with ID: " + commentID, e);
+        } finally {
+            // Close resources
+            if (pre != null) {
+                try {
+                    pre.close();
+                } catch (SQLException e) {
+                    LOGGER.log(Level.SEVERE, "Error closing PreparedStatement.", e);
+                }
+            }
+        }
+
+        return isUpdated;
+    }
+
     public static void main(String[] args) throws ClassNotFoundException {
         NewsCommentDAO newsCommentDAO = new NewsCommentDAO();
 
@@ -202,8 +363,7 @@ public class NewsCommentDAO extends DBContext {
 //                System.out.println("---------------------------------------");
 //            }
 //        }
-
- NewsComment newComment = new NewsComment();
+        NewsComment newComment = new NewsComment();
         newComment.setNewsID(41); // Set a valid newsID
         newComment.setCustomerID(null); // Set customerID to null
         newComment.setStaffID(2); // Set staffID to null
@@ -220,5 +380,5 @@ public class NewsCommentDAO extends DBContext {
             System.out.println("Failed to add comment.");
         }
     }
-    
+
 }
