@@ -276,6 +276,13 @@
                         <span>Charts</span></a
                     >
                 </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
@@ -615,7 +622,7 @@
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div>
                                             <div class="form-group mb-4">
-                                                <label for="name" class="form-label">Name:</label>
+                                                <label for="name" class="form-label">Tên:</label>
                                                 <input
                                                     type="text"
                                                     class="form-control w-100"
@@ -626,7 +633,7 @@
                                                     />
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="type" class="form-label">Type:</label>
+                                                <label for="type" class="form-label">Loại dịch vụ:</label>
                                                 <select class="form-select w-100" name="type" id="type">
                                                     <c:forEach items="${serviceType}" var="ls">
                                                         <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
@@ -634,7 +641,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="img" class="form-label">URL img:</label>
+                                                <label for="img" class="form-label">URL ảnh:</label>
                                                 <input
                                                     type="file"
                                                     class="form-control w-100"
@@ -679,7 +686,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group mb-4">
-                                            <label for="fee" class="form-label">Fee:</label>
+                                            <label for="fee" class="form-label">Giá:</label>
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
@@ -709,7 +716,7 @@
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="description" class="form-label"
-                                                   >Description:</label
+                                                   >Mô tả:</label
                                             >
                                             <textarea
                                                 class="form-control w-100"

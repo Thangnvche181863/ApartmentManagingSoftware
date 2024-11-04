@@ -13,14 +13,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/charts.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/inforapartmentservice.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/InforApartmentService.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/DAO/ApartmentDAO.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/servicelist.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/registlist.jsp</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/StatisticServlet.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/model/Finance.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/model/Building.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/DAO/FinanceDAO.java</file>
+            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/CostStatisticServlet.java</file>
             <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/RegistListServlet.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/user/registDetail.jsp</file>
         </group>
     </open-files>
 </project-private>

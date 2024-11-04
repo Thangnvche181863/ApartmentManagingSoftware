@@ -226,8 +226,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="statistic">
                         <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Thống kê chi tiêu</span></a>
+                        <span>Thống Kê Phụ Phí</span></a>
                 </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
+
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item active">
@@ -652,7 +660,12 @@
             </div>
         </div>
 
-
+        <%-- Thông báo thành công --%>
+        <% if ("success".equals(request.getParameter("status"))) { %>
+        <script>
+            alert("Thêm thành công!");
+        </script>
+        <% } %>
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>

@@ -15,6 +15,14 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
+                <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+            />
+                        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
     </head>
@@ -126,12 +134,26 @@
                         <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
                 </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="statistic">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Thống Kê Phụ Phí</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
 
                 <!-- Nav Item - Tables -->
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="servicelist">
                         <i class="fas fa-fw fa-table"></i>
-                        <span>Service List</span></a>
+                        <span>Danh Sách Dịch Vụ</span></a>
                 </li>
 
                 <!-- Divider -->

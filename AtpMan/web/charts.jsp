@@ -35,18 +35,99 @@
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-
+        <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
+        <script>
+            tinymce.init({
+                selector: '#description3'
+            });
+        </script>  
         <style>
-            .chooseApt:focus li, .chooseApt:focus div{
-                background-color: #198754;
+            .is-invalid {
+                border-color: red;
+                background-color: #f8d7da;
             }
-            .chooseApt:focus .card1, .chooseApt:focus .card2{
-                color: white !important;
+
+            /* Phong cách chung */
+            .row {
+                border: 1px solid #b0b0b0;
+                border-radius: 10px;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #f9f9f9;
             }
-            #carouselExampleIndicators .carousel-item img {
-                max-height: 500px; /* Adjust the maximum height as needed */
-                width: auto;
-                margin: auto;
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-weight: 600;
+                color: #333;
+            }
+
+            .form-control,
+            .form-select {
+                border-radius: 5px;
+                outline: none;
+                box-shadow: none;
+                border: 1px solid #ced4da;
+            }
+
+            input[type="file"] {
+                padding: 6px;
+                border: 1px solid #ced4da;
+            }
+
+            #imgPreview {
+                width: 100%;
+                max-width: 230px;
+                height: auto;
+                margin-top: 10px;
+                border-radius: 10px;
+            }
+
+            .text-center {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            .btn-primary {
+                width: 100px;
+                padding: 8px;
+                font-weight: 600;
+            }
+
+            #feeError {
+                display: none;
+                color: #d9534f;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            .form-label {
+                font-weight: 600;
+                margin-bottom: 8px;
+                display: block;
+                color: #333;
+            }
+
+            .discount-input {
+                width: 150px;
+                padding: 8px;
+                margin-bottom: 8px;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                text-align: center;
+            }
+
+            div > div label {
+                font-weight: 500;
+                display: block;
+                margin-bottom: 4px;
             }
         </style>
 
@@ -153,9 +234,16 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="statistic">
                         <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
+                        <span>Thống Kê Phụ Phí</span></a>
+                </li>
+
+                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
                 </li>
 
                 <!-- Nav Item - Tables -->
@@ -395,138 +483,82 @@
                     <!-- End of Topbar -->
 
 
+
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
+
+
+                        <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800 text-primary"><b>Thống kê dịch vụ năm ${requestScope.currentYear}</b></h1>
+                            <h1 class="h3 mb-0 text-gray-800"  style="margin: auto" ><strong>Thống Kê Phụ Phí</strong></h1>
                         </div>
-                        <div class="row">
-                            <!-- Total information for one year -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Tổng hóa đơn
-                                                </div>
-                                                <fmt:setLocale value = "en_US"/>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    ${statistic.totalBill} đơn
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-money-bill fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                        <div
+                            class="row"
+                            style="
+                            border: 1px darkgrey solid;
+                            border-radius: 10px;
+                            width: 50%;
+                            margin: 0 auto;
+                            padding: 20px;
+                            margin-bottom: 20px
+                            "
+                            >
+                            <!--                            enctype show how to encypt when put it on server -->
+                            <form action="statistic" method="post" style="width: 100%">
+                                <div class="d-flex justify-content-around">
+                                    <label for="year">Năm:&nbsp;&nbsp;</label>
+                                    <select name="year" id="year" style="border-radius: 5px" onchange="this.form.submit()">
+                                        <c:forEach var="i" begin="2022" end="2025">
+                                            <option value="${i}" <c:if test="${i == year}">selected</c:if>>${i}</option>
+                                        </c:forEach>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="month">Tháng:&nbsp;&nbsp;</label>
+                                    <select name="month" id="month" style="border-radius: 5px" onchange="this.form.submit()">
+                                        <!-- Lặp qua các tháng từ 1 đến 12 -->
+                                        <c:forEach var="i" begin="1" end="12">
+                                            <option value="${i}" <c:if test="${i == month}">selected</c:if>>${i}</option>
+                                        </c:forEach>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label for="buildingId" >Chọn Tòa Nhà:&nbsp;&nbsp;</label>
+                                    <select name="buildingId" id="buildingId" style="border-radius: 5px" onchange="this.form.submit()">
+                                        <c:forEach items="${buildings}" var="ls">
+                                            <option value="${ls.buildingID}" 
+                                                    <c:if test="${buildingId == ls.buildingID}">selected</c:if>
+                                                    >${ls.name}</option>
+                                        </c:forEach>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
                                 </div>
-                            </div>
-                            <!-- End Billing information for one year -->
-
-                            <!--Paid amount billing information year-->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-success shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Tổng số tiền
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatNumber value="${statistic.totalAmount} " type="number" maxFractionDigits="0"></fmt:formatNumber>
-                                                        VND
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Paid amount billing information year-->
-
-                                <!-- UnPaid amount billing information year -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Chưa thanh toán
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    ${statistic.totalUnBill} hóa đơn
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--UnPaid amount billing information year-->
-                            <!-- Pending Requests Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                    Tiền chưa thanh toán
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatNumber value="${statistic.totalUnPay} " type="number" maxFractionDigits="0"></fmt:formatNumber>
-                                                        VND
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!--Billing information for month-->            
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary col-xl-5 col-md-5">Thông tin hóa đơn trong tháng</h1>
-                                    <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
-                                        <div class="col-xl-6 col-md-6">
-                                            <input type="hidden" name="apartmentID" value="${requestScope.apartment.apartmentID}" />
-                                        <fmt:setLocale value = "vi_VN"/>
-                                        <label for="month" class="form-label">Chọn Tháng</label>
-                                        <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
-                                            <c:forEach items="${requestScope.dateList}" var="dList">
-                                                <fmt:formatDate value="${dList}" pattern="M" var="month"/>
-                                                <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
-                                                    <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
-                                                    </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                        <label for="year" class="form-label">Chọn Năm</label>
-                                        <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
-                                            <c:forEach items="${requestScope.listOfYear}" var="yList">
-                                                <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
-                                                    ${yList}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                                        
-                                       
-
+                            </form>
                         </div>
+                        <table class="table table-bordered"  cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Tòa Nhà</th>
+                                    <th>Loại Phí</th>
+                                    <th>Phí (VND)</th>
+                                    <th>Ngày Đăng</th>
+                                    <th>Thông Tin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${finances}" var="f">
+                                    <tr>
+                                        <td>${f.building}</td>
+                                        <td>${f.name}</td>
+                                        <td>
+                                            <fmt:setLocale value="en_US" />
+                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${f.amount}"/>
+                                        </td>
+                                        <td>${f.date}</td>
+                                        <td>
+                                            <a href="statisticdetail?id=${f.financeId}">Chi tiết</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-
-
                     <!-- /.container-fluid -->
 
 
@@ -537,7 +569,6 @@
 
             </div>
             <!-- End of Content Wrapper -->
-
 
         </div>
         <!-- End of Page Wrapper -->
@@ -567,6 +598,12 @@
             </div>
         </div>
 
+        <%-- Thông báo thành công --%>
+        <% if ("success".equals(request.getParameter("status"))) { %>
+        <script>
+            alert("Thêm thành công!");
+        </script>
+        <% } %>
 
 
         <!-- Bootstrap core JavaScript-->
@@ -584,252 +621,7 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-        <script>
-                                            function paging(param) {
-                                                let pageChoose = param.value;
-                                                $.ajax({
-                                                    url: "/AtpMan/userhomenews",
-                                                    type: "post", //send it through post method
-                                                    data: {
-                                                        page: pageChoose
-                                                    },
-                                                    success: function (data) {
-                                                        $("#newsContent").html(data);
-                                                        //                                                            generate.innerHTML = data;
-                                                    },
-                                                    error: function (xhr) {
-                                                        //Do Something to handle error
-                                                    }
-                                                });
-                                            }
-                                            function handleSearch(page) {
-                                                let searchTerm = document.getElementById("searchService").value;
-                                                let selectMonth = ${requestScope.currentMonth};
-                                                let selectYears = ${requestScope.currentYear};
-                                                let apartmentID = ${requestScope.apartmentID};
-                                                let currentPage = page;
-                                                console.log("search ", searchTerm);
-                                                console.log("month ", selectMonth);
-                                                console.log("year ", selectYears);
-                                                console.log("aptId ", apartmentID);
-                                                console.log("current ", currentPage);
-                                                $.ajax({
-                                                    url: "/AtpMan/userhometableajax",
-                                                    type: "get", //send it through post method
-                                                    data: {
-                                                        searchTerm: searchTerm,
-                                                        selectMonth: selectMonth,
-                                                        selectYear: selectYears,
-                                                        apartmentID: apartmentID,
-                                                        currentPage: currentPage
-                                                    },
-                                                    success: function (data) {
-                                                        $("#searchTable").html(data);
-                                                        //                                                                                console.log("data",data);
-                                                        //                                                            generate.innerHTML = data;
-                                                    },
-                                                    error: function (xhr) {
-                                                        //Do Something to handle error
-                                                    }
-                                                });
-                                            }
-
-                                            function submitMonth() {
-                                                document.getElementById('chooseMonthYear').submit();
-                                            }
-
-                                            let d = new Date();
-                                            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-                                            let month = months.find((value, index) => {
-                                                if (d.getMonth()) {
-                                                    return index == d.getMonth() - 1;
-                                                } else {
-                                                    return index == 12;
-                                                }
-                                            });
-                                            console.log(month)
-
-                                            //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
-
-                                            // take data from servlet to js
-                                            const amountList = [
-            <c:forEach items="${requestScope.amoutMonth}" var="amountList">
-                ${amountList},
-            </c:forEach>
-                                            ];
-                                            const serviceList = [
-            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                                                "${serviceContract.getService().getName()}",
-            </c:forEach>
-                                            ];
-                                            const amountService = [
-            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                <c:out value="${serviceContract.getAmount()}"/>,
-            </c:forEach>
-                                            ];
-                                            console.log(amountService);
-
-
-                                            function number_format(number, decimals, dec_point, thousands_sep) {
-                                                // *     example: number_format(1234.56, 2, ',', ' ');
-                                                // *     return: '1 234,56'
-                                                number = (number + '').replace(',', '').replace(' ', '');
-                                                var n = !isFinite(+number) ? 0 : +number,
-                                                        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                                                        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                                                        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                                                        s = '',
-                                                        toFixedFix = function (n, prec) {
-                                                            var k = Math.pow(10, prec);
-                                                            return '' + Math.round(n * k) / k;
-                                                        };
-                                                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                                                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                                                if (s[0].length > 3) {
-                                                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-                                                }
-                                                if ((s[1] || '').length < prec) {
-                                                    s[1] = s[1] || '';
-                                                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                                                }
-                                                return s.join(dec);
-                                            }
-                                            // Pie Chart Example
-                                            var ctx = document.getElementById("myPieChart");
-                                            var myPieChart = new Chart(ctx, {
-                                                type: 'doughnut',
-                                                data: {
-                                                    labels: serviceList,
-                                                    datasets: [{
-                                                            data: amountService,
-                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
-                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
-                                                        }],
-                                                },
-                                                options: {
-                                                    maintainAspectRatio: false,
-                                                    tooltips: {
-                                                        backgroundColor: "rgb(255,255,255)",
-                                                        bodyFontColor: "#858796",
-                                                        borderColor: '#dddfeb',
-                                                        borderWidth: 1,
-                                                        xPadding: 15,
-                                                        yPadding: 15,
-                                                        displayColors: false,
-                                                        caretPadding: 10,
-                                                        callbacks: {
-                                                            label: function (tooltipItem, data) {
-                                                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
-                                                                return value + ' VNĐ';
-                                                            }
-                                                        }
-                                                    },
-                                                    legend: {
-                                                        display: true,
-                                                        position: 'bottom', // Hoặc 'top', 'left', 'right'
-                                                        labels: {
-                                                            boxWidth: 10, // Kích thước của hộp màu
-                                                            padding: 10 // Khoảng cách giữa các mục
-                                                        }
-                                                    },
-                                                    cutoutPercentage: 60,
-                                                },
-                                            });
-
-
-                                            // Area Chart Example
-                                            var ctx = document.getElementById("myAreaChart");
-                                            var myLineChart = new Chart(ctx, {
-                                                type: 'line',
-                                                data: {
-                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                    datasets: [{
-                                                            label: "Amount",
-                                                            lineTension: 0.3,
-                                                            backgroundColor: "rgba(78, 115, 223, 0.05)",
-                                                            borderColor: "rgba(78, 115, 223, 1)",
-                                                            pointRadius: 3,
-                                                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                            pointBorderColor: "rgba(78, 115, 223, 1)",
-                                                            pointHoverRadius: 3,
-                                                            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                                                            pointHitRadius: 10,
-                                                            pointBorderWidth: 2,
-                                                            data: amountList,
-                                                        }],
-                                                },
-                                                options: {
-                                                    maintainAspectRatio: false,
-                                                    layout: {
-                                                        padding: {
-                                                            left: 10,
-                                                            right: 25,
-                                                            top: 25,
-                                                            bottom: 0
-                                                        }
-                                                    },
-                                                    scales: {
-                                                        xAxes: [{
-                                                                time: {
-                                                                    unit: 'date'
-                                                                },
-                                                                gridLines: {
-                                                                    display: false,
-                                                                    drawBorder: false
-                                                                },
-                                                                ticks: {
-                                                                    maxTicksLimit: 7
-                                                                }
-                                                            }],
-                                                        yAxes: [{
-                                                                ticks: {
-                                                                    maxTicksLimit: 5,
-                                                                    padding: 10,
-                                                                    // Include a dollar sign in the ticks
-                                                                    callback: function (value, index, values) {
-                                                                        return number_format(value) + ' VNĐ';
-                                                                    }
-                                                                },
-                                                                gridLines: {
-                                                                    color: "rgb(234, 236, 244)",
-                                                                    zeroLineColor: "rgb(234, 236, 244)",
-                                                                    drawBorder: false,
-                                                                    borderDash: [2],
-                                                                    zeroLineBorderDash: [2]
-                                                                }
-                                                            }],
-                                                    },
-                                                    legend: {
-                                                        display: false
-                                                    },
-                                                    tooltips: {
-                                                        backgroundColor: "rgb(255,255,255)",
-                                                        bodyFontColor: "#858796",
-                                                        titleMarginBottom: 10,
-                                                        titleFontColor: '#6e707e',
-                                                        titleFontSize: 14,
-                                                        borderColor: '#dddfeb',
-                                                        borderWidth: 1,
-                                                        xPadding: 15,
-                                                        yPadding: 15,
-                                                        displayColors: false,
-                                                        intersect: false,
-                                                        mode: 'index',
-                                                        caretPadding: 10,
-                                                        callbacks: {
-                                                            label: function (tooltipItem, chart) {
-                                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            });
-        </script>
-
+        <script src="js/main3.js"></script>
     </body>
 
 </html>

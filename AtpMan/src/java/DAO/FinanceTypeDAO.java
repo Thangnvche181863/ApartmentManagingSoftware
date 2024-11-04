@@ -24,13 +24,16 @@ public class FinanceTypeDAO {
         List<FinanceType> list = new ArrayList<>();
 
         try {
-            String sql = "Select * from FinanceBuilding";
+            String sql = "Select * from FinanceType";
             connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new FinanceType(rs.getInt("financeTypeId"), rs.getString("name"), rs.getString("description")));
+                FinanceType ft = new FinanceType();
+                ft.setFinanceTypeId(rs.getInt(1));
+                ft.setName(rs.getString(2));
+                list.add(ft);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -38,13 +41,15 @@ public class FinanceTypeDAO {
         return list;
     }
 
-    public void insertFinanceType(String name, String description) {
+    public void insertFinanceType(String name) {
         try {
-            String sql = "Insert into FinanceType (name,description) values(?,?)";
+            String sql = "INSERT INTO [dbo].[FinanceType]\n"
+                    + "           ([name])\n"
+                    + "     VALUES\n"
+                    + "           (?)";
             connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
-            ps.setString(2, description);
 
             ps.executeUpdate();
         } catch (Exception e) {
@@ -54,7 +59,7 @@ public class FinanceTypeDAO {
 
     public void deleteFinanceType(int financeTypeId) {
         try {
-            String sql = "ELETE FROM [dbo].[FinanceType]\n"
+            String sql = "DELETE FROM [dbo].[FinanceType]\n"
                     + "      WHERE financeTypeId = ?";
             connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -66,17 +71,15 @@ public class FinanceTypeDAO {
         }
     }
 
-    public void updateFinaceType(int financeTypeId, String name, String description) {
+    public void updateFinaceType(int financeTypeId, String name) {
         try {
             String sql = "UPDATE [dbo].[FinanceType]\n"
                     + "   SET [name] = ?\n"
-                    + "      ,[description] = ?\n"
                     + " WHERE financeTypeId = ?";
             connection = DBContext.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, name);
-            ps.setString(2, description);
-            ps.setInt(3, financeTypeId);
+            ps.setInt(2, financeTypeId);
             ps.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -85,8 +88,16 @@ public class FinanceTypeDAO {
 
     public static void main(String[] args) {
         FinanceTypeDAO fdao = new FinanceTypeDAO();
-//        fdao.insertFinanceBuilding(1, 2);
-//        fdao.deleteFinanceBuilding(1, 1);
+//        fdao.insertFinanceType("thu tiền bảo trì căn hộ");
+        fdao.deleteFinanceType(31);
+        fdao.deleteFinanceType(32);
+        fdao.deleteFinanceType(33);
+        fdao.deleteFinanceType(34);
+        fdao.deleteFinanceType(35);
+        fdao.deleteFinanceType(36);
+        fdao.deleteFinanceType(37);
+
+
         System.out.println(fdao.getAll());
     }
 }

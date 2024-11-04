@@ -4,26 +4,19 @@
  */
 package controller.staff;
 
-import DAO.BuildingDAO;
-import DAO.FinanceDAO;
-import DAO.InvoiceDAO;
+import DAO.FinanceTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.util.List;
-import model.Building;
-import model.Finance;
-import model.Statistic;
 
 /**
  *
  * @author thang
  */
-public class StatisticServlet extends HttpServlet {
+public class AddFinanceServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +35,10 @@ public class StatisticServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StatisticServlet</title>");
+            out.println("<title>Servlet AddFinanceServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StatisticServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddFinanceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,23 +56,7 @@ public class StatisticServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonthValue();
-        
-        BuildingDAO buildingDAO = new BuildingDAO();
-        List<Building> buildings = buildingDAO.getAllBuilding();
-
-        FinanceDAO fdao = new FinanceDAO();
-        List<Finance> finances = fdao.getAllByTime(year, month, 1);
-        request.setAttribute("buildings", buildings);
-        request.setAttribute("finances", finances);
-        
-        request.setAttribute("year", year);
-        request.setAttribute("month", month);
-        request.setAttribute("buildingId", 1);
-
-        request.getRequestDispatcher("charts.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -93,26 +70,14 @@ public class StatisticServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String name = request.getParameter("name");
+        FinanceTypeDAO fdao = new FinanceTypeDAO();
+        fdao.insertFinanceType(name);
 
-        
-        FinanceDAO fdao = new FinanceDAO();
+        // Thêm thuộc tính để xác định trạng thái thành công
+        request.setAttribute("status", "success");
 
-        String year = request.getParameter("year");
-        String month = request.getParameter("month");
-        String buildingId = request.getParameter("buildingId");
-
-        BuildingDAO buildingDAO = new BuildingDAO();
-        List<Building> buildings = buildingDAO.getAllBuilding();
-        request.setAttribute("buildings", buildings);
-
-        List<Finance> finances = fdao.getAllByTime(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(buildingId));
-        request.setAttribute("finances", finances);
-
-        request.setAttribute("year", year);
-        request.setAttribute("month", month);
-        request.setAttribute("buildingId", buildingId);
-
-        request.getRequestDispatcher("charts.jsp").forward(request, response);
+        response.sendRedirect("costStatistic?status=success");
     }
 
     /**

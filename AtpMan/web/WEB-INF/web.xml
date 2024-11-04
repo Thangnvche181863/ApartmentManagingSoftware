@@ -182,6 +182,18 @@
         <servlet-name>StatisticServlet</servlet-name>
         <servlet-class>controller.staff.StatisticServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddFinanceServlet</servlet-name>
+        <servlet-class>controller.staff.AddFinanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CostStatisticServlet</servlet-name>
+        <servlet-class>controller.staff.CostStatisticServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StatisticDetailServlet</servlet-name>
+        <servlet-class>controller.staff.StatisticDetailServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -341,6 +353,18 @@
     <servlet-mapping>
         <servlet-name>StatisticServlet</servlet-name>
         <url-pattern>/statistic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddFinanceServlet</servlet-name>
+        <url-pattern>/addFinance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CostStatisticServlet</servlet-name>
+        <url-pattern>/costStatistic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StatisticDetailServlet</servlet-name>
+        <url-pattern>/statisticdetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

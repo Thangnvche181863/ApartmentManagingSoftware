@@ -6,24 +6,27 @@ package controller.staff;
 
 import DAO.BuildingDAO;
 import DAO.FinanceDAO;
-import DAO.InvoiceDAO;
+import DAO.FinanceTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import model.Building;
-import model.Finance;
-import model.Statistic;
+import model.FinanceType;
 
 /**
  *
  * @author thang
  */
-public class StatisticServlet extends HttpServlet {
+@MultipartConfig
+public class CostStatisticServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +45,10 @@ public class StatisticServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet StatisticServlet</title>");
+            out.println("<title>Servlet CostStatisticServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet StatisticServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CostStatisticServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,23 +66,22 @@ public class StatisticServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonthValue();
-        
-        BuildingDAO buildingDAO = new BuildingDAO();
-        List<Building> buildings = buildingDAO.getAllBuilding();
+        String status = request.getParameter("status");
 
-        FinanceDAO fdao = new FinanceDAO();
-        List<Finance> finances = fdao.getAllByTime(year, month, 1);
+        // Kiểm tra tham số status và hiển thị thông báo nếu thành công
+        if ("success".equals(status)) {
+            request.setAttribute("message", "Tạo thành công!");
+        }
+
+        FinanceTypeDAO ftdao = new FinanceTypeDAO();
+        BuildingDAO bdao = new BuildingDAO();
+
+        List<Building> buildings = bdao.getAllBuilding();
+        List<FinanceType> financeTypes = ftdao.getAll();
+
         request.setAttribute("buildings", buildings);
-        request.setAttribute("finances", finances);
-        
-        request.setAttribute("year", year);
-        request.setAttribute("month", month);
-        request.setAttribute("buildingId", 1);
-
-        request.getRequestDispatcher("charts.jsp").forward(request, response);
-
+        request.setAttribute("financeTypes", financeTypes);
+        request.getRequestDispatcher("costStatistics.jsp").forward(request, response);
     }
 
     /**
@@ -94,25 +96,22 @@ public class StatisticServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
+        PrintWriter out = response.getWriter();
+        String typeBuilding = request.getParameter("typeBuilding");
+        String typeFee = request.getParameter("typeFee");
+        String fee = request.getParameter("fee");
+        fee = fee.replace(",", "");
+        String description = request.getParameter("description");
+
+//        out.print(typeBuilding);
+//        out.print(typeFee);
+//        out.print(fee);
+//        out.print(description);
+
         FinanceDAO fdao = new FinanceDAO();
-
-        String year = request.getParameter("year");
-        String month = request.getParameter("month");
-        String buildingId = request.getParameter("buildingId");
-
-        BuildingDAO buildingDAO = new BuildingDAO();
-        List<Building> buildings = buildingDAO.getAllBuilding();
-        request.setAttribute("buildings", buildings);
-
-        List<Finance> finances = fdao.getAllByTime(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(buildingId));
-        request.setAttribute("finances", finances);
-
-        request.setAttribute("year", year);
-        request.setAttribute("month", month);
-        request.setAttribute("buildingId", buildingId);
-
-        request.getRequestDispatcher("charts.jsp").forward(request, response);
+        fdao.insertFinance(Integer.parseInt(typeBuilding), Integer.parseInt(typeFee), BigDecimal.valueOf(Double.parseDouble(fee)), Date.valueOf(LocalDate.now()), description);
+        
+        response.sendRedirect("costStatistic?status=success");
     }
 
     /**

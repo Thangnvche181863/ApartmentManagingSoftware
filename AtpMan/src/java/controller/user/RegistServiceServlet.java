@@ -113,7 +113,7 @@ public class RegistServiceServlet extends HttpServlet {
         ServiceContractDAO scdao = new ServiceContractDAO();
 //        
         scdao.insertServiceContract(Integer.parseInt(apartmentID), Integer.parseInt(serviceID), Date.valueOf(startDate), Date.valueOf(endDate), Double.parseDouble(fee));
-        response.sendRedirect("registServiceTenant");
+        response.sendRedirect("registServiceTenant?status=success");
     }
 
     /**

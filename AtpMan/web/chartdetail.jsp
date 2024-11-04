@@ -35,39 +35,99 @@
         <!-- Custom styles for this page -->
         <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
-
+        <script src="tinymce_7.4.1/tinymce/js/tinymce/tinymce.min.js"></script>
         <script>
-            function confirmDelete() {
-                return confirm("Sure delete?");
-            }
-        </script>
-
+            tinymce.init({
+                selector: '#description3'
+            });
+        </script>  
         <style>
-            .pagination {
-                font-size: 0.8em; /* Adjust font size as needed */
-                margin: 0;
-                padding: 0;
-                list-style: none;
+            .is-invalid {
+                border-color: red;
+                background-color: #f8d7da;
             }
 
-            .pagination a {
-                padding: 5px 10px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                text-decoration: none;
+            /* Phong cách chung */
+            .row {
+                border: 1px solid #b0b0b0;
+                border-radius: 10px;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-label {
+                font-weight: 600;
                 color: #333;
             }
 
-            .pagination a:hover {
-                background-color: #f0f0f0;
+            .form-control,
+            .form-select {
+                border-radius: 5px;
+                outline: none;
+                box-shadow: none;
+                border: 1px solid #ced4da;
             }
 
-            .pagination strong {
-                padding: 5px 10px;
-                border: 1px solid #ccc;
-                border-radius: 3px;
-                background-color: #f0f0f0;
+            input[type="file"] {
+                padding: 6px;
+                border: 1px solid #ced4da;
+            }
+
+            #imgPreview {
+                width: 100%;
+                max-width: 230px;
+                height: auto;
+                margin-top: 10px;
+                border-radius: 10px;
+            }
+
+            .text-center {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+            }
+
+            .btn-primary {
+                width: 100px;
+                padding: 8px;
+                font-weight: 600;
+            }
+
+            #feeError {
+                display: none;
+                color: #d9534f;
+            }
+
+            textarea {
+                resize: none;
+            }
+
+            .form-label {
+                font-weight: 600;
+                margin-bottom: 8px;
+                display: block;
                 color: #333;
+            }
+
+            .discount-input {
+                width: 150px;
+                padding: 8px;
+                margin-bottom: 8px;
+                border-radius: 5px;
+                border: 1px solid #ced4da;
+                text-align: center;
+            }
+
+            div > div label {
+                font-weight: 500;
+                display: block;
+                margin-bottom: 4px;
             }
         </style>
 
@@ -174,12 +234,12 @@
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
+                    <a class="nav-link" href="statistic">
                         <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
+                        <span>Thống Kê Phụ Phí</span></a>
                 </li>
-                
-                                <!-- Nav Item - Charts -->
+
+                <!-- Nav Item - Charts -->
                 <li class="nav-item">
                     <a class="nav-link" href="costStatistic">
                         <i class="bi bi-cash-coin"></i>
@@ -187,7 +247,7 @@
                 </li>
 
                 <!-- Nav Item - Tables -->
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="servicelist">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Danh Sách Dịch Vụ</span></a>
@@ -206,12 +266,15 @@
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
+
             <div id="content-wrapper" class="d-flex flex-column">
 
                 <!-- Main Content -->
                 <div id="content">
 
+
                     <!-- Topbar -->
+
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                         <!-- Sidebar Toggle (Topbar) -->
@@ -377,8 +440,8 @@
                                 </div>
                             </li>
 
+                            <!--abc-->
                             <div class="topbar-divider d-none d-sm-block"></div>
-
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
                                 <c:if test="${sessionScope.user != null}">
@@ -416,184 +479,37 @@
                         </ul>
 
                     </nav>
+
                     <!-- End of Topbar -->
-
-
-
-
-
-
-
-
 
 
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
 
+
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800"><b>Danh Sách Đăng Kí Năm ${year}</b></h1>
-                            <p>
-                                <a class="btn btn-info" href="servicelist">Danh Sách Dịch Vụ</a>
-                            </p>
+                            <h1 class="h3 mb-0 text-gray-800"  style="margin: auto" ><strong>Mô Tả Chi Tiết</strong></h1>
+                                <a class="btn btn-info" href="statistic">Thống Kê Phụ Phí</a>
                         </div>
+                        
 
-                        <form action="registlist" method="POST">
-                            <div>
-                                <label for="year">Năm:</label>
-                                <select name="year" id="year" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <c:forEach var="i" begin="2022" end="2024">
-                                        <option value="${i}" <c:if test="${i == year}">selected</c:if>>${i}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="month">Tháng:</label>
-                                <select name="month" id="month" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <!-- Lặp qua các tháng từ 1 đến 12 -->
-                                    <c:forEach var="i" begin="1" end="12">
-                                        <option value="${i}" <c:if test="${i == month}">selected</c:if>>${i}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="row">số dòng:</label>
-                                <select name="recordsPerPage" id="recordsPerPage" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option >25</option>
-                                    <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
-                                    <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
-                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="buildingtype">Chọn Tòa Nhà:</label>
-                                    <select name="buildingtype" id="buildingType" style="border-radius: 5px" onchange="this.form.submit()">
-                                        <option value="">All</option>
-                                    <c:forEach items="${listbuilding}" var="ls">
-                                        <option value="${ls.name}" 
-                                                <c:if test="${buildingtype == ls.name}">selected</c:if>>${ls.name}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="apartmentType">Loại Căn Hộ:</label>
-                                <select name="apartmentType" id="apartmentType" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option value="">All</option>
-                                    <c:forEach items="${listdepartment}" var="ls">
-                                        <option value="${ls.apartmentType}" 
-                                                <c:if test="${apartmentType == ls.apartmentType}">selected</c:if>>${ls.apartmentType}</option>
-                                    </c:forEach>
-                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="search">Tìm kiếm:</label>
-                                <input type="text" name="search" value="${search}" id="search" placeholder="Nhập số phòng" style="border-radius: 5px"  onchange="this.form.submit()"/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <label for="serviceType">Xếp Theo Tổng Tiền</label>
-                                <select name="orderBy" id="serviceType" style="border-radius: 5px" onchange="this.form.submit()">
-                                    <option value="">All</option>
-                                    <option value="asc" <c:if test="${orderBy == 'asc'}">selected</c:if>>Tăng dần</option>
-                                    <option value="desc" <c:if test="${orderBy == 'desc'}">selected</c:if>>Giảm dần</option>
-                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input type="hidden" name="page" value="${currentPage}"/>
-                            </div>
-                        </form>
-
-                        <!-- Begin Page Content -->
-
-
-                        <div class="container-fluid">
-
-                            <!-- DataTales Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-body">                                  
-                                    <div class="table-responsive">
-                                        Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <div class="d-flex justify-content-between">
-                                            <div class="pagination">
-                                                <%
-                                                    int currentPage = (Integer) request.getAttribute("currentPage");
-                                                    int totalPages = (Integer) request.getAttribute("totalPages");
-                                                    int recordsPerPage = (Integer) request.getAttribute("recordsPerPage");
-                                                    String buildingtype = (String) request.getAttribute("buildingtype");
-                                                    String apartmentType = (String) request.getAttribute("apartmentType");
-                                                    String search = (String) request.getAttribute("search");
-                                                    String orderBy = (String) request.getAttribute("orderBy");
-                                                    String month = (String) request.getAttribute("month");
-                                                    String year = (String) request.getAttribute("year");
-    //                                                int month = (Integer) request.getAttribute("month");
-    //                                                int year = (Integer) request.getAttribute("year");
-
-                                                    // Hiển thị nút "Previous" nếu không phải trang đầu tiên
-                                                    if (currentPage > 1) {
-                                                %>
-                                                <a href="registlist?page=<%= currentPage - 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
-                                                <%
-                                                    }
-
-                                                    // Hiển thị danh sách các trang
-                                                    for (int i = 1; i <= totalPages; i++) {
-                                                        if (i == currentPage) {
-                                                %>
-                                                <strong><%= i %></strong>
-                                                <%
-                                                        } else {
-                                                %>
-                                                <a href="registlist?page=<%= i %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
-                                                <%
-                                                        }
-                                                    }
-
-                                                    // Hiển thị nút "Next" nếu không phải trang cuối cùng
-                                                    if (currentPage < totalPages) {
-                                                %>
-                                                <a href="registlist?page=<%= currentPage + 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
-                                                <%
-                                                    }
-                                                %>
-                                            </div>
-                                            <div>Tổng thu:  
-                                                <fmt:setLocale value="en_US" />
-                                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalFinance}"/>
-                                            </div>
-                                        </div>
-                                        <table class="table table-bordered"  width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Số Phòng</th>
-                                                    <th class="text-center">Loại Căn Hộ</th>
-                                                    <th class="text-center">Số Tầng</th>
-                                                    <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
-                                                    <th class="text-center">Thông Tin</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach items="${listapart}" var="ls">
-                                                    <tr>
-                                                        <td class="text-center">${ls.apartmentNumber}</td>
-                                                        <td class="text-center">${ls.apartmentType}</td>
-                                                        <td class="text-center">${ls.floor}</td>
-                                                        <td class="text-center">
-                                                            <fmt:setLocale value="en_US" />
-                                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.totalAmount}"/>
-                                                        </td>
-                                                        <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}&month=${month}&year=${year}">Chi tiết</a></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div
+                            style="
+                            border: 1px darkgrey solid;
+                            border-radius: 10px;
+                            width: 100%;
+                            margin: 0 auto;
+                            padding: 20px;
+                            margin-bottom: 20px
+                            "
+                            >
+                            <!--                            enctype show how to encypt when put it on server -->
+                            ${finance.description}
                         </div>
-
-
-
                     </div>
                     <!-- /.container-fluid -->
-
-
-
-
-
-
-
-
-
-
 
 
                 </div>
@@ -632,6 +548,14 @@
             </div>
         </div>
 
+        <%-- Thông báo thành công --%>
+        <% if ("success".equals(request.getParameter("status"))) { %>
+        <script>
+            alert("Thêm thành công!");
+        </script>
+        <% } %>
+
+
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -647,7 +571,7 @@
 
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
-
+        <script src="js/main3.js"></script>
     </body>
 
 </html>

@@ -235,6 +235,13 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Charts</span></a>
                 </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
@@ -500,7 +507,7 @@
                                                 <input type="text" class="form-control w-100" name="name" id="name" value="${service.name}">
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="type" class="form-label">Type:</label>
+                                                <label for="type" class="form-label">Loại dịch vụ:</label>
                                                 <select class="form-select w-100" name="type" id="type" style="border-radius: 5px; outline: none;">
                                                     <c:forEach items="${serviceType}" var="ls">
                                                         <option value="${ls.type}" <c:if test="${service.type == ls.type}">selected</c:if>>${ls.type}</option>
@@ -508,7 +515,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="img" class="form-label">URL img:</label>
+                                                <label for="img" class="form-label">URL ảnh:</label>
                                                 <input type="file" class="form-control w-100" accept="image/*" name="img" id="img"  onchange="previewImg(event)">
                                                 <img src="${service.img}" id="imgPreview" style="width: 230px;height: 200px; margin-top: 20px; border-radius: 10px"/>
                                                 <input type="hidden" name="imgPath" value="${service.img}">
@@ -536,7 +543,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group mb-4">
-                                            <label for="fee" class="form-label">Fee:</label>
+                                            <label for="fee" class="form-label">Giá:</label>
                                             <input type="text" class="form-control w-100" name="fee" id="fee" value="${service.fee}">
                                             <div id="feeError" class="text-danger" style="display: none;"></div>
                                         </div>
@@ -545,7 +552,7 @@
                                             <input type="text" class="form-control w-100" name="icon" id="icon" value="${service.icon}">
                                         </div>
                                         <div class="form-group mb-4" style="width: 100%;">
-                                            <label for="description" class="form-label">Description:</label>
+                                            <label for="description" class="form-label">Mô tả:</label>
                                             <textarea class="form-control w-100" name="description" id="description" rows="9">${service.description}</textarea>
                                         </div>
                                     </div>
