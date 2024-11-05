@@ -544,9 +544,11 @@
                                                     }
                                                 %>
                                             </div>
-                                            <div>Tổng thu:  
+                                            <div><b><strong>Tổng thu:  
                                                 <fmt:setLocale value="en_US" />
                                                 <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalFinance}"/>
+                                                    </strong>
+                                                </b>
                                             </div>
                                         </div>
                                         <table class="table table-bordered"  width="100%" cellspacing="0">
