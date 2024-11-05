@@ -194,6 +194,26 @@
         <servlet-name>StatisticDetailServlet</servlet-name>
         <servlet-class>controller.staff.StatisticDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisterResidentToApartment</servlet-name>
+        <servlet-class>controller.user.RegisterResidentToApartment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchNewsGuest</servlet-name>
+        <servlet-class>controller.guest.SearchNewsGuest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsCommentDelete</servlet-name>
+        <servlet-class>controller.user.NewsCommentDelete</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportComment</servlet-name>
+        <servlet-class>controller.user.ReportComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewsCommentManager</servlet-name>
+        <servlet-class>controller.staff.NewsCommentManager</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -365,6 +385,26 @@
     <servlet-mapping>
         <servlet-name>StatisticDetailServlet</servlet-name>
         <url-pattern>/statisticdetail</url-pattern>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterResidentToApartment</servlet-name>
+        <url-pattern>/RegisResidentApartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchNewsGuest</servlet-name>
+        <url-pattern>/SearchNewsGuest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsCommentDelete</servlet-name>
+        <url-pattern>/CommentDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportComment</servlet-name>
+        <url-pattern>/ReportComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewsCommentManager</servlet-name>
+        <url-pattern>/newscommentmanage</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

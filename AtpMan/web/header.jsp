@@ -7,6 +7,74 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
+    <style>
+    .search-container {
+        display: inline-block;
+    }
+
+    .search-dropdown {
+        left: calc(69%); /* Shifted ?px to the right */
+        transform: translateX(-50%);
+        top: calc(100% + 5px);
+        z-index: 1000;
+        animation: fadeIn 0.2s ease-in-out;
+        white-space: nowrap;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -10px);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+
+    /* Adjusted arrow position */
+    .search-dropdown::before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: calc(45%); /* Adjusted arrow position to align with button */
+        transform: translateX(-50%);
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid white;
+    }
+</style>
+
+<!-- Add this JavaScript before the closing body tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchBtn = document.getElementById('searchBtn');
+        const searchDropdown = document.getElementById('searchDropdown');
+        
+        // Toggle dropdown when clicking search button
+        searchBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            searchDropdown.style.display = searchDropdown.style.display === 'none' ? 'block' : 'none';
+            
+            // Focus the input when opening dropdown
+            if (searchDropdown.style.display === 'block') {
+                searchDropdown.querySelector('input').focus();
+            }
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchDropdown.contains(e.target) && e.target !== searchBtn) {
+                searchDropdown.style.display = 'none';
+            }
+        });
+        
+        // Prevent dropdown from closing when clicking inside it
+        searchDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    });
+</script>
     <!-- Spinner Start -->
     <div
         id="spinner"
@@ -26,7 +94,7 @@
     <div class="container-fluid nav-bar px-0 px-lg-4 py-lg-0">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="home.jsp" class="navbar-brand p-0">
+                <a href="homepageGuest" class="navbar-brand p-0">
                     <h1 class="text-primary mb-0"><i class="fab fa-slack me-2"></i> APTMANAGE</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -38,6 +106,21 @@
                         <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
                         <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro") ? "active" : "" %>">Dịch Vụ</a>
                         <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Phản hồi</a>
+                 <!--   dont touch-->
+                        <button id="searchBtn" class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div id="searchDropdown" class="search-dropdown position-absolute" style="display: none;">
+                            <form action="SearchNewsGuest" method="get" class="p-2 bg-white rounded shadow">
+                                <div class="input-group">
+                                    <input type="search" name="search" class="form-control" placeholder="Search..." style="width: 200px;">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                   <!--    dont touch-->
                     </div>
                 </div>
                 <div class="d-none d-xl-flex flex-shrink-0 ps-4">
@@ -63,9 +146,9 @@
 
                         <c:if test="${sessionScope.user ==null}">
 
-<!--                            <a href="register.jsp" class="btn btn-primary">
-                                <i class="fab fa-slack me-2"></i> Sign up
-                            </a>-->
+                            <!--                            <a href="register.jsp" class="btn btn-primary">
+                                                            <i class="fab fa-slack me-2"></i> Sign up
+                                                        </a>-->
                         </c:if>
 
                         <c:if test="${sessionScope.user !=null}">
@@ -81,5 +164,6 @@
                 </div>
             </nav>
         </div>
+        
     </div>
     <!-- Navbar & Hero End -->

@@ -20,6 +20,8 @@ public class NewsComment {
     private Timestamp commentDate;
     private String customerName;
     private String staffName;
+    private int status;
+    
 
     public NewsComment() {
     }
@@ -42,6 +44,28 @@ public class NewsComment {
         this.commentDate = commentDate;
         this.customerName = customerName;
         this.staffName = staffName;
+    }
+
+    public NewsComment(int commentID, int newsID, Integer customerID, Integer staffID, String commentText, Timestamp commentDate, String customerName, String staffName, int status) {
+        this.commentID = commentID;
+        this.newsID = newsID;
+        this.customerID = customerID;
+        this.staffID = staffID;
+        this.commentText = commentText;
+        this.commentDate = commentDate;
+        this.customerName = customerName;
+        this.staffName = staffName;
+        this.status = status;
+    }
+    
+    
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
     
     

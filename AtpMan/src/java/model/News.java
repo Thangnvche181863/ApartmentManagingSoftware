@@ -193,5 +193,18 @@ public class News {
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
+    
+       @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        News news = (News) obj;
+        return newsID == news.newsID; // Compare by newsID or another unique attribute
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(newsID); // Use newsID to calculate hash
+    }
 
 }
