@@ -357,7 +357,7 @@
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>
-                                    <c:when test="${message.startsWith('Deleted')}">
+                                    <c:when test="${message.startsWith('Bỏ Qua Báo Cáo Thành Công')}">
                                         <p class="text-center alert alert-success">${message}</p>
                                     </c:when>
                                     <c:otherwise>
@@ -372,7 +372,7 @@
                                     <input type="text" name="search" class="form-control bg-light border-0 small" 
                                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
 
-                                    
+
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
                                             <i class="fas fa-search fa-sm"></i>
@@ -381,7 +381,7 @@
                                 </div>
                             </form>
                             <div>
-                                 <a href="newsmanage" class="btn btn-outline-primary mr-2">Quản Lý Tin</a>
+                                <a href="newsmanage" class="btn btn-outline-primary mr-2">Quản Lý Tin</a>
                                 <a href="newscategorymanage" class="btn btn-outline-primary mr-2">Quản Lý Tập Tin</a>
                             </div>
 
@@ -416,22 +416,26 @@
                                                 <td><a href="NewsDetail?id=${com.newsID}">${com.newsID}</td>
                                                 <td>
                                                     <c:choose>
-                                                <c:when test="${not empty com.customerName}">
-                                                    ${com.customerName}
-                                                </c:when>
-                                                <c:when test="${not empty com.staffName}">
-                                                    ${com.staffName}
-                                                </c:when>
-                                                <c:otherwise>
-                                                    Anonymous
-                                                </c:otherwise>
-                                            </c:choose>
+                                                        <c:when test="${not empty com.customerName}">
+                                                            ${com.customerName}
+                                                        </c:when>
+                                                        <c:when test="${not empty com.staffName}">
+                                                            ${com.staffName}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Anonymous
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                                 <td>${com.commentText}</td>
                                                 <td><fmt:formatDate value="${com.commentDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        
+                                                        <form action="newscommentmanage" method="post">
+                                                            <input type="hidden" name="commentID" value="${com.commentID}"> </input>
+                                                            <button type ="submit" class="btn btn-sm btn-success" onclick="return confirmCancel();">
+                                                                Bỏ qua
+                                                            </button> </form>
                                                         <a class="btn btn-sm btn-danger" href="CommentDelete?id=${com.commentID}" onclick="return confirmDelete();">Xóa</a>
                                                     </div>
                                                 </td>
@@ -529,9 +533,15 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script type="text/javascript">
-                                                            function confirmDelete() {
-                                                                return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
-                                                            }
+                     function confirmDelete() {
+                     return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
+                    }
+        </script>
+        <script type="text/javascript">
+        
+                    function confirmCancel(){
+                        return confirm("Bạn có chắc chắn muốn bỏ qua báo cáo này?");
+                    }
         </script>
     </body>
 </html>

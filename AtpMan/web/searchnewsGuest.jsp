@@ -160,6 +160,8 @@
             <div class="col-md-12">
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center"> <!-- Changed to justify-content-center -->
+                       
+                     
                         <c:if test="${currentPage > 1}">
                             <li class="page-item">
                                 <a class="page-link" href="SearchNewsGuest?page=${currentPage - 1}&search=${param.search}">Previous</a>
@@ -183,8 +185,7 @@
         </div>
 
         <!-- New category End -->
-
-
+      
         <!-- Footer Start -->
         <jsp:include page="footer.jsp"/>
         <!-- Footer End -->

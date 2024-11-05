@@ -259,13 +259,13 @@
 
                                 <c:if test="${userRole == 'customer'}">
                                     <div class="form-group">
-                                        <input type="hidden" name="customerID" value="${sessionCustomer.customerID}"/>
+                                        <input type="hidden" name="customerID" value="${customer.customerID}"/>
                                     </div>
-                                </c:if>
+                                </c:if> 
 
                                 <c:if test="${userRole == 'staff'}">
                                     <div class="form-group">
-                                        <input type="hidden" name="staffID" value="${sessionStaff.staffID}"/>
+                                        <input type="hidden" name="staffID" value="${staff.staffID}"/>
                                     </div>
                                 </c:if>
 

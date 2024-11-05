@@ -166,36 +166,34 @@ public class NewsCommentDAO extends DBContext {
 
         return list;
     }
-    
+
     public int getTotalReportedComments() {
-    String sql = "SELECT COUNT(*) FROM NewsComment WHERE status = 1";
-    int count = 0;
+        String sql = "SELECT COUNT(*) FROM NewsComment WHERE status = 1";
+        int count = 0;
 
-    try {
-        DBContext.getConnection();
+        try {
+            DBContext.getConnection();
 
-        if (DBContext.connection == null || DBContext.connection.isClosed()) {
-            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-            return count;
-        }
-
-        try (PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-             ResultSet rs = pre.executeQuery()) {
-
-            if (rs.next()) {
-                count = rs.getInt(1);
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return count;
             }
+
+            try (PreparedStatement pre = DBContext.connection.prepareStatement(sql); ResultSet rs = pre.executeQuery()) {
+
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            }
+
+            LOGGER.log(Level.INFO, "Total number of reported comments: {0}", count);
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error counting reported comments with status = 1.", e);
         }
 
-        LOGGER.log(Level.INFO, "Total number of reported comments: {0}", count);
-
-    } catch (SQLException | ClassNotFoundException e) {
-        LOGGER.log(Level.SEVERE, "Error counting reported comments with status = 1.", e);
+        return count;
     }
-
-    return count;
-}
-
 
     public boolean addNewsComment(NewsComment comment) throws ClassNotFoundException {
         String sql = "INSERT INTO NewsComment (newsID, customerID, staffID, commentDate, commentText) VALUES (?, ?, ?, ?, ?)";
@@ -248,6 +246,42 @@ public class NewsCommentDAO extends DBContext {
 
         return isAdded;
     }
+
+    public boolean cancelReportedComment(int commentID) {
+    String sql = "UPDATE NewsComment SET status = 0 WHERE commentID = ?";
+    boolean isCanceled = false;
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return isCanceled;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setInt(1, commentID); // Set the commentID parameter
+
+        // Execute the update
+        int rowsAffected = pre.executeUpdate();
+
+        if (rowsAffected > 0) {
+            LOGGER.log(Level.INFO, "Canceled report for comment with ID: {0}", commentID);
+            isCanceled = true;
+        } else {
+            LOGGER.log(Level.WARNING, "No comment found with ID: {0}", commentID);
+        }
+
+        // Close resources
+        pre.close();
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error canceling report for comment with ID: " + commentID, e);
+    }
+
+    return isCanceled;
+}
+
 
     public boolean deleteCommentById(int commentID) {
         String sql = "DELETE FROM NewsComment WHERE commentID = ?";

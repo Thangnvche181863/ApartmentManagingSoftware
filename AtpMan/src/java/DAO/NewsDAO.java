@@ -408,6 +408,59 @@ public class NewsDAO extends DBContext {
 
         return list;
     }
+    
+    public List<News> getNewsByTitle(String search) {
+    List<News> list = new ArrayList<>();
+    String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
+               + "FROM News n "
+               + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
+               + "JOIN Staff s ON n.staffID = s.staffID "
+               + "WHERE n.newsTitle LIKE ? "
+               + "ORDER BY n.postDate DESC";
+
+    try {
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return list;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        String searchTitle = "%" + search + "%";
+        pre.setString(1, searchTitle);
+        ResultSet rs = pre.executeQuery();
+
+        while (rs.next()) {
+            int newsID = rs.getInt("newsID");
+            int staffID = rs.getInt("staffID");
+            int taskID = rs.getInt("taskID");
+            int newsCategoryID = rs.getInt("newsCategoryID");
+            String newsTitle = rs.getString("newsTitle");
+            String newsContent = rs.getString("newsContent");
+            java.sql.Timestamp sqlPostDate = rs.getTimestamp("postDate");
+            Date postDate = new Date(sqlPostDate.getTime());
+            String newsImg = rs.getString("newsImg");
+            String newsDescription = rs.getString("newsDescription");
+            String newsCategoryName = rs.getString("newsCategoryName");
+            String staffName = rs.getString("staffName");
+
+            News news = new News(newsID, staffID, taskID, newsCategoryID, newsTitle, newsContent, postDate, newsImg, newsCategoryName, staffName, newsDescription);
+            list.add(news);
+        }
+
+        rs.close();
+        pre.close();
+
+        LOGGER.log(Level.INFO, "Successfully retrieved {0} news records.", list.size());
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching news records.", e);
+    }
+
+    return list;
+}
+
 
     //get news for banner in /News
     public List<News> getNewsForBanner() {

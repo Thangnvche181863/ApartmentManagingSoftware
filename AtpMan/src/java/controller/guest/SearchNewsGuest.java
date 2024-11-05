@@ -11,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,9 +25,10 @@ import model.News;
  */
 public class SearchNewsGuest extends HttpServlet {
 
-  private static final int RECORDS_PER_PAGE = 9;
+    private static final int RECORDS_PER_PAGE = 9;
+    private static final Logger logger = Logger.getLogger(SearchNewsGuest.class.getName());
 
-@Override
+    @Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     NewsDAO newsDAO = new NewsDAO();
@@ -54,25 +57,32 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             // Use a set to avoid duplicates
             Set<News> uniqueNewsSet = new HashSet<>();
 
-            // Iterate through each search term
+            // Get total results for all terms to calculate totalRows correctly
             for (String term : searchTerms) {
-                // Trim the term and check if it's not empty
                 term = term.trim();
                 if (!term.isEmpty()) {
                     // Get results for the current term
-                    List<News> results = newsDAO.getNewsByPageAndTitle(term, currentPage, RECORDS_PER_PAGE);
+                    List<News> results = newsDAO.getNewsByTitle(term); // Assuming this method retrieves all matching news
                     uniqueNewsSet.addAll(results);
                 }
             }
 
-            // Convert the set back to a list
-            newsList = new ArrayList<>(uniqueNewsSet);
-            totalRows = newsList.size(); // Total rows is the size of the unique news list
+            // Convert the set back to a list and slice for pagination
+            totalRows = uniqueNewsSet.size(); // Correct totalRows
+            newsList = new ArrayList<>(uniqueNewsSet); // Convert back to list
+            
+            // Get the results for the current page
+            int start = (currentPage - 1) * RECORDS_PER_PAGE;
+            int end = Math.min(start + RECORDS_PER_PAGE, totalRows);
+            newsList = newsList.subList(start, end); // Get sublist for current page
+            
+            logger.log(Level.INFO, "Total rows calculated: {0}", totalRows);
         }
 
         // Calculate total pages based on unique results
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
-
+        logger.log(Level.INFO, "Total pages calculated: {0}", totalPages);
+        
         // Check if no search results found
         if (searchParam == null || searchParam.isEmpty() || totalRows == 0) {
             request.setAttribute("message", "Nothing is found"); // Set the message attribute
@@ -80,6 +90,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
             // Set attributes for the JSP
             request.setAttribute("news", newsList);
             request.setAttribute("currentPage", currentPage);
+            request.setAttribute("totalRows", totalRows);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("search", searchParam); // Pass the search term
         }
@@ -93,13 +104,11 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response)
 }
 
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    
-}
+    }
 
     /**
      * Returns a short description of the servlet.

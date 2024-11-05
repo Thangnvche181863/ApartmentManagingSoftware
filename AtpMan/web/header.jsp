@@ -13,7 +13,7 @@
     }
 
     .search-dropdown {
-        left: calc(64%); /* Shifted ?px to the right */
+        left: calc(69%); /* Shifted ?px to the right */
         transform: translateX(-50%);
         top: calc(100% + 5px);
         z-index: 1000;

@@ -58,10 +58,36 @@ public class NewsCommentManager extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    // Retrieve commentID from the request
+    String commentIDParam = request.getParameter("commentID");
+    int commentID = 0;
 
+    // Validate and parse the commentID
+    try {
+        commentID = Integer.parseInt(commentIDParam);
+    } catch (NumberFormatException e) {
+        // Handle invalid commentID (not a number)
+        request.setAttribute("error", "Invalid comment ID.");
+        request.getRequestDispatcher("errorPage.jsp").forward(request, response);
+        return;
     }
+
+    // Initialize the DAO and cancel the reported comment
+    NewsCommentDAO newsCommentDAO = new NewsCommentDAO();
+    boolean isCanceled = newsCommentDAO.cancelReportedComment(commentID);
+
+    // Handle success or failure
+    if (isCanceled) {
+        request.setAttribute("message", "Bỏ Qua Báo Cáo Thành Công.");
+    } else {
+        request.setAttribute("message", "Bỏ Qua Báo Cáo Thất Bại.");
+    }
+
+     response.sendRedirect("newscommentmanage");
+}
+
 
     @Override
     public String getServletInfo() {
