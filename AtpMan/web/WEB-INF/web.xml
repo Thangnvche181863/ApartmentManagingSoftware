@@ -385,8 +385,8 @@
     <servlet-mapping>
         <servlet-name>StatisticDetailServlet</servlet-name>
         <url-pattern>/statisticdetail</url-pattern>
-    </servlet>
-    <servlet>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>RegisterResidentToApartment</servlet-name>
         <url-pattern>/RegisResidentApartment</url-pattern>
     </servlet-mapping>
