@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Staff;
@@ -222,4 +224,39 @@ public class StaffDAO {
         return false;
     }
 
+    public List<Staff> getAllStaff() {
+        Connection conn = null;
+        List<Staff> staffs = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Staff";
+                try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Staff staff = new Staff();
+                        staff.setRoleID(rs.getInt("roleID"));
+                        staff.setUsername(rs.getString("username"));
+                        staff.setName(rs.getString("name"));
+                        staff.setEmail(rs.getString("email"));
+                        staff.setPhoneNumber(rs.getString("phoneNumber"));
+                        staff.setHireDate(rs.getDate("hireDate"));
+                        staffs.add(staff);
+                    }
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error retrieving staffs", ex);
+            ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error closing connection", ex);
+                }
+            }
+        }
+        return staffs;
+    }
 }

@@ -11,45 +11,125 @@
 <!DOCTYPE html>
 <html lang="vi">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Complaint List</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>SB Admin 2 - Cards</title>
+
+        <!-- Custom fonts for this template-->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <!-- Icon Font Stylesheet -->
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+            />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet"
+            />
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
+        <!--        <script>
+                    function confirmDelete() {
+                        return confirm("Bạn muốn xóa chứ?");
+                    }
+                </script>-->
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f8f9fc;
-                margin: 0;
-                padding: 0px;
-            }
-            h1 {
-                text-align: center;
-                color: #015fc9;
-            }
             table {
                 width: 100%;
-                border-collapse: separate;
+                border-collapse: collapse;
                 margin-top: 20px;
-                background-color: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                font-family: Arial, sans-serif;
             }
+
             th, td {
-                padding: 12px;
+                padding: 10px;
                 text-align: left;
                 border-bottom: 1px solid #ddd;
             }
-            th {
-                background-color: #4e73df;
-                color: white;
+
+            thead th {
+                background-color: #f2f2f2;
+                font-weight: bold;
             }
-            tr:hover {
-                background-color: #f1f1f1;
+
+            select {
+                width: 80%;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            form label {
+                margin-right: 10px;
+                font-weight: bold;
+            }
+
+            .form-container {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            td:last-child {
+                font-weight: bold;
+                color: #333;
+            }
+
+            .total-label {
+                font-weight: bold;
+                color: #666;
+            }
+
+            .search-box {
+                padding: 8px;
+                width: 100%;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .pagination {
+                font-size: 0.8em; /* Adjust font size as needed */
+                margin: 0;
+                padding: 0;
+                list-style: none;
+            }
+
+            .pagination a {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                text-decoration: none;
+                color: #333;
+            }
+
+            .pagination a:hover {
+                background-color: #f0f0f0;
+            }
+
+            .pagination strong {
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                background-color: #f0f0f0;
+                color: #333;
             }
         </style>
+
     </head>
     <body>
         <%@include file="sidebar.jsp" %>
-        <div>
+        <div class="container">
             <h1>Danh sách các yêu cầu</h1>
             <!-- Form tìm kiếm -->
             <!-- Form tìm kiếm -->
@@ -100,10 +180,12 @@
                             <c:if test="${complaint.status == 0}">
                                 <form action="complaintlist" method="post">
                                     <input type="hidden" name="requestID" value="${complaint.requestID}" />
+                                    <input type="hidden" name="action" value="accept" />
                                     <button type="submit" name="status" value="1">Chấp thuận</button>
                                 </form>
                                 <button onclick="showRejectPopup(${complaint.requestID})">Từ chối</button>
-                            </c:if>
+
+                            </c:if>                           
                             <c:if test="${complaint.status == 1}">
                                 <button disabled>Đã xác nhận</button>
                             </c:if>
@@ -112,7 +194,7 @@
                 </c:forEach>
             </table>
 
-            <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+            <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 50px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
                 <form id="rejectForm" action="rejectRequest" method="post">
                     <input type="hidden" id="rejectRequestID" name="requestID" />
                     <label for="reason">Lý do từ chối:</label>
@@ -122,6 +204,9 @@
                     <button type="button" onclick="closeRejectPopup()">Hủy</button>
                 </form>
             </div>
+
+
+
             <button>
                 <a href="managerPage">Back to home</a>
             </button>
@@ -148,7 +233,32 @@
                 function closeRejectPopup() {
                     document.getElementById('rejectPopup').style.display = 'none';
                 }
+
+//                function showApprovePopup(requestID) {
+//                    document.getElementById('approveRequestID').value = requestID;
+//                    document.getElementById('approvePopup').style.display = 'block';
+//                }
+//
+//                function closeApprovePopup() {
+//                    document.getElementById('approvePopup').style.display = 'none';
+//                }
+
             </script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Core plugin JavaScript-->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="js/sb-admin-2.min.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+            <!-- Page level custom scripts -->
+            <script src="js/demo/datatables-demo.js"></script>
         </div>
 
     </body>

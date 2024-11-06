@@ -237,4 +237,66 @@ public class RequestComplaintDAO {
             DBContext.closeConnection(conn);
         }
     }
+
+    public RequestComplaint getComplaintByID(int requestID) {
+        Connection conn = null;
+        RequestComplaint complaint = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT * FROM RequestComplaint WHERE requestID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, requestID);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        complaint = new RequestComplaint();
+                        complaint.setRequestID(rs.getInt("requestID"));
+                        complaint.setCustomerID(rs.getInt("customerID"));
+                        complaint.setTitle(rs.getString("title"));
+                        complaint.setDescription(rs.getString("description"));
+                        complaint.setType(rs.getString("type"));
+                        complaint.setDateRequested(rs.getDate("dateRequested"));
+                        complaint.setStatus(rs.getInt("status"));
+                    }
+                } catch (Exception e) {
+                }
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting customerID", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return complaint;
+    }
+
+    public List<RequestComplaint> getComplaintsByCustomer(int customerID) {
+        Connection conn = null;
+        List<RequestComplaint> complaints = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM RequestComplaint WHERE customerID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {  
+                    ps.setInt(1, customerID);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
+                        RequestComplaint complaint = new RequestComplaint();                       
+                        complaint.setRequestID(rs.getInt("requestID"));
+                        complaint.setCustomerID(rs.getInt("customerID"));
+                        complaint.setTitle(rs.getString("title"));
+                        complaint.setDescription(rs.getString("description"));
+                        complaint.setDateRequested(rs.getDate("dateRequested"));
+                        complaint.setStatus(rs.getInt("status"));                       
+                        complaints.add(complaint);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting complaints for customerID: " + customerID, e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return complaints;
+    }
+
 }

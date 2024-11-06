@@ -14,15 +14,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
+import model.RequestComplaint;
 
 /**
  *
  * @author WuanTun
  */
-public class RequestServlet extends HttpServlet {
+public class CustomerComplaintList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +43,10 @@ public class RequestServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RequestServlet</title>");
+            out.println("<title>Servlet CustomerComplaintList</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RequestServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CustomerComplaintList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,42 +64,50 @@ public class RequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("feedback-customer.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         try {
-
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
-
+            
             HttpSession session = request.getSession(false);
             Customer loggedInCustomer = (Customer) session.getAttribute("user");
 
             if (loggedInCustomer == null) {
-                request.setAttribute("errSession", "Bạn cần đăng nhập.");
+                request.setAttribute("errSession", "Bạn cần đăng nhập để thay đổi email.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
             int customerID = loggedInCustomer.getCustomerID();
             System.out.println("Customer ID from session: " + customerID);
-            RequestComplaintDAO requestcomplaintDAO = WebManager.getInstance().requestComplaintDAO;
-
-            String title = request.getParameter("title");
-            String description = request.getParameter("description");
-            String type = request.getParameter("type");
-
-            requestcomplaintDAO.submitComplaint(customerID, title, description, type);
-            response.sendRedirect("userhome");
-
+            
+            try {
+                RequestComplaintDAO requestComplaintDAO = WebManager.getInstance().requestComplaintDAO;
+                List<RequestComplaint> customerComplaints = requestComplaintDAO.getComplaintsByCustomer(customerID);
+                
+                request.setAttribute("customerComplaints", customerComplaints);
+                request.getRequestDispatcher("complaint_list-customer.jsp").forward(request, response);
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(CustomerComplaintList.class.getName()).log(Level.SEVERE, null, ex);
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(RequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerComplaintList.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(RequestServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CustomerComplaintList.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

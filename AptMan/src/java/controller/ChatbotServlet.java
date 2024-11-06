@@ -169,7 +169,7 @@ public class ChatbotServlet extends HttpServlet {
     }
 
     public String callOpenAIAPI(String userMessage) throws IOException {
-        String apiKey = ""; //sk-XOQcoPNuor1AVdWcGt8-ciw4TlU_n0aVOjFKt18DDVT3BlbkFJkg8BcK0IuYG1dz7jKPa3Qsdq3Eqb9e3w-RcNBiVCEA
+        String apiKey = "sk-XOQcoPNuor1AVdWcGt8-ciw4TlU_n0aVOjFKt18DDVT3BlbkFJkg8BcK0IuYG1dz7jKPa3Qsdq3Eqb9e3w-RcNBiVCEA"; 
         URL url = new URL("https://api.openai.com/v1/chat/completions");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");

@@ -186,7 +186,7 @@ public class CustomerDAO {
                     ps.setString(4, email);
                     ps.setString(5, phoneNumber);
                     ps.setString(6, isOwner); // 1 for Resident, 0 for Owner
-                    ps.executeUpdate();
+                    ps.executeUpdate(); 
                 }
             }
         } catch (SQLException | ClassNotFoundException e) {

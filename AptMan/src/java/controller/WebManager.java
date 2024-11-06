@@ -5,19 +5,22 @@
 package controller;
 
 import DAO.ApartmentDAO;
+import DAO.AssignmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import DAO.FinanceDAO;
 import DAO.FinanceTypeDAO;
+import DAO.HandleRequestDAO;
 import DAO.InvoiceDAO;
 import DAO.InvoiceServiceDAO;
 import DAO.LivingDAO;
 import DAO.OwnershipDAO;
 import DAO.RequestComplaintDAO;
+import DAO.RoleDAO;
 import DAO.ServiceContractDAO;
 import DAO.ServiceDAO;
 import DAO.StaffDAO;
-
+import DAO.TaskDAO;
 
 import java.sql.SQLException;
 
@@ -26,6 +29,7 @@ import java.sql.SQLException;
  * @author WuanTun
  */
 public class WebManager {
+
     public CustomerDAO customerDAO;
     public StaffDAO staffDAO;
     public ApartmentDAO apartmentDAO;
@@ -39,10 +43,15 @@ public class WebManager {
     public FinanceTypeDAO financeTypeDAO;
     public OwnershipDAO ownershipDAO;
     public RequestComplaintDAO requestComplaintDAO;
-    
+    public RoleDAO roleDAO;
+    public TaskDAO taskDAO;
+    public AssignmentDAO assignmentDAO;
+    public HandleRequestDAO handleRequestDAO;
+
     private static WebManager instance;
-     private WebManager() throws SQLException, ClassNotFoundException {
-        
+
+    private WebManager() throws SQLException, ClassNotFoundException {
+
         customerDAO = new CustomerDAO();
         staffDAO = new StaffDAO();
         apartmentDAO = new ApartmentDAO();
@@ -56,6 +65,10 @@ public class WebManager {
         financeTypeDAO = new FinanceTypeDAO();
         ownershipDAO = new OwnershipDAO();
         requestComplaintDAO = new RequestComplaintDAO();
+        roleDAO = new RoleDAO();
+        taskDAO = new TaskDAO();
+        assignmentDAO = new AssignmentDAO();
+        handleRequestDAO = new HandleRequestDAO();
     }
 
     public static WebManager getInstance() throws SQLException, ClassNotFoundException {

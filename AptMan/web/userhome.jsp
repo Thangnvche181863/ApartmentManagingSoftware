@@ -121,7 +121,7 @@
                             <a class="collapse-item" href="changepassword">Change Password</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
+                            <a class="collapse-item" href="customercomplaintlist">List Ordered Service</a>
                             <a class="collapse-item" href="requestservlet">Request Service</a>
                         </div>
                     </div>

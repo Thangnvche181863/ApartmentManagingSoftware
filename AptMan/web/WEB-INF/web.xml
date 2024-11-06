@@ -85,6 +85,22 @@
         <servlet-name>ChatbotServlet</servlet-name>
         <servlet-class>controller.ChatbotServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateTask</servlet-name>
+        <servlet-class>controller.CreateTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <servlet-class>controller.CreateTaskServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerComplaintList</servlet-name>
+        <servlet-class>controller.CustomerComplaintList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffHome</servlet-name>
+        <servlet-class>controller.StaffHome</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -168,6 +184,22 @@
     <servlet-mapping>
         <servlet-name>ChatbotServlet</servlet-name>
         <url-pattern>/chatbot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTask</servlet-name>
+        <url-pattern>/createtask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTaskServlet</servlet-name>
+        <url-pattern>/createtaskservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerComplaintList</servlet-name>
+        <url-pattern>/customercomplaintlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffHome</servlet-name>
+        <url-pattern>/staffhome</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
