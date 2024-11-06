@@ -30,8 +30,7 @@ public class Apartment {
     public Apartment() {
     }
 
-    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
-        public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, BigDecimal totalAmount, List<ServiceContract> list, String name) {
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, BigDecimal totalAmount, List<ServiceContract> list, String name) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
@@ -44,8 +43,8 @@ public class Apartment {
         this.list = list;
         this.name = name;
     }
-    
-    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, BigDecimal totalAmount, List<ServiceContract> list, String name) {
+
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
@@ -151,8 +150,5 @@ public class Apartment {
     public String toString() {
         return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", apartmentType=" + apartmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + '}';
     }
-
-   
-    
 
 }

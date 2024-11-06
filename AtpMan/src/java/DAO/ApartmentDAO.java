@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.lang.System.Logger;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Connection;
@@ -139,7 +140,6 @@ public class ApartmentDAO {
     // }
     
     //////////////////////////////// QUAN///////////////////////////////////////
-    private static final Logger LOGGER = Logger.getLogger(ApartmentDAO.class.getName());
 
     public List<Apartment> getApartmentsByBuilding(int buildingId) {
         System.out.println("-------------");

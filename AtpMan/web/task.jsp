@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Danh Sách Công Việc</title>
+        <title>Công Việc Đã giao</title>
 
         <!-- Custom fonts and stylesheets -->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -105,11 +105,10 @@
 
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Công Việc 
+                        <h1 class="h3 mb-0 text-gray-800">Công việc đã giao
                             <a class="btn btn-primary" href="assignment">Chưa giao</a>
-                            <a class="btn btn-primary" href="task">Đã giao</a>
+                            <a class="btn btn-primary" href="task">Đã giao </a>
                         </h1>
-                        <a class="btn btn-primary" href="createTask.jsp">Thêm công việc</a>
                         <!-- Hiển thị thông báo nếu có -->
                         <c:if test="${not empty sessionScope.mess}">
                             <div class="alert alert-success" role="alert">
@@ -121,7 +120,7 @@
 
                     <!-- Form lọc công việc -->
                     <div class="form-container">
-                        <form action="assignment" method="POST">
+                        <form action="task" method="POST">
                             <table>
                                 <thead>
                                     <tr>
@@ -142,19 +141,20 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <select name="taskType" onchange="this.form.submit()" style="width: 100px;">
-                                                    <option value="0" <c:if test="${selectedTaskType == '0'}">selected</c:if>>Tất cả</option>
-                                                <c:forEach items="${taskType}" var="type">
-                                                    <option value="${type}" <c:if test="${type == selectedTaskType}">selected</c:if>>${type}</option>
-                                                </c:forEach>
-                                            </select>
+                                                <select name="status" onchange="this.form.submit()">
+                                                    <option value="0" <c:if test="${selectedStatus == '0'}">selected</c:if>>Tất cả</option>
+                                                <option value="Da hoan thanh" <c:if test="${selectedStatus == 'Da hoan thanh'}">selected</c:if>>Đã hoàn thành</option>
+                                                <option value="Chua hoan thanh" <c:if test="${selectedStatus == 'Chua hoan thanh'}">selected</c:if>>Chưa hoàn thành</option>
+                                                </select>
+                                            </td>
 
-                                        </td>
-                                        <td>
-                                            <input type="text" value="${search}" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()" />
-                                        </td>
-                                        <td class="total-label text-center">
-                                            ${totalTask} Công việc
+
+                                            </td>
+                                            <td>
+                                                <input type="text" value="" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()" />
+                                            </td>
+                                            <td class="total-label text-center">
+                                            ${amountOfAssignment} việc
                                         </td>
                                     </tr>
                                 </tbody>
@@ -168,92 +168,95 @@
                             <div class="table-responsive">
                                 <div class="pagination">
                                     <c:if test="${currentPage > 1}">
-                                        <a href="assignment?page=${currentPage - 1}">Previous</a>
+                                        <a href="task?page=${currentPage - 1}">Trước</a>
                                     </c:if>
                                     <c:forEach begin="1" end="${totalPages}" var="i">
                                         <c:choose>
                                             <c:when test="${i == currentPage}">
-                                                <strong>${i}</strong>
+                                                <strong>${i}</strong> <!-- Hiển thị số trang hiện tại -->
                                             </c:when>
                                             <c:otherwise>
-                                                <a href="assignment?page=${i}">${i}</a>
+                                                <a href="task?page=${i}">${i}</a> <!-- Liên kết đến các trang khác -->
                                             </c:otherwise>
                                         </c:choose>
                                     </c:forEach>
                                     <c:if test="${currentPage < totalPages}">
-                                        <a href="assignment?page=${currentPage + 1}">Next</a>
+                                        <a href="task?page=${currentPage + 1}">Sau</a>
                                     </c:if>
                                 </div>
+
 
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Mã công việc</th>
-                                            <th>Tên</th>
-                                            <th>Mô tả</th>
-                                            <th>Loại công việc</th>
-                                            <th class="text-center">Giao việc</th>
+                                            <th>Người chịu trách nhiệm</th>
+                                            <th>Tên công việc</th>
+                                            <th>Ngày giao</th>
+                                            <th>Hạn</th>
+                                            <th class="text-center">Trạng thái</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listTask}" var="ls">
+                                        <c:forEach items="${listAssignments}" var="ls">
                                             <tr>
-                                                <td>${ls.taskID}</td>
+                                                <td>${ls.staffName}</td>
                                                 <td>${ls.taskName}</td>
-                                                <td>${ls.description}</td>
-                                                <td>${ls.taskType}</td>
+                                                <td>${ls.startTime}</td>
+                                                <td>${ls.endTime}</td>
                                                 <td class="text-center">
-                                                    <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#assignTaskModal-${ls.taskID}">
-                                                        Giao việc
-                                                    </a>
+                                                    <c:choose>
+                                                        <c:when test="${ls.status == 'Da hoan thanh'}">
+                                                            <span class="text-warning ">Đã hoàn thành</span>  
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="text-primary">Chưa hoàn thành</span>  
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
+
+
                                             </tr>
                                             <!-- Modal giao việc -->
-                                        <div class="modal fade" id="assignTaskModal-${ls.taskID}" tabindex="-1" role="dialog">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title">Chọn nhân viên giao việc cho công việc ${ls.taskName}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="assignment" method="POST">
-                                                            <input type="hidden" name="taskType" value="${ls.taskType}" />
-                                                            <input type="hidden" name="taskID" value="${ls.taskID}" />
-                                                            <input type="hidden" name="service" value="assign" />
 
-                                                            <!-- Danh sách nhân viên -->
-                                                            <select name="staffID" class="form-control">
-                                                                <c:forEach items="${listStaff}" var="o">
-                                                                    <c:if test="${ls.taskType == o.roleAuthority}">
-                                                                        <option value="${o.staffID}">${o.name}</option>
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </select>
 
-                                                            <!-- Người dùng nhập số ngày cho endTime -->
-                                                            <label for="endDays">Nhập số ngày để hoàn thành công việc:</label>
-                                                            <input type="number" id="endDays" name="endDays" class="form-control" min="1" placeholder="Nhập số ngày" required>
-
-                                                            <p class="mt-2">Bạn có chắc muốn giao công việc này cho nhân viên đã chọn?</p>
-
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                                                                <button type="submit" class="btn btn-primary">Giao việc</button>
-                                                            </div>
-                                                        </form>
-
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                         </c:forEach>
-                                        </tbody>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="container-fluid">
+
+                    <!-- Thêm biểu đồ hình tròn -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body text-center">
+                            <h4>Tỷ lệ công việc đã hoàn thành và chưa hoàn thành</h4>
+                            <style>
+                                #completionChart {
+                                    width: 400px ;
+                                    height: 400px ;
+                                    margin: auto;
+                                }
+                                .completion-percentage {
+                                    font-weight: bold;
+                                    margin-top: 15px;
+                                    color: #4e73df;
+                                }
+                            </style>
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <canvas id="completionChart"></canvas>
+                            </div>
+                            <div class="completion-percentage">
+                                Đã hoàn thành: 
+                                <span id="completedPercentage"></span>% công việc
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
             </div>
         </div>
@@ -261,6 +264,55 @@
 
 
         <!-- Scripts -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var completedTasks = ${numberCompleteAssignment};
+                var uncompletedTasks = ${numberUncompleteAssignment};
+
+                // Tính tỷ lệ phần trăm công việc đã hoàn thành
+                var totalTasks = completedTasks + uncompletedTasks;
+                var completedPercentage = ((completedTasks / totalTasks) * 100).toFixed(2);
+
+                // Hiển thị tỷ lệ phần trăm công việc đã hoàn thành
+                document.getElementById("completedPercentage").innerText = completedPercentage;
+
+                var ctx = document.getElementById('completionChart').getContext('2d');
+                var completionChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Đã hoàn thành', 'Chưa hoàn thành'],
+                        datasets: [{
+                                data: [completedTasks, uncompletedTasks],
+                                backgroundColor: ['#4e73df', '#e74a3b'],
+                                hoverBackgroundColor: ['#2e59d9', '#d9534f'],
+                                borderWidth: 1
+                            }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right' // Chuyển chú thích sang bên phải
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        return tooltipItem.label + ': ' + tooltipItem.raw + ' (' +
+                                                (tooltipItem.raw / totalTasks * 100).toFixed(2) + '%)';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+
+        </script>
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>

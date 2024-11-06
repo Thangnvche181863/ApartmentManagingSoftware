@@ -15,17 +15,32 @@ public class Assignment {
     private int taskID;
     private Date startTime;
     private Date endTime;
-    
+    private String status;
+    private String staffName;
+    private String taskName;
 
     public Assignment() {
     }
 
-    public Assignment(int staffID, int taskID, Date startTime, Date endTime) {
+    public Assignment(String staffName, String taskName, Date startTime, Date endTime, String status) {
+      
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+        this.staffName = staffName;
+        this.taskName = taskName;
+    }
+
+    public Assignment(int staffID, int taskID, Date startTime, Date endTime, String status) {
         this.staffID = staffID;
         this.taskID = taskID;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.status = status;
     }
+
+    
+    
 
     public int getStaffID() {
         return staffID;
@@ -37,6 +52,14 @@ public class Assignment {
 
     public int getTaskID() {
         return taskID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setTaskID(int taskID) {
@@ -59,9 +82,30 @@ public class Assignment {
         this.endTime = endTime;
     }
 
+    public String getStaffName() {
+        return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
+
     @Override
     public String toString() {
-        return "Assignment{" + "staffID=" + staffID + ", taskID=" + taskID + ", startTime=" + startTime + ", endTime=" + endTime + '}';
+        return "Assignment{" + "staffID=" + staffID + ", taskID=" + taskID + ", startTime=" + startTime + ", endTime=" + endTime + ", status=" + status + ", staffName=" + staffName + ", taskName=" + taskName + '}';
     }
+
+    
+    
+
+   
     
 }

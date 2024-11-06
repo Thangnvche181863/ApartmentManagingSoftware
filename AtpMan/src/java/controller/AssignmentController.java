@@ -93,7 +93,7 @@ public class AssignmentController extends HttpServlet {
         // Lấy loại công việc để hiển thị trong form lọc
         request.setAttribute("taskType", dao.getAllTaskType());
 
-        request.getRequestDispatcher("task.jsp").forward(request, response);
+        request.getRequestDispatcher("assignment.jsp").forward(request, response);
     }
 
     @Override
@@ -130,8 +130,8 @@ public class AssignmentController extends HttpServlet {
             // Tính toán endTime bằng cách cộng số ngày vào startTime
             long endMillis = startTime.getTime() + (long) endDays * 24 * 60 * 60 * 1000;
             java.sql.Date endTime = new java.sql.Date(endMillis);
-
-            int n = adao.creatAssignment(staffID, taskID, startTime, endTime);
+            String status = "Chua hoan thanh";
+            int n = adao.creatAssignment(staffID, taskID, startTime, endTime,status);
             String mess = (n > 0) ? "Công việc đã được giao" : "Đã xảy ra lỗi, hãy thử lại!";
             request.getSession().setAttribute("mess", mess);
             response.sendRedirect("assignment");
@@ -178,7 +178,7 @@ public class AssignmentController extends HttpServlet {
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", dao.countActive(taskType, search, recordsPerPage));
             request.setAttribute("taskType", dao.getAllTaskType());
-            request.getRequestDispatcher("task.jsp").forward(request, response);
+            request.getRequestDispatcher("assignment.jsp").forward(request, response);
         }
     }
 

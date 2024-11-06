@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">-->
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>CustomerPermissionFilter</filter-name>
@@ -109,11 +108,6 @@
     </servlet>
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
-        <servlet-class>controller.UserhomeNewsServlet</servlet-class>
-        <servlet-class>controller.staff.DeleteServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.user.UserhomeNewsServlet</servlet-class>
     </servlet>
     <servlet>
@@ -155,6 +149,8 @@
     <servlet>
         <servlet-name>AssignmentController</servlet-name>
         <servlet-class>controller.AssignmentController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ServiceUserDetailServlet</servlet-name>
         <servlet-class>controller.ServiceUserDetailServlet</servlet-class>
     </servlet>
@@ -197,6 +193,10 @@
     <servlet>
         <servlet-name>RegistServiceServlet</servlet-name>
         <servlet-class>controller.user.RegistServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaskController</servlet-name>
+        <servlet-class>controller.TaskController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -317,6 +317,8 @@
     <servlet-mapping>
         <servlet-name>AssignmentController</servlet-name>
         <url-pattern>/assignment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ServiceUserDetailServlet</servlet-name>
         <url-pattern>/serviceuserdetail</url-pattern>
     </servlet-mapping>
@@ -359,6 +361,10 @@
     <servlet-mapping>
         <servlet-name>RegistServiceServlet</servlet-name>
         <url-pattern>/registService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaskController</servlet-name>
+        <url-pattern>/task</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

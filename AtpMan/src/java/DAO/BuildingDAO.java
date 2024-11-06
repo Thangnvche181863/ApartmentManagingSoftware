@@ -54,12 +54,7 @@ public class BuildingDAO {
         return vector.size();
     }
     
-    public static void main(String[] args) {
-        Building building = new Building();
-        BuildingDAO dao = new BuildingDAO();
-        List<Building> vector = dao.getAllBuildings();
-        System.out.println(vector.size());
-    }
+    
 
     public Vector<Integer> getApartmentAvailable() {
         Vector<Integer> vector = new Vector<>();

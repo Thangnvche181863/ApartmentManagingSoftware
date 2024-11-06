@@ -333,7 +333,7 @@ public class CustomerDAO {
                 String name = rs.getString(3);
                 String email = rs.getString(4);
                 String phoneNumber = rs.getString(5);
-                int age = rs.getInt(6);
+                Date age = rs.getDate(6);
                 Date registrationDate = rs.getDate(7);
                 int isOwner = rs.getInt(8);
                 Customer customer = new Customer(customerID, username, name, email, phoneNumber, age, registrationDate, isOwner);

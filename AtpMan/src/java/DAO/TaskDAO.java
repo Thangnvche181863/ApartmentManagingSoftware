@@ -32,7 +32,7 @@ public class TaskDAO {
 
         String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
                 + "FROM Task t\n"
-                + "LEFT JOIN Assigment a ON t.taskID = a.taskID\n"
+                + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
                 + "WHERE a.staffID IS NULL;";
         try {
             conn = DBContext.getConnection();
@@ -99,7 +99,7 @@ public class TaskDAO {
             int offset = (page - 1) * recordsPerPage;
             String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
                 + "FROM Task t\n"
-                + "LEFT JOIN Assigment a ON t.taskID = a.taskID\n"
+                + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
                 + "WHERE a.staffID IS NULL order by taskID offset ? rows fetch next ? rows only";
             conn = DBContext.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);

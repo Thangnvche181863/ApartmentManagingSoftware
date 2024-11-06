@@ -11,6 +11,14 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/web/assignment.jsp</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/src/java/DAO/AssignmentDAO.java</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/src/java/DAO/TaskDAO.java</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/web/task.jsp</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/src/java/controller/TaskController.java</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/src/java/model/Assignment.java</file>
+            <file>file:/D:/Project%20SWP/ApartmentManagingSoftware/AtpMan/src/java/controller/AssignmentController.java</file>
+        </group>
     </open-files>
 </project-private>
