@@ -189,11 +189,31 @@ public class BuildingDAO {
         }
         return name;
     }
+    
+    public int countBuilding() {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Building";
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
 
     public static void main(String[] args) {
 
         BuildingDAO buildingDAO = new BuildingDAO();
-        System.out.println(buildingDAO.getBuildingName(1));
+        System.out.println(buildingDAO.getAllBuilding());
 
     }
 }

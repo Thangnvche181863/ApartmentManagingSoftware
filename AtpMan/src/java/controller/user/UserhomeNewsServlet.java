@@ -70,14 +70,14 @@ public class UserhomeNewsServlet extends HttpServlet {
             out.println("<div class=\"blog-box row\">\n"
                     + "     <div class=\"col-md-4\">\n"
                     + "        <div class=\"post-media\">\n"
-                    + "           <a href=\"NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
+                    + "           <a href=\"/AtpMan/NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
                     + "              <img src=\"../" + news.getNewsImg() + "\" alt=\"\" class=\"img-fluid\">\n"
                     + "                  <div class=\"hovereffect\"></div>\n"
                     + "           </a>\n"
                     + "        </div><!-- end media -->\n"
                     + "     </div><!-- end col -->\n"
                     + "  <div class=\"blog-meta big-meta col-md-8\">\n"
-                    + "  <h4><a href=\"NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
+                    + "  <h4><a href=\"/AtpMan/NewsDetail?id=" + news.getNewsID() + "\" title=\"\">\n"
                     + "      " + news.getNewsTitle() + "\n"
                     + "      </a></h4>\n"
                     + "  <p>" + news.getDescription() + "</p>\n"
@@ -118,7 +118,7 @@ public class UserhomeNewsServlet extends HttpServlet {
 
         if (currentPage < totalPages) {
             out.println("<li class=\"page-item\">\n"
-                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"paging(this)\">Previous</button>\n"
+                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"paging(this)\">Next</button>\n"
                     + "   </li>");
 
         }

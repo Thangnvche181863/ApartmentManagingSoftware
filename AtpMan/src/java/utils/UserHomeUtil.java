@@ -4,11 +4,18 @@
  */
 package utils;
 
+import DAO.ApartmentDAO;
+import jakarta.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import model.Apartment;
+import model.Building;
+import model.Customer;
 import model.Invoice;
 
 /**
@@ -43,12 +50,35 @@ public class UserHomeUtil {
         }
         return mList;
     }
+    public LinkedHashSet<Integer> listOfMonth2(LinkedHashMap<Integer, Double> amountInMonth, int year) {
+        LinkedHashSet<Integer> mList = new LinkedHashSet<>();
+        for (Map.Entry<Integer, Double> entry : amountInMonth.entrySet()) {
+            mList.add(entry.getKey());
+        }
+        return mList;
+    }
 
     public double totalAmount(List<Invoice> list, int year) {
         double total = 0;
         for (Invoice invoice : list) {
             if (invoice.getIssueDate().toLocalDate().getYear() == year) {
                 total += invoice.getAmount();
+            }
+        }
+        return total;
+    }
+    public double totalAmount2(LinkedHashMap<Integer, Double> amountInMonth) {
+        double total = 0;
+        for (Map.Entry<Integer, Double> entry : amountInMonth.entrySet()) {
+            total += entry.getValue();
+        }
+        return total;
+    }
+    public double totalAmountInMonth(LinkedHashMap<Integer, Double> amountInMonth, int month) {
+        double total = 0;
+        for (Map.Entry<Integer, Double> entry : amountInMonth.entrySet()) {
+            if(month == entry.getKey()){
+                total = entry.getValue();
             }
         }
         return total;
@@ -90,5 +120,37 @@ public class UserHomeUtil {
             }
         }
         return amountList;
+    }
+    public List<Double> listAmountByMonth2(LinkedHashMap<Integer, Double> amountMap, int year) {
+        double init = 0;
+        List<Double> amountList = new ArrayList<>(Arrays.asList(init, init, init, init, init, init, init, init, init, init, init, init));
+        for (Map.Entry<Integer, Double> entry : amountMap.entrySet()) {
+            Integer month = entry.getKey();
+            Double amount = entry.getValue();
+            amountList.add(month-1, amount);
+        }
+        
+        return amountList;
+    }
+    
+    public Apartment getApartment(HttpServletRequest request, int apartmentId, Customer customer, ApartmentDAO apartmentDAO){
+        Apartment apartment = null;
+        if(customer.getIsOwner() == 0){
+            apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
+        }else{
+            List<Building> buildingList = new ArrayList<>();
+            
+        }
+        return apartment;
+    }
+    
+    public List<String> stringToList(String statement){
+        List<String> stringList = null;
+        if(statement != null && !statement.isBlank()){
+            String[] stringArr = statement.trim().split("\\s+");
+            stringList = new ArrayList<>(Arrays.asList(stringArr));
+            stringArr = null;
+        }
+        return stringList;
     }
 }

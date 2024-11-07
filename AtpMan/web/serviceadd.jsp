@@ -276,6 +276,13 @@
                         <span>Charts</span></a
                     >
                 </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
@@ -539,29 +546,19 @@
 
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="userDropdown"
-                                    role="button"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    >
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                                          >Douglas McGee</span
-                                    >
-                                    <img
-                                        class="img-profile rounded-circle"
-                                        src="img/undraw_profile.svg"
-                                        />
-                                </a>
+                                <c:if test="${sessionScope.user != null}">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                            <strong style="color: black;">${sessionScope.user.name}</strong>
+                                        </span>
+                                        <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                    </a>
+                                </c:if>
+
                                 <!-- Dropdown - User Information -->
-                                <div
-                                    class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                    aria-labelledby="userDropdown"
-                                    >
-                                    <a class="dropdown-item" href="#">
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="profile.jsp">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profile
                                     </a>
@@ -574,19 +571,13 @@
                                         Activity Log
                                     </a>
                                     <div class="dropdown-divider"></div>
-                                    <a
-                                        class="dropdown-item"
-                                        href="#"
-                                        data-toggle="modal"
-                                        data-target="#logoutModal"
-                                        >
-                                        <i
-                                            class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                                            ></i>
+                                    <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
                                 </div>
                             </li>
+
                         </ul>
                     </nav>
                     <!-- End of Topbar -->
@@ -631,7 +622,7 @@
                                     <div class="col-md-12 d-flex justify-content-between">
                                         <div>
                                             <div class="form-group mb-4">
-                                                <label for="name" class="form-label">Name:</label>
+                                                <label for="name" class="form-label">Tên:</label>
                                                 <input
                                                     type="text"
                                                     class="form-control w-100"
@@ -642,7 +633,7 @@
                                                     />
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="type" class="form-label">Type:</label>
+                                                <label for="type" class="form-label">Loại dịch vụ:</label>
                                                 <select class="form-select w-100" name="type" id="type">
                                                     <c:forEach items="${serviceType}" var="ls">
                                                         <option value="${ls.type}" <c:if test="${type == ls.type}">selected</c:if>>${ls.type}</option>
@@ -650,7 +641,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group mb-4">
-                                                <label for="img" class="form-label">URL img:</label>
+                                                <label for="img" class="form-label">URL ảnh:</label>
                                                 <input
                                                     type="file"
                                                     class="form-control w-100"
@@ -695,7 +686,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group mb-4">
-                                            <label for="fee" class="form-label">Fee:</label>
+                                            <label for="fee" class="form-label">Giá:</label>
                                             <input
                                                 type="text"
                                                 class="form-control w-100"
@@ -725,7 +716,7 @@
                                         </div>
                                         <div class="form-group mb-4">
                                             <label for="description" class="form-label"
-                                                   >Description:</label
+                                                   >Mô tả:</label
                                             >
                                             <textarea
                                                 class="form-control w-100"

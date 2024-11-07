@@ -178,6 +178,13 @@
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Charts</span></a>
                 </li>
+                
+                                <!-- Nav Item - Charts -->
+                <li class="nav-item">
+                    <a class="nav-link" href="costStatistic">
+                        <i class="bi bi-cash-coin"></i>
+                        <span>Tổng Hợp Phụ Phí</span></a>
+                </li>
 
                 <!-- Nav Item - Tables -->
                 <li class="nav-item">
@@ -426,13 +433,28 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Danh Sách Đăng Kí</h1>
+                            <h1 class="h3 mb-0 text-gray-800"><b>Danh Sách Đăng Kí Năm ${year}</b></h1>
                             <p>
                                 <a class="btn btn-info" href="servicelist">Danh Sách Dịch Vụ</a>
                             </p>
                         </div>
 
                         <form action="registlist" method="POST">
+                            <div>
+                                <label for="year">Năm:</label>
+                                <select name="year" id="year" style="border-radius: 5px" onchange="this.form.submit()">
+                                    <c:forEach var="i" begin="2022" end="2024">
+                                        <option value="${i}" <c:if test="${i == year}">selected</c:if>>${i}</option>
+                                    </c:forEach>
+                                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label for="month">Tháng:</label>
+                                <select name="month" id="month" style="border-radius: 5px" onchange="this.form.submit()">
+                                    <!-- Lặp qua các tháng từ 1 đến 12 -->
+                                    <c:forEach var="i" begin="1" end="12">
+                                        <option value="${i}" <c:if test="${i == month}">selected</c:if>>${i}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                             <div>
                                 <label for="row">số dòng:</label>
                                 <select name="recordsPerPage" id="recordsPerPage" style="border-radius: 5px" onchange="this.form.submit()">
@@ -478,8 +500,8 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">                                  
                                     <div class="table-responsive">
-                                        <td class="total-label text-center" style="width: 130px;">
-                                            Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng
+                                        Tổng: <%=  (Integer) request.getAttribute("totalRoom") %> phòng&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="d-flex justify-content-between">
                                             <div class="pagination">
                                                 <%
                                                     int currentPage = (Integer) request.getAttribute("currentPage");
@@ -489,11 +511,15 @@
                                                     String apartmentType = (String) request.getAttribute("apartmentType");
                                                     String search = (String) request.getAttribute("search");
                                                     String orderBy = (String) request.getAttribute("orderBy");
+                                                    String month = (String) request.getAttribute("month");
+                                                    String year = (String) request.getAttribute("year");
+    //                                                int month = (Integer) request.getAttribute("month");
+    //                                                int year = (Integer) request.getAttribute("year");
 
                                                     // Hiển thị nút "Previous" nếu không phải trang đầu tiên
                                                     if (currentPage > 1) {
                                                 %>
-                                                <a href="registlist?page=<%= currentPage - 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
+                                                <a href="registlist?page=<%= currentPage - 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Previous</a>
                                                 <%
                                                     }
 
@@ -505,7 +531,7 @@
                                                 <%
                                                         } else {
                                                 %>
-                                                <a href="registlist?page=<%= i %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
+                                                <a href="registlist?page=<%= i %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>"><%= i %></a>
                                                 <%
                                                         }
                                                     }
@@ -513,35 +539,41 @@
                                                     // Hiển thị nút "Next" nếu không phải trang cuối cùng
                                                     if (currentPage < totalPages) {
                                                 %>
-                                                <a href="registlist?page=<%= currentPage + 1 %>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
+                                                <a href="registlist?page=<%= currentPage + 1 %>&year=<%=year%>&month=<%=month%>&recordsPerPage=<%= recordsPerPage %>&buildingtype=<%= buildingtype %>&apartmentType=<%= apartmentType %>&search=<%= search %>&orderBy=<%= orderBy %>">Next</a>
                                                 <%
                                                     }
                                                 %>
                                             </div>
-                                            <table class="table table-bordered"  width="100%" cellspacing="0">
-                                                <thead>
+                                            <div>Tổng thu:  
+                                                <fmt:setLocale value="en_US" />
+                                                <fmt:formatNumber type="number" maxFractionDigits="3" value="${totalFinance}"/>
+                                            </div>
+                                        </div>
+                                        <table class="table table-bordered"  width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Số Phòng</th>
+                                                    <th class="text-center">Loại Căn Hộ</th>
+                                                    <th class="text-center">Số Tầng</th>
+                                                    <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
+                                                    <th class="text-center">Thông Tin</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="${listapart}" var="ls">
                                                     <tr>
-                                                        <th class="text-center">Số Phòng</th>
-                                                        <th class="text-center">Loại Căn Hộ</th>
-                                                        <th class="text-center">Số Tầng</th>
-                                                        <th class="text-center">Tổng Tiền Dịch Vụ (VND)</th>
-                                                        <th class="text-center">Thông Tin</th>
+                                                        <td class="text-center">${ls.apartmentNumber}</td>
+                                                        <td class="text-center">${ls.apartmentType}</td>
+                                                        <td class="text-center">${ls.floor}</td>
+                                                        <td class="text-center">
+                                                            <fmt:setLocale value="en_US" />
+                                                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${ls.totalAmount}"/>
+                                                        </td>
+                                                        <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}&month=${month}&year=${year}">Chi tiết</a></td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:forEach items="${listapart}" var="ls">
-                                                        <tr>
-                                                            <td class="text-center">${ls.apartmentNumber}</td>
-                                                            <td class="text-center">${ls.apartmentType}</td>
-                                                            <td class="text-center">${ls.floor}</td>
-                                                            <td class="text-center">
-                                                                <fmt:formatNumber type="number" value="${ls.totalAmount}" />
-                                                            </td>
-                                                            <td class="text-center"><a href="inforapartmentservice?id=${ls.apartmentID}">Chi tiết</a></td>
-                                                        </tr>
-                                                    </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>

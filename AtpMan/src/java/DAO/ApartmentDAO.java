@@ -50,6 +50,26 @@ public class ApartmentDAO {
         }
         return vector;
     }
+    
+    public int countApartment() {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Apartment";
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
 
     // thang
     public Vector<Building> getAllBuilding() {
@@ -121,12 +141,6 @@ public class ApartmentDAO {
         return vector;
     }
 
-    public int getAmountOfApartment() {
-        ApartmentDAO dao = new ApartmentDAO();
-        Vector<Apartment> vector = dao.getAllApartment();
-        return vector.size();
-    }
-
     public Apartment getApartmentByCustomerId(int customerId) {
         Connection connection = null;
         String sql = "select a.* from Apartment a\n"
@@ -155,9 +169,45 @@ public class ApartmentDAO {
         return null;
     }
 
+    public int getAmountOfApartment() {
+        ApartmentDAO dao = new ApartmentDAO();
+        Vector<Apartment> vector = dao.getAllApartment();
+        return vector.size();
+    }
+
+    public Apartment getApartmentByLiving(int customerId) {
+        Connection connection = null;
+        String sql = "select a.*, b.name from Apartment a\n"
+                + "inner join Living l on a.apartmentID = l.apartmentID\n"
+                + "inner join Building b on a.buildingID = b.buildingID\n"
+                + "where l.customerID = ? and l.endDate is null";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Apartment apartment = new Apartment();
+                apartment.setApartmentID(rs.getInt(1));
+                apartment.setBuildingID(rs.getInt(2));
+                apartment.setApartmentNumber(rs.getString(3));
+                apartment.setApartmentType(rs.getString(4));
+                apartment.setPrice(rs.getBigDecimal(5));
+                apartment.setMaintenanceFee(rs.getBigDecimal(6));
+                apartment.setFloor(rs.getInt(7));
+                apartment.setArea(rs.getInt(8));
+                apartment.setName(rs.getString(9));
+                return apartment;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     // thang
     public Vector<Apartment> allApartmentPaging(int page, int recordsPerPage, String buildingtype, String apartmentType,
-            String search, String orderBy) {
+            String search, int year, int month, String orderBy) {
         Vector<Apartment> vector = new Vector<>();
         Connection conn = null;
 
@@ -165,8 +215,7 @@ public class ApartmentDAO {
                 "SELECT A.apartmentID, b.name AS buildingName, A.apartmentNumber, A.apartmentType, A.floor, ");
         sql.append("CASE WHEN SUM(SC.amount) IS NULL THEN 0 ELSE SUM(SC.amount) END AS totalAmount ")
                 .append("FROM Apartment A ")
-                .append("LEFT JOIN ServiceContract SC ON A.apartmentID = SC.apartmentID ")
-                .append("LEFT JOIN Service S ON SC.serviceID = S.serviceID ")
+                .append("LEFT JOIN ServiceContract SC ON A.apartmentID = SC.apartmentID AND YEAR(SC.startDate) = ? AND MONTH(SC.startDate) = ? ")
                 .append("LEFT JOIN Building b ON A.buildingID = b.buildingID ")
                 .append("WHERE 1=1 ");
 
@@ -194,6 +243,8 @@ public class ApartmentDAO {
             PreparedStatement ps = conn.prepareStatement(sql.toString());
 
             int paramIndex = 1;
+            ps.setInt(paramIndex++, year);
+            ps.setInt(paramIndex++, month);
             if (buildingtype != null && !buildingtype.isEmpty()) {
                 ps.setString(paramIndex++, buildingtype);
             }
@@ -231,14 +282,14 @@ public class ApartmentDAO {
         return vector;
     }
 
-    public int getTotalApartment(String buildingtype, String apartmentType, String search, String orderBy) {
+    public int getTotalApartment(String buildingtype, String apartmentType, String search, int year, int month, String orderBy) {
         ApartmentDAO dao = new ApartmentDAO();
         Vector<Apartment> vector = dao.allApartmentPaging(1, dao.getAmountOfApartment(), buildingtype, apartmentType,
-                search, orderBy);
+                search, year, month, orderBy);
         return vector.size();
     }
 
-    public Apartment apartmentDetail(int id) {
+    public Apartment apartmentDetail(int id, int month, int year) {
         Connection conn = null;
         Apartment apartment = new Apartment();
         ServiceContractDAO scdao = new ServiceContractDAO();
@@ -259,7 +310,7 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
-                apartment.setList(scdao.serviceContractById(rs.getInt(1)));
+                apartment.setList(scdao.serviceContractById(rs.getInt(1), month, year));
 
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -297,9 +348,10 @@ public class ApartmentDAO {
     public List<Apartment> getAllApartmentByOwner(int customerID) {
         Connection connection = null;
         List<Apartment> list = new ArrayList<>();
-        String sql = "select a.* from apartment a\n"
+        String sql = "select a.*, b.name from apartment a\n"
                 + "inner join Ownership o on a.apartmentID = o.apartmentID\n"
-                + "where o.customerID = ?";
+                + "inner join Building b on a.buildingID = b.buildingID\n"
+                + "where o.customerID = ? and o.endDate is null ";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -315,7 +367,8 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
-                
+                apartment.setName(rs.getString(9));
+
                 list.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException e) {

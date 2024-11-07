@@ -13,7 +13,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Discount;
 import model.Service;
 import model.ServiceContract;
@@ -65,30 +69,47 @@ public class RegistDetailServlet extends HttpServlet {
 
         String serviceID = request.getParameter("serviceID");
         String apartmentID = request.getParameter("apartmentID");
+        String serviceContractID = request.getParameter("serviceContractID");
         ServiceContractDAO scdao = new ServiceContractDAO();
+
+        // cần try catch khi parse hết các param tránh lỗi - Khang
         
         DiscountDAO ddao = new DiscountDAO();
-        
-        Discount discount =  ddao.getDiscountById(Integer.parseInt(serviceID));
-        
+
+        Discount discount = ddao.getDiscountById(Integer.parseInt(serviceID));
+
         request.setAttribute("discount1Month", discount.getOneMonth());
         request.setAttribute("discount2Month", discount.getTwoMonth());
         request.setAttribute("discount3Month", discount.getThreeMonth());
 
+        LocalDate currentDate = LocalDate.now();
+
         ServiceDAO sdao = new ServiceDAO();
 
+        // cach khac
+//        List<ServiceContract> list = null;
+//        try {
+//            list = scdao.getCurrentServiceContractNotPaging(Integer.parseInt(apartmentID), Date.valueOf(currentDate));
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(RegistDetailServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         List<ServiceContract> list = scdao.getAll();
+        // tại sao lại lấy tất service chứ không phải lấy cụ thể service đấy trong db
         for (ServiceContract sc : list) {
-            if (sc.getServiceId() == Integer.parseInt(serviceID) && sc.getApartmentId() == Integer.parseInt(apartmentID)) { //if (sc.getServiceId() == serviceID && sc.getApartmentId() == apartmentID) {
+            if (sc.getServiceId() == Integer.parseInt(serviceID) && sc.getApartmentId() == Integer.parseInt(apartmentID)
+                    && sc.getEndDate().compareTo(Date.valueOf(currentDate)) > 0) { //if (sc.getServiceId() == serviceID && sc.getApartmentId() == apartmentID) {
+                // update logic - thêm compareDate - Khang
                 request.setAttribute("serviceContract", sc);
+
             }
         }
 
         Service service = sdao.findById(Integer.parseInt(serviceID));
 
-        request.setAttribute("amount", scdao.pickServiceContract(Integer.parseInt(apartmentID), Integer.parseInt(serviceID)));
+        request.setAttribute("amount", scdao.pickServiceContract(Integer.parseInt(serviceID)));
         request.setAttribute("apartmentID", apartmentID);
         request.setAttribute("service", service);
+        request.setAttribute("serviceContractID", serviceContractID);
         request.getRequestDispatcher("/user/registDetail.jsp").forward(request, response);
     }
 

@@ -67,12 +67,15 @@ public class RegistServiceServlet extends HttpServlet {
 //        PrintWriter out = response.getWriter();
         String apartmentId = request.getParameter("apartmentId");
         String serviceId = request.getParameter("serviceId");
+        String serviceContractId = request.getParameter("serviceContractId");
+        // try catch - Khang
+        
 //        out.println(apartmentId);
 //                out.println(serviceId);
 
         ServiceContractDAO scdao = new ServiceContractDAO();
-        
-        scdao.deleteServiceContract(Integer.parseInt(apartmentId), Integer.parseInt(serviceId));
+        // cần dùng serviceContract Id - KhangPM
+        scdao.deleteServiceContract(Integer.parseInt(apartmentId), Integer.parseInt(serviceContractId));
         response.sendRedirect("registServiceTenant");
     }
 
@@ -109,11 +112,12 @@ public class RegistServiceServlet extends HttpServlet {
         out.println(endDate);
         out.println(apartmentID);
         out.println(serviceID);
+        out.println(fee);
 
         ServiceContractDAO scdao = new ServiceContractDAO();
-//        
+        
         scdao.insertServiceContract(Integer.parseInt(apartmentID), Integer.parseInt(serviceID), Date.valueOf(startDate), Date.valueOf(endDate), Double.parseDouble(fee));
-        response.sendRedirect("registServiceTenant");
+        response.sendRedirect("registServiceTenant?status=success");
     }
 
     /**

@@ -93,7 +93,7 @@ public class RegistServiceTenant extends HttpServlet {
             apartmentID = apartment.getApartmentID();
         }
 
-        List<Service> list = serviceContractDAO.unregisteredService(apartmentID, Date.valueOf(LocalDate.now()));
+        List<Service> list = serviceContractDAO.unregisteredService2(apartmentID, Date.valueOf(LocalDate.now()));
         Building building = buildingDAO.getBuildingByApartmentID(apartment.getApartmentID());
 
         // if user is owner
@@ -115,7 +115,7 @@ public class RegistServiceTenant extends HttpServlet {
         List<ServiceContract> serviceContractList = null;
         LocalDate date = LocalDate.now();
         try {
-            serviceContractList = serviceContractDAO.getCurrentServiceContract(apartmentID, Date.valueOf(date));
+            serviceContractList = serviceContractDAO.getCurrentServiceContractNotPaging(apartmentID, Date.valueOf(date));
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RegistServiceTenant.class.getName()).log(Level.SEVERE, null, ex);
         }

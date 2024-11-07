@@ -57,8 +57,11 @@ public class InforApartmentService extends HttpServlet {
         ApartmentDAO adao = new ApartmentDAO();
         ServiceContractDAO sdao = new ServiceContractDAO();
         int id = Integer.parseInt(request.getParameter("id"));
-        request.setAttribute("apart", adao.apartmentDetail(id));
-        request.setAttribute("statistic", sdao.statisticContract(id));
+        int month = Integer.parseInt(request.getParameter("month"));
+        int year = Integer.parseInt(request.getParameter("year"));
+        
+        request.setAttribute("apart", adao.apartmentDetail(id,month,year));
+        request.setAttribute("statistic", sdao.statisticContract(id,month,year));
         request.getRequestDispatcher("inforapartmentservice.jsp").forward(request, response);
     }
 

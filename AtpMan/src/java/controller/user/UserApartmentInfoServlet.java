@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.*;
 import DAO.*;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,8 +69,9 @@ public class UserApartmentInfoServlet extends HttpServlet {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         BuildingDAO buildingDAO = new BuildingDAO();
         CustomerDAO customerDAO = new CustomerDAO();
+        LivingDAO livingDAO = new LivingDAO();
         ServiceContractDAO serviceContractDAO = new ServiceContractDAO();
-        
+
         String apartmentID_raw = request.getParameter("apartmentID");
         String buildingID_raw = request.getParameter("buildingID");
 
@@ -94,7 +96,7 @@ public class UserApartmentInfoServlet extends HttpServlet {
 
         // get apartment that user live in, if user is tenant => always get apartment info through this, no need apartmentID
         // if user is owner can null if not live in
-        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
+        Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
         List<Building> buildingList = null;
         Building building = null;
         if (apartment != null) {
@@ -136,46 +138,63 @@ public class UserApartmentInfoServlet extends HttpServlet {
                         building = building1;
                     }
                 }
+                boolean check = false;
                 for (Apartment apartment1 : building.getApartmentList()) {
                     if (apartment1.getApartmentID() == apartmentID) {
                         apartment = apartment1;
+                        check = true;
                     }
                 }
-                if (apartment == null) {
+                if (!check) {
                     apartment = building.getApartmentList().get(0);
                 }
-//                buildingList = buildingDAO.getAllBuildingByOwnership(customer.getCustomerID());
-//                apartment = apartmentDAO.getApartmentByID(apartmentID);
-//                for (Building building1 : buildingList) {
-//                    if (building1.getBuildingID() == apartment.getBuildingID()) {
-//                        building = building1;
-//                    }
-//                }
             } // apartmentID == 0 and buildingID != 0
             else {
                 for (Building building1 : buildingList) {
-                    if(building1.getBuildingID() == buildingID){
+                    if (building1.getBuildingID() == buildingID) {
                         building = building1;
                     }
                 }
                 apartment = building.getApartmentList().get(0);
             }
         }
-        List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID());
+
+        //pagination parameter
+        int residentPerPage = 5;
+        int servicePerPage = 5;
+
+        int currentResidentPage = 1;
+        int currentServicePage = 1;
+
+        List<Customer> customerList = customerDAO.getLivingInApartment(apartment.getApartmentID(), currentResidentPage, residentPerPage, null);
         LocalDate date = LocalDate.now();
-        List<ServiceContract> serviceContractList = null;
-        try {
-            serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date));
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UserApartmentInfoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        List<ServiceContract> serviceContractList = serviceContractDAO.getCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), currentServicePage, servicePerPage, null);
+
+        BigDecimal totalAmount = serviceContractDAO.totalAmountCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), null);
+        double totalA = 0;
+
+        if (totalAmount != null) {
+            totalA = totalAmount.doubleValue();
         }
-        
+
+        int totalResident = customerDAO.countLivingInApartment(apartmentID, null);
+        int totalService = serviceContractDAO.countCurrentServiceContract(apartment.getApartmentID(), Date.valueOf(date), null);
+
+        int totalResidentPage = (int) Math.ceil((double) totalResident / residentPerPage);
+        int totalServicePage = (int) Math.ceil((double) totalService / servicePerPage);
+
+        Living living = livingDAO.getLivingInfoByUserId(customer.getCustomerID());
+
+        request.setAttribute("totalResidentPage", totalResidentPage);
+        request.setAttribute("totalServicePage", totalServicePage);
+        request.setAttribute("totalAmount", totalA);
+        request.setAttribute("living", living);
         request.setAttribute("building", building);
         request.setAttribute("buildingList", buildingList);
         request.setAttribute("apartment", apartment);
         request.setAttribute("customerList", customerList);
         request.setAttribute("serviceContractList", serviceContractList);
-        request.getRequestDispatcher("user/userapartmentinfo.jsp").forward(request, response); 
+        request.getRequestDispatcher("user/userapartmentinfo.jsp").forward(request, response);
     }
 
     /**

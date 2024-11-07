@@ -22,6 +22,8 @@ public class Customer {
     private int isOwner;
     private int status;
     
+    private String apartmentNumber;
+    
     public Customer() {
 
     }
@@ -112,6 +114,16 @@ public class Customer {
     public void setIsOwner(int isOwner) {
         this.isOwner = isOwner;
     }
+
+    public String getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(String apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+    
+    
 
     @Override
     public String toString() {

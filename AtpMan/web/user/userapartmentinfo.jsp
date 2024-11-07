@@ -5,7 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
@@ -32,128 +32,7 @@
     <body>
         <div id="wrapper">
             <!-- Sidebar -->
-            <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="userhome.jsp">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">APT MAN</div>
-                </a>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
-
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="/AtpMan/user/userhome">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Interface
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                       aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Components</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Components:</h6>
-                            <a class="collapse-item" href="buttons.html">Buttons</a>
-                            <a class="collapse-item" href="cards.html">Cards</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Utilities:</h6>
-                            <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Addons
-                </div>
-
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                       aria-expanded="true" aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Nav Item - Charts -->
-                <li class="nav-item">
-                    <a class="nav-link" href="charts.html">
-                        <i class="fas fa-fw fa-chart-area"></i>
-                        <span>Charts</span></a>
-                </li>
-
-                <!-- Nav Item - Tables -->
-                <li class="nav-item">
-                    <a class="nav-link" href="tables.html">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Tables</span></a>
-                </li>
-
-                <!-- Nav Item - Regist service -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/AtpMan/registServiceTenant">
-                        <i class="fas fa-fw fa-table"></i>
-                        <span>Register Service</span></a>
-                </li>
-
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
-
-                <!-- Sidebar Toggler (Sidebar) -->
-                <div class="text-center d-none d-md-inline">
-                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                </div>
-
-            </ul>
+            <jsp:include page="../sidebar.jsp"/>
             <!-- End of Sidebar --> 
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
@@ -368,11 +247,11 @@
                             </div>
                             <div class="col-xl-12 col-md-12 mb-12">
                                 <div class="row">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="btn-group dropend">
-                                            <div class="card-body">
-                                                    <form id="submitApt" action="/AtpMan/userapartmentinfo" method="get">
-                                                <div class="row no-gutters align-items-center">
+                                    <form id="submitForm" action="/AtpMan/userapartmentinfo" method="get">
+                                        <div class="card border-left-success shadow h-100 py-2">
+                                            <div class="btn-group dropend">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
                                                         <div class="col mr-2">
                                                             <!--building information-->
                                                             <div class="row">
@@ -433,89 +312,104 @@
                                                                 Giá trị căn hộ: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700"><fmt:formatNumber value=" ${requestScope.apartment.price}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ   </span>
                                                                 </div>
                                                                 <div class="h5 mb-0 font-weight-bold text-gray-900 card1">
-                                                                    Tổng số người ở: &nbsp; <span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.customerList.size()} người</span>
+                                                                    Tổng số người ở: &nbsp; 
+                                                                <c:if test="${requestScope.customerList.size()>0}"><span class="h5 mb-0 font-weight-bold text-gray-700">${requestScope.customerList.size()} người</span></c:if>
+                                                                <c:if test="${requestScope.customerList.size()==0}"><span class="h5 mb-0 font-weight-bold text-gray-700">Chưa có người ở</span></c:if>
+                                                                </div>
                                                             </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa-building fa-10x text-gray-300"></i>
+                                                            </div> 
                                                         </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-building fa-10x text-gray-300"></i>
-                                                    </div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div> 
+                                <br>
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                    <h1 class="h1 mb-0 text-gray-800"><b>Thông tin cư dân</b></h1>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#addResidentModal">Thêm cư dân</button>
+                                </div>
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 row">
+                                        <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách cư dân đăng ký trong căn hộ</h5>
+                                        <div class="col-md-3">
+                                            <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
+                                                <option value="5">Số lượng hiển thị: 5</option>
+                                                <option value="10">Số lượng hiển thị: 10</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="input-group rounded ">
+                                                <!--reset the current page to 1 cause of search can reduce the number of page-->
+                                                <input id="searchResident" name="searchResident" type="text" value="" oninput="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text btn-primary border-0" id="search-addon">
+                                                        <i class="fas fa-search"></i>
+                                                    </span>
                                                 </div>
                                                     </form>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
-                            <br>
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 class="h1 mb-0 text-gray-800"><b>Thông tin cư dân</b></h1>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#addResidentModal">Thêm cư dân</button>
-
-                            </div>
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 row">
-                                    <h5 class="m-0 font-weight-bold text-primary col-md-8">Danh sách cư dân đăng ký trong căn hộ</h5>
-                                    <div class="col-md-4">
-                                        <div class="input-group rounded ">
-                                            <!--reset the current page to 1 cause of search can reduce the number of page-->
-                                            <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#searchTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text btn-primary border-0" id="search-addon">
-                                                    <i class="fas fa-search"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="searchTable" class="card-body">
-                                    <div>
+                                    <div id="residentTable" class="card-body">
                                         <table class="table table-striped table-hover table-bordered">
                                             <thead style="background-color: #4e73df; color: white">
                                                 <tr>
                                                     <th>#</th>
                                                     <th>Tên</th>
-                                                    <th>Năm Sinh</th>
+                                                    <th>Ngày sinh</th>
                                                     <th>Email</th>
                                                     <th>Số điện thoại</th>
+                                                    <th>Ngày vào ở</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <c:if test="${not empty requestScope.customerList}">
                                                 <c:set var="count" value="0"/>
                                                 <c:forEach items="${requestScope.customerList}" var="resident">
                                                     <c:set var="count" value="${count + 1}"/>
                                                     <tr>
                                                         <td>${count}</td>
                                                         <td>${resident.name}</td>
-                                                        <td>${resident.dob}</td>
+                                                        <td><fmt:formatDate value="${resident.dob}" pattern="dd/MM/yyyy"/></td>
                                                         <td>${resident.email}</td>
                                                         <td>${resident.phoneNumber}</td>
+                                                        <td><fmt:formatDate value="${requestScope.living.startDate}" pattern="dd/MM/yyyy"/></td>
                                                     </tr>
                                                 </c:forEach>
-                                            </tbody>
-                                        </table>
-                                        <div class="d-flex flex-row-reverse">
-                                            <nav aria-label="Page navigation">
-                                                <ul class="pagination justify-content-start">
-                                                    <c:if test="${requestScope.currentServicePage > 1}">
-                                                        <li class="page-item">
-                                                            <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
-                                                        </li>
-                                                    </c:if>
+                                            </c:if>
+                                            <c:if test="${empty requestScope.customerList}">
+                                                <tr>
+                                                    <td colspan="6">Không có dữ liệu</td>
+                                                </tr>
+                                            </c:if>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex flex-row-reverse">
+                                        <nav aria-label="Page navigation">
+                                            <ul class="pagination justify-content-start">
+                                                <c:if test="${0 > 1}">
+                                                    <li class="page-item">
+                                                        <button class="page-link" value="${requestScope.currentResidentPage - 1}" onclick="handleResidentTable(this.value)">Previous</button>
+                                                    </li>
+                                                </c:if>
 
-                                                    <c:forEach var="i" begin="1" end="${requestScope.totalServicePages}">
-                                                        <li class="page-item ${i == requestScope.currentServicePage ? 'active' : ''}">
-                                                            <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
-                                                        </li>
-                                                    </c:forEach>
+                                                <c:forEach var="i" begin="1" end="${requestScope.totalResidentPage}">
+                                                    <li class="page-item ${i == 1 ? 'active' : ''}">
+                                                        <button class="page-link" value="${i}" onclick="handleResidentTable(this.value)">${i}</button>
+                                                    </li>
+                                                </c:forEach>
 
-                                                    <c:if test="${requestScope.currentServicePage < requestScope.totalServicePages}">
-                                                        <li class="page-item">
-                                                            <button class="page-link" value="${requestScope.currentServicePage + 1}" onclick="handleSearch(this.value)">Previous</button>
-                                                        </li>
-                                                    </c:if>
-                                                </ul>
-                                            </nav>
-                                        </div>
+                                                <c:if test="${1 < requestScope.totalResidentPage}">
+                                                    <li class="page-item">
+                                                        <button class="page-link" value="${2}" onclick="handleResidentTable(this.value)">Next</button>
+                                                    </li>
+                                                </c:if>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 </div>   
                             </div>
@@ -524,11 +418,17 @@
                             </div>
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 row">
-                                    <h5 class="m-0 font-weight-bold text-primary col-md-8">Danh sách dịch vụ đã đăng ký trong căn hộ</h5>
+                                    <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách dịch vụ đã đăng ký trong căn hộ</h5>
+                                    <div class="col-md-3">
+                                        <select id="servicePerPage" name="servicePerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleServiceTable($('#serviceTable .pagination .page-item.active button.page-link').val())">
+                                            <option value="5">Số lượng hiển thị: 5</option>
+                                            <option value="10">Số lượng hiển thị: 10</option>
+                                        </select>
+                                    </div>
                                     <div class="col-md-4">
                                         <div class="input-group rounded ">
                                             <!--reset the current page to 1 cause of search can reduce the number of page-->
-                                            <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#searchTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                            <input id="searchService" name="searchService" type="text" value="" oninput="handleServiceTable($('#serviceTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                                             <div class="input-group-append">
                                                 <span class="input-group-text btn-primary border-0" id="search-addon">
                                                     <i class="fas fa-search"></i>
@@ -537,7 +437,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="searchTable" class="card-body">
+                                <div id="serviceTable" class="card-body">
                                     <div>
                                         <table class="table table-striped table-hover table-bordered">
                                             <thead style="background-color: #4e73df; color: white">
@@ -551,24 +451,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:set var="countServiceTable" value="0"/>
-                                                <c:set var="total" value="0"/>
-                                                <c:forEach items="${requestScope.serviceContractList}" var="serviceContract">
-                                                    <c:set var="countServiceTable" value="${countServiceTable + 1}"/>
-                                                    <c:set var="total" value="${total + serviceContract.getAmount()}"/>
+                                                <c:if test="${not empty requestScope.serviceContractList}">
+                                                    <c:set var="countServiceTable" value="0"/>
+                                                    <c:forEach items="${requestScope.serviceContractList}" var="serviceContract">
+                                                        <c:set var="countServiceTable" value="${countServiceTable + 1}"/>
+                                                        <tr>
+                                                            <td>${countServiceTable}</td>
+                                                            <td>${serviceContract.getService().getName()}</td>
+                                                            <td>${serviceContract.getService().getType()}</td>
+                                                            <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
+                                                            <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
+                                                            <td><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
+                                                            </tr>
+                                                    </c:forEach>
+                                                </c:if>
+                                                <c:if test="${empty requestScope.serviceContractList}">
                                                     <tr>
-                                                        <td>${countServiceTable}</td>
-                                                        <td>${serviceContract.getService().getName()}</td>
-                                                        <td>${serviceContract.getService().getType()}</td>
-                                                        <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
-                                                        <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
-                                                        <td><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
-                                                        </tr>
-                                                </c:forEach>
+                                                        <td colspan="6">Không có dữ liệu dịch vụ</td>
+                                                    </tr>
+                                                </c:if>
                                             </tbody>
-                                            <tfoot style="background-color: #4e73df; color: white">
+                                            <tfoot style="background-color: #4e73df; color: white" class="h5">
                                                 <tr>
-                                                    <th colspan="6">Tổng tiền dịch vụ: <fmt:formatNumber value="${total}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</th>
+                                                    <th colspan="6">Tổng tiền dịch vụ: <fmt:formatNumber value="${requestScope.totalAmount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -577,19 +482,19 @@
                                                     <ul class="pagination justify-content-start">
                                                     <c:if test="${requestScope.currentServicePage > 1}">
                                                         <li class="page-item">
-                                                            <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                            <button class="page-link" value="${requestScope.totalServicePage - 1}" onclick="handleServiceTable(this.value)">Previous</button>
                                                         </li>
                                                     </c:if>
 
-                                                    <c:forEach var="i" begin="1" end="${requestScope.totalServicePages}">
-                                                        <li class="page-item ${i == requestScope.currentServicePage ? 'active' : ''}">
-                                                            <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
+                                                    <c:forEach var="i" begin="1" end="${requestScope.totalServicePage}">
+                                                        <li class="page-item ${i == 1 ? 'active' : ''}">
+                                                            <button class="page-link" value="${i}" onclick="handleServiceTable(this.value)">${i}</button>
                                                         </li>
                                                     </c:forEach>
 
-                                                    <c:if test="${requestScope.currentServicePage < requestScope.totalServicePages}">
+                                                    <c:if test="${1 < requestScope.totalServicePage}">
                                                         <li class="page-item">
-                                                            <button class="page-link" value="${requestScope.currentServicePage + 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                            <button class="page-link" value="${2}" onclick="handleServiceTable(this.value)">Next</button>
                                                         </li>
                                                     </c:if>
                                                 </ul>
@@ -618,7 +523,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="residentEmail">Email</label>
-                                                <input type="email" class="form-control" id="residentEmail" name="email" required>
+                                                <input type="email" class="form-control" id="residentEmail" name="email" >
                                             </div>
                                             <div class="form-group">
                                                 <label for="residentPhoneNumber">Số điện thoại</label>
@@ -658,7 +563,7 @@
         <script src="./vendor/chart.js/Chart.min.js"></script>
 
         <!-- Custom scripts for all pages-->
-        <script src="./js/sb-admin-2.min.js"></script>
+        <script src="./js/sb-admin-2.min.js"></script> 
 
         <!-- Core plugin JavaScript-->
         <script src="./vendor/jquery-easing/jquery.easing.min.js"></script> 
@@ -669,6 +574,7 @@
 
         <!-- Page level custom scripts -->
         <script src="./js/demo/datatables-demo.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
                                                                 function changeSelect() {
                                                                     let buildingId = $("#buildingID").val();
@@ -693,9 +599,64 @@
                                                                         }
                                                                     });
                                                                 }
-                                                                
-                                                                function submit(){
-                                                                    document.getElementById("submitApt").submit();
+
+                                                                function handleResidentTable() {
+                                                                    let apartmentId = $("#apartmentID").val();
+                                                                    let userSearchTerm = $("#searchResident").val();
+                                                                    let residentPerPage = $("#residentPerPage").val();
+                                                                    console.log("apartmentID ", apartmentId);
+                                                                    console.log("searchResident ", userSearchTerm);
+                                                                    console.log("residentPerPage ", residentPerPage);
+                                                                    $.ajax({
+                                                                        url: "/AtpMan/userapartmentinforesidenttableajax",
+                                                                        type: "post", //send it through post method
+                                                                        data: {
+                                                                            apartmentID: apartmentId,
+                                                                            userSearchTerm: userSearchTerm,
+                                                                            residentPerPage: residentPerPage
+                                                                        },
+                                                                        success: function (data) {
+                                                                            $("#residentTable").html(data);
+                                                                            console.log("success");
+//                                                            generate.innerHTML = data;
+                                                                        },
+                                                                        error: function (xhr) {
+                                                                            console.log("error");
+                                                                            //Do Something to handle error
+                                                                        }
+                                                                    });
+                                                                }
+
+                                                                function handleServiceTable(param) {
+                                                                    let apartmentId = $("#apartmentID").val();
+                                                                    let serviceSearchTerm = $("#searchService").val();
+                                                                    let servicePerPage = $("#servicePerPage").val();
+                                                                    let currentServicePage = param;
+                                                                    console.log("apartmentID ", apartmentId);
+                                                                    console.log("searchService ", serviceSearchTerm);
+                                                                    console.log("servicePerPage ", servicePerPage);
+                                                                    $.ajax({
+                                                                        url: "/AtpMan/userapartmentinfoservicetableajax",
+                                                                        type: "post", //send it through post method
+                                                                        data: {
+                                                                            apartmentID: apartmentId,
+                                                                            serviceSearchTerm: serviceSearchTerm,
+                                                                            currentServicePage: currentServicePage,
+                                                                            servicePerPage: servicePerPage
+                                                                        },
+                                                                        success: function (data) {
+                                                                            $("#serviceTable").html(data);
+                                                                            console.log("success");
+//                                                            generate.innerHTML = data;
+                                                                        },
+                                                                        error: function (xhr) {
+                                                                            console.log("error");
+                                                                            //Do Something to handle error
+                                                                        }
+                                                                    });
+                                                                }
+                                                                function submit() {
+                                                                    document.getElementById("submitForm").submit();
                                                                 }
         </script>
     </body>

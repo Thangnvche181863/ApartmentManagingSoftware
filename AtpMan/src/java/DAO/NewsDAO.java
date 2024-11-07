@@ -69,13 +69,13 @@ public class NewsDAO extends DBContext {
     }
 //news by page
 
+    
     public List<News> getNewsByPage(int page, int recordsPerPage) {
         List<News> list = new ArrayList<>();
         String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "
                 + "FROM News n "
                 + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
                 + "JOIN Staff s ON n.staffID = s.staffID "
-                + "WHERE n.newsCategoryID = 1 "
                 + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {

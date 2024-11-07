@@ -20,7 +20,6 @@
 
         <div class="container">
             <div class="header clearfix">
-
                 <h3 class="text-muted">VNPAY DEMO</h3>
             </div>
             <h3>Tạo mới đơn hàng</h3>
@@ -74,6 +73,7 @@
                 var postData = $("#frmCreateOrder").serialize();
                 var submitUrl = $("#frmCreateOrder").attr("action");
                 console.log(submitUrl);
+                console.log(postData);
                 $.ajax({
                     type: "POST",
                     url: submitUrl,

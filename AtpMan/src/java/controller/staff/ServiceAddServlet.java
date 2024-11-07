@@ -163,7 +163,9 @@ public class ServiceAddServlet extends HttpServlet {
         request.setAttribute("totalPages", sdao.count(recordsPerPage));
         request.setAttribute("listservice", sdao.servicePaging(page, recordsPerPage));
         request.setAttribute("serviceType", sdao.getAllType());
-        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+//        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+        response.sendRedirect("servicelist?status=success");
+        
 
     }
 
