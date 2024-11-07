@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+    <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     <head>
 
         <meta charset="utf-8">
@@ -11,8 +10,8 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Tòa nhà</title>
-        
+        <title>RESIDENT</title>
+
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -43,7 +42,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">CÁC TÒA NHÀ</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
@@ -52,32 +51,35 @@
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <c:set value="${requestScope.availableApartment}" var="countList"></c:set>
-                        <c:set value="0" var="count"></c:set>
-                        <c:forEach items="${listBuilding}" var="o">
+                        <c:set value="${requestScope.listResidentName}" var="nameList"></c:set>
+                        <c:set value="0" var="countName"></c:set>
+                        <c:set value="${requestScope.listResidentAge}" var="ageList"></c:set>
+                        <c:set value="0" var="countAge"></c:set>
+
+                        <c:forEach items="${listResident}" var="o">
+
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    ${o.name}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số tầng: ${o.numFloor}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số căn hộ: ${o.numApartment}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-danger">Còn trống: ${countList.get(pageScope.count)}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Địa chỉ: ${o.address}</div>
-
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
+                                                    ID: ${o.livingID}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-building fa-2x text-gray-400"></i>
+                                                <i class="fas fa-user fa-2x text-gray-400"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        <c:set value="${count + 1}" var="count"></c:set>
+                            <c:set value="${countName + 1}" var="countName"></c:set>
+                            <c:set value="${countAge + 1}" var="countAge"></c:set>
                         </c:forEach>
                     </div>
 
@@ -89,7 +91,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true">�</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

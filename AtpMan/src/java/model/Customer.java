@@ -28,6 +28,17 @@ public class Customer {
 
     }
 
+    public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner) {
+        this.customerID = customerID;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.registrationDate = registrationDate;
+        this.isOwner = isOwner;
+    }
+
     public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner, int status) {
         this.customerID = customerID;
         this.username = username;

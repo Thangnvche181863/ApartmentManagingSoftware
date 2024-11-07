@@ -5,6 +5,7 @@
 package DAO;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -960,17 +961,83 @@ public class InvoiceDAO {
         String sql = "select top 1 invoiceID from Invoice\n"
                 + "where apartmentID = ?\n"
                 + "order by invoiceID desc";
+                try {
+                    connection = DBContext.getConnection();
+                    PreparedStatement statement = connection.prepareStatement(sql);
+                    statement.setInt(1, apartmentId);
+                    ResultSet rs = statement.executeQuery();
+                    if (rs.next()) {
+                        id = rs.getInt(1);
+                    }
+                } catch (SQLException | ClassNotFoundException e) {
+                }
+                return id;
+            }
+    public void updateInvoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
+        try {
+            String sql = "UPDATE [dbo].[Invoice]\n"
+                    + "   SET [apartmentID] = ?\n"
+                    + "      ,[amount] = ?\n"
+                    + "      ,[issueDate] = ?\n"
+                    + "      ,[dueDate] = ?\n"
+                    + "      ,[status] = ?\n"
+                    + "      ,[transactionDate] = ?\n"
+                    + " WHERE invoiceId = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, apartmentId);
+            ps.setDouble(2, amount);
+            ps.setDate(3, issueDate);
+            ps.setDate(4, dueDate);
+            ps.setInt(5, status);
+            ps.setDate(6, transactionDate);
+            ps.setInt(7, invoiceId);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public List<Integer> getAllApartmentInvoiceYear(int apartmentId) {
+        List<Integer> list = new ArrayList<>();
+        String sql = "Select distinct YEAR(issueDate) as year from Invoice where apartmentID = ?";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentId);
             ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                id = rs.getInt(1);
+            while (rs.next()) {
+                int year = rs.getInt(1);
+                list.add(year);
             }
         } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
         }
-        return id;
+        return list;
+    }
+
+    public List<Integer> getNumOfUnpaidInvoice(int buildingID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = " SELECT a.apartmentID, COUNT(i.invoiceID) AS unpaid_invoice_count\n"
+                + "FROM Apartment a\n"
+                + "LEFT JOIN Invoice i ON a.apartmentID = i.apartmentID AND i.status = 0 where buildingID = ?\n"
+                + "GROUP BY a.apartmentID;";
+        Connection conn = null;
+        try {
+            conn = utils.DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, buildingID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getInt(2));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
     }
 
     public static void main(String[] args) {
