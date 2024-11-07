@@ -129,23 +129,12 @@
     </head>
     <body>
         <%@include file="sidebar.jsp" %>
-        
+
         <div class="container">
             <%@include file="topbar.jsp" %>
             <h1>Danh sách các yêu cầu</h1>
-<!--            <form id="searchForm" action="complaintlist" method="get">
-                <input type="hidden" name="page" value="1">
-                <input type="text" name="search" value="${search}" placeholder="Search...">
-                <select name="searchField">
-                    <option value="customerName" ${searchField == 'customerName' ? 'selected' : ''}>Customer Name</option>
-                    <option value="type" ${searchField == 'type' ? 'selected' : ''}>Type</option>
-                    <option value="status" ${searchField == 'status' ? 'selected' : ''}>Status</option>
-                    <option value="title" ${searchField == 'title' ? 'selected' : ''}>Title</option>
-                </select>
-                <button type="submit">Search</button>
-            </form>-->
+           
 
-            
             <form id="sortForm" action="complaintlist" method="get">
                 <input type="hidden" name="page" value="1">
                 <input type="hidden" name="search" value="${search}">
@@ -251,29 +240,30 @@
             <button>
                 <a href="managerPage">Back to home</a>
             </button>
-            <script>
-                // Gửi form tìm kiếm
-                function submitSearchForm() {
-                    document.getElementById('sortSelect').name = '';  // Để không gửi giá trị sort khi tìm kiếm
-                    document.getElementById('searchForm').submit();
-                }
+        </div>
+        <script>
+            // Gửi form tìm kiếm
+            function submitSearchForm() {
+                document.getElementById('sortSelect').name = '';  // Để không gửi giá trị sort khi tìm kiếm
+                document.getElementById('searchForm').submit();
+            }
 
-                // Gửi form sắp xếp
-                function submitSortForm() {
-                    document.getElementById('searchInput').name = '';  // Để không gửi giá trị search khi sắp xếp
-                    document.getElementById('sortForm').submit();
-                }
+            // Gửi form sắp xếp
+            function submitSortForm() {
+                document.getElementById('searchInput').name = '';  // Để không gửi giá trị search khi sắp xếp
+                document.getElementById('sortForm').submit();
+            }
 
-                // Hiển thị popup từ chối
-                function showRejectPopup(requestID) {
-                    document.getElementById('rejectRequestID').value = requestID;
-                    document.getElementById('rejectPopup').style.display = 'block';
-                }
+            // Hiển thị popup từ chối
+            function showRejectPopup(requestID) {
+                document.getElementById('rejectRequestID').value = requestID;
+                document.getElementById('rejectPopup').style.display = 'block';
+            }
 
-                // Đóng popup từ chối
-                function closeRejectPopup() {
-                    document.getElementById('rejectPopup').style.display = 'none';
-                }
+            // Đóng popup từ chối
+            function closeRejectPopup() {
+                document.getElementById('rejectPopup').style.display = 'none';
+            }
 
 //                function showApprovePopup(requestID) {
 //                    document.getElementById('approveRequestID').value = requestID;
@@ -284,23 +274,23 @@
 //                    document.getElementById('approvePopup').style.display = 'none';
 //                }
 
-            </script>
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        </script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
-            <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
-        </div>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
+
 
     </body>
 
