@@ -7,81 +7,112 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Form Feedback Dịch Vụ</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Customer Feedback Form">
+        <meta name="author" content="WuanTun">
+        <title>Request Service</title>
+
+        <!-- Custom fonts and styles -->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Custom styles for this page -->
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
-            body {
-                font-family: Arial, sans-serif;
+            .container {
+                max-width: 600px;
+                margin-top: 40px;
+                padding: 20px;
                 background-color: #f8f9fc;
-                margin: 0;
-                padding: 20px;
-            }
-            h2 {
-                text-align: center;
-                color: #4e73df;
-            }
-            form {
-                max-width: 500px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #ffffff;
                 border-radius: 8px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
+
+            h2 {
+                color: #4e73df;
+                text-align: center;
+                font-weight: 700;
+                margin-bottom: 20px;
+            }
+
             label {
-                display: block;
-                margin-bottom: 5px;
+                font-weight: bold;
                 color: #4e73df;
             }
-            input[type="text"],
-            textarea {
-                width: 95%; /* Giữ chiều rộng là 90% */
-                padding: 10px;
+
+            .form-group {
                 margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                font-size: 14px;
             }
-            textarea {
-                height: 100px; /* Chiều cao cố định cho textarea */
-                resize: vertical; /* Cho phép người dùng chỉ kéo dài chiều cao */
-                max-height: 300px; /* Chiều cao tối đa cho textarea */
+
+            .form-control {
+                border-radius: 5px;
+                border: 1px solid #ddd;
             }
-            button {
+
+            button[type="submit"] {
+                width: 100%;
+                padding: 10px;
                 background-color: #4e73df;
-                color: white;
                 border: none;
-                padding: 10px 15px;
-                border-radius: 4px;
-                cursor: pointer;
+                color: #fff;
                 font-size: 16px;
+                font-weight: bold;
+                border-radius: 5px;
                 transition: background-color 0.3s ease;
             }
-            button:hover {
-                background-color: #3a5cb1;
+
+            button[type="submit"]:hover {
+                background-color: #2e59d9;
+            }
+
+            .form-icon {
+                color: #4e73df;
+                margin-right: 5px;
             }
         </style>
-
     </head>
     <body>
-        <h2>Đánh giá sau sử dụng dịch vụ</h2>
-        <form action="requestservlet" method="post">
-            <label for="title">Title:</label>
-            <input type="text" name="title" required>
+        <div class="container">
+            <h2>Yêu cầu thêm dịch vụ</h2>
+            <form action="requestservlet" method="post">
+                <div class="form-group">
+                    <label for="title">
+                        <i class="bi bi-file-text form-icon"></i>Tiêu đề:
+                    </label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">
+                        <i class="bi bi-chat-dots form-icon"></i>Mô tả:
+                    </label>
+                    <textarea name="description" rows="5" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="type">
+                        <i class="bi bi-tools form-icon"></i>Loại dịch vụ:
+                    </label>
+                    <select name="type" class="form-control" required>
+                        <option value="" selected>Chọn loại dịch vụ</option>
+                        <option value="Sữa chữa">Sửa chữa</option>
+                        <option value="Vệ sinh">Vệ sinh</option>
+                        <option value="Khác">Khác</option>
+                    </select>
+                </div>
+                <button type="submit">Gửi yêu cầu</button>
+            </form>
+        </div>
 
-            <label for="description">Description:</label>
-            <textarea name="description" rows="5" required></textarea>
-            <select name="type">
-                <option value="" selected>Choose type</option>
-                <option value="Sữa chữa">Sửa chữa</option>
-                <option value="Vệ sinh">Vệ sinh</option>
-                <option value="Khác">Khác</option>
-            </select>
-                
-            <button type="submit">Submit</button>
-        </form>
+        <!-- JavaScript Libraries -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="js/sb-admin-2.min.js"></script>
     </body>
 </html>
+

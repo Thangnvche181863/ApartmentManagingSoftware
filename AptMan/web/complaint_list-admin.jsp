@@ -145,16 +145,7 @@
                 <button type="submit">Search</button>
             </form>-->
 
-            <!--            <form id="sortForm" action="complaintlist" method="get">
-                            <select name="sort" id="sortSelect">
-                                <option value="">Sắp xếp</option>
-                                <option value="date">Ngày</option>
-                                <option value="customerName">Tên khách hàng</option>
-                                <option value="type">Loại</option>
-                                <option value="status">Trạng thái</option>
-                            </select>
-                            <button type="submit">Sort</button>
-                        </form>-->
+            
             <form id="sortForm" action="complaintlist" method="get">
                 <input type="hidden" name="page" value="1">
                 <input type="hidden" name="search" value="${search}">
