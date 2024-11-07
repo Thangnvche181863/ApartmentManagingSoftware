@@ -98,7 +98,7 @@
         </script>
         <script>
             document.getElementById("googleLoginBtn").onclick = function () {
-                window.location.href = "https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/AtpMan/logingoogle&response_type=code&client_id=568289174347-2i2rujrr6nrul944und4erc72c158p07.apps.googleusercontent.com&approval_prompt=force";
+                window.location.href = "https://accounts.google.com/o/oauth2/auth?scope=profile email&redirect_uri=http://localhost:9999/AptMan/logingoogle&response_type=code&client_id=568289174347-2i2rujrr6nrul944und4erc72c158p07.apps.googleusercontent.com&approval_prompt=force";
             };
         </script>
     </body>

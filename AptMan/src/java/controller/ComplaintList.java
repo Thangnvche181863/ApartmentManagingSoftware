@@ -4,13 +4,11 @@
  */
 package controller;
 
-import DAO.AssignmentDAO;
 import DAO.HandleRequestDAO;
 import DAO.RequestComplaintDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,9 +36,18 @@ public class ComplaintList extends HttpServlet {
 
             List<Staff> staffList = staffDAO.getAllStaff();
             request.setAttribute("staffList", staffList);
+
             String search = request.getParameter("search");
             String searchField = request.getParameter("searchField");
             String sort = request.getParameter("sort");
+
+            // Get page parameters
+            int page = 1;
+            int pageSize = 10;
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.isEmpty()) {
+                page = Integer.parseInt(pageStr);
+            }
 
             if (search == null) {
                 search = "";
@@ -50,59 +57,32 @@ public class ComplaintList extends HttpServlet {
                 sort = "date";
             }
 
-            List<RequestComplaint> complaints = requestComplaintDAO.getComplaints(search, searchField, sort);
+            // Get total complaints for pagination
+            int totalComplaints = requestComplaintDAO.getTotalComplaints(search, searchField);
+            int totalPages = (int) Math.ceil((double) totalComplaints / pageSize);
+
+            // Get complaints for current page
+            List<RequestComplaint> complaints = requestComplaintDAO.getComplaints(search, searchField, sort, page, pageSize);
 
             request.setAttribute("complaints", complaints);
             request.setAttribute("search", search);
             request.setAttribute("searchField", searchField);
             request.setAttribute("sort", sort);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+
             request.getRequestDispatcher("complaint_list-admin.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(ComplaintList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        try {
-//            
-//            RequestComplaintDAO requestComplaintDAO = WebManager.getInstance().requestComplaintDAO;
-//            TaskDAO taskDAO = WebManager.getInstance().taskDAO;
-//
-//            int requestID = Integer.parseInt(request.getParameter("requestID"));
-//            RequestComplaint complaint = requestComplaintDAO.getComplaintByID(requestID);
-//
-//            String description = complaint.getDescription();
-//            String type = complaint.getType();
-//
-//            // Tạo task với type và description từ complaint
-//            int taskID = taskDAO.createTask(
-//                    complaint.getRequestID(),
-//                    complaint.getDescription(),
-//                    complaint.getType()
-//            );
-//
-//            // Update trạng thái request thành đã xử lý
-//            requestComplaintDAO.updateStatus(requestID, 1);
-//
-//            // Lưu taskID vào session để dùng cho trang assignstaff.jsp
-//            HttpSession session = request.getSession();
-//            session.setAttribute("taskID", taskID);
-//
-//            // Chuyển hướng đến trang assignstaff.jsp
-//            response.sendRedirect("createtask.jsp");
-//        } catch (SQLException | ClassNotFoundException ex) {
-//            Logger.getLogger(ComplaintList.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String action = request.getParameter("action");
             int requestID = Integer.parseInt(request.getParameter("requestID"));
-//        int staffID = Integer.parseInt(request.getParameter("staffID"));  // Lấy staffID từ request
 
             RequestComplaintDAO requestComplaintDAO = WebManager.getInstance().requestComplaintDAO;
             TaskDAO taskDAO = WebManager.getInstance().taskDAO;
@@ -122,7 +102,9 @@ public class ComplaintList extends HttpServlet {
 
                 HttpSession session = request.getSession();
                 session.setAttribute("taskID", taskID);
-                List<RequestComplaint> complaints = requestComplaintDAO.getComplaints("", null, "date");
+                int page = 1;
+                int pageSize = 10;
+                List<RequestComplaint> complaints = requestComplaintDAO.getComplaints("", null, "date", page, pageSize);
                 request.setAttribute("complaints", complaints);
 //            response.sendRedirect("complaint_list-admin.jsp");
                 request.getRequestDispatcher("complaint_list-admin.jsp").forward(request, response);

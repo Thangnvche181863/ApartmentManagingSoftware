@@ -122,7 +122,77 @@ public class RequestComplaintDAO {
 //        }
 //        return complaintList;
 //    }
-    public List<RequestComplaint> getComplaints(String search, String searchField, String sort) {
+//    public List<RequestComplaint> getComplaints(String search, String searchField, String sort) {
+//        Connection conn = null;
+//        List<RequestComplaint> complaintList = new ArrayList<>();
+//
+//        try {
+//            conn = DBContext.getConnection();
+//            String sql = "SELECT rc.requestID, rc.customerID, rc.title, rc.description, rc.status, rc.dateRequested, rc.type, c.name AS customerName "
+//                    + "FROM RequestComplaint rc "
+//                    + "JOIN Customer c ON rc.customerID = c.customerID ";
+//
+//            // Thêm điều kiện tìm kiếm nếu có
+//            if (search != null && !search.isEmpty()) {
+//                sql += "WHERE ";
+//                if ("customerName".equals(searchField)) {
+//                    sql += "c.name LIKE ?";
+//                } else if ("type".equals(searchField)) {
+//                    sql += "rc.type LIKE ?";
+//                } else if ("status".equals(searchField)) {
+//                    sql += "rc.status LIKE ?";
+//                } else if ("title".equals(searchField)) {
+//                    sql += "rc.title LIKE ?";
+//                }
+//                sql += " ";  // Thêm khoảng trắng để nối với sắp xếp
+//            }
+//
+//            // Thêm điều kiện sắp xếp
+//            if (sort != null && !sort.isEmpty()) {
+//                sql += " ORDER BY ";
+//                if ("date".equals(sort)) {
+//                    sql += "rc.dateRequested DESC";
+//                } else if ("customerName".equals(sort)) {
+//                    sql += "c.name ASC";
+//                } else if ("type".equals(sort)) {
+//                    sql += "rc.type ASC";
+//                } else if ("status".equals(sort)) {
+//                    sql += "rc.status ASC";
+//                }
+//            } else {
+//                sql += " ORDER BY rc.requestID DESC";  // Mặc định sắp xếp theo ID
+//            }
+//
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            int parameterIndex = 1;
+//
+//            // Thiết lập tham số tìm kiếm
+//            if (search != null && !search.isEmpty()) {
+//                ps.setString(parameterIndex++, "%" + search + "%");
+//            }
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                int requestID = rs.getInt("requestID");
+//                int customerID = rs.getInt("customerID");
+//                String title = rs.getString("title");
+//                String description = rs.getString("description");
+//                int status = rs.getInt("status");
+//                Date dateRequested = rs.getDate("dateRequested");
+//                String type = rs.getString("type");
+//                String customerName = rs.getString("customerName");
+//                RequestComplaint complaint = new RequestComplaint(requestID, customerID, title, description, status, dateRequested, type, customerName);
+//                complaintList.add(complaint);
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            LOGGER.log(Level.SEVERE, null, e);
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//        return complaintList;
+//    }
+    public List<RequestComplaint> getComplaints(String search, String searchField, String sort, int page, int pageSize) {
         Connection conn = null;
         List<RequestComplaint> complaintList = new ArrayList<>();
 
@@ -132,7 +202,6 @@ public class RequestComplaintDAO {
                     + "FROM RequestComplaint rc "
                     + "JOIN Customer c ON rc.customerID = c.customerID ";
 
-            // Thêm điều kiện tìm kiếm nếu có
             if (search != null && !search.isEmpty()) {
                 sql += "WHERE ";
                 if ("customerName".equals(searchField)) {
@@ -144,10 +213,9 @@ public class RequestComplaintDAO {
                 } else if ("title".equals(searchField)) {
                     sql += "rc.title LIKE ?";
                 }
-                sql += " ";  // Thêm khoảng trắng để nối với sắp xếp
+                sql += " ";
             }
 
-            // Thêm điều kiện sắp xếp
             if (sort != null && !sort.isEmpty()) {
                 sql += " ORDER BY ";
                 if ("date".equals(sort)) {
@@ -160,16 +228,22 @@ public class RequestComplaintDAO {
                     sql += "rc.status ASC";
                 }
             } else {
-                sql += " ORDER BY rc.requestID DESC";  // Mặc định sắp xếp theo ID
+                sql += " ORDER BY rc.requestID DESC";
             }
+
+            // Add pagination
+            sql += " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             int parameterIndex = 1;
 
-            // Thiết lập tham số tìm kiếm
             if (search != null && !search.isEmpty()) {
                 ps.setString(parameterIndex++, "%" + search + "%");
             }
+
+            // Set pagination parameters
+            ps.setInt(parameterIndex++, (page - 1) * pageSize);
+            ps.setInt(parameterIndex, pageSize);
 
             ResultSet rs = ps.executeQuery();
 
@@ -191,6 +265,43 @@ public class RequestComplaintDAO {
             DBContext.closeConnection(conn);
         }
         return complaintList;
+    }
+
+    public int getTotalComplaints(String search, String searchField) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        int total = 0;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT COUNT(*) as total FROM RequestComplaint rc "
+                    + "JOIN Customer c ON rc.customerID = c.customerID ";
+
+            if (search != null && !search.isEmpty()) {
+                sql += "WHERE ";
+                if ("customerName".equals(searchField)) {
+                    sql += "c.name LIKE ?";
+                } else if ("type".equals(searchField)) {
+                    sql += "rc.type LIKE ?";
+                } else if ("status".equals(searchField)) {
+                    sql += "rc.status LIKE ?";
+                } else if ("title".equals(searchField)) {
+                    sql += "rc.title LIKE ?";
+                }
+            }
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            if (search != null && !search.isEmpty()) {
+                ps.setString(1, "%" + search + "%");
+            }
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return total;
     }
 
     public String getCustomerNameByID(int customerID) {
@@ -276,17 +387,17 @@ public class RequestComplaintDAO {
             conn = DBContext.getConnection();
             if (conn != null) {
                 String sql = "SELECT * FROM RequestComplaint WHERE customerID = ?";
-                try (PreparedStatement ps = conn.prepareStatement(sql)) {  
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setInt(1, customerID);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
-                        RequestComplaint complaint = new RequestComplaint();                       
+                        RequestComplaint complaint = new RequestComplaint();
                         complaint.setRequestID(rs.getInt("requestID"));
                         complaint.setCustomerID(rs.getInt("customerID"));
                         complaint.setTitle(rs.getString("title"));
                         complaint.setDescription(rs.getString("description"));
                         complaint.setDateRequested(rs.getDate("dateRequested"));
-                        complaint.setStatus(rs.getInt("status"));                       
+                        complaint.setStatus(rs.getInt("status"));
                         complaints.add(complaint);
                     }
                 }

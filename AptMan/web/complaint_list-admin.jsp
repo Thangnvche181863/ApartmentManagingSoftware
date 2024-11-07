@@ -129,23 +129,41 @@
     </head>
     <body>
         <%@include file="sidebar.jsp" %>
+        
         <div class="container">
+            <%@include file="topbar.jsp" %>
             <h1>Danh sách các yêu cầu</h1>
-            <!-- Form tìm kiếm -->
-            <!-- Form tìm kiếm -->
-            <!--        <form id="searchForm" action="complaintlist" method="get">
-                        <input type="text" name="search" placeholder="Tìm kiếm " id="searchInput">
-                        <button type="submit">Search</button>
-                    </form>-->
+<!--            <form id="searchForm" action="complaintlist" method="get">
+                <input type="hidden" name="page" value="1">
+                <input type="text" name="search" value="${search}" placeholder="Search...">
+                <select name="searchField">
+                    <option value="customerName" ${searchField == 'customerName' ? 'selected' : ''}>Customer Name</option>
+                    <option value="type" ${searchField == 'type' ? 'selected' : ''}>Type</option>
+                    <option value="status" ${searchField == 'status' ? 'selected' : ''}>Status</option>
+                    <option value="title" ${searchField == 'title' ? 'selected' : ''}>Title</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>-->
 
-            <!-- Form sắp xếp -->
+            <!--            <form id="sortForm" action="complaintlist" method="get">
+                            <select name="sort" id="sortSelect">
+                                <option value="">Sắp xếp</option>
+                                <option value="date">Ngày</option>
+                                <option value="customerName">Tên khách hàng</option>
+                                <option value="type">Loại</option>
+                                <option value="status">Trạng thái</option>
+                            </select>
+                            <button type="submit">Sort</button>
+                        </form>-->
             <form id="sortForm" action="complaintlist" method="get">
+                <input type="hidden" name="page" value="1">
+                <input type="hidden" name="search" value="${search}">
+                <input type="hidden" name="searchField" value="${searchField}">
                 <select name="sort" id="sortSelect">
-                    <option value="">Sắp xếp</option>
-                    <option value="date">Ngày</option>
-                    <option value="customerName">Tên khách hàng</option>
-                    <option value="type">Loại</option>
-                    <option value="status">Trạng thái</option>
+                    <option value="date" ${sort == 'date' ? 'selected' : ''}>Ngày</option>
+                    <option value="customerName" ${sort == 'customerName' ? 'selected' : ''}>Tên khách hàng</option>
+                    <option value="type" ${sort == 'type' ? 'selected' : ''}>Loại</option>
+                    <option value="status" ${sort == 'status' ? 'selected' : ''}>Trạng thái</option>
                 </select>
                 <button type="submit">Sort</button>
             </form>
@@ -183,7 +201,7 @@
                                     <input type="hidden" name="action" value="accept" />
                                     <button type="submit" name="status" value="1">Chấp thuận</button>
                                 </form>
-                                <button onclick="showRejectPopup(${complaint.requestID})">Từ chối</button>
+
 
                             </c:if>                           
                             <c:if test="${complaint.status == 1}">
@@ -193,6 +211,38 @@
                     </tr>
                 </c:forEach>
             </table>
+            <div class="d-flex justify-content-center mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <!-- Previous page -->
+                        <c:if test="${currentPage > 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="complaintlist?page=${currentPage-1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+
+                        <!-- Page numbers -->
+                        <c:forEach begin="1" end="${totalPages}" var="i">
+                            <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                <a class="page-link" href="complaintlist?page=${i}&search=${search}&searchField=${searchField}&sort=${sort}">
+                                    ${i}
+                                </a>
+                            </li>
+                        </c:forEach>
+
+                        <!-- Next page -->
+                        <c:if test="${currentPage < totalPages}">
+                            <li class="page-item">
+                                <a class="page-link" href="complaintlist?page=${currentPage+1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </nav>
+            </div>
 
             <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 50px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
                 <form id="rejectForm" action="rejectRequest" method="post">
