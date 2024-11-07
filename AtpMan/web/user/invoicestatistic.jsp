@@ -333,11 +333,10 @@
                                         <fmt:setLocale value = "vi_VN"/>
                                         <label for="month" class="form-label">Chọn Tháng</label>
                                         <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
-                                            <c:forEach items="${requestScope.dateList}" var="dList">
-                                                <fmt:formatDate value="${dList}" pattern="M" var="month"/>
+                                            <c:forEach items="${requestScope.listOfMonth}" var="month">
                                                 <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
-                                                    <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
-                                                    </option>
+                                                    Tháng ${pageScope.month}
+                                                </option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -355,7 +354,7 @@
                             </div>
                             <!-- Card Body -->
                             <div class="card-body row">
-                                <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="col-xl-6 col-md-6 mb-4">
                                     <div class="card border-left-primary shadow h-100 py-2">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -364,7 +363,7 @@
                                                         Tổng hóa đơn trong tháng</div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                         <fmt:setLocale value = "en_US"/>
-                                                        <fmt:formatNumber value="${requestScope.invoiceCurrent.amount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
+                                                        <fmt:formatNumber value="${requestScope.totalAmount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
                                                         </div>
                                                     </div>
                                                     <div class="col-auto">
@@ -376,489 +375,446 @@
                                     </div>
 
                                     <!-- Earnings (Monthly) Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="col-xl-6 col-md-6 mb-4">
                                         <div class="card border-left-success shadow h-100 py-2">
                                             <div class="card-body">
                                                 <div class="row no-gutters align-items-center">
                                                     <div class="col mr-2">
                                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                            Ngày phát hành</div>
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                        <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.issueDate}"></fmt:formatDate>
-                                                        <c:if test="${requestScope.invoiceCurrent.issueDate == null}">không khả dụng</c:if>
+                                                            Số lượng hóa đơn    
                                                         </div>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <!-- Pending Requests Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
-                                        <div class="card border-left-warning shadow h-100 py-2">
-                                            <div class="card-body">
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col mr-2">
-                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                            Ngày hết hạn</div>
                                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                        <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.dueDate}"></fmt:formatDate>
-                                                        <c:if test="${requestScope.invoiceCurrent.dueDate == null}">không khả dụng</c:if>
-                                                        </div>
+                                                        ${requestScope.totalInvoice}
                                                     </div>
-                                                    <div class="col-auto">
-                                                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Pending Requests Card Example -->
-                                    <div class="col-xl-3 col-md-6 mb-4">
-                                    <c:if test="${requestScope.invoiceCurrent.status == 1}">
-                                        <c:set var="colorTab" value="success"></c:set>
-                                        <c:set var="status" value="Đã thanh toán"/>
-                                    </c:if>
-                                    <c:if test="${requestScope.invoiceCurrent.status == 0}">
-                                        <c:set var="colorTab" value="danger"></c:set>
-                                        <c:set var="status" value="Chưa thanh toán"/>
-                                    </c:if>
-                                    <c:if test="${requestScope.invoiceCurrent.dueDate == null}">
-                                        <c:set var="colorTab" value="secondary"></c:set>
-                                        <c:set var="status" value="Không khả dụng"/>
-                                    </c:if>
-                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
-                                                        Trạng thái
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
-                        <!-- Content Row -->
+                    </div>
+                    <!-- Content Row -->
 
-                        <!-- chart here -->
-                        <div class="row">
-                            <!-- Area Chart -->
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Biểu đồ hóa đơn trong 12 tháng</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card Body -->
-                                    <div class="card-body">
-                                        <div class="chart-area">
-                                            <canvas id="myAreaChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Pie Chart -->
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="card shadow mb-4">
-                                    <!-- Card Header - Dropdown -->
-                                    <div
-                                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary">Biểu đồ tỉ lệ dịch vụ trong hóa đơn</h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                                 aria-labelledby="dropdownMenuLink">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Card Body -->
-                                    <div class="card-body">
-                                        <div class="chart-pie pt-4 pb-2">
-                                            <canvas id="myPieChart"></canvas>
-                                        </div>
-                                        <div class="mt-4 text-center small">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- table here -->
+                    <!-- chart here -->
+                    <!-- Area Chart -->
+                    <div class="col-xl-12 col-lg-12">
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3 row">
-                                <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách dịch vụ trong hóa đơn</h5>
-                                <div class="col-md-3">
-                                    <select id="servicePerPage" name="servicePerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleSearch()">
-                                        <option value="5">Số lượng hiển thị: 5</option>
-                                        <option value="10">Số lượng hiển thị: 10</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="input-group rounded ">
-                                        <!--reset the current page to 1 cause of search can reduce the number of page-->
-                                        <input id="searchService" name="searchService" type="text" value="" oninput="handleSearch($('#serviceTable .pagination .page-item.active button.page-link').val())" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text btn-primary border-0" id="search-addon">
-                                                <i class="fas fa-search"></i>
-                                            </span>
-                                        </div>
+                            <!-- Card Header - Dropdown -->
+                            <div
+                                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Biểu đồ hóa đơn trong 12 tháng</h6>
+                                <div class="dropdown no-arrow">
+                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                         aria-labelledby="dropdownMenuLink">
+                                        <div class="dropdown-header">Dropdown Header:</div>
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Something else here</a>
                                     </div>
                                 </div>
                             </div>
-                            <div id="serviceTable" class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead style="background-color: #4e73df; color: white">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Tên</th>
-                                                <th>Loại dịch vụ</th>
-                                                <th>Ngày đăng kí</th>
-                                                <th>Ngày kết thúc</th>
-                                                <th>Đơn giá</th>
-                                                <th>Tỉ lệ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:set var="countServiceTable" value="0"/>
-                                            <c:forEach items="${requestScope.invoiceCurrent.getServiceContractList()}" var="serviceContract">
-                                                <c:set var="countServiceTable" value="${countServiceTable+1}"/>
-                                                <tr>
-                                                    <td>${countServiceTable}</td>
-                                                    <td>${serviceContract.getService().getName()}</td>
-                                                    <td>${serviceContract.getService().getType()}</td>
-                                                    <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getStartDate()}"></fmt:formatDate></td>
-                                                    <td><fmt:formatDate pattern="dd/MM/YYY" value="${serviceContract.getEndDate()}"></fmt:formatDate></td>
-                                                    <td><fmt:formatNumber value="${serviceContract.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
-                                                    <td><fmt:formatNumber value="${serviceContract.getAmount()/requestScope.invoiceCurrent.getAmount()}" type="percent" maxFractionDigits="0"></fmt:formatNumber></td>
-                                                    </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                        <tfoot style="background-color: #4e73df; color: white" class="h5">
-                                            <tr>
-                                                <th colspan="7">
-                                                    Tổng tiền dịch vụ: <fmt:formatNumber value="${requestScope.invoiceCurrent.amount} " type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
-                                                </th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    <div class="d-flex flex-row-reverse">
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-start">
-                                                <c:if test="${requestScope.currentServicePage > 1}">
-                                                    <li class="page-item">
-                                                        <button class="page-link" value="${requestScope.currentServicePage - 1}" onclick="handleSearch(this.value)">Previous</button>
-                                                    </li>
-                                                </c:if>
-
-                                                <c:forEach var="i" begin="1" end="${requestScope.totalServicePages}">
-                                                    <li class="page-item ${i == requestScope.currentServicePage ? 'active' : ''}">
-                                                        <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
-                                                    </li>
-                                                </c:forEach>
-
-                                                <c:if test="${requestScope.currentServicePage < requestScope.totalServicePages}">
-                                                    <li class="page-item">
-                                                        <button class="page-link" value="${requestScope.currentServicePage + 1}" onclick="handleSearch(this.value)">Previous</button>
-                                                    </li>
-                                                </c:if>
-                                            </ul>
-                                        </nav>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- table here -->
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h4 id="currentMonth" class="h4 mb-0 text-gray-800 text-primary font-weight-bold col-xl-5 col-md-5">Tìm kiếm thanh toán</h4>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body row">
+                            <div class="col-md-6 row">
+                                <div class="col-12 row">
+                                    <label for="invoiceCode" class="col-sm-4 col-form-label font-weight-bold">Mã hóa đơn</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="invoiceCode" name="invoiceCode" oninput="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
+                            <div class="col-md-6 row">
+                                <div class="col-12 row">
+                                    <label for="transactionNo" class="col-sm-4 col-form-label font-weight-bold">Mã giao dịch</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="transactionNo" name="transactionNo" min="" oninput="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 row">
+                                <div class="col-12 row">
+                                    <label for="orderInfo" class="col-sm-4 col-form-label font-weight-bold">Nội dung thanh toán</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="orderInfo" name="orderInfo" min="" oninput="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 row">
+                                <div class="col-12 row">
+                                    <label for="sort" class="col-sm-4 col-form-label font-weight-bold">Sắp xếp theo giá</label>
+                                    <div class="col-md-8">
+                                        <select id="sort" name="sort" class="form-select" aria-label="Default select example" onchange="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                            <option value="" selected>Mặc định</option>
+                                            <option value="asc">Tăng dần</option>
+                                            <option value="desc">Giảm dần</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 row">
+                                <div class="col-12 row">
+                                    <label for="bankCode" class="col-sm-4 col-form-label font-weight-bold">Mã ngân hàng</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" id="bankCode" name="bankCode" min="" oninput="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            <div class="col-md-6 d-flex flex-row-reverse">
+                                                            <div class="col-2">
+                                                                <input class="btn btn-primary" type="submit" value="Tìm kiếm" onclick="handleSearch($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                                            </div>
+                                                        </div>-->
                         </div>
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h5 class="m-0 font-weight-bold text-primary text-gray-800 col-md-9">Danh sách hóa đơn</h5>
+                            <div class="col-md-3">
+                                <select id="invoicePerPage" name="invoicePerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleSearchInvoice($('#invoiceTable .pagination .page-item.active button.page-link').val())">
+                                    <option value="5">Số lượng hiển thị: 5</option>
+                                    <option value="10">Số lượng hiển thị: 10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="invoiceTable" class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead style="background-color: #4e73df; color: white">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Mã giao dịch</th>
+                                            <th>Mã hóa đơn</th>
+                                            <th>Đơn giá</th>
+                                            <th>Ngân hàng</th>
+                                            <th>Nội dung</th>
+                                            <th>Ngày thanh toán</th>
+                                            <th>Thông tin</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:set var="countInvoiceTable" value="0"/>
+                                        <c:forEach items="${requestScope.invoiceCurrentList}" var="invoice">
+                                            <c:set var="countInvoiceTable" value="${countInvoiceTable+1}"/>
+                                            <tr>
+                                                <td>${countInvoiceTable}</td>
+                                                <td>${invoice.transactionNo}</td>
+                                                <td>${invoice.invoiceCode}</td>
+                                                <td><fmt:formatNumber value="${invoice.getAmount()}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ</td>
+                                                <td>${invoice.bankCode}</td>
+                                                <td>${invoice.orderInfo}</td>
+                                                <td><fmt:formatDate pattern="dd/MM/YYY HH:mm:ss" value="${invoice.transactionDate}"></fmt:formatDate></td>
+                                                <td><input class="btn btn-primary" type="submit" value="Chi tiết" onclick="handleDetails(${invoice.invoiceId})"></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                    <tfoot style="background-color: #4e73df; color: white" class="h5">
+                                        <tr>
+                                            <th colspan="9">
+                                                <div  class="d-flex justify-content-between">
+                                                    <span>
+                                                        Tổng số hóa đơn thanh toán: ${requestScope.totalPaidInvoice}
+                                                    </span>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="d-flex flex-row-reverse">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-start">
+                                            <c:if test="${1 > 1}">
+                                                <li class="page-item">
+                                                    <button class="page-link" value="${requestScope.currentPage - 1}" onclick="handleSearchInvoice(this.value)">Previous</button>
+                                                </li>
+                                            </c:if>
 
+                                            <c:forEach var="i" begin="1" end="${requestScope.totalInvoicePage}">
+                                                <li class="page-item ${i == 1 ? 'active' : ''}">
+                                                    <button class="page-link" value="${i}" onclick="handleSearchInvoice(this.value)">${i}</button>
+                                                </li>
+                                            </c:forEach>
+
+                                            <c:if test="${1 < requestScope.totalInvoicePage}">
+                                                <li class="page-item">
+                                                    <button class="page-link" value="${1 + 1}" onclick="handleSearchInvoice(this.value)">Next</button>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>
+                    <div class="card shadow mb-4" id="serviceCard">
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="./vendor/jquery/jquery.min.js"></script>
-            <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-            <script src="./vendor/chart.js/Chart.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="./vendor/jquery/jquery.min.js"></script>
+        <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="./vendor/chart.js/Chart.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="./js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="./js/sb-admin-2.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="./vendor/jquery-easing/jquery.easing.min.js"></script> 
+        <!-- Core plugin JavaScript-->
+        <script src="./vendor/jquery-easing/jquery.easing.min.js"></script> 
 
-            <!-- Page level plugins -->
-            <script src="./vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="./vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="./vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-            <!--Page level custom scripts--> 
-            <script src="./js/demo/datatables-demo.js"></script>
+        <!--Page level custom scripts--> 
+        <script src="./js/demo/datatables-demo.js"></script>
 
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-            <script>
-                                                            function handleSearch(page) {
-                                                                let searchTerm = document.getElementById("searchService").value;
-                                                                let selectMonth = ${requestScope.currentMonth};
-                                                                let selectYears = ${requestScope.currentYear};
-                                                                let apartmentID = ${requestScope.apartment.apartmentID};
-                                                                let currentPage = page;
-                                                                let servicePerPage = $("#servicePerPage").val();
-                                                                console.log("search ", searchTerm);
-                                                                console.log("month ", selectMonth);
-                                                                console.log("year ", selectYears);
-                                                                console.log("aptId ", apartmentID);
-                                                                console.log("current ", currentPage);
-                                                                console.log("servicePerPage ", servicePerPage);
-                                                                $.ajax({
-                                                                    url: "/AtpMan/invoicestatistictableajax",
-                                                                    type: "get", //send it through post method
-                                                                    data: {
-                                                                        searchTerm: searchTerm,
-                                                                        selectMonth: selectMonth,
-                                                                        selectYear: selectYears,
-                                                                        apartmentID: apartmentID,
-                                                                        currentPage: currentPage,
-                                                                        servicePerPage: servicePerPage
-                                                                    },
-                                                                    success: function (data) {
-                                                                        $("#serviceTable").html(data);
+        <script>
+                                                        function handleSearchInvoice(page) {
+                                                            let invoiceCode = $("#invoiceCode").val();
+                                                            let transactionNo = $("#transactionNo").val();
+                                                            let orderInfo = $("#orderInfo").val();
+                                                            let bankCode = $("#bankCode").val();
+                                                            let sort = $("#sort").val();
 
-                                                                    },
-                                                                    error: function (xhr) {
-                                                                        //Do Something to handle error
+                                                            let selectMonth = ${requestScope.currentMonth};
+                                                            let selectYears = ${requestScope.currentYear};
+                                                            let apartmentID = ${requestScope.apartment.apartmentID};
+                                                            let currentPage = page;
+                                                            let invoicePerPage = $("#invoicePerPage").val();
+
+                                                            console.log("invoiceCode ", invoiceCode);
+                                                            console.log("transactionNo ", transactionNo);
+                                                            console.log("orderInfo ", orderInfo);
+                                                            console.log("bankCode ", bankCode);
+                                                            console.log("sort ", sort);
+                                                            console.log("month ", selectMonth);
+                                                            console.log("year ", selectYears);
+                                                            console.log("aptId ", apartmentID);
+                                                            console.log("currentPage ", currentPage);
+                                                            console.log("invoicePerPage ", invoicePerPage);
+                                                            $.ajax({
+                                                                url: "/AtpMan/userinvoiceajax",
+                                                                type: "get", //send it through post method
+                                                                data: {
+                                                                    invoiceCode: invoiceCode,
+                                                                    transactionNo: transactionNo,
+                                                                    orderInfo: orderInfo,
+                                                                    bankCode: bankCode,
+                                                                    selectMonth: selectMonth,
+                                                                    selectYear: selectYears,
+                                                                    apartmentId: apartmentID,
+                                                                    currentPage: currentPage,
+                                                                    invoicePerPage: invoicePerPage,
+                                                                    sort: sort
+                                                                },
+                                                                success: function (data) {
+                                                                    $("#invoiceTable").html(data);
+
+                                                                },
+                                                                error: function (xhr) {
+                                                                    //Do Something to handle error
+                                                                }
+                                                            });
+                                                        }
+                                                        function handleDetails(invoiceID) {
+                                                            let invoiceId = invoiceID;
+
+                                                            console.log("invoiceId ", invoiceId);
+                                                            $.ajax({
+                                                                url: "/AtpMan/userinvoicestatdetailsajax",
+                                                                type: "get", //send it through post method
+                                                                data: {
+                                                                    invoiceId: invoiceId
+                                                                },
+                                                                success: function (data) {
+                                                                    $("#serviceCard").html(data);
+                                                                },
+                                                                error: function (xhr) {
+                                                                    //Do Something to handle error
+                                                                }
+                                                            });
+                                                        }
+
+                                                        function submitMonth() {
+                                                            document.getElementById('chooseMonthYear').submit();
+                                                        }
+
+                                                        let d = new Date();
+                                                        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                                                        let month = months.find((value, index) => {
+                                                            if (d.getMonth()) {
+                                                                return index == d.getMonth() - 1;
+                                                            } else {
+                                                                return index == 12;
+                                                            }
+                                                        });
+                                                        console.log(month)
+
+                                                        //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
+
+                                                        // take data from servlet to js
+                                                        const amountList = [
+            <c:forEach items="${requestScope.amoutMonth}" var="amountList">
+                ${amountList},
+            </c:forEach>
+                                                        ];
+                                                        console.log(amountList)
+                                                        const serviceList = [
+            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
+                                                            "${serviceContract.getService().getName()}",
+            </c:forEach>
+                                                        ];
+                                                        const amountService = [
+            <c:forEach items="${requestScope.serviceList}" var="serviceContract">
+                <c:out value="${serviceContract.getAmount()}"/>,
+            </c:forEach>
+                                                        ];
+                                                        console.log(amountService);
+
+
+                                                        function number_format(number, decimals, dec_point, thousands_sep) {
+                                                            // *     example: number_format(1234.56, 2, ',', ' ');
+                                                            // *     return: '1 234,56'
+                                                            number = (number + '').replace(',', '').replace(' ', '');
+                                                            var n = !isFinite(+number) ? 0 : +number,
+                                                                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                                                                    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                                                                    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                                                                    s = '',
+                                                                    toFixedFix = function (n, prec) {
+                                                                        var k = Math.pow(10, prec);
+                                                                        return '' + Math.round(n * k) / k;
+                                                                    };
+                                                            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+                                                            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                                            if (s[0].length > 3) {
+                                                                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                                            }
+                                                            if ((s[1] || '').length < prec) {
+                                                                s[1] = s[1] || '';
+                                                                s[1] += new Array(prec - s[1].length + 1).join('0');
+                                                            }
+                                                            return s.join(dec);
+                                                        }
+                                                        // Area Chart Example
+                                                        var ctx = document.getElementById("myAreaChart");
+                                                        var myLineChart = new Chart(ctx, {
+                                                            type: 'line',
+                                                            data: {
+                                                                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                                                                datasets: [{
+                                                                        label: "Amount",
+                                                                        lineTension: 0.3,
+                                                                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                                                                        borderColor: "rgba(78, 115, 223, 1)",
+                                                                        pointRadius: 3,
+                                                                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                                                                        pointHoverRadius: 3,
+                                                                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                                                                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                                                                        pointHitRadius: 10,
+                                                                        pointBorderWidth: 2,
+                                                                        data: amountList,
+                                                                    }],
+                                                            },
+                                                            options: {
+                                                                maintainAspectRatio: false,
+                                                                layout: {
+                                                                    padding: {
+                                                                        left: 10,
+                                                                        right: 25,
+                                                                        top: 25,
+                                                                        bottom: 0
                                                                     }
-                                                                });
-                                                            }
-
-                                                            function submitMonth() {
-                                                                document.getElementById('chooseMonthYear').submit();
-                                                            }
-
-                                                            let d = new Date();
-                                                            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-                                                            let month = months.find((value, index) => {
-                                                                if (d.getMonth()) {
-                                                                    return index == d.getMonth() - 1;
-                                                                } else {
-                                                                    return index == 12;
-                                                                }
-                                                            });
-                                                            console.log(month)
-
-                                                            //            document.getElementById("currentMonth").innerHTML += "(" + month + ", " + d.getFullYear() + ")";
-
-                                                            // take data from servlet to js
-                                                            const amountList = [
-                <c:forEach items="${requestScope.amoutMonth}" var="amountList">
-                    ${amountList},
-                </c:forEach>
-                                                            ];
-                                                            const serviceList = [
-                <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                                                                "${serviceContract.getService().getName()}",
-                </c:forEach>
-                                                            ];
-                                                            const amountService = [
-                <c:forEach items="${requestScope.serviceList}" var="serviceContract">
-                    <c:out value="${serviceContract.getAmount()}"/>,
-                </c:forEach>
-                                                            ];
-                                                            console.log(amountService);
-
-
-                                                            function number_format(number, decimals, dec_point, thousands_sep) {
-                                                                // *     example: number_format(1234.56, 2, ',', ' ');
-                                                                // *     return: '1 234,56'
-                                                                number = (number + '').replace(',', '').replace(' ', '');
-                                                                var n = !isFinite(+number) ? 0 : +number,
-                                                                        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                                                                        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                                                                        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                                                                        s = '',
-                                                                        toFixedFix = function (n, prec) {
-                                                                            var k = Math.pow(10, prec);
-                                                                            return '' + Math.round(n * k) / k;
-                                                                        };
-                                                                // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-                                                                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-                                                                if (s[0].length > 3) {
-                                                                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-                                                                }
-                                                                if ((s[1] || '').length < prec) {
-                                                                    s[1] = s[1] || '';
-                                                                    s[1] += new Array(prec - s[1].length + 1).join('0');
-                                                                }
-                                                                return s.join(dec);
-                                                            }
-                                                            // Pie Chart Example
-                                                            var ctx = document.getElementById("myPieChart");
-                                                            var myPieChart = new Chart(ctx, {
-                                                                type: 'doughnut',
-                                                                data: {
-                                                                    labels: serviceList,
-                                                                    datasets: [{
-                                                                            data: amountService,
-                                                                            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#5a5c69', '#f8c8db', '#b3d0d6', '#ffcc00', '#ff6347', '#6c757d', '#007bff'],
-                                                                            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                                                                            hoverBorderColor: "rgba(234, 236, 244, 1)",
+                                                                },
+                                                                scales: {
+                                                                    xAxes: [{
+                                                                            time: {
+                                                                                unit: 'date'
+                                                                            },
+                                                                            gridLines: {
+                                                                                display: false,
+                                                                                drawBorder: false
+                                                                            },
+                                                                            ticks: {
+                                                                                maxTicksLimit: 7
+                                                                            }
+                                                                        }],
+                                                                    yAxes: [{
+                                                                            ticks: {
+                                                                                maxTicksLimit: 5,
+                                                                                padding: 10,
+                                                                                // Include a dollar sign in the ticks
+                                                                                callback: function (value, index, values) {
+                                                                                    return number_format(value) + ' VNĐ';
+                                                                                }
+                                                                            },
+                                                                            gridLines: {
+                                                                                color: "rgb(234, 236, 244)",
+                                                                                zeroLineColor: "rgb(234, 236, 244)",
+                                                                                drawBorder: false,
+                                                                                borderDash: [2],
+                                                                                zeroLineBorderDash: [2]
+                                                                            }
                                                                         }],
                                                                 },
-                                                                options: {
-                                                                    maintainAspectRatio: false,
-                                                                    tooltips: {
-                                                                        backgroundColor: "rgb(255,255,255)",
-                                                                        bodyFontColor: "#858796",
-                                                                        borderColor: '#dddfeb',
-                                                                        borderWidth: 1,
-                                                                        xPadding: 15,
-                                                                        yPadding: 15,
-                                                                        displayColors: false,
-                                                                        caretPadding: 10,
-                                                                        callbacks: {
-                                                                            label: function (tooltipItem, data) {
-                                                                                var value = number_format(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
-                                                                                return value + ' VNĐ';
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    legend: {
-                                                                        display: true,
-                                                                        position: 'bottom', // Hoặc 'top', 'left', 'right'
-                                                                        labels: {
-                                                                            boxWidth: 10, // Kích thước của hộp màu
-                                                                            padding: 10 // Khoảng cách giữa các mục
-                                                                        }
-                                                                    },
-                                                                    cutoutPercentage: 60,
+                                                                legend: {
+                                                                    display: false
                                                                 },
-                                                            });
-
-
-                                                            // Area Chart Example
-                                                            var ctx = document.getElementById("myAreaChart");
-                                                            var myLineChart = new Chart(ctx, {
-                                                                type: 'line',
-                                                                data: {
-                                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                                                                    datasets: [{
-                                                                            label: "Amount",
-                                                                            lineTension: 0.3,
-                                                                            backgroundColor: "rgba(78, 115, 223, 0.05)",
-                                                                            borderColor: "rgba(78, 115, 223, 1)",
-                                                                            pointRadius: 3,
-                                                                            pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                                            pointBorderColor: "rgba(78, 115, 223, 1)",
-                                                                            pointHoverRadius: 3,
-                                                                            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                                                                            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                                                                            pointHitRadius: 10,
-                                                                            pointBorderWidth: 2,
-                                                                            data: amountList,
-                                                                        }],
-                                                                },
-                                                                options: {
-                                                                    maintainAspectRatio: false,
-                                                                    layout: {
-                                                                        padding: {
-                                                                            left: 10,
-                                                                            right: 25,
-                                                                            top: 25,
-                                                                            bottom: 0
-                                                                        }
-                                                                    },
-                                                                    scales: {
-                                                                        xAxes: [{
-                                                                                time: {
-                                                                                    unit: 'date'
-                                                                                },
-                                                                                gridLines: {
-                                                                                    display: false,
-                                                                                    drawBorder: false
-                                                                                },
-                                                                                ticks: {
-                                                                                    maxTicksLimit: 7
-                                                                                }
-                                                                            }],
-                                                                        yAxes: [{
-                                                                                ticks: {
-                                                                                    maxTicksLimit: 5,
-                                                                                    padding: 10,
-                                                                                    // Include a dollar sign in the ticks
-                                                                                    callback: function (value, index, values) {
-                                                                                        return number_format(value) + ' VNĐ';
-                                                                                    }
-                                                                                },
-                                                                                gridLines: {
-                                                                                    color: "rgb(234, 236, 244)",
-                                                                                    zeroLineColor: "rgb(234, 236, 244)",
-                                                                                    drawBorder: false,
-                                                                                    borderDash: [2],
-                                                                                    zeroLineBorderDash: [2]
-                                                                                }
-                                                                            }],
-                                                                    },
-                                                                    legend: {
-                                                                        display: false
-                                                                    },
-                                                                    tooltips: {
-                                                                        backgroundColor: "rgb(255,255,255)",
-                                                                        bodyFontColor: "#858796",
-                                                                        titleMarginBottom: 10,
-                                                                        titleFontColor: '#6e707e',
-                                                                        titleFontSize: 14,
-                                                                        borderColor: '#dddfeb',
-                                                                        borderWidth: 1,
-                                                                        xPadding: 15,
-                                                                        yPadding: 15,
-                                                                        displayColors: false,
-                                                                        intersect: false,
-                                                                        mode: 'index',
-                                                                        caretPadding: 10,
-                                                                        callbacks: {
-                                                                            label: function (tooltipItem, chart) {
-                                                                                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                                                                                return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
-                                                                            }
+                                                                tooltips: {
+                                                                    backgroundColor: "rgb(255,255,255)",
+                                                                    bodyFontColor: "#858796",
+                                                                    titleMarginBottom: 10,
+                                                                    titleFontColor: '#6e707e',
+                                                                    titleFontSize: 14,
+                                                                    borderColor: '#dddfeb',
+                                                                    borderWidth: 1,
+                                                                    xPadding: 15,
+                                                                    yPadding: 15,
+                                                                    displayColors: false,
+                                                                    intersect: false,
+                                                                    mode: 'index',
+                                                                    caretPadding: 10,
+                                                                    callbacks: {
+                                                                        label: function (tooltipItem, chart) {
+                                                                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                                                                            return datasetLabel + ': ' + number_format(tooltipItem.yLabel) + ' VNĐ';
                                                                         }
                                                                     }
                                                                 }
-                                                            });
-            </script>
+                                                            }
+                                                        });
+        </script>
     </body>
 </html>

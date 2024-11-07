@@ -61,9 +61,11 @@ public class InvoiceStatServiceTableAjax extends HttpServlet {
         String invoiceCode = "";
         double invoiceAmount = 1;
 
-        for (Map.Entry<String, Double> entry : invoiceMap.entrySet()) {
-            invoiceCode = entry.getKey();
-            invoiceAmount = entry.getValue();
+        if (invoiceMap != null && !invoiceMap.isEmpty()) {
+            for (Map.Entry<String, Double> entry : invoiceMap.entrySet()) {
+                invoiceCode = entry.getKey();
+                invoiceAmount = entry.getValue();
+            }
         }
 
         int totalPages = (int) Math.ceil((double) serviceCount / servicePerPage);
@@ -88,7 +90,7 @@ public class InvoiceStatServiceTableAjax extends HttpServlet {
                     + "                                <div class=\"input-group rounded \">\n"
                     + "                                    <!--reset the current page to 1 cause of search can reduce the number of page-->\n"
                     + "                                    <input id=\"searchService\" name=\"searchService\" type=\"text\" value=\"\" oninput=\"handleSearchDetails($('#serviceTable .pagination .page-item.active button.page-link').val())\" class=\"form-control\" placeholder=\"Search\" aria-label=\"Search\" aria-describedby=\"search-addon\" />\n"
-                    + "                                    <input id=\"invoiceID\" type=\"hidden\" name=\"invoiceID\" value=\""+ invoiceId +"\" />                            "
+                    + "                                    <input id=\"invoiceID\" type=\"hidden\" name=\"invoiceID\" value=\"" + invoiceId + "\" />                            "
                     + "                                     <div class=\"input-group-append\">\n"
                     + "                                        <span class=\"input-group-text btn-primary border-0\" id=\"search-addon\">\n"
                     + "                                            <i class=\"fas fa-search\"></i>\n"

@@ -45,6 +45,7 @@ public class ajaxServlet extends HttpServlet {
         String bankCode = req.getParameter("bankCode");
 
         String invoiceId = req.getParameter("invoiceId");
+        String paymentType = req.getParameter("paymentType");
         session.setAttribute("invoiceIdPayment", invoiceId);
         
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -72,7 +73,7 @@ public class ajaxServlet extends HttpServlet {
         } else {
             vnp_Params.put("vnp_Locale", "vn");
         }
-        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl + "?invoiceId=" + invoiceId);
+        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl + "?paymentType=" + paymentType);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));

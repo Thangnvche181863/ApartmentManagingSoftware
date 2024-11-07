@@ -290,7 +290,6 @@
                                                                data-val="true" 
                                                                data-val-number="The field Amount must be a number." 
                                                                data-val-required="The Amount field is required." 
-                                                               max="100000000" 
                                                                min="1" 
                                                                type="text" 
                                                                value="<fmt:formatNumber value="${requestScope.amount}" type="number" maxFractionDigits="0"/> VNĐ"
@@ -298,6 +297,7 @@
                                                                />
                                                         <input id="amount" name="amount" type="hidden" value="${requestScope.amount}">
                                                         <input id="invoiceId" name="invoiceId" type="hidden" value="${requestScope.invoiceId}">
+                                                        <input id="paymentType" name="paymentType" type="hidden" value="${requestScope.paymentType}">
                                                     </div>
                                                 </div>
                                             </div>

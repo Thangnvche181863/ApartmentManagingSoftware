@@ -426,6 +426,7 @@
 
                     <!--////////////////-->
                     <div class="container">
+                        <fmt:setLocale value = "en_US"/>
                         <div
                             class="text-center mx-auto wow fadeInUp"
                             data-wow-delay="0.2s"
@@ -443,7 +444,7 @@
                                         /></span></p>
                             <p class="text-primary">Hủy đăng kí vui lòng bấm vào 
                                 <span>
-                                    <a href="registService?apartmentId=${apartmentID}&serviceId=${service.getServiceId()}" style="color: red" onclick="return confirmDelete();"> Đây!</a>
+                                    <a href="registService?apartmentId=${apartmentID}&serviceId=${service.getServiceId()}&serviceContractId=${requestScope.serviceContractID}" style="color: red" onclick="return confirmDelete();"> Đây!</a>
                                 </span>
                             <p>
                             </c:if>
@@ -470,9 +471,11 @@
                         <div id="overlay" class="overlay" style="display: none;">
                             <div id="registrationForm" class="registration-form">
                                 <h3 class="text-center text-primary mb-3">Đăng Ký Dịch Vụ</h3>
-                                <form action="registService" method="POST">
+                                <form action="/AtpMan/payinvoice" method="POST">
                                     <input type="hidden" name="apartmentID" value="${apartmentID}">
                                     <input type="hidden" name="serviceID" value="${service.getServiceId()}">
+                                    <input type="hidden" id="amount" name="amount" value="${service.getFee()}"/>
+                                    <input type="hidden" id="paymentType" name="paymentType" value="payRegisInvoice"/>
 
                                     <!-- Fields for displaying user info -->
                                     <div class="form-group mb-3">
@@ -497,7 +500,8 @@
                                     <div class="form-group mb-3">
                                         <label for="fee" class="text-primary">Giá</label>
                                         <input type="text" class="form-control" id="fee" name="fee" style="color: red"
-                                               value="<fmt:formatNumber value='${service.getFee()}' type='number' pattern='#,##0'/> VND/tháng" readonly />
+                                               value="<fmt:formatNumber value="${service.getFee()}" type="number" maxFractionDigits="0"/> VND/tháng"
+                                               readonly />
                                     </div>
 
                                     <!-- Buttons for submitting or canceling -->
@@ -526,7 +530,7 @@
                                             <a href="registServiceTenant?apartmentID=${apartmentID}"><button class="btn-primary btn" style="height: 40px">Quay trở lại</button></a>
                                         </div>
                                         <p class="mb-4"><strong><span style="color: #015DC5">Loại dịch vụ:  </span></strong><span style="color: #4CA64C"> ${service.type}</span></p>
-                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber  value="${amount.getTotalAmount()}" /> VND</p>
+                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber value="${service.getFee()}" type="number" maxFractionDigits="0"/> VND</p>
                                         <div class="feature-icon p-4 mb-4">
                                             <i class="${service.icon}" style="font-size: 3rem; color: #015DC5"></i>
                                         </div>
@@ -615,11 +619,11 @@
 
                     // Tính toán giá dựa trên gói dịch vụ
                     if (subscriptionPlan === "1") {
-                        updatedFee = baseFee * discount1Month; 
+                        updatedFee = baseFee * discount1Month;
                     } else if (subscriptionPlan === "2") {
-                        updatedFee = baseFee * discount2Month; 
+                        updatedFee = baseFee * discount2Month;
                     } else if (subscriptionPlan === "3") {
-                        updatedFee = baseFee * discount3Month; 
+                        updatedFee = baseFee * discount3Month;
                     }
 
                     // Cập nhật giá vào input fee

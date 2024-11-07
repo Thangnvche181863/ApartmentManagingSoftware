@@ -4,12 +4,19 @@
  */
 package controller.vnpay;
 
+import DAO.ServiceContractDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import model.ServiceContract;
 
 /**
  *
@@ -70,18 +77,66 @@ public class PayInvoiceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        processRequest(request, response);
-        String amount_raw = request.getParameter("amount");
-        String invoiceId = request.getParameter("invoiceId");
-        double amount = 0;
-        try {
-            amount = Double.parseDouble(amount_raw);
-        } catch (NumberFormatException e) {
+
+        HttpSession session = request.getSession();
+        String paymentType = request.getParameter("paymentType");
+
+        request.setAttribute("paymentType", paymentType);
+        if (paymentType.equals("payExistInvoice")) {
+            String amount_raw = request.getParameter("amount");
+            String invoiceId = request.getParameter("invoiceId");
+            double amount = 0;
+            try {
+                amount = Double.parseDouble(amount_raw);
+            } catch (NumberFormatException e) {
+            }
+
+            int amt = (int) amount;
+
+            request.setAttribute("amount", amt);
+            request.setAttribute("invoiceId", invoiceId);
+
+        } else if (paymentType.equals("payRegisInvoice")) {
+            String apartmentID = request.getParameter("apartmentID");
+            String serviceID = request.getParameter("serviceID");
+            String amount_raw = request.getParameter("amount");
+            String subscriptionPlan = request.getParameter("subscriptionPlan");
+            LocalDate startDate = LocalDate.now();
+            LocalDate endDate = LocalDate.now();
+
+            // Kiểm tra giá trị của subscriptionPlan
+            if ("1".equals(subscriptionPlan)) {
+                endDate = startDate.plus(1, ChronoUnit.MONTHS);; // Nếu là gói 1 tháng,
+            } else if ("2".equals(subscriptionPlan)) {
+                endDate = startDate.plus(2, ChronoUnit.MONTHS); // Gói 2 tháng
+            } else if ("3".equals(subscriptionPlan)) {
+                endDate = startDate.plus(3, ChronoUnit.MONTHS); // Gói 3 tháng
+            }
+
+            double amount = Double.parseDouble(amount_raw.replaceAll(",", "").replace(" VND/tháng", ""));
+//            try {
+//                amount = Double.parseDouble(amount_raw);
+//            } catch (NumberFormatException e) {
+//            }
+
+            int amt = (int) amount;
+
+            ServiceContract serviceContract = new ServiceContract();
+            serviceContract.setApartmentId(Integer.parseInt(apartmentID));
+            serviceContract.setServiceId(Integer.parseInt(serviceID));
+            serviceContract.setStartDate(Date.valueOf(startDate));
+            serviceContract.setEndDate(Date.valueOf(endDate));
+            serviceContract.setAmount(BigDecimal.valueOf(amount));
+
+            session.setAttribute("serviceContract", serviceContract);
+
+            request.setAttribute("amount", amt);
+            request.setAttribute("apartmentID", apartmentID);
+            request.setAttribute("serviceID", serviceID);
+        } else {
+            request.setAttribute("message", "Có lỗi đã xảy ra");
         }
 
-        int amt = (int) amount;
-
-        request.setAttribute("amount", amt);
-        request.setAttribute("invoiceId", invoiceId);
         request.getRequestDispatcher("vnpay/payinvoice.jsp").forward(request, response);
     }
 

@@ -11,6 +11,7 @@ package DAO;
 import utils.DBContext;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -372,22 +373,22 @@ public class CustomerDAO {
         }
         sql += " order by c.customerID asc\n"
                 + "offset ? rows fetch next ? rows only";
-        
-        int fetchStart = (currentPage-1)*rowsPerPage;
-        
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentID);
-            if(count > 0){
-                int index=2;
+            if (count > 0) {
+                int index = 2;
                 for (int i = 0; i < count; i++) {
-                    statement.setString(index, "%"+searchTermList.get(i)+"%");
+                    statement.setString(index, "%" + searchTermList.get(i) + "%");
                     index++;
                 }
             }
-            statement.setInt(count+2, fetchStart);
-            statement.setInt(count+3, rowsPerPage);
+            statement.setInt(count + 2, fetchStart);
+            statement.setInt(count + 3, rowsPerPage);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Customer customer = new Customer();
@@ -408,6 +409,7 @@ public class CustomerDAO {
         }
         return list;
     }
+
     // KhangPM
     public int countLivingInApartment(int apartmentID, List<String> searchTermList) {
         int result = 0;
@@ -428,15 +430,15 @@ public class CustomerDAO {
                 }
             }
         }
-        
+
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, apartmentID);
-            if(count > 0){
-                int index=2;
+            if (count > 0) {
+                int index = 2;
                 for (int i = 0; i < count; i++) {
-                    statement.setString(index, "%"+searchTermList.get(i)+"%");
+                    statement.setString(index, "%" + searchTermList.get(i) + "%");
                     index++;
                 }
             }
@@ -452,14 +454,610 @@ public class CustomerDAO {
         return result;
     }
 
+    //KhangPM
+    /**
+     *
+     * @param currentPage current page for paging
+     * @param rowsPerPage rows per page
+     * @param buildingId id of building
+     * @param apartmentNumber
+     * @param statusLiving status in living table. 1 for living (endDate not
+     * null) 0 for not living (endDate = null), 2 for both
+     * @param isOwner 1 for owner, 0 for tenant, 2 for both
+     * @param status 1 for active, 0 for inactive
+     * @param searchTermList
+     * @return
+     */
+    public List<Customer> getResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
+        List<Customer> list = new ArrayList<>();
+        Connection connection = null;
+        String sql = "select distinct c.* from Customer c\n"
+                + "inner join Living lv on lv.customerID = c.customerID\n";
+        if (statusLiving == 0) {
+            sql += " and( lv.endDate is not null) \n";
+        } else if (statusLiving == 1) {
+            sql += " and( lv.endDate is null) \n";
+        }
+        sql += " inner join Apartment a on a.apartmentID = lv.apartmentID\n"
+                + "inner join Building b on b.buildingID = a.buildingID\n";
+        sql += " where 1=1 \n";
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+        if (statusLiving == 0) {
+            sql += " and c.customerID not in (select c.customerID from Customer c\n"
+                    + "inner join Living lv on lv.customerID = c.customerID and( lv.endDate is null))\n";
+        }
+        if (isOwner == 1) {
+            sql += " and c.isOwner = 1\n";
+        } else if (isOwner == 0) {
+            sql += " and c.isOwner = 0\n";
+        }
+        sql += " order by c.customerID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            statement.setInt(index++, fetchStart);
+            statement.setInt(index, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt(1));
+                customer.setName(rs.getString(4));
+                customer.setEmail(rs.getString(5));
+                customer.setPhoneNumber(rs.getString(6));
+                customer.setDob(rs.getDate("dob"));
+                customer.setIsOwner(rs.getInt(9));
+                customer.setStatus(rs.getInt(11));
+                list.add(customer);
+            }
+            return list;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return list;
+    }
+
+    // KhangPM
+    public List<Customer> getActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int isOwner, int status, List<String> searchTermList) {
+        List<Customer> list = new ArrayList<>();
+        Connection connection = null;
+        String sql = """
+                     select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
+                     and c.status = 1""";
+
+        if (isOwner == 1) {
+            sql += " and c.isOwner = 1\n";
+        } else if (isOwner == 0) {
+            sql += " and c.isOwner = 0\n";
+        }
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+
+        sql += " order by c.customerID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            statement.setInt(index++, fetchStart);
+            statement.setInt(index, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt("customerID"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setDob(rs.getDate("dob"));
+                customer.setIsOwner(rs.getInt("isOwner"));
+                customer.setStatus(rs.getInt("status"));
+                customer.setApartmentNumber(rs.getString("apartmentNumber"));
+                list.add(customer);
+            }
+            return list;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return list;
+    }
+
+    // KhangPM
+    public int countActiveResidentForManage(int buildingId, String apartmentNumber, int isOwner, int status, List<String> searchTermList) {
+        int count = 0;
+        Connection connection = null;
+        String sql = """
+                     select distinct count(*) from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
+                     and c.status = 1""";
+
+        if (isOwner == 1) {
+            sql += " and c.isOwner = 1\n";
+        } else if (isOwner == 0) {
+            sql += " and c.isOwner = 0\n";
+        }
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+
+    // KhangPM
+    public List<Customer> getRegistResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, List<String> searchTermList) {
+        List<Customer> list = new ArrayList<>();
+        Connection connection = null;
+        String sql = """
+                     select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where c.status = 3""";
+
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+
+        sql += " order by c.customerID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            statement.setInt(index++, fetchStart);
+            statement.setInt(index, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt("customerID"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setDob(rs.getDate("dob"));
+                customer.setIsOwner(rs.getInt("isOwner"));
+                customer.setStatus(rs.getInt("status"));
+                customer.setApartmentNumber(rs.getString("apartmentNumber"));
+                list.add(customer);
+            }
+            return list;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return list;
+    }
+
+    // KhangPM
+    public int countRegistResidentForManage(int buildingId, String apartmentNumber, List<String> searchTermList) {
+        int count = 0;
+        Connection connection = null;
+        String sql = """
+                     select distinct count(*) from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where c.status = 3""";
+
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+    
+    // KhangPM
+    public List<Customer> getInActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, List<String> searchTermList) {
+        List<Customer> list = new ArrayList<>();
+        Connection connection = null;
+        String sql = """
+                     select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where c.status = 3""";
+
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+
+        sql += " order by c.customerID\n"
+                + "offset ? rows fetch next ? rows only";
+
+        int fetchStart = (currentPage - 1) * rowsPerPage;
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            statement.setInt(index++, fetchStart);
+            statement.setInt(index, rowsPerPage);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Customer customer = new Customer();
+                customer.setCustomerID(rs.getInt("customerID"));
+                customer.setName(rs.getString("name"));
+                customer.setEmail(rs.getString("email"));
+                customer.setPhoneNumber(rs.getString("phoneNumber"));
+                customer.setDob(rs.getDate("dob"));
+                customer.setIsOwner(rs.getInt("isOwner"));
+                customer.setStatus(rs.getInt("status"));
+                customer.setApartmentNumber(rs.getString("apartmentNumber"));
+                list.add(customer);
+            }
+            return list;
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return list;
+    }
+
+    // KhangPM
+    public int countInActiveResidentForManage(int buildingId, String apartmentNumber, List<String> searchTermList) {
+        int count = 0;
+        Connection connection = null;
+        String sql = """
+                     select distinct count(*) from Customer c
+                     left join Living lv on lv.customerID = c.customerID
+                     left join Apartment a on a.apartmentID = lv.apartmentID
+                     left join Building b on b.buildingID = a.buildingID
+                     where c.status = 3""";
+
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber.trim() + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList.get(0) + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err" + e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+
+    public void updateStatusResident(int status, int customerId) {
+        Connection connection = null;
+        String sql = """
+                     update Customer
+                     set status = ?
+                     where customerID = ?
+                     """;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            statement.setInt(2, customerId);
+            int i = statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+    }
+    public void updateLivingResident(int customerId) {
+        Connection connection = null;
+        String sql = """
+                     update Living
+                     set endDate = ?
+                     where customerID = ? and endDate is null
+                     """;
+        try {
+            LocalDate currentDate = LocalDate.now();
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(currentDate));
+            statement.setInt(2, customerId);
+            int i = statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+    }
+    
+    public void removeAccount(int customerId){
+        Connection connection = null;
+        String sql = """
+                     update Customer
+                     set username = NULL, password = NULLL
+                     where customerID = ?
+                     """;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            int i = statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("err: " + e.getMessage());
+        }
+    }
+
+    //KhangPM
+    public int countResidentSearch(int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Customer c\n"
+                + "inner join Living lv on lv.customerID = c.customerID\n";
+        if (statusLiving == 0) {
+            sql += " and( lv.endDate is not null) \n";
+        } else if (statusLiving == 1) {
+            sql += " and( lv.endDate is null) \n";
+        }
+        sql += " inner join Apartment a on a.apartmentID = lv.apartmentID\n"
+                + "inner join Building b on b.buildingID = a.buildingID\n";
+        sql += " where 1=1 \n";
+        if (buildingId != 0) {
+            sql += " and b.buildingID = ? \n";
+        }
+        if (apartmentNumber != null && !apartmentNumber.isBlank()) {
+            sql += " and a.apartmentNumber like '%" + apartmentNumber + "%' \n";
+        }
+        if (searchTermList != null && !searchTermList.isEmpty()) {
+            if (searchTermList.size() == 1) {
+                sql += " and c.name like N'%" + searchTermList + "%' \n";
+            } else {
+                sql += " and ( c.name like N'%" + searchTermList.get(0) + "%' ";
+                for (int i = 1; i < searchTermList.size() - 1; i++) {
+                    sql += " or c.name like N'%" + searchTermList.get(i) + "%' ";
+                }
+                sql += " or c.name like N'%" + searchTermList.get(searchTermList.size() - 1) + "%') \n";
+            }
+        }
+        if (statusLiving == 0) {
+            sql += " and c.customerID not in (select c.customerID from Customer c\n"
+                    + "inner join Living lv on lv.customerID = c.customerID and( lv.endDate is null))\n";
+        }
+        if (isOwner == 1) {
+            sql += " and c.isOwner = 1\n";
+        } else if (isOwner == 0) {
+            sql += " and c.isOwner = 0\n";
+        }
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            int index = 1;
+            if (buildingId != 0) {
+                statement.setInt(index++, buildingId);
+            }
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+
+    //KhangPM
+    public int countResident() {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Customer where status = 1 or status = 3";
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+
+    //KhangPM
+    public int countResidentByStatus(int status) {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Customer where status = ?";
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, status);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
         List<String> sList = new ArrayList<>();
         sList.add("khang");
-        sList.add("phạm");
         List<Customer> list = dao.getLivingInApartment(10, 1, 5, sList);
-        int count = dao.countLivingInApartment(1, sList);
-        System.out.println(count);
-        System.out.println("list: "+list);
+
+        List<Customer> cusList = dao.getActiveResidentForManage(1, 5, 0, null, 2, 2, null);
+        System.out.println("custList size: " + cusList);
+
+        int count2 = dao.countActiveResidentForManage(0, null, 2, 1, null);
+        System.out.println("count: " + count2);
     }
 }

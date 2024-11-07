@@ -334,35 +334,78 @@
                                 </div>
                             </div>
                         </div> 
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800 text-primary">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
-                        </div>
-                        <!-- Billing information for one year -->
-                        <div class="row">
-                            <!-- Total information for one year -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Tổng hóa đơn (${requestScope.currentYear})
-                                                </div>
-                                                <fmt:setLocale value = "en_US"/>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatNumber value="${requestScope.totalBill}" type="number" maxFractionDigits="0"></fmt:formatNumber>
-                                                        VNĐ
+
+                        <!-- Total information for one year -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4 col-xl-5 col-md-5">
+                                    <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary ">Tổng hóa đơn trong năm ${requestScope.currentYear}</h1>
+                                </div>
+                                <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
+                                    <div class="col-xl-6 col-md-6">
+                                        <input type="hidden" name="apartmentID" value="${requestScope.apartment.apartmentID}" />
+                                        <fmt:setLocale value = "vi_VN"/>
+                                        <label for="month" class="form-label">Chọn Tháng</label>
+                                        <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
+                                            <c:forEach items="${requestScope.listOfMonth}" var="month">
+                                                <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
+                                                    Tháng ${pageScope.month}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6 col-md-6">
+                                        <label for="year" class="form-label">Chọn Năm</label>
+                                        <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
+                                            <c:forEach items="${requestScope.listOfYear}" var="yList">
+                                                <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
+                                                    ${yList}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="" class="card-body row">
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        Tổng hóa đơn (${requestScope.currentYear})
+                                                    </div>
+                                                    <fmt:setLocale value = "en_US"/>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        <fmt:formatNumber value="${requestScope.totalBill}" type="number" maxFractionDigits="0"></fmt:formatNumber>
+                                                            VNĐ
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-money-bill fa-2x text-gray-300"></i>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Billing information for one year -->
+                                    <!-- Pending Requests Card Example -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-info shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                            Tổng số hóa đơn</div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.numOfInvoice}</div>
+                                                </div>
                                                 <div class="col-auto">
-                                                    <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- End Billing information for one year -->
-
                                 <!--Paid amount billing information year-->
                                 <div class="col-xl-3 col-md-6 mb-4">
                                     <div class="card border-left-success shadow h-100 py-2">
@@ -370,34 +413,33 @@
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Tổng đã thanh toán
+                                                        Tổng thanh toán trong tháng
                                                     </div>
                                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatNumber value="${requestScope.paid} " type="number" maxFractionDigits="0"></fmt:formatNumber>
-                                                        VNĐ
+                                                        <fmt:formatNumber value="${requestScope.totalAmountCurrent} " type="number" maxFractionDigits="0"></fmt:formatNumber>
+                                                            VNĐ
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--Paid amount billing information year-->
+                                    <!--Paid amount billing information year-->
 
-                                <!-- UnPaid amount billing information year -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Chưa thanh toán
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatNumber value="${requestScope.unpaid} " type="number" maxFractionDigits="0"></fmt:formatNumber>
-                                                        VNĐ
+                                    <!-- UnPaid amount billing information year -->
+                                    <div class="col-xl-3 col-md-6 mb-4">
+                                        <div class="card border-left-warning shadow h-100 py-2">
+                                            <div class="card-body">
+                                                <div class="row no-gutters align-items-center">
+                                                    <div class="col mr-2">
+                                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                            Tổng hóa đơn trong tháng
+                                                        </div>
+                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                        ${requestScope.numOfInvoiceInMonth}
                                                     </div>
                                                 </div>
                                                 <div class="col-auto">
@@ -408,177 +450,24 @@
                                     </div>
                                 </div>
                                 <!--UnPaid amount billing information year-->
-                                <!-- Pending Requests Card Example -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-info shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                        Tổng số hóa đơn</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.numOfInvoice}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                            <!-- End Billing information for one year -->
                         </div>
-                        <!-- End Billing information for one year -->
-
-                        <!--Billing information for month-->
-                        <div class="d-flex align-items-center justify-content-between mb-4 row">
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4 col-xl-5 col-md-5">
-                                <h1 id="currentMonth" class="h3 mb-0 text-gray-800 text-primary ">Thông tin hóa đơn trong tháng</h1>
-                            </div>
-                            <form class="d-flex col-xl-7 col-md-7" action="userhome" method="GET" id="chooseMonthYear">
-                                <div class="col-xl-6 col-md-6">
-                                    <input type="hidden" name="apartmentID" value="${requestScope.apartment.apartmentID}" />
-                                    <fmt:setLocale value = "vi_VN"/>
-                                    <label for="month" class="form-label">Chọn Tháng</label>
-                                    <select id="month" name="selectMonth" class="form-select me-2" aria-label="Select Month" onchange="submitMonth()">
-                                        <c:forEach items="${requestScope.dateList}" var="dList">
-                                            <fmt:formatDate value="${dList}" pattern="M" var="month"/>
-                                            <option ${pageScope.month == requestScope.currentMonth ? 'selected' : ''} value="${month}">
-                                                <fmt:formatDate value="${dList}" pattern="MMMM"></fmt:formatDate>
-                                                </option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="col-xl-6 col-md-6">
-                                    <label for="year" class="form-label">Chọn Năm</label>
-                                    <select id="year" name="selectYear" class="form-select" aria-label="Select Year" onchange="submitMonth()">
-                                        <c:forEach items="${requestScope.listOfYear}" var="yList">
-                                            <option ${requestScope.currentYear == pageScope.yList ? 'selected' : ''} value="${pageScope.yList}">
-                                                ${yList}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="row">
-                            <!-- Earnings (Monthly) Card Example -->
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Tổng hóa đơn trong tháng</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:setLocale value = "en_US"/>
-                                                    <fmt:formatNumber value="${requestScope.invoiceCurrent.amount}" type="number" maxFractionDigits="0"></fmt:formatNumber> VNĐ
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-money-bill fa-2x text-gray-300"></i>
-                                                </div>
+<!--                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
+                                                Trạng thái
                                             </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Earnings (Monthly) Card Example -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-success shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                        Ngày phát hành</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.issueDate}"></fmt:formatDate>
-                                                    <c:if test="${requestScope.invoiceCurrent.issueDate == null}">không khả dụng</c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <!-- Pending Requests Card Example -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                    <div class="card border-left-warning shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                        Ngày hết hạn</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                    <fmt:formatDate pattern="dd/MM/YYY" value="${requestScope.invoiceCurrent.dueDate}"></fmt:formatDate>
-                                                    <c:if test="${requestScope.invoiceCurrent.dueDate == null}">không khả dụng</c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Pending Requests Card Example -->
-                                <div class="col-xl-3 col-md-6 mb-4">
-                                <c:if test="${requestScope.invoiceCurrent.status == 1}">
-                                    <c:set var="colorTab" value="success"></c:set>
-                                    <c:set var="status" value="Đã thanh toán"/>
-                                </c:if>
-                                <c:if test="${requestScope.invoiceCurrent.status == 0}">
-                                    <c:set var="colorTab" value="danger"></c:set>
-                                    <c:set var="status" value="Chưa thanh toán"/>
-                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
-                                                        Trạng thái
-                                                    </div>
-                                                        <a class="pay" style="text-decoration: none" href="#" onclick="submitPayment()">
-                                                        <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status} (Bấm để thanh toán)</div>
-                                                    </a>
-                                                    <form id="paysubmit" action="/AtpMan/payinvoice" method="post" style="display: none">
-                                                        <input type="hidden" name ="amount" value="${requestScope.invoiceCurrent.amount}"/>
-                                                        <input type="hidden" name ="invoiceId" value="${requestScope.invoiceCurrent.invoiceId}"/>
-                                                    </form>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:if>
-                                <c:if test="${requestScope.invoiceCurrent.dueDate == null}">
-                                    <c:set var="colorTab" value="secondary"></c:set>
-                                    <c:set var="status" value="Không khả dụng"/>
-                                </c:if>
-                                <c:if test="${requestScope.invoiceCurrent.status != 0}">
-                                    <div class="card border-left-${colorTab} shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <div class="text-xs font-weight-bold text-${colorTab} text-uppercase mb-1">
-                                                        Trạng thái
-                                                    </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pageScope.status}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:if>
-                            </div>
-                        </div>
-                        <!--End Current month's billing information-->
+                            </div>-->
 
                         <!-- Content Row -->
 
@@ -778,7 +667,7 @@
                                                                     function submitMonth() {
                                                                         document.getElementById('chooseMonthYear').submit();
                                                                     }
-                                                                    
+
                                                                     function submitPayment() {
                                                                         document.getElementById("paysubmit").submit();
                                                                     }

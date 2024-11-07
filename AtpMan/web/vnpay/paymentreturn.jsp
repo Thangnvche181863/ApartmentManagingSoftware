@@ -325,7 +325,7 @@
                                 </p>
                             </div>
                         </div>
-                        <a href="/AtpMan/user/userhome" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Quay lại</a>
+                        <a href="${requestScope.returnURL}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Quay lại</a>
                     </div>
                 </div>
             </div>

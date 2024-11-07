@@ -133,7 +133,7 @@ public class InvoiceStatisticTableAjax extends HttpServlet {
             searchTermList = Arrays.asList(searchTermArray);
         }
 
-        int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartmentID, month, year, searchTermList);
+        int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartmentID, month, year);
         int totalPages = (int) Math.ceil((double) totalServiceRows / servicePerPage);
 
         if (currentPage > totalPages) {

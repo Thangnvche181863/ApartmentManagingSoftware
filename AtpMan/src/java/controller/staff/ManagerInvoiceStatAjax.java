@@ -87,7 +87,6 @@ public class ManagerInvoiceStatAjax extends HttpServlet {
         Locale locale = Locale.US;
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-
         out.println("<div class=\"table-responsive\">\n"
                 + "                                <table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">\n"
                 + "                                    <thead style=\"background-color: #4e73df; color: white\">\n"
@@ -151,7 +150,7 @@ public class ManagerInvoiceStatAjax extends HttpServlet {
         }
         if (currentPage < totalPaidInvoicePage) {
             out.println("                                                <li class=\"page-item\">\n"
-                    + "                                                    <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Previous</button>\n"
+                    + "                                                    <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Next</button>\n"
                     + "                                                </li>\n");
         }
 

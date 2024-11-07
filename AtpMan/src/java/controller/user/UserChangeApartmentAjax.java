@@ -124,7 +124,7 @@ public class UserChangeApartmentAjax extends HttpServlet {
             }
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonthYear(apartment.getApartmentID(), month, year);
+        Invoice invoiceCurrent = new Invoice();
 
 //        for (Invoice invoice : iList) {
 //            if (invoice.getIssueDate().toLocalDate().getMonthValue() == month && invoice.getIssueDate().toLocalDate().getYear() == year) {

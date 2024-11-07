@@ -5,6 +5,8 @@
 package controller.vnpay;
 
 import DAO.InvoiceDAO;
+import DAO.InvoiceServiceDAO;
+import DAO.ServiceContractDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -25,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import model.ServiceContract;
 
 /**
  *
@@ -75,12 +78,18 @@ public class PayReturnServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         HttpSession session = request.getSession();
-        String invoiceIdSession = (String) session.getAttribute("invoiceIdPayment");
-
         InvoiceDAO invoiceDAO = new InvoiceDAO();
 
-        String invoiceId_raw = request.getParameter("invoiceId");
-        int invoiceId = Integer.parseInt(invoiceId_raw);
+        String paymentType = request.getParameter("paymentType");
+
+        String returnURL = "/AtpMan/user/userhome";
+        if (paymentType.equals("payExistInvoice")) {
+            returnURL = "/AtpMan/user/userhome";
+        } else if (paymentType.equals("payRegisInvoice")) {
+            returnURL = "/AtpMan/registServiceTenant";
+        }
+        
+        request.setAttribute("returnURL", returnURL);
 
         Map fields = new HashMap();
         for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
@@ -101,6 +110,9 @@ public class PayReturnServlet extends HttpServlet {
         if (fields.containsKey("invoiceId")) {
             fields.remove("invoiceId");
         }
+        if (fields.containsKey("paymentType")) {
+            fields.remove("paymentType");
+        }
         String signValue = Config.hashAllFields(fields);
 
         String vnp_TxnRef = request.getParameter("vnp_TxnRef");
@@ -110,7 +122,6 @@ public class PayReturnServlet extends HttpServlet {
         String vnp_TransactionNo = request.getParameter("vnp_TransactionNo");
         String vnp_BankCode = request.getParameter("vnp_BankCode");
         String vnp_PayDate = request.getParameter("vnp_PayDate");
-
 
         // convert to localdate time
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
@@ -133,17 +144,59 @@ public class PayReturnServlet extends HttpServlet {
         request.setAttribute("vnp_BankCode", vnp_BankCode);
         if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
-                if ( invoiceIdSession != null && invoiceIdSession.equals(invoiceId_raw)) {
-                    invoiceDAO.updateInvoiceTransaction(invoiceId, Timestamp.valueOf(transactionDate), vnp_TxnRef, vnp_TransactionNo, vnp_BankCode, vnp_OrderInfo);
+                if (paymentType.equals("payExistInvoice")) {
+                    String invoiceIdSession = (String) session.getAttribute("invoiceIdPayment");
+                    String invoiceId_raw = request.getParameter("invoiceId");
+
+                    int invoiceId = 0;
+                    try {
+                        invoiceId = Integer.parseInt(invoiceId_raw);
+                    } catch (NumberFormatException e) {
+                    }
+                    if (invoiceIdSession != null) {
+                        invoiceDAO.updateInvoiceTransaction(Integer.parseInt(invoiceIdSession), Timestamp.valueOf(transactionDate), vnp_TxnRef, vnp_TransactionNo, vnp_BankCode, vnp_OrderInfo);
+                        session.removeAttribute("invoiceIdPayment");
+                        request.setAttribute("message", "Thành công");
+                    } else {
+                        session.removeAttribute("invoiceIdPayment");
+                        request.setAttribute("message", "Không thành công");
+                    }
+                } else if (paymentType.equals("payRegisInvoice")) {
+                    LocalDate currentDate = LocalDate.now();
+                    ServiceContract serviceContract = (ServiceContract) session.getAttribute("serviceContract");
+
+                    if (serviceContract != null) {
+                        ServiceContractDAO scdao = new ServiceContractDAO();
+                        InvoiceServiceDAO invoiceServiceDAO = new InvoiceServiceDAO();
+
+                        int stt = invoiceDAO.insertInvoiceForRegistService(serviceContract.getApartmentId(), serviceContract.getAmount().doubleValue(), Date.valueOf(currentDate), Date.valueOf(currentDate), 1, Timestamp.valueOf(transactionDate), vnp_TxnRef, vnp_TransactionNo, vnp_BankCode, vnp_OrderInfo);
+                        int recentInvoiceId = invoiceDAO.getRecentInvoiceId(serviceContract.getApartmentId());
+
+                        scdao.insertServiceContract(serviceContract.getApartmentId(), serviceContract.getServiceId(), serviceContract.getStartDate(), serviceContract.getEndDate(), serviceContract.getAmount().doubleValue());
+                        int serviceContractId = scdao.getRecentServiceContractId(serviceContract.getApartmentId());
+
+                        invoiceServiceDAO.insertInvoiceService(recentInvoiceId, serviceContractId);
+                        session.removeAttribute("serviceContract");
+                        request.setAttribute("message", "Thành công");
+                    } else {
+                        request.setAttribute("message", "Không thành công");
+                    }
+                } else {
                     session.removeAttribute("invoiceIdPayment");
+                    session.removeAttribute("serviceContract");
+                    request.setAttribute("message", "Không thành công");
                 }
-                request.setAttribute("message", "Thành công");
+
                 request.getRequestDispatcher("/vnpay/paymentreturn.jsp").forward(request, response);
             } else {
+                session.removeAttribute("invoiceIdPayment");
+                session.removeAttribute("serviceContract");
                 request.setAttribute("message", "Không thành công");
                 request.getRequestDispatcher("/vnpay/paymentreturn.jsp").forward(request, response);
             }
         } else {
+            session.removeAttribute("invoiceIdPayment");
+            session.removeAttribute("serviceContract");
             request.setAttribute("message", "Sai chữ ký");
             request.getRequestDispatcher("/vnpay/paymentreturn.jsp").forward(request, response);
         }

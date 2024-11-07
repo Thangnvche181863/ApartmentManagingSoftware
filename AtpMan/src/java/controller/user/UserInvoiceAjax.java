@@ -46,224 +46,142 @@ public class UserInvoiceAjax extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        UserHomeUtil userHomeUtil = new UserHomeUtil();
+
+        UserHomeUtil userUtil = new UserHomeUtil();
+        InvoiceDAO invoiceDAO = new InvoiceDAO();
 
         String month_raw = request.getParameter("selectMonth");
         String year_raw = request.getParameter("selectYear");
-        String apartmentID_raw = request.getParameter("apartmentID");
+        String invoiceCode = request.getParameter("invoiceCode");
+        String transactionNo = request.getParameter("transactionNo");
+        String orderInfo = request.getParameter("orderInfo");
+        String bankCode = request.getParameter("bankCode");
+        String currentPage_raw = request.getParameter("currentPage");
+        String invoicePerPage_raw = request.getParameter("invoicePerPage");
+        String apartmentId_raw = request.getParameter("apartmentId");
+        String sort = request.getParameter("sort");
 
-        CustomerDAO customerDAO = new CustomerDAO();
-        
-        // get session resident account
-        HttpSession session = request.getSession();
-        Customer customer = (Customer) session.getAttribute("user");
-
-        // get current date for user first access
-        int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
-        int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
-        int apartmentID = 0;
-
-        if (year_raw != null) {
+        int month = 0;
+        if (month_raw != null && !month_raw.trim().isEmpty()) {
+            try {
+                month = Integer.parseInt(month_raw);
+            } catch (NumberFormatException e) {
+            }
+        }
+        int year = 0;
+        if (year_raw != null && !year_raw.trim().isEmpty()) {
             try {
                 year = Integer.parseInt(year_raw);
             } catch (NumberFormatException e) {
             }
         }
 
-        if (apartmentID_raw != null) {
-            try {
-                apartmentID = Integer.parseInt(apartmentID_raw);
-            } catch (NumberFormatException e) {
-            }
+        int invoicePerPage = 5;
+        try {
+            invoicePerPage = Integer.parseInt(invoicePerPage_raw);
+        } catch (NumberFormatException e) {
         }
 
-        // create dao
-        InvoiceDAO invoiceDAO = new InvoiceDAO();
-        ApartmentDAO apartmentDAO = new ApartmentDAO();
-
-        // get apartment user is living
-        Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
-
-        // if user is owner
-        if (customer.getIsOwner() == 1) {
-            List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
-            if (apartmentID != 0) {
-                for (Apartment apartment1 : apartmentList) {
-                    if (apartment1.getApartmentID() == apartmentID) {
-                        apartment = apartment1;
-                    }
-                }
-            } // if owner not living
-            else if (apartment == null) {
-                apartment = apartmentList.get(0);
-            }
+        int currentPage = 1;
+        try {
+            currentPage = Integer.parseInt(currentPage_raw);
+        } catch (NumberFormatException e) {
         }
 
-        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());
-        LinkedHashSet<Integer> listOfYear = userHomeUtil.listOfYear(dList);
-        LinkedHashSet<Date> listOfMonth = userHomeUtil.listOfMonth(dList, year);
-
-        if (month_raw != null) {
-            try {
-                boolean contain = false;
-                month = Integer.parseInt(month_raw);
-                for (Date date : listOfMonth) {
-                    if (date.toLocalDate().getMonthValue() == month) {
-                        contain = true;
-                    }
-                }
-                if (!contain) {
-                    if (!listOfMonth.isEmpty()) {
-                        Date firstElement = listOfMonth.iterator().next();
-                        month = firstElement.toLocalDate().getMonthValue();
-                    }
-                }
-            } catch (NumberFormatException e) {
-            }
+        int apartmentId = 0;
+        try {
+            apartmentId = Integer.parseInt(apartmentId_raw);
+        } catch (NumberFormatException e) {
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonthYear(apartment.getApartmentID(), month, year);
+        List<String> orderInfoList = userUtil.stringToList(orderInfo);
 
-//        for (Invoice invoice : iList) {
-//            if (invoice.getIssueDate().toLocalDate().getMonthValue() == month && invoice.getIssueDate().toLocalDate().getYear() == year) {
-//                invoiceCurrent = invoice;
-//            }
-//        }
+        int numOfInvoice = invoiceDAO.countInvoiceByApartmentIDandMonth2(apartmentId, month, year, invoiceCode, transactionNo, bankCode, orderInfoList);
+        int totalInvoicePage = (int) Math.ceil((double) numOfInvoice / invoicePerPage);
+
+        if (currentPage > totalInvoicePage) {
+            currentPage = 1;
+        }
+
+        List<Invoice> invoiceCurrentList = invoiceDAO.getInvoiceByApartmentIDandMonth2(apartmentId, month, year, currentPage, invoicePerPage, invoiceCode, transactionNo, bankCode, orderInfoList, sort);
+
         Locale locale = Locale.US;
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
-        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-        out.println("<div class=\"d-flex align-items-center justify-content-between mb-4 row\">\n"
-                + "                                <div class=\"d-sm-flex align-items-center justify-content-between mb-4 col-xl-5 col-md-5\">\n"
-                + "                                    <h1 id=\"currentMonth\" class=\"h3 mb-0 text-gray-800 text-primary \">Thông tin hóa đơn trong tháng</h1>\n"
-                + "                                </div>\n"
-                + "                                <form class=\"d-flex col-xl-7 col-md-7\" action=\"userhome\" method=\"GET\" id=\"chooseMonthYear\">\n"
-                + "                                    <div class=\"col-xl-6 col-md-6\">\n"
-                + "                                        <input id=\"apartmentID\" type=\"hidden\" name=\"apartmentID\" value=\""+apartment.getApartmentID()+"\" />\n"
-                + "                                        <fmt:setLocale value = \"vi_VN\"/>\n"
-                + "                                        <label for=\"month\" class=\"form-label\">Chọn Tháng</label>\n"
-                + "                                        <select id=\"month\" name=\"selectMonth\" class=\"form-select me-2\" aria-label=\"Select Month\" onchange=\"changeMonthAndYear()\">\n");
-        for (Date months : listOfMonth) {
-            out.println("                                   <option " + (month == months.toLocalDate().getMonthValue() ? "selected" : "") + " value=\"" + months.toLocalDate().getMonthValue() + "\">\n"
-                    + "                                          " + monthFormat.format(months) + ""
-                    + "                                      </option>\n");
-        }
-
-        out.println("                                        </select>\n"
-                + "                                    </div>\n"
-                + "                                    <div class=\"col-xl-6 col-md-6\">\n"
-                + "                                        <label for=\"year\" class=\"form-label\">Chọn Năm</label>\n"
-                + "                                        <select id=\"year\" name=\"selectYear\" class=\"form-select\" aria-label=\"Select Year\" onchange=\"changeMonthAndYear()\">\n");
-        for (Integer years : listOfYear) {
-            out.println("                                   <option " + (years == year ? "selected" : "") + " value=\"" + years + "\">\n"
-                    + "                                                    " + years + "\n"
-                    + "                                      </option>\n");
-        }
-        out.println("                                        </select>\n"
-                + "                                    </div>\n"
-                + "                                </form>\n"
-                + "                            </div>\n"
-                + "                            <div class=\"row\">"
-        );
-        out.println("<div class=\"col-xl-3 col-md-6 mb-4\">\n"
-                + "                                <div class=\"card border-left-primary shadow h-100 py-2\">\n"
-                + "                                    <div class=\"card-body\">\n"
-                + "                                        <div class=\"row no-gutters align-items-center\">\n"
-                + "                                            <div class=\"col mr-2\">\n"
-                + "                                                <div class=\"text-xs font-weight-bold text-primary text-uppercase mb-1\">\n"
-                + "                                                    Tổng hóa đơn trong tháng</div>\n"
-                + "                                                <div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n"
-                + "                                                    " + (invoiceCurrent != null ? decimalFormat.format(invoiceCurrent.getAmount()) + " VNĐ" : "Không khả dụng") + "\n"
-                + "                                                    </div>\n"
-                + "                                                </div>\n"
-                + "                                                <div class=\"col-auto\">\n"
-                + "                                                    <i class=\"fas fa-money-bill fa-2x text-gray-300\"></i>\n"
-                + "                                                </div>\n"
-                + "                                            </div>\n"
-                + "                                        </div>\n"
-                + "                                    </div>\n"
-                + "                                </div>\n"
-                + "\n"
-                + "                                <!-- Earnings (Monthly) Card Example -->\n"
-                + "                                <div class=\"col-xl-3 col-md-6 mb-4\">\n"
-                + "                                    <div class=\"card border-left-success shadow h-100 py-2\">\n"
-                + "                                        <div class=\"card-body\">\n"
-                + "                                            <div class=\"row no-gutters align-items-center\">\n"
-                + "                                                <div class=\"col mr-2\">\n"
-                + "                                                    <div class=\"text-xs font-weight-bold text-success text-uppercase mb-1\">\n"
-                + "                                                        Ngày phát hành</div>\n"
-                + "                                                    <div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n"
-                + "                                                    " + (invoiceCurrent != null ? dateFormat.format(invoiceCurrent.getIssueDate()) : "Không khả dụng") + "\n"
-                + "                                                    </div>\n"
-                + "                                                </div>\n"
-                + "                                                <div class=\"col-auto\">\n"
-                + "                                                    <i class=\"fas fa-calendar fa-2x text-gray-300\"></i>\n"
-                + "                                                </div>\n"
-                + "                                            </div>\n"
-                + "                                        </div>\n"
-                + "                                    </div>\n"
-                + "                                </div>\n"
-                + "\n"
-                + "\n"
-                + "                                <!-- Pending Requests Card Example -->\n"
-                + "                                <div class=\"col-xl-3 col-md-6 mb-4\">\n"
-                + "                                    <div class=\"card border-left-warning shadow h-100 py-2\">\n"
-                + "                                        <div class=\"card-body\">\n"
-                + "                                            <div class=\"row no-gutters align-items-center\">\n"
-                + "                                                <div class=\"col mr-2\">\n"
-                + "                                                    <div class=\"text-xs font-weight-bold text-warning text-uppercase mb-1\">\n"
-                + "                                                        Ngày hết hạn</div>\n"
-                + "                                                    <div class=\"h5 mb-0 font-weight-bold text-gray-800\">\n"
-                + "                                                    " + (invoiceCurrent != null ? dateFormat.format(invoiceCurrent.getDueDate()) : "Không khả dụng") + "\n"
-                + "                                                    </div>\n"
-                + "                                                </div>\n"
-                + "                                                <div class=\"col-auto\">\n"
-                + "                                                    <i class=\"fas fa-calendar fa-2x text-gray-300\"></i>\n"
-                + "                                                </div>\n"
-                + "                                            </div>\n"
-                + "                                        </div>\n"
-                + "                                    </div>\n"
-                + "                                </div>\n"
-                + "\n"
-                + "                                <!-- Pending Requests Card Example -->\n"
-                + "                                <div class=\"col-xl-3 col-md-6 mb-4\">\n");
-        String colorTab = "secondary";
-        String status = "Không khả dụng";
-        if (invoiceCurrent != null) {
-            switch (invoiceCurrent.getStatus()) {
-                case 1:
-                    colorTab = "success";
-                    status = "Đã thanh toán";
-                    break;
-                case 0:
-                    colorTab = "danger";
-                    status = "Chưa thanh toán";
-                    break;
-                default:
-                    colorTab = "secondary";
-                    status = "Không khả dụng";
-                    break;
+        out.println("<div class=\"table-responsive\">\n"
+                + "                                <table class=\"table table-bordered\" id=\"dataTable\" width=\"100%\" cellspacing=\"0\">\n"
+                + "                                    <thead style=\"background-color: #4e73df; color: white\">\n"
+                + "                                        <tr>\n"
+                + "                                            <th>#</th>\n"
+                + "                                            <th>Mã giao dịch</th>\n"
+                + "                                            <th>Mã hóa đơn</th>\n"
+                + "                                            <th>Đơn giá</th>\n"
+                + "                                            <th>Ngân hàng</th>\n"
+                + "                                            <th>Nội dung</th>\n"
+                + "                                            <th>Ngày thanh toán</th>\n"
+                + "                                            <th>Thông tin</th>\n"
+                + "                                        </tr>\n"
+                + "                                    </thead>\n"
+                + "                                    <tbody>\n");
+        if (invoiceCurrentList == null || invoiceCurrentList.isEmpty()) {
+            out.println("                                                <tr>\n"
+                    + "                                                    <td colspan=\"6\"><h4>Không tìm thấy hóa đơn tương ứng</h4></td>\n"
+                    + "                                                  </tr>\n");
+        } else {
+            int count = (numOfInvoice - 1) * invoicePerPage;
+            for (Invoice invoice : invoiceCurrentList) {
+                count++;
+                out.println("                                            <tr>\n"
+                        + "                                                <td>" + count + "</td>\n"
+                        + "                                                <td>" + invoice.getTransactionNo() + "</td>\n"
+                        + "                                                <td>" + invoice.getInvoiceCode() + "</td>\n"
+                        + "                                                <td>" + decimalFormat.format(invoice.getAmount()) + " VNĐ</td>\n"
+                        + "                                                <td>" + invoice.getBankCode() + "</td>\n"
+                        + "                                                <td>" + invoice.getOrderInfo() + "</td>\n"
+                        + "                                                <td>" + dateFormat.format(invoice.getTransactionDate()) + "</td>\n"
+                        + "                                                <td><input class=\"btn btn-primary\" type=\"submit\" value=\"Chi tiết\" onclick=\"handleDetails(" + invoice.getInvoiceId() + " )\"></td>\n"
+                        + "                                                </tr>\n");
             }
         }
-        out.println("                               <div class=\"card border-left-" + colorTab + " shadow h-100 py-2\">\n"
-                + "                                    <div class=\"card-body\">\n"
-                + "                                        <div class=\"row no-gutters align-items-center\">\n"
-                + "                                            <div class=\"col mr-2\">\n"
-                + "                                                <div class=\"text-xs font-weight-bold text-" + colorTab + " text-uppercase mb-1\">\n"
-                + "                                                    Trạng thái\n"
-                + "                                                </div>\n"
-                + "                                                <div class=\"h5 mb-0 font-weight-bold text-gray-800\">" + status + "</div>\n"
-                + "                                            </div>\n"
-                + "                                            <div class=\"col-auto\">\n"
-                + "                                                <i class=\"fas fa-comments fa-2x text-gray-300\"></i>\n"
-                + "                                            </div>\n"
-                + "                                        </div>\n"
-                + "                                    </div>\n"
+        out.println("                                    </tbody>\n"
+                + "                                    <tfoot style=\"background-color: #4e73df; color: white\" class=\"h5\">\n"
+                + "                                        <tr>\n"
+                + "                                            <th colspan=\"9\">\n"
+                + "                                                <div  class=\"d-flex justify-content-between\">\n"
+                + "                                                    <span>\n"
+                + "                                                        Tổng số hóa đơn thanh toán: " + numOfInvoice + "\n"
+                + "                                                    </span>\n"
+                + "                                                    </div>\n"
+                + "                                                </th>\n"
+                + "                                            </tr>\n"
+                + "                                        </tfoot>\n"
+                + "                                    </table>\n"
+                + "                                    <div class=\"d-flex flex-row-reverse\">\n"
+                + "                                        <nav aria-label=\"Page navigation\">\n"
+                + "                                            <ul class=\"pagination justify-content-start\">\n");
+        if (currentPage > 1) {
+            out.println("                                                <li class=\"page-item\">\n"
+                    + "                                                    <button class=\"page-link\" value=\"" + (currentPage - 1) + "\" onclick=\"handleSearchInvoice(this.value)\">Previous</button>\n"
+                    + "                                                </li>\n");
+        }
+        for (int i = 1; i <= totalInvoicePage; i++) {
+            out.println("                                                <li class=\"page-item " + (i == currentPage ? "active" : "") + "\">\n"
+                    + "                                                    <button class=\"page-link\" value=\"" + i + "\" onclick=\"handleSearchInvoice(this.value)\">" + i + "</button>\n"
+                    + "                                                </li>\n");
+        }
+        if (currentPage < totalInvoicePage) {
+            out.println("                                                <li class=\"page-item\">\n"
+                    + "                                                    <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearchInvoice(this.value)\">Next</button>\n"
+                    + "                                                </li>\n");
+        }
+
+        out.println("                                        </ul>\n"
+                + "                                    </nav>\n"
                 + "                                </div>\n"
-                + "                            </div>"
                 + "                            </div>"
         );
     }

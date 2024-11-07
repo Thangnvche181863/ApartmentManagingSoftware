@@ -20,7 +20,9 @@ import java.time.Month;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import utils.UserHomeUtil;
 
 /**
@@ -80,6 +82,11 @@ public class UserHomeServlet extends HttpServlet {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute("user");
 
+        // create dao
+        InvoiceDAO invoiceDAO = new InvoiceDAO();
+        ApartmentDAO apartmentDAO = new ApartmentDAO();
+        NewsDAO newsDAO = new NewsDAO();
+
         // get current date for user first access
         int month = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getMonthValue() - 1 : 12;
         int year = LocalDate.now().getMonthValue() > 0 ? LocalDate.now().getYear() : LocalDate.now().getYear() - 1;
@@ -99,13 +106,9 @@ public class UserHomeServlet extends HttpServlet {
             }
         }
 
-        // create dao
-        InvoiceDAO invoiceDAO = new InvoiceDAO();
-        ApartmentDAO apartmentDAO = new ApartmentDAO();
-        
         // get apartment user is living
         Apartment apartment = apartmentDAO.getApartmentByLiving(customer.getCustomerID());
-        
+
         // if user is owner
         if (customer.getIsOwner() == 1) {
             List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
@@ -122,45 +125,56 @@ public class UserHomeServlet extends HttpServlet {
             request.setAttribute("apartmentList", apartmentList);
         }
 
-        List<Invoice> iList = invoiceDAO.getAllInvoiceByApartmentID(apartment.getApartmentID());
+        LinkedHashMap<Integer, Double> amountInMonth = invoiceDAO.getAmountMonth(apartment.getApartmentID(), year);
+        List<Double> amountMonth = userHomeUtil.listAmountByMonth2(amountInMonth, year);
+
         List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());
         LinkedHashSet<Integer> listOfYear = userHomeUtil.listOfYear(dList);
-        LinkedHashSet<Date> listOfMonth = userHomeUtil.listOfMonth(dList, year);
+        LinkedHashSet<Integer> listOfMonth = userHomeUtil.listOfMonth2(amountInMonth, year);
 
         if (month_raw != null) {
             try {
                 boolean contain = false;
                 month = Integer.parseInt(month_raw);
-                for (Date date : listOfMonth) {
-                    if (date.toLocalDate().getMonthValue() == month) {
+                for (Integer iMonth : listOfMonth) {
+                    if (iMonth == month) {
                         contain = true;
                     }
                 }
                 if (!contain) {
                     if (!listOfMonth.isEmpty()) {
-                        Date firstElement = listOfMonth.iterator().next();
-                        month = firstElement.toLocalDate().getMonthValue();
+                        month = listOfMonth.iterator().next();
                     }
                 }
             } catch (NumberFormatException e) {
             }
-        }
-
-        Invoice invoiceCurrent = new Invoice();
-        
-        for (Invoice invoice : iList) {
-            if(invoice.getIssueDate().toLocalDate().getMonthValue() == month && invoice.getIssueDate().toLocalDate().getYear() == year){
-                invoiceCurrent = invoice;
+        } else {
+            boolean contain = false;
+            for (Integer iMonth : listOfMonth) {
+                if (iMonth == month) {
+                    contain = true;
+                }
+            }
+            if (!contain) {
+                if (!listOfMonth.isEmpty()) {
+                    month = listOfMonth.iterator().next();
+                }
             }
         }
-        
-        // parameter for current year
-        double total = userHomeUtil.totalAmount(iList, year);
-        int numOfInvoice = userHomeUtil.numInvoiceInYear(iList, year);
-        double paid = userHomeUtil.paidAmount(iList, year);
-        double unpaid = userHomeUtil.unPaidAmount(iList, year);
 
-        NewsDAO newsDAO = new NewsDAO();
+        // parameter for current year
+        double totalAmount = userHomeUtil.totalAmount2(amountInMonth);
+        int numOfInvoice = invoiceDAO.countInvoiceByApartmentIdInYear(apartment.getApartmentID(), year);
+        double totalAmountCurrent = userHomeUtil.totalAmountInMonth(amountInMonth, month);
+        int numOfInvoiceInMonth = invoiceDAO.countInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year);
+
+        System.out.println("month:" + month);
+        System.out.println("apt:" + apartment.getApartmentID());
+        System.out.println(totalAmountCurrent);
+        for (Map.Entry<Integer, Double> entry : amountInMonth.entrySet()) {
+            System.out.println("month: " + entry.getKey());
+            System.out.println(entry.getValue());
+        }
 
         //get current page from the request
         String pageParam = request.getParameter("page");
@@ -178,32 +192,29 @@ public class UserHomeServlet extends HttpServlet {
         //calculate totalPages
         int totalRows = newsDAO.getNumberOfRows();
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
-    
-        
+
         List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);
         List<News> bannerList = newsDAO.getNewsForBanner();
 
+        // news att
         request.setAttribute("newsBanner", bannerList);
         request.setAttribute("news", newsList);
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentServicePage", "1");
 
-        // area chart
-        List<Double> amoutMonth = userHomeUtil.listAmountByMonth(iList, year);
-        request.setAttribute("amoutMonth", amoutMonth);
-
-        request.setAttribute("dateList", listOfMonth);
+        // area chart, month and year value
+        request.setAttribute("amoutMonth", amountMonth);
+        request.setAttribute("listOfMonth", listOfMonth);
         request.setAttribute("currentMonth", month);
         request.setAttribute("currentYear", year);
         request.setAttribute("listOfYear", listOfYear);
 
-        request.setAttribute("totalBill", total);
+        // bill information
+        request.setAttribute("totalBill", totalAmount);
         request.setAttribute("numOfInvoice", numOfInvoice);
-        request.setAttribute("paid", paid);
-        request.setAttribute("unpaid", unpaid);
-
-        request.setAttribute("invoiceCurrent", invoiceCurrent);
+        request.setAttribute("totalAmountCurrent", totalAmountCurrent);
+        request.setAttribute("numOfInvoiceInMonth", numOfInvoiceInMonth);
 
         request.setAttribute("apartment", apartment);
         request.getRequestDispatcher("/user/userhome.jsp").forward(request, response);

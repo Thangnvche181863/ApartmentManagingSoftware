@@ -68,7 +68,9 @@ public class ManagerInvoiceStatServlet extends HttpServlet {
         int currentPage = 1;
 
         BigDecimal totalAmount = invoiceDAO.totalPaidInvoice();
+        BigDecimal totalAmountCurrentMonth = invoiceDAO.totalPaidInvoiceCurrentMonth(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
         int totalPaidInvoice = invoiceDAO.totalInvoiceByStatus(1);
+        int totalPaidInvoiceCurrentMonth = invoiceDAO.countPaidInvoiceCurrentMonth(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
         Date minDate = invoiceDAO.getEarliestDateInvoice();
         LocalDate maxDate = LocalDate.now();
 
@@ -78,7 +80,9 @@ public class ManagerInvoiceStatServlet extends HttpServlet {
         int totalPaidInvoicePage = (int) Math.ceil((double) totalPaidInvoice / invoicePerPage);
 
         request.setAttribute("totalAmount", totalAmount);
+        request.setAttribute("totalAmountCurrentMonth", totalAmountCurrentMonth);
         request.setAttribute("totalPaidInvoice", totalPaidInvoice);
+        request.setAttribute("totalPaidInvoiceCurrentMonth", totalPaidInvoiceCurrentMonth);
         request.setAttribute("invoiceList", invoiceList);
         request.setAttribute("minDate", minDate);
         request.setAttribute("maxDate", maxDate);
