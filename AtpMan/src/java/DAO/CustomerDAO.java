@@ -356,7 +356,8 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
-                + "where l.apartmentID = ?";
+                + "where l.apartmentID = ? "
+                + "and endDate is null";
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
