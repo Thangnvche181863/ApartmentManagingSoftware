@@ -190,7 +190,7 @@ public class UserHomeServlet extends HttpServlet {
         }
 
         //calculate totalPages
-        int totalRows = newsDAO.getNumberOfRows();
+        int totalRows = newsDAO.getNumberOfRowsForTin();
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
 
         List<News> newsList = newsDAO.getNewsByPage(currentPage, RECORDS_PER_PAGE);

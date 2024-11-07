@@ -4,6 +4,7 @@
  */
 package controller.vnpay;
 
+import DAO.DiscountDAO;
 import DAO.ServiceContractDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import model.Discount;
 import model.ServiceContract;
 
 /**
@@ -101,16 +103,24 @@ public class PayInvoiceServlet extends HttpServlet {
             String serviceID = request.getParameter("serviceID");
             String amount_raw = request.getParameter("amount");
             String subscriptionPlan = request.getParameter("subscriptionPlan");
+
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = LocalDate.now();
 
+            DiscountDAO ddao = new DiscountDAO();
+
+            Discount discount = ddao.getDiscountById(Integer.parseInt(serviceID));
+            double getdiscount = 1;
             // Kiểm tra giá trị của subscriptionPlan
             if ("1".equals(subscriptionPlan)) {
                 endDate = startDate.plus(1, ChronoUnit.MONTHS);; // Nếu là gói 1 tháng,
+                getdiscount = discount.getOneMonth();
             } else if ("2".equals(subscriptionPlan)) {
                 endDate = startDate.plus(2, ChronoUnit.MONTHS); // Gói 2 tháng
+                getdiscount = discount.getTwoMonth();
             } else if ("3".equals(subscriptionPlan)) {
                 endDate = startDate.plus(3, ChronoUnit.MONTHS); // Gói 3 tháng
+                getdiscount = discount.getThreeMonth();
             }
 
             double amount = Double.parseDouble(amount_raw.replaceAll(",", "").replace(" VND/tháng", ""));
@@ -118,7 +128,8 @@ public class PayInvoiceServlet extends HttpServlet {
 //                amount = Double.parseDouble(amount_raw);
 //            } catch (NumberFormatException e) {
 //            }
-
+            amount = amount * (1 - (getdiscount / 100.0));
+            System.out.println(amount);
             int amt = (int) amount;
 
             ServiceContract serviceContract = new ServiceContract();
@@ -128,7 +139,7 @@ public class PayInvoiceServlet extends HttpServlet {
             serviceContract.setEndDate(Date.valueOf(endDate));
             serviceContract.setAmount(BigDecimal.valueOf(amount));
 
-            session.setAttribute("serviceContract", serviceContract);
+            session.setAttribute("serviceContractSession", serviceContract);
 
             request.setAttribute("amount", amt);
             request.setAttribute("apartmentID", apartmentID);

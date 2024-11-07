@@ -50,7 +50,7 @@ public class UserhomeNewsServlet extends HttpServlet {
             currentPage = 1;
         }
 
-        int totalRows = newsDAO.getNumberOfRows();
+        int totalRows = newsDAO.getNumberOfRowsForTin();
         //calculate totalPages
         int totalPages = (int) Math.ceil((double) totalRows / RECORDS_PER_PAGE);
 

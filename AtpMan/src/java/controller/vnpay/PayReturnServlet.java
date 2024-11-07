@@ -163,7 +163,7 @@ public class PayReturnServlet extends HttpServlet {
                     }
                 } else if (paymentType.equals("payRegisInvoice")) {
                     LocalDate currentDate = LocalDate.now();
-                    ServiceContract serviceContract = (ServiceContract) session.getAttribute("serviceContract");
+                    ServiceContract serviceContract = (ServiceContract) session.getAttribute("serviceContractSession");
 
                     if (serviceContract != null) {
                         ServiceContractDAO scdao = new ServiceContractDAO();
