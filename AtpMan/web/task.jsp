@@ -97,170 +97,171 @@
     </style>
 
     <body id="page-top">
-        <%@include file="sidebar.jsp" %>
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <%@include file="topbar.jsp" %>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
 
-                <div class="container-fluid">
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Công việc đã giao
-                            <a class="btn btn-primary" href="assignment">Chưa giao</a>
-                            <a class="btn btn-primary" href="task">Đã giao </a>
-                        </h1>
-                        <!-- Hiển thị thông báo nếu có -->
-                        <c:if test="${not empty sessionScope.mess}">
-                            <div class="alert alert-success" role="alert">
-                                ${sessionScope.mess}
-                            </div>
-                            <c:remove var="mess" scope="session"/> <!-- Xóa thông báo sau khi hiển thị -->
-                        </c:if>
-                    </div>
-
-                    <!-- Form lọc công việc -->
-                    <div class="form-container">
-                        <form action="task" method="POST">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Số Dòng</th>
-                                        <th class="text-center">Phân Loại</th>
-                                        <th class="text-center">Tìm Kiếm</th>
-                                        <th class="text-center">Tổng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <select name="recordsPerPage" onchange="this.form.submit()" style="width: 80px;">
-                                                <option value="10" <c:if test="${recordsPerPage == 10}">selected</c:if>>10</option>
-                                                <option value="25" <c:if test="${recordsPerPage == 25}">selected</c:if>>25</option>
-                                                <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
-                                                <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="status" onchange="this.form.submit()">
-                                                    <option value="0" <c:if test="${selectedStatus == '0'}">selected</c:if>>Tất cả</option>
-                                                <option value="Da hoan thanh" <c:if test="${selectedStatus == 'Da hoan thanh'}">selected</c:if>>Đã hoàn thành</option>
-                                                <option value="Chua hoan thanh" <c:if test="${selectedStatus == 'Chua hoan thanh'}">selected</c:if>>Chưa hoàn thành</option>
-                                                </select>
-                                            </td>
-
-
-                                            </td>
-                                            <td>
-                                                <input type="text" value="" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()" />
-                                            </td>
-                                            <td class="total-label text-center">
-                                            ${amountOfAssignment} việc
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
-
-                    <!-- Bảng công việc -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="pagination">
-                                    <c:if test="${currentPage > 1}">
-                                        <a href="task?page=${currentPage - 1}">Trước</a>
-                                    </c:if>
-                                    <c:forEach begin="1" end="${totalPages}" var="i">
-                                        <c:choose>
-                                            <c:when test="${i == currentPage}">
-                                                <strong>${i}</strong> <!-- Hiển thị số trang hiện tại -->
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="task?page=${i}">${i}</a> <!-- Liên kết đến các trang khác -->
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-                                    <c:if test="${currentPage < totalPages}">
-                                        <a href="task?page=${currentPage + 1}">Sau</a>
-                                    </c:if>
+                    <div class="container-fluid">
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Công việc đã giao
+                                <a class="btn btn-primary" href="assignment">Chưa giao</a>
+                                <a class="btn btn-primary" href="task">Đã giao </a>
+                            </h1>
+                            <!-- Hiển thị thông báo nếu có -->
+                            <c:if test="${not empty sessionScope.mess}">
+                                <div class="alert alert-success" role="alert">
+                                    ${sessionScope.mess}
                                 </div>
+                                <c:remove var="mess" scope="session"/> <!-- Xóa thông báo sau khi hiển thị -->
+                            </c:if>
+                        </div>
 
-
-                                <table class="table table-bordered" width="100%" cellspacing="0">
+                        <!-- Form lọc công việc -->
+                        <div class="form-container">
+                            <form action="task" method="POST">
+                                <table>
                                     <thead>
                                         <tr>
-                                            <th>Người chịu trách nhiệm</th>
-                                            <th>Tên công việc</th>
-                                            <th>Ngày giao</th>
-                                            <th>Hạn</th>
-                                            <th class="text-center">Trạng thái</th>
+                                            <th class="text-center">Số Dòng</th>
+                                            <th class="text-center">Phân Loại</th>
+                                            <th class="text-center">Tìm Kiếm</th>
+                                            <th class="text-center">Tổng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listAssignments}" var="ls">
-                                            <tr>
-                                                <td>${ls.staffName}</td>
-                                                <td>${ls.taskName}</td>
-                                                <td>${ls.startTime}</td>
-                                                <td>${ls.endTime}</td>
-                                                <td class="text-center">
-                                                    <c:choose>
-                                                        <c:when test="${ls.status == 'Da hoan thanh'}">
-                                                            <span class="text-warning ">Đã hoàn thành</span>  
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <span class="text-primary">Chưa hoàn thành</span>  
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                        <tr>
+                                            <td>
+                                                <select name="recordsPerPage" onchange="this.form.submit()" style="width: 80px;">
+                                                    <option value="10" <c:if test="${recordsPerPage == 10}">selected</c:if>>10</option>
+                                                    <option value="25" <c:if test="${recordsPerPage == 25}">selected</c:if>>25</option>
+                                                    <option value="50" <c:if test="${recordsPerPage == 50}">selected</c:if>>50</option>
+                                                    <option value="100" <c:if test="${recordsPerPage == 100}">selected</c:if>>100</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="status" onchange="this.form.submit()">
+                                                        <option value="0" <c:if test="${selectedStatus == '0'}">selected</c:if>>Tất cả</option>
+                                                    <option value="Da hoan thanh" <c:if test="${selectedStatus == 'Da hoan thanh'}">selected</c:if>>Đã hoàn thành</option>
+                                                    <option value="Chua hoan thanh" <c:if test="${selectedStatus == 'Chua hoan thanh'}">selected</c:if>>Chưa hoàn thành</option>
+                                                    </select>
                                                 </td>
 
 
-                                            </tr>
-                                            <!-- Modal giao việc -->
-
-
-
-                                        </c:forEach>
+                                                </td>
+                                                <td>
+                                                    <input type="text" value="" name="search" class="search-box" placeholder="Nhập từ khóa..." onchange="this.form.submit()" />
+                                                </td>
+                                                <td class="total-label text-center">
+                                                ${amountOfAssignment} việc
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
+                            </form>
+                        </div>
+
+                        <!-- Bảng công việc -->
+                        <div class="card shadow mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="pagination">
+                                        <c:if test="${currentPage > 1}">
+                                            <a href="task?page=${currentPage - 1}">Trước</a>
+                                        </c:if>
+                                        <c:forEach begin="1" end="${totalPages}" var="i">
+                                            <c:choose>
+                                                <c:when test="${i == currentPage}">
+                                                    <strong>${i}</strong> <!-- Hiển thị số trang hiện tại -->
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="task?page=${i}">${i}</a> <!-- Liên kết đến các trang khác -->
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <c:if test="${currentPage < totalPages}">
+                                            <a href="task?page=${currentPage + 1}">Sau</a>
+                                        </c:if>
+                                    </div>
+
+
+                                    <table class="table table-bordered" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Người chịu trách nhiệm</th>
+                                                <th>Tên công việc</th>
+                                                <th>Ngày giao</th>
+                                                <th>Hạn</th>
+                                                <th class="text-center">Trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${listAssignments}" var="ls">
+                                                <tr>
+                                                    <td>${ls.staffName}</td>
+                                                    <td>${ls.taskName}</td>
+                                                    <td>${ls.startTime}</td>
+                                                    <td>${ls.endTime}</td>
+                                                    <td class="text-center">
+                                                        <c:choose>
+                                                            <c:when test="${ls.status == 'Da hoan thanh'}">
+                                                                <span class="text-warning ">Đã hoàn thành</span>  
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <span class="text-primary">Chưa hoàn thành</span>  
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+
+
+                                                </tr>
+                                                <!-- Modal giao việc -->
+
+
+
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-fluid">
+                    <div class="container-fluid">
 
-                    <!-- Thêm biểu đồ hình tròn -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body text-center">
-                            <h4>Tỷ lệ công việc đã hoàn thành và chưa hoàn thành</h4>
-                            <style>
-                                #completionChart {
-                                    width: 400px ;
-                                    height: 400px ;
-                                    margin: auto;
-                                }
-                                .completion-percentage {
-                                    font-weight: bold;
-                                    margin-top: 15px;
-                                    color: #4e73df;
-                                }
-                            </style>
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                <canvas id="completionChart"></canvas>
-                            </div>
-                            <div class="completion-percentage">
-                                Đã hoàn thành: 
-                                <span id="completedPercentage"></span>% công việc
+                        <!-- Thêm biểu đồ hình tròn -->
+                        <div class="card shadow mb-4">
+                            <div class="card-body text-center">
+                                <h4>Tỷ lệ công việc đã hoàn thành và chưa hoàn thành</h4>
+                                <style>
+                                    #completionChart {
+                                        width: 400px ;
+                                        height: 400px ;
+                                        margin: auto;
+                                    }
+                                    .completion-percentage {
+                                        font-weight: bold;
+                                        margin-top: 15px;
+                                        color: #4e73df;
+                                    }
+                                </style>
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    <canvas id="completionChart"></canvas>
+                                </div>
+                                <div class="completion-percentage">
+                                    Đã hoàn thành: 
+                                    <span id="completedPercentage"></span>% công việc
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
+
                 </div>
-
-
             </div>
         </div>
-
 
 
         <!-- Scripts -->

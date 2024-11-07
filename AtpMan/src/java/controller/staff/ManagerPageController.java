@@ -7,6 +7,7 @@ package controller.staff;
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
+import DAO.InvoiceDAO;
 import DAO.LivingDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
@@ -61,6 +62,10 @@ public class ManagerPageController extends HttpServlet {
             TaskDAO tdao = new TaskDAO();
             int amountOfTask = tdao.getAmountOfTask();
             request.setAttribute("amountOfTask", amountOfTask);
+            
+            InvoiceDAO invoiceDAO = new InvoiceDAO();
+            int totalInvoice = invoiceDAO.totalInvoiceByStatus(1);
+            request.setAttribute("totalInvoice", totalInvoice);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }

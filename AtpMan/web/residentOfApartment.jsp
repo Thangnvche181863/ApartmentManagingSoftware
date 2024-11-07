@@ -23,81 +23,82 @@
     </head>
 
     <body id="page-top">
+        <div id="wrapper">
+            <!-- Page Wrapper -->
+            <%@include file="sidebar.jsp" %>
 
-        <!-- Page Wrapper -->
-        <%@include file="sidebar.jsp" %>
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
 
-            <!-- Main Content -->
-            <div id="content">
+                    <!-- Topbar -->
+                    <%@include file="topbar.jsp" %>
+                    <!-- End of Topbar -->
 
-                <!-- Topbar -->
-                <%@include file="topbar.jsp" %>
-                <!-- End of Topbar -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
+                        <!-- Content Row -->
+                        <div class="row">
 
-                    <!-- Content Row -->
-                    <div class="row">
+                            <!-- Earnings (Monthly) Card Example -->
+                            <c:set value="${requestScope.listResidentName}" var="nameList"></c:set>
+                            <c:set value="0" var="countName"></c:set>
+                            <c:set value="${requestScope.listResidentAge}" var="ageList"></c:set>
+                            <c:set value="0" var="countAge"></c:set>
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <c:set value="${requestScope.listResidentName}" var="nameList"></c:set>
-                        <c:set value="0" var="countName"></c:set>
-                        <c:set value="${requestScope.listResidentAge}" var="ageList"></c:set>
-                        <c:set value="0" var="countAge"></c:set>
+                            <c:forEach items="${listResident}" var="o">
 
-                        <c:forEach items="${listResident}" var="o">
-
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    ID: ${o.livingID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-user fa-2x text-gray-400"></i>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        ID: ${o.livingID}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-user fa-2x text-gray-400"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <c:set value="${countName + 1}" var="countName"></c:set>
-                            <c:set value="${countAge + 1}" var="countAge"></c:set>
-                        </c:forEach>
-                    </div>
+                                <c:set value="${countName + 1}" var="countName"></c:set>
+                                <c:set value="${countAge + 1}" var="countAge"></c:set>
+                            </c:forEach>
+                        </div>
 
-                    <!-- Logout Modal-->
-                    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                    <a class="btn btn-primary" href="login.html">Logout</a>
+                        <!-- Logout Modal-->
+                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                        <a class="btn btn-primary" href="login.html">Logout</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +106,6 @@
                 </div>
             </div>
         </div>
-
 
         <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>

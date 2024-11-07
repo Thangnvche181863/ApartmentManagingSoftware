@@ -25,6 +25,7 @@
 
     <body id="page-top">
 
+        <div id="wrapper">
         <!-- Page Wrapper -->
         <%@include file="sidebar.jsp" %>
 

@@ -104,6 +104,7 @@
     </script>
 
     <body id="page-top">
+        <div id="wrapper">
         <!-- Include sidebar -->
         <%@include file="sidebar.jsp" %>
 

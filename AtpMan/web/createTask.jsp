@@ -97,55 +97,57 @@
     </style>
 
     <body id="page-top">
-        <%@include file="sidebar.jsp" %>
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <%@include file="topbar.jsp" %>
-                <form action="assignment" method="POST">
-                    <input type="hidden" name="service" value="create">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-12 border-right">
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
+                    <form action="assignment" method="POST">
+                        <input type="hidden" name="service" value="create">
+                        <div class="container rounded bg-white mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-md-12 border-right">
 
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Thêm công việc</h4>
-                                    </div>
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="text-right">Thêm công việc</h4>
+                                        </div>
 
-                                    <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Tên công việc</label><input type="text" name="taskName" class="form-control" placeholder="Tên công việc" value=""></div>
-                                        <div class="col-md-12"><label class="labels">Mô tả</label><input type="text" name="description" class="form-control" placeholder="Mô tả công việc" value=""></div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Loại công việc</label>
-                                            <select name="taskType" class="form-control">
-                                                <option value="Bảo trì">Bảo trì</option>
-                                                <option value="Dịch vụ">Dịch vụ</option>
-                                                <option value="Chi tiêu">Chi tiêu</option>
-                                                <option value="An ninh">An ninh</option>
-                                            </select>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12"><label class="labels">Tên công việc</label><input type="text" name="taskName" class="form-control" placeholder="Tên công việc" value=""></div>
+                                            <div class="col-md-12"><label class="labels">Mô tả</label><input type="text" name="description" class="form-control" placeholder="Mô tả công việc" value=""></div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Loại công việc</label>
+                                                <select name="taskType" class="form-control">
+                                                    <option value="Bảo trì">Bảo trì</option>
+                                                    <option value="Dịch vụ">Dịch vụ</option>
+                                                    <option value="Chi tiêu">Chi tiêu</option>
+                                                    <option value="An ninh">An ninh</option>
+                                                </select>
+                                            </div>
+
+
                                         </div>
 
 
+                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Tạo</button></div>
+
                                     </div>
-
-
-                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Tạo</button></div>
 
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
+
+                    </form>
+                </div>
             </div>
         </div>
-    </form>
 
 
 
-
-</div>    
+    </div>    
 </div> 
 
 

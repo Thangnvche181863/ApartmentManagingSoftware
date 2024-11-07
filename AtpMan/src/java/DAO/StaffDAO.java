@@ -530,9 +530,8 @@ public class StaffDAO {
     public static void main(String[] args) {
 
         StaffDAO dao = new StaffDAO();
-        List<Staff> n = dao.getAllStaffHaveRole();
-        System.out.println("Húp" + n.get(1).getRoleAuthority());
-        System.out.println(""+dao.getAllInformationstaff("Nghia", "sRY4rMY8/DtYD2+OQLAkTVClzcY="));
 
+        List<Staff> n1 = dao.staffPaging(1, 10);
+        System.out.println(n1);
     }
 }

@@ -59,7 +59,6 @@ public class UserLogin extends HttpServlet {
                 String userName = customer.getName();
                 session.setAttribute("user", customer);
                 session.setAttribute("name", userName);
-                response.sendRedirect("userhome");
                 session.setAttribute("customer", customer);
                 request.getSession().setAttribute("userRole", "customer");
                 response.sendRedirect("user/userhome");

@@ -27,22 +27,8 @@
             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             rel="stylesheet">
 
-
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <!-- cai nay cua table -->
 
@@ -130,77 +116,79 @@
         }
     </script>
     <body>
-        <%@include file="sidebar.jsp" %>
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+                <!-- Main Content -->
+                <div id="content">
 
-                <!-- Topbar -->
-                <%@include file="topbar.jsp" %>
-
-
-
-                <form action="profile" enctype="multipart/form-data" method="POST">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-4 border-right">
-                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="${user.staffImg}" id="imgPreview" width="150px" height="150px" >
-                                    <span class="font-weight-bold">${user.name}</span><span class="text-black-50">${user.email}</span><span> </span></div>
-                            </div>
-                            <div class="col-md-6 border-right">
+                    <!-- Topbar -->
+                    <%@include file="topbar.jsp" %>
 
 
 
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Trang cá nhân</h4>
-                                    </div>
-                                    <!-- Hiển thị thông báo lỗi nếu có -->
-                                    <c:if test="${not empty message}">
-                                        <div class="alert alert-danger" role="alert">
-                                            ${message}
+                    <form action="profile" enctype="multipart/form-data" method="POST">
+                        <div class="container rounded bg-white mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-md-4 border-right">
+                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="${user.staffImg}" id="imgPreview" width="150px" height="150px" >
+                                        <span class="font-weight-bold">${user.name}</span><span class="text-black-50">${user.email}</span><span> </span></div>
+                                </div>
+                                <div class="col-md-6 border-right">
+
+
+
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="text-right">Trang cá nhân</h4>
                                         </div>
-                                    </c:if>
-                                    <div class="row mt-3">
-                                        <div class="col-md-12"><label class="labels">Tên</label><input type="text" name="name" class="form-control" placeholder="first name" value="${user.name}"></div>
-                                        <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
-                                        <div class="col-md-12"><label class="labels">Tên đăng nhập</label><input type="text" class="form-control" placeholder="username" value="${user.username}" readonly></div>
-                                        <div class="col-md-12"><label class="labels">Mật khẩu</label><input type="text" class="form-control" placeholder="password" value="********" readonly>
-                                            <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> </div>
-                                        Đổi mật khẩu
-                                        </a>
+                                        <!-- Hiển thị thông báo lỗi nếu có -->
+                                        <c:if test="${not empty message}">
+                                            <div class="alert alert-danger" role="alert">
+                                                ${message}
+                                            </div>
+                                        </c:if>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12"><label class="labels">Tên</label><input type="text" name="name" class="form-control" placeholder="first name" value="${user.name}"></div>
+                                            <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
+                                            <div class="col-md-12"><label class="labels">Tên đăng nhập</label><input type="text" class="form-control" placeholder="username" value="${user.username}" readonly></div>
+                                            <div class="col-md-12"><label class="labels">Mật khẩu</label><input type="text" class="form-control" placeholder="password" value="********" readonly>
+                                                <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> </div>
+                                            Đổi mật khẩu
+                                            </a>
 
 
-                                        <div class="col-md-12"><label class="labels">Email </label><input type="text" name="email" class="form-control" placeholder="enter email " value="${user.email}" readonly></div>
-                                        <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
-                                            Đổi Email
-                                        </a>
-                                        <div class="col-md-12">
-                                            <label class="labels">Ngày bắt đầu(Công việc/Đăng kí) </label>
-                                            <input type="text" class="form-control" 
-                                                   placeholder="enter hire date" 
-                                                   value="${userType == 'staff' ? user.hireDate : (userType == 'customer' ? user.registrationDate : '')}"
+                                            <div class="col-md-12"><label class="labels">Email </label><input type="text" name="email" class="form-control" placeholder="enter email " value="${user.email}" readonly></div>
+                                            <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
+                                                Đổi Email
+                                            </a>
+                                            <div class="col-md-12">
+                                                <label class="labels">Ngày bắt đầu(Công việc/Đăng kí) </label>
+                                                <input type="text" class="form-control" 
+                                                       placeholder="enter hire date" 
+                                                       value="${userType == 'staff' ? user.hireDate : (userType == 'customer' ? user.registrationDate : '')}"
 
-                                                   readonly>
+                                                       readonly>
+                                            </div>
+
+
                                         </div>
+                                        <label for="img" class="form-label">Đổi ảnh đại diện:</label>
+                                        <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
 
+                                        <input type="hidden" name="imgPath" value="${user.staffImg}">
+
+                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Lưu thay đổi </button></div>
 
                                     </div>
-                                    <label for="img" class="form-label">Đổi ảnh đại diện:</label>
-                                    <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
-
-                                    <input type="hidden" name="imgPath" value="${user.staffImg}">
-
-                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Lưu thay đổi </button></div>
 
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
+                </div>
             </div>
         </div>
     </form>

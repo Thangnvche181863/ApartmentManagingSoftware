@@ -27,105 +27,107 @@
     </head>
 
     <body id="page-top">
+        <div id="wrapper">
+            <!-- Page Wrapper -->
+            <%@include file="sidebar.jsp" %>
 
-        <!-- Page Wrapper -->
-        <%@include file="sidebar.jsp" %>
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
 
-            <!-- Main Content -->
-            <div id="content">
+                    <!-- Topbar -->
+                    <%@include file="topbar.jsp" %>
+                    <!-- End of Topbar -->
 
-                <!-- Topbar -->
-                <%@include file="topbar.jsp" %>
-                <!-- End of Topbar -->
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                        <!-- Page Heading -->
+                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                            <h1 class="h3 mb-0 text-gray-800">Căn hộ</h1>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        </div>
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Căn hộ</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div>
+                        <!-- Content Row -->
+                        <div class="row">
 
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <c:set value="${requestScope.list}" var="countList"></c:set>
-                        <c:set value="0" var="count"></c:set>
-                        <c:set value="${requestScope.listInvoice}" var="invoiceList"></c:set>
-                        <c:set value="0" var="invoice"></c:set>
-                        <c:forEach items="${listApartment}" var="o">
-                            <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    ID: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Loại: ${o.apartmentType}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số: ${o.apartmentNumber}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Phí dịch vụ: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Diện tích: ${o.area} m² </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Tầng: ${o.floor}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Số cư dân: ${countList.get(pageScope.count)} </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Hóa đơn chưa trả: ${invoiceList.get(pageScope.invoice)} </div>
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="residentofapartment?apartmentID=${o.apartmentID}" class ="text-warning" style="text-decoration: none" >Xem tất cả người ở</a></div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-home fa-2x text-gray-400"></i>
+                            <!-- Earnings (Monthly) Card Example -->
+                            <c:set value="${requestScope.list}" var="countList"></c:set>
+                            <c:set value="0" var="count"></c:set>
+                            <c:set value="${requestScope.listInvoice}" var="invoiceList"></c:set>
+                            <c:set value="0" var="invoice"></c:set>
+                            <c:forEach items="${listApartment}" var="o">
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        ID: ${o.apartmentID}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Loại: ${o.apartmentType}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Số: ${o.apartmentNumber}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Phí dịch vụ: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Diện tích: ${o.area} m² </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Tầng: ${o.floor}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Số cư dân: ${countList.get(pageScope.count)} </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Hóa đơn chưa trả: ${invoiceList.get(pageScope.invoice)} </div>
+                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
+                                                        <a href="residentofapartment?apartmentID=${o.apartmentID}" class ="text-warning" style="text-decoration: none" >Xem tất cả người ở</a></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-home fa-2x text-gray-400"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <c:set value="${count + 1}" var="count"></c:set>
-                            <c:set value="${invoice + 1}" var="invoice"></c:set>
-                        </c:forEach>
+                                <c:set value="${count + 1}" var="count"></c:set>
+                                <c:set value="${invoice + 1}" var="invoice"></c:set>
+                            </c:forEach>
 
 
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-primary" href="login.html">Logout</a>
+                            <!-- Logout Modal-->
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                            <a class="btn btn-primary" href="login.html">Logout</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <!-- Bootstrap core JavaScript-->
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                        <!-- Bootstrap core JavaScript-->
-                        <script src="vendor/jquery/jquery.min.js"></script>
-                        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                <!-- Core plugin JavaScript-->
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                        <!-- Core plugin JavaScript-->
-                        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+                <!-- Custom scripts for all pages-->
+                <script src="js/sb-admin-2.min.js"></script>
 
-                        <!-- Custom scripts for all pages-->
-                        <script src="js/sb-admin-2.min.js"></script>
+                <!-- Page level plugins -->
+                <script src="vendor/chart.js/Chart.min.js"></script>
 
-                        <!-- Page level plugins -->
-                        <script src="vendor/chart.js/Chart.min.js"></script>
+                <!-- Page level custom scripts -->
+                <script src="js/demo/chart-area-demo.js"></script>
+                <script src="js/demo/chart-pie-demo.js"></script>
 
-                        <!-- Page level custom scripts -->
-                        <script src="js/demo/chart-area-demo.js"></script>
-                        <script src="js/demo/chart-pie-demo.js"></script>
+                </body>
 
-                        </body>
-
-                        </html>
+                </html>
