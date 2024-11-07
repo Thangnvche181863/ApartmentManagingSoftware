@@ -270,6 +270,7 @@ public class UserApartmentInfoAjax extends HttpServlet {
                 + "                            <br>\n"
                 + "                            <div class=\"d-sm-flex align-items-center justify-content-between mb-4\">\n"
                 + "                                <h1 class=\"h1 mb-0 text-gray-800\"><b>Thông tin cư dân</b></h1>\n"
+                + "   <button class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#addResidentModal\">Thêm cư dân</button>     \n"
                 + "                            </div>\n"
                 + "                            <div class=\"card shadow mb-4\">\n"
                 + "                                    <div class=\"card-header py-3 row\">\n"

@@ -32,10 +32,16 @@ public class HomeGuest extends HttpServlet {
         int managementFeatureID = 3;
         int residentFeatureID = 4;
         int teamMembersID = 5;
+        
+        //set limit
+        int limitbannerHome = 2;
+        int limitmanagementFeature = 4;
+        int limitresidentFeature = 4;
+        
 
-        List<News> banner = newsDAO.getNewsByCategoryId(bannerHomeID);
-        List<News> managementFeature = newsDAO.getNewsByCategoryId(managementFeatureID);
-        List<News> residentFeature = newsDAO.getNewsByCategoryId(residentFeatureID);
+        List<News> banner = newsDAO.getTopNewsByCategoryId(bannerHomeID,limitbannerHome);
+        List<News> managementFeature = newsDAO.getTopNewsByCategoryId(managementFeatureID,limitmanagementFeature);
+        List<News> residentFeature = newsDAO.getTopNewsByCategoryId(residentFeatureID, limitresidentFeature);
         List<News> teamMembers = newsDAO.getNewsByCategoryId(teamMembersID);
 
         request.setAttribute("banner", banner);

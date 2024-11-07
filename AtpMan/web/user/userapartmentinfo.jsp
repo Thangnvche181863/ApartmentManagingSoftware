@@ -330,6 +330,7 @@
                                 <br>
                                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                     <h1 class="h1 mb-0 text-gray-800"><b>Thông tin cư dân</b></h1>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#addResidentModal">Thêm cư dân</button>
                                 </div>
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 row">
@@ -349,6 +350,7 @@
                                                         <i class="fas fa-search"></i>
                                                     </span>
                                                 </div>
+                                                    </form>
                                             </div>
                                         </div>
                                     </div>
@@ -502,6 +504,53 @@
                                 </div>   
                             </div>
                         </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="addResidentModal" tabindex="-1" role="dialog" aria-labelledby="addResidentModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addResidentModalLabel">Thêm cư dân</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form id="addResidentForm" method="POST" action="RegisResidentApartment">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="residentName">Tên</label>
+                                                <input type="text" class="form-control" id="residentName" name="name" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="residentEmail">Email</label>
+                                                <input type="email" class="form-control" id="residentEmail" name="email" >
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="residentPhoneNumber">Số điện thoại</label>
+                                                <input type="text" class="form-control" id="residentPhoneNumber" name="phone" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="residentDob">Ngày sinh</label>
+                                                <input type="date" class="form-control" id="residentDob" name="dob" required="">
+                                            </div>
+                                            <div class="form-group">
+
+                                                <input type="hidden" type="number" class="form-control" id="apartmentID"  name="apartmentID" value="${requestScope.apartment.apartmentID}" required>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>                           
+
                     </div>
                 </div>
             </div>

@@ -510,7 +510,7 @@
                                                     <img class="d-block w-100" src="../<c:out value='${banner.newsImg}'/>" alt="Slide ${status.index + 1}">
                                                     <div class="carousel-caption d-none d-md-block">
                                                         <h5 style="color:#FFFF00;"><c:out value='${banner.newsTitle}'/></h5>
-                                                        <p style="color:#FFFF00;"><c:out value='${banner.newsContent}'/></p>
+                                                        <p style="color:#FFFF00;"><c:out value='${banner.description}'/></p>
                                                     </div>
                                                 </a>
                                             </div>
@@ -557,7 +557,8 @@
                                                             <h4><a href="/AtpMan/NewsDetail?id=${newsItem.newsID}" title="">
                                                                     ${newsItem.newsTitle}
                                                                 </a></h4>
-                                                            <p>${newsItem.newsContent}</p>
+                                                            <p>${newsItem.description}</p>
+                                                            
                                                             <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
                                                             <small>
                                                                 <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />

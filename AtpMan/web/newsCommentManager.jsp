@@ -1,6 +1,6 @@
 <%-- 
-    Document   : test
-    Created on : Oct 19, 2024, 9:56:08 PM
+    Document   : newsCommentManager
+    Created on : Nov 4, 2024, 11:00:50 PM
     Author     : PC
 --%>
 
@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Quản Lý Tin</title>
+        <title>Quản Lý Bình Luận</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -29,11 +29,10 @@
         <!-- Custom styles for this template-->
         <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-        <!-- Include TinyMCE -->
+
 
 
     </head>
-
     <body id="page-top">
 
         <!-- Page Wrapper -->
@@ -354,11 +353,11 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <center><h1 class="h3 mb-4 text-gray-800">Quản Lý Tin</h1></center>  
+                        <center><h1 class="h3 mb-4 text-gray-800">Quản Lý Bình Luận</h1></center>  
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>
-                                    <c:when test="${message.startsWith('News deleted')}">
+                                    <c:when test="${message.startsWith('Bỏ Qua Báo Cáo Thành Công')}">
                                         <p class="text-center alert alert-success">${message}</p>
                                     </c:when>
                                     <c:otherwise>
@@ -368,18 +367,11 @@
                             </c:if>
                         </center>
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <form class="form-inline d-none d-sm-inline-block mw-100" action="newsmanage" method="get">
+                            <form class="form-inline d-none d-sm-inline-block mw-100" action="#" method="get">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control bg-light border-0 small" 
                                            placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
 
-                                    <!-- Dropdown for News Categories -->
-                                    <select name="category" class="form-control ml-2">
-                                        <option value="all">All</option>
-                                        <c:forEach var="category" items="${newsCategories}">
-                                            <option value="${category.newsCategoryID}">${category.name}</option>
-                                        </c:forEach>
-                                    </select>
 
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit">
@@ -389,8 +381,8 @@
                                 </div>
                             </form>
                             <div>
-                                <a href="newscategorymanage" class="btn btn-outline-primary mr-2">Quản Lý Mục Tin</a>
-                                <a href="AddNews" class="btn btn-outline-primary">Thêm Tin</a>
+                                <a href="newsmanage" class="btn btn-outline-primary mr-2">Quản Lý Tin</a>
+                                <a href="newscategorymanage" class="btn btn-outline-primary mr-2">Quản Lý Tập Tin</a>
                             </div>
 
                         </div>
@@ -398,7 +390,7 @@
                     <!-- /.container-fluid -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Bảng Tin</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Bảng Bình Luận bị Báo Cáo </h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -406,30 +398,45 @@
                                     <thead>
                                         <tr>
 
-                                            <th>Tên</th>
-                                            <th>Mô Tả</th>
-                                            <th>Tác Giả</th>
-                                            <th>Mục Tin</th>
-                                            <th>Thời Gian Đăng</th>
+                                            <th>CommentID</th>
+                                            <th>NewsID</th>
+                                            <th>Người Viết</th>
+                                            <th>Nội Dung</th>
+                                            <th>Ngày Đăng</th>
                                             <th>Tương Tác</th>
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <c:forEach items="${news}" var="newsItem">
+                                        <c:forEach items="${comments}" var="com">
                                             <tr>
 
-                                                <td width="250">${newsItem.newsTitle}</td>
-                                                <td width="500">${newsItem.description}</td>
-                                                <td>${newsItem.staffName}</td>
-                                                <td><a href="newsmanage?category=${newsItem.newsCategoryID}">${newsItem.newsCategoryName}</a></td>
-                                                <td><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
+                                                <td>${com.commentID}</td>
+                                                <td><a href="NewsDetail?id=${com.newsID}">${com.newsID}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty com.customerName}">
+                                                            ${com.customerName}
+                                                        </c:when>
+                                                        <c:when test="${not empty com.staffName}">
+                                                            ${com.staffName}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Anonymous
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td>${com.commentText}</td>
+                                                <td><fmt:formatDate value="${com.commentDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a class="btn btn-sm btn-primary" href="NewsDetail?id=${newsItem.newsID}">Xem</a>
-                                                        <a class="btn btn-sm btn-warning" href="EditNews?id=${newsItem.newsID}">Sửa</a>
-                                                        <a class="btn btn-sm btn-danger" href="newsdelete?id=${newsItem.newsID}" onclick="return confirmDelete();">Xóa</a>
+                                                        <form action="newscommentmanage" method="post">
+                                                            <input type="hidden" name="commentID" value="${com.commentID}"> </input>
+                                                            <button type ="submit" class="btn btn-sm btn-success" onclick="return confirmCancel();">
+                                                                Bỏ qua
+                                                            </button> </form>
+                                                        <a class="btn btn-sm btn-danger" href="CommentDelete?id=${com.commentID}" onclick="return confirmDelete();">Xóa</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -449,19 +456,19 @@
                                             <ul class="pagination justify-content-start">
                                                 <c:if test="${currentPage > 1}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="newsmanage?page=${currentPage - 1}&search=${param.search}&category=${param.category}">Previous</a>
+                                                        <a class="page-link" href="newsmanage?page=${currentPage - 1}">Previous</a>
                                                     </li>
                                                 </c:if>
 
                                                 <c:forEach var="i" begin="1" end="${totalPages}">
                                                     <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                                        <a class="page-link" href="newsmanage?page=${i}&search=${param.search}&category=${param.category}">${i}</a>
+                                                        <a class="page-link" href="newsmanage?page=${i}">${i}</a>
                                                     </li>
                                                 </c:forEach>
 
                                                 <c:if test="${currentPage < totalPages}">
                                                     <li class="page-item">
-                                                        <a class="page-link" href="newsmanage?page=${currentPage + 1}&search=${param.search}&category=${param.category}">Next</a>
+                                                        <a class="page-link" href="newsmanage?page=${currentPage + 1}">Next</a>
                                                     </li>
                                                 </c:if>
                                             </ul>
@@ -526,54 +533,15 @@
         <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
         <script type="text/javascript">
-                                                            function confirmDelete() {
-                                                                return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
-                                                            }
-        </script>
-
-        <script>
-            document.getElementById("newsForm").addEventListener("submit", function (event) {
-                const fileInput = document.getElementById("newsImg");
-                const filePath = fileInput.value;
-                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-
-                if (filePath) {
-                    if (!allowedExtensions.exec(filePath)) {
-                        alert("Please upload a valid image file (jpg, jpeg, png, gif).");
-                        fileInput.value = ''; // Clear the input
-                        event.preventDefault(); // Prevent form submission
+                     function confirmDelete() {
+                     return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
                     }
-                }
-            });
         </script>
-
-        <script src="https://cdn.tiny.cloud/1/n0b2uh23r0ya9qhhy07odsf6v4qhzjpn6aoav7c4rzx6ocd4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-
-        <script>
-            tinymce.init({
-                selector: '#newsContent', // Target the textarea
-                plugins: 'image link media',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image media',
-                height: 300
-            });
-
-            // Ensure the TinyMCE content is saved before form submission
-            $(document).ready(function () {
-                $('#newsForm').on('submit', function (e) {
-                    console.log("Form is being submitted...");
-
-                    tinymce.triggerSave(); // Update textarea with TinyMCE content
-
-                    // Debug: Check if the textarea now has content
-                    console.log("News content:", $('#newsContent').val());
-
-                    if ($('#newsContent').val() === '') {
-                        e.preventDefault();  // Prevent form submission if content is missing
-                        alert("News content is empty!");
+        <script type="text/javascript">
+        
+                    function confirmCancel(){
+                        return confirm("Bạn có chắc chắn muốn bỏ qua báo cáo này?");
                     }
-                });
-            });
         </script>
     </body>
-
 </html>

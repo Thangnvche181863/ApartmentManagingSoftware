@@ -357,8 +357,8 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
-                + "where l.apartmentID = ?\n";
-
+                + "where l.apartmentID = ? \n"
+                + "and endDate is null";
         int count = 0;
         if (searchTermList != null && !searchTermList.isEmpty()) {
             if (searchTermList.size() == 1) {
@@ -1048,16 +1048,102 @@ public class CustomerDAO {
         return count;
     }
 
+    
+    public boolean addCustomerToApartment(Customer customer, int apartmentID, Date startDate) {
+        String customerSql = "INSERT INTO Customer (name, email, phoneNumber, dob, registrationDate, isOwner, status) VALUES (?, ?, ?, ?, ?, 0, 3)";
+        String livingSql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
+        boolean isAdded = false;
+        Connection conn = null;
+
+        try {
+            conn = DBContext.getConnection();
+            if (conn == null || conn.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return false;
+            }
+
+            // Disable auto-commit for transaction management
+            conn.setAutoCommit(false);
+
+            // Insert customer into Customer table
+            try (PreparedStatement customerStmt = conn.prepareStatement(customerSql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                customerStmt.setString(1, customer.getName());
+                customerStmt.setString(2, customer.getEmail());
+                customerStmt.setString(3, customer.getPhoneNumber());
+                customerStmt.setDate(4, customer.getDob() != null ? new java.sql.Date(customer.getDob().getTime()) : null);
+                customerStmt.setDate(5, customer.getRegistrationDate() != null ? new java.sql.Date(customer.getRegistrationDate().getTime()) : null);
+               
+
+                int customerRows = customerStmt.executeUpdate();
+                if (customerRows > 0) {
+                    try (ResultSet generatedKeys = customerStmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int newCustomerID = generatedKeys.getInt(1);
+                            customer.setCustomerID(newCustomerID);
+                            LOGGER.log(Level.INFO, "Added Customer with ID: {0}", newCustomerID);
+
+                            // Insert record into Living table
+                            try (PreparedStatement livingStmt = conn.prepareStatement(livingSql)) {
+                                livingStmt.setInt(1, newCustomerID);
+                                livingStmt.setInt(2, apartmentID);
+                                livingStmt.setDate(3, startDate != null ? new java.sql.Date(startDate.getTime()) : null);
+
+                                int livingRows = livingStmt.executeUpdate();
+                                if (livingRows > 0) {
+                                    LOGGER.log(Level.INFO, "Living record added for Customer ID: {0}", newCustomerID);
+                                    isAdded = true;
+                                } else {
+                                    throw new SQLException("Adding Living record failed.");
+                                }
+                            }
+                        } else {
+                            throw new SQLException("Adding customer failed, no ID obtained.");
+                        }
+                    }
+                } else {
+                    LOGGER.log(Level.WARNING, "No customer was added.");
+                }
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error adding customer and living record.", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+
+        return isAdded;
+    }
+
     public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-        List<String> sList = new ArrayList<>();
-        sList.add("khang");
-        List<Customer> list = dao.getLivingInApartment(10, 1, 5, sList);
+        Customer testCustomer = new Customer();
+        testCustomer.setName("tester");
+        testCustomer.setEmail("asdasd");
+        testCustomer.setPhoneNumber("1234567890");
+        testCustomer.setDob(java.sql.Date.valueOf("1990-01-01"));
+        testCustomer.setRegistrationDate(new java.util.Date());
+       
 
-        List<Customer> cusList = dao.getActiveResidentForManage(1, 5, 0, null, 2, 2, null);
-        System.out.println("custList size: " + cusList);
+        int apartmentID = 1;  // Replace with a valid apartment ID from your database
+        java.sql.Date startDate = java.sql.Date.valueOf("2023-01-01");
+        
 
-        int count2 = dao.countActiveResidentForManage(0, null, 2, 1, null);
-        System.out.println("count: " + count2);
+        // Create an instance of the class containing the addCustomerToApartment method
+        CustomerDAO customerDAO = new CustomerDAO();  // Assuming the method is in CustomerDAO
+
+        // Test addCustomerToApartment
+        boolean isAdded = customerDAO.addCustomerToApartment(testCustomer, apartmentID, startDate);
+
+        // Output the result
+        if (isAdded) {
+            System.out.println("Test Passed: Customer and living records added successfully.");
+            System.out.println("Customer ID: " + testCustomer.getCustomerID());
+        } else {
+            System.out.println("Test Failed: Could not add customer and living records.");
+        }
+
     }
 }
