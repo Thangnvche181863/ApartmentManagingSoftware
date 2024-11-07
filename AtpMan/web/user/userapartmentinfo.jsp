@@ -247,7 +247,7 @@
                             </div>
                             <div class="col-xl-12 col-md-12 mb-12">
                                 <div class="row">
-                                    <!--<form id="submitForm" action="/AtpMan/userapartmentinfo" method="get">-->
+                                    <form id="submitForm" action="/AtpMan/userapartmentinfo" method="get">
                                         <div class="card border-left-success shadow h-100 py-2">
                                             <div class="btn-group dropend">
                                                 <div class="card-body">
@@ -259,7 +259,7 @@
                                                                     Tòa Nhà:
                                                                 </div>
                                                                 <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
-                                                                    <select id="buildingID" name="buildingID" class="form-select h2 font-weight-bold text-success text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
+                                                                    <select id="buildingID" name="buildingID" class="form-select h2 font-weight-bold text-success text-uppercase mb-1" aria-label="Default select example" onchange="submit()">
                                                                         <c:if test="${sessionScope.user.isOwner == 1}">
                                                                             <c:forEach items="${requestScope.buildingList}" var="building">
                                                                                 <option ${(requestScope.building.buildingID == building.buildingID) ? 'selected':''} value="${building.buildingID}">${building.name}</option>
@@ -287,7 +287,7 @@
                                                                     Căn hộ:
                                                                 </div>
                                                                 <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6">
-                                                                    <select id="apartmentID" name="apartmentID" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="changeSelect()">
+                                                                    <select id="apartmentID" name="apartmentID" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="submit()">
                                                                         <c:if test="${sessionScope.user.isOwner == 1}">
                                                                             <c:forEach items="${requestScope.building.apartmentList}" var="apartment">
                                                                                 <option ${(requestScope.apartment.apartmentID == apartment.apartmentID) ? 'selected' : ''} value="${apartment.apartmentID}">${apartment.apartmentNumber}</option>
@@ -324,7 +324,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        <!--</form>-->
+                                        </form>
                                     </div>
                                 </div> 
                                 <br>
@@ -334,17 +334,6 @@
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 row">
                                         <h5 class="m-0 font-weight-bold text-primary col-md-5">Danh sách cư dân đăng ký trong căn hộ</h5>
-                                        <!--                                        <div class="row col-md-2">
-                                                                                    <div class="" style="display: flex;">
-                                                                                        <b style="margin: 0; align-content: center;">Số lượng hiển thị</b>
-                                                                                    </div>
-                                                                                    <div class="col-md-8">
-                                                                                        <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
-                                                                                            <option value="5">5</option>
-                                                                                            <option value="10">10</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>-->
                                         <div class="col-md-3">
                                             <select id="residentPerPage" name="residentPerPage" class="form-select h2 font-weight-bold text-primary text-uppercase mb-1" aria-label="Default select example" onchange="handleResidentTable($('#residentTable .pagination .page-item.active button.page-link').val())">
                                                 <option value="5">Số lượng hiển thị: 5</option>
