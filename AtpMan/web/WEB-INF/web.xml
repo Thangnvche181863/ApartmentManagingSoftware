@@ -37,6 +37,10 @@
         <url-pattern>/newscategorymanage</url-pattern>
         <url-pattern>/NewsCategoryDelete</url-pattern>
         <url-pattern>/AddNewsCategory</url-pattern>
+        <url-pattern>/newscommentmanage</url-pattern>
+        <url-pattern>/CommentDelete</url-pattern>
+        <url-pattern>/newscategoryadd.jsp</url-pattern>
+        <url-pattern>/CommentDelete</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AjaxFilter</filter-name>
@@ -127,10 +131,6 @@
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.user.UserhomeNewsServlet</servlet-class>
     </servlet>
-    <!--    <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.guest.Home</servlet-class>
-    </servlet>-->
     <servlet>
         <servlet-name>UserApartmentInfoServlet</servlet-name>
         <servlet-class>controller.user.UserApartmentInfoServlet</servlet-class>

@@ -6,6 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    // Clear the session when the page loads
+    if (request.getMethod().equalsIgnoreCase("POST")) {
+        session.invalidate();  // Invalidates the session when "Login" button is clicked
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -57,7 +63,7 @@
                                 <div class="mb-md-5 mt-md-4">
                                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
 
-                                    <form action="userlogin" method="post">
+                                    <form action="userlogin" method="POST">
                                         <div class="row">
                                             <div class="col-12 mb-4">
                                                 <label class="form-label select-label" style="color : white">Login as</label>
