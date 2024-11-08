@@ -183,12 +183,10 @@ public class UserApartmentInfoServlet extends HttpServlet {
         int totalResidentPage = (int) Math.ceil((double) totalResident / residentPerPage);
         int totalServicePage = (int) Math.ceil((double) totalService / servicePerPage);
 
-        Living living = livingDAO.getLivingInfoByUserId(customer.getCustomerID());
 
         request.setAttribute("totalResidentPage", totalResidentPage);
         request.setAttribute("totalServicePage", totalServicePage);
         request.setAttribute("totalAmount", totalA);
-        request.setAttribute("living", living);
         request.setAttribute("building", building);
         request.setAttribute("buildingList", buildingList);
         request.setAttribute("apartment", apartment);

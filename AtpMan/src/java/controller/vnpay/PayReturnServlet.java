@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import model.Invoice;
 import model.ServiceContract;
 
 /**
@@ -169,13 +170,22 @@ public class PayReturnServlet extends HttpServlet {
                         ServiceContractDAO scdao = new ServiceContractDAO();
                         InvoiceServiceDAO invoiceServiceDAO = new InvoiceServiceDAO();
 
-                        int stt = invoiceDAO.insertInvoiceForRegistService(serviceContract.getApartmentId(), serviceContract.getAmount().doubleValue(), Date.valueOf(currentDate), Date.valueOf(currentDate), 1, Timestamp.valueOf(transactionDate), vnp_TxnRef, vnp_TransactionNo, vnp_BankCode, vnp_OrderInfo);
-                        int recentInvoiceId = invoiceDAO.getRecentInvoiceId(serviceContract.getApartmentId());
-
-                        scdao.insertServiceContract(serviceContract.getApartmentId(), serviceContract.getServiceId(), serviceContract.getStartDate(), serviceContract.getEndDate(), serviceContract.getAmount().doubleValue());
-                        int serviceContractId = scdao.getRecentServiceContractId(serviceContract.getApartmentId());
-
-                        invoiceServiceDAO.insertInvoiceService(recentInvoiceId, serviceContractId);
+                        Invoice invoice = new Invoice();
+                        invoice.setApartmentId(serviceContract.getApartmentId());
+                        invoice.setAmount(serviceContract.getAmount().doubleValue());
+                        invoice.setIssueDate(Date.valueOf(currentDate));
+                        invoice.setDueDate(Date.valueOf(currentDate));
+                        invoice.setStatus(1);
+                        invoice.setTransactionDate(Timestamp.valueOf(transactionDate));
+                        invoice.setInvoiceCode(vnp_TxnRef);
+                        invoice.setTransactionNo(vnp_TransactionNo);
+                        invoice.setBankCode(vnp_BankCode);
+                        invoice.setOrderInfo(vnp_OrderInfo);
+                        
+                        
+                        
+                        boolean stt = invoiceDAO.insertInvoiceForRegistService(invoice, serviceContract);
+                        
                         session.removeAttribute("serviceContract");
                         request.setAttribute("message", "Thành công");
                     } else {

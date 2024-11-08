@@ -149,7 +149,7 @@ public class ProfileController extends HttpServlet {
         if (n > 0) {
             // Lấy lại thông tin người dùng mới và in ra
             staff.setName(name);
-            staff.setStaffImg(fileURL);
+            staff.setAvatar(fileURL);
             
             // Cập nhật session và điều hướng lại trang profile
             session.setAttribute("user", staff);

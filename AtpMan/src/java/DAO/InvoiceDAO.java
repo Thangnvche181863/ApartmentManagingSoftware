@@ -281,7 +281,7 @@ public class InvoiceDAO {
                 + "inner join Apartment a on a.apartmentID = i.apartmentID\n"
                 + "where i.apartmentID = ?\n"
                 + "and MONTH(transactionDate) = ? and YEAR(transactionDate) = ?\n";
-                
+
         // Tạo truy vấn động theo điều kiện có giá trị khác null
         if (invoiceCode != null && !invoiceCode.isBlank()) {
             sql += " and i.invoiceCode like ? ";
@@ -304,7 +304,7 @@ public class InvoiceDAO {
             }
         }
         if (order != null && !order.isBlank()) {
-            sql += " order by i.amount "+order.trim()+" offset ? rows fetch next ? rows only";
+            sql += " order by i.amount " + order.trim() + " offset ? rows fetch next ? rows only";
         } else {
             sql += "order by i.transactionDate desc offset ? rows fetch next ? rows only";
         }
@@ -336,7 +336,7 @@ public class InvoiceDAO {
                     for (int i = 1; i < orderInfo.size() - 1; i++) {
                         statement.setString(index++, "%" + orderInfo.get(i).trim() + "%");
                     }
-                    statement.setString(index++, "%" + orderInfo.get(orderInfo.size()-1).trim() + "%");
+                    statement.setString(index++, "%" + orderInfo.get(orderInfo.size() - 1).trim() + "%");
                 }
             }
 
@@ -367,12 +367,13 @@ public class InvoiceDAO {
         }
         return invoiceList;
     }
+
     public int countInvoiceByApartmentIDandMonth2(int apartmentID, int month, int year, String invoiceCode, String transactionNo, String bankCode, List<String> orderInfo) {
         int count = 0;
         String sql = "select count(*) from Invoice i\n"
                 + "where i.apartmentID = ?\n"
                 + "and MONTH(transactionDate) = ? and YEAR(transactionDate) = ?\n";
-                
+
         // Tạo truy vấn động theo điều kiện có giá trị khác null
         if (invoiceCode != null && !invoiceCode.isBlank()) {
             sql += " and i.invoiceCode like ? ";
@@ -420,7 +421,7 @@ public class InvoiceDAO {
                     for (int i = 1; i < orderInfo.size() - 1; i++) {
                         statement.setString(index++, "%" + orderInfo.get(i).trim() + "%");
                     }
-                    statement.setString(index++, "%" + orderInfo.get(orderInfo.size()-1).trim() + "%");
+                    statement.setString(index++, "%" + orderInfo.get(orderInfo.size() - 1).trim() + "%");
                 }
             }
 
@@ -931,29 +932,103 @@ public class InvoiceDAO {
         return map;
     }
 
-    public int insertInvoiceForRegistService(int apartmentId, double amount, Date issueDate, Date dueDate, int status, Timestamp transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo) {
-        int stt = 0;
-        String sql = "INSERT INTO Invoice ([apartmentID],[amount],[issueDate],[dueDate],[status],[transactionDate],[invoiceCode],[transactionNo],[bankCode],[orderInfo])\n"
-                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
-        try {
-            connection = DBContext.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, apartmentId);
-            statement.setDouble(2, amount);
-            statement.setDate(3, issueDate);
-            statement.setDate(4, dueDate);
-            statement.setInt(5, status);
-            statement.setTimestamp(6, transactionDate);
-            statement.setString(7, invoiceCode);
-            statement.setString(8, transactionNo);
-            statement.setString(9, bankCode);
-            statement.setString(10, orderInfo);
+    public boolean insertInvoiceForRegistService(Invoice invoice, ServiceContract serviceContract) {
+        boolean isAdded = false;
+        String sqlInvoice = "INSERT INTO Invoice (apartmentID, amount, issueDate, dueDate, status, transactionDate, invoiceCode, transactionNo, bankCode, orderInfo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlServiceContract = "INSERT INTO ServiceContract (apartmentID, serviceID, startDate, endDate, amount) VALUES (?, ?, ?, ?, ?)";
+        String sqlInvoiceService = "INSERT INTO InvoiceService (invoiceID, serviceContractID) VALUES (?, ?)";
 
-            stt = statement.executeUpdate();
+        Connection connection = null;
+
+        try {
+            // Kết nối và bắt đầu giao dịch
+            connection = DBContext.getConnection();
+            connection.setAutoCommit(false);
+
+            // Thêm vào bảng Invoice
+            try (PreparedStatement statementInvoice = connection.prepareStatement(sqlInvoice, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                statementInvoice.setInt(1, invoice.getApartmentId());
+                statementInvoice.setDouble(2, invoice.getAmount());
+                statementInvoice.setDate(3, invoice.getIssueDate());
+                statementInvoice.setDate(4, invoice.getDueDate());
+                statementInvoice.setInt(5, invoice.getStatus());
+                statementInvoice.setTimestamp(6, invoice.getTransactionDate());
+                statementInvoice.setString(7, invoice.getInvoiceCode());
+                statementInvoice.setString(8, invoice.getTransactionNo());
+                statementInvoice.setString(9, invoice.getBankCode());
+                statementInvoice.setString(10, invoice.getOrderInfo());
+
+                int invoiceRows = statementInvoice.executeUpdate();
+                if (invoiceRows == 0) {
+                    throw new SQLException("Creating Invoice failed, no rows affected.");
+                }
+
+                // Lấy invoiceID mới tạo
+                try (ResultSet generatedKeys = statementInvoice.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int invoiceId = generatedKeys.getInt(1);
+                        invoice.setInvoiceId(invoiceId);
+                    } else {
+                        throw new SQLException("Creating Invoice failed, no ID obtained.");
+                    }
+                }
+            }
+
+            // Thêm vào bảng ServiceContract
+            try (PreparedStatement statementServiceContract = connection.prepareStatement(sqlServiceContract, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                statementServiceContract.setInt(1, serviceContract.getApartmentId());
+                statementServiceContract.setInt(2, serviceContract.getServiceId());
+                statementServiceContract.setDate(3, serviceContract.getStartDate());
+                statementServiceContract.setDate(4, serviceContract.getEndDate());
+                statementServiceContract.setDouble(5, serviceContract.getAmount().doubleValue());
+
+                int serviceContractRows = statementServiceContract.executeUpdate();
+                if (serviceContractRows == 0) {
+                    throw new SQLException("Creating ServiceContract failed, no rows affected.");
+                }
+
+                // Lấy serviceContractID mới tạo
+                try (ResultSet generatedKeys = statementServiceContract.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int serviceContractId = generatedKeys.getInt(1);
+                        serviceContract.setServiceContractId(serviceContractId);
+                    } else {
+                        throw new SQLException("Creating ServiceContract failed, no ID obtained.");
+                    }
+                }
+            }
+
+            // Thêm vào bảng InvoiceService
+            try (PreparedStatement statementInvoiceService = connection.prepareStatement(sqlInvoiceService)) {
+                statementInvoiceService.setInt(1, invoice.getInvoiceId());
+                statementInvoiceService.setInt(2, serviceContract.getServiceContractId());
+
+                int invoiceServiceRows = statementInvoiceService.executeUpdate();
+                if (invoiceServiceRows == 0) {
+                    throw new SQLException("Creating InvoiceService failed, no rows affected.");
+                }
+            }
+
+            // Nếu tất cả đều thành công, cam kết giao dịch
+            connection.commit();
+            isAdded = true;
+
         } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            // Hủy giao dịch nếu có lỗi
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException rollbackEx) {
+                    System.out.println("Rollback failed: " + rollbackEx.getMessage());
+                }
+            }
+            System.out.println("Error inserting records: " + e.getMessage());
+        } finally {
+            // Đảm bảo kết nối được đóng lại
+            DBContext.closeConnection(connection);
         }
-        return stt;
+
+        return isAdded;
     }
 
     public int getRecentInvoiceId(int apartmentId) {
@@ -961,18 +1036,19 @@ public class InvoiceDAO {
         String sql = "select top 1 invoiceID from Invoice\n"
                 + "where apartmentID = ?\n"
                 + "order by invoiceID desc";
-                try {
-                    connection = DBContext.getConnection();
-                    PreparedStatement statement = connection.prepareStatement(sql);
-                    statement.setInt(1, apartmentId);
-                    ResultSet rs = statement.executeQuery();
-                    if (rs.next()) {
-                        id = rs.getInt(1);
-                    }
-                } catch (SQLException | ClassNotFoundException e) {
-                }
-                return id;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, apartmentId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
             }
+        } catch (SQLException | ClassNotFoundException e) {
+        }
+        return id;
+    }
+
     public void updateInvoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate) {
         try {
             String sql = "UPDATE [dbo].[Invoice]\n"
@@ -1054,7 +1130,7 @@ public class InvoiceDAO {
         List<Invoice> iLIst = dao.getInvoiceByApartmentIDandMonth2(1, 11, 2024, 1, 5, null, null, null, null, "desc");
 
         System.out.println(iLIst.size());
-        
+
         int count = dao.countInvoiceByApartmentIDandMonth2(1, 11, 2024, null, null, null, null);
         System.out.println("count: " + count);
 

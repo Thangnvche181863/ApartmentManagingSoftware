@@ -20,9 +20,11 @@ public class Customer {
     private Date dob;
     private Date registrationDate;
     private int isOwner;
+    private String avatar;
     private int status;
     
     private String apartmentNumber;
+    private Date livingDate;
     
     public Customer() {
 
@@ -132,6 +134,22 @@ public class Customer {
 
     public void setApartmentNumber(String apartmentNumber) {
         this.apartmentNumber = apartmentNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Date getLivingDate() {
+        return livingDate;
+    }
+
+    public void setLivingDate(Date livingDate) {
+        this.livingDate = livingDate;
     }
     
     
