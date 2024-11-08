@@ -498,9 +498,9 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="fee" class="text-primary">Giá</label>
+                                        <label for="fee" class="text-primary">Giá <span style="color: red">VND</span></label>
                                         <input type="text" class="form-control" id="fee" name="fee" style="color: red"
-                                               value="<fmt:formatNumber value="${requestScope.service.getFee()}" type="number" maxFractionDigits="0"/> VND/tháng"
+                                               value="<fmt:formatNumber value="${requestScope.service.getFee()}" type="number" maxFractionDigits="0"/>"
                                                readonly />
                                     </div>
 
@@ -603,9 +603,12 @@
                     discount1Month = 1 - (parseFloat('${discount1Month}') / 100);
                     discount2Month = 1 - (parseFloat('${discount2Month}') / 100);
                     discount3Month = 1 - (parseFloat('${discount3Month}') / 100);
-                    updateFee(); // Cập nhật giá ban đầu
+
+                    // Cập nhật giá ban đầu
+                    updateFee();
                 }
 
+                // Hàm cập nhật phí dịch vụ dựa trên gói dịch vụ đã chọn
                 function updateFee() {
                     // Kiểm tra nếu baseFee chưa được thiết lập
                     if (baseFee === undefined) {
@@ -626,8 +629,10 @@
                         updatedFee = baseFee * discount3Month;
                     }
 
-                    // Cập nhật giá vào input fee
-                    document.getElementById('fee').value = new Intl.NumberFormat().format(updatedFee) + " VND/tháng";
+                    // Định dạng số và cập nhật giá vào input fee
+                    document.getElementById('fee').value = new Intl.NumberFormat('vi-VN', {
+                        maximumFractionDigits: 0
+                    }).format(updatedFee);
                 }
 
                 // Gọi hàm initializeFee khi trang được tải
