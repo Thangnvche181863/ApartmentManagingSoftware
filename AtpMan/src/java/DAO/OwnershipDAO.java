@@ -10,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import model.*;
 
 /**
@@ -40,6 +42,25 @@ public class OwnershipDAO {
 
         }
         return list;
+    }
+    
+    public void insertResident(int customerID, int apartmentID) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO Ownership (apartmentID, customerID, [contractDate]) VALUES (?, ?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, apartmentID);
+                ps.setInt(2, customerID);
+                ps.setDate(3, Date.valueOf(LocalDate.now()));
+                ps.executeUpdate();
+                System.out.println("Inserted into Living: customerID = " + customerID + ", apartmentID = " + apartmentID); // In thông báo thành công
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace(); // In ra lỗi
+        } finally {
+            DBContext.closeConnection(conn);
+        }
     }
     
     public static void main(String[] args) {

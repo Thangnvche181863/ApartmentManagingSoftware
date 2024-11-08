@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.user;
+package controller.staff;
 
 import DAO.CustomerDAO;
 import java.io.IOException;
@@ -119,15 +119,15 @@ public class ActiveResidentTableAjax extends HttpServlet {
                 out.println("                                            <tr>\n"
                         + "                                                <td>" + count + "</td>\n"
                         + "                                                <td>" + resident.getName() + "</td>\n"
-                        + "                                                <td>" + dateFormat.format(resident.getDob()) + "</td>\n"
+                        + "                                                <td>" + (resident.getDob() != null ? dateFormat.format(resident.getDob()) : "") + "</td>\n"
                         + "                                                <td>" + (resident.getEmail() != null ? resident.getEmail() : "") + "</td>\n"
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
-                        + "                                                <td>" + resident.getApartmentNumber() + "</td>\n"
+                        + "                                                <td>" + (resident.getApartmentNumber() != null ? resident.getApartmentNumber() : "") + "</td>\n"
                         + "                                                <td class=\"" + (resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "") + "\">" + (resident.getIsOwner() == 1 ? "Chủ căn hộ" : "Người ở") + "</td>\n"
-                        + "                                                <td>Đang cư trú</td>\n"
+                        + "                                                <td>" + (resident.getApartmentNumber() != null ? "Đang cư trú" : "Không cư trú") + "</td>\n"
                         + "                                                <td>\n"
                         + "                                                    <form id=\"removeForm\" action=\"residentmanage\" method=\"post\">\n"
-                        + "                                                        <input type=\"hidden\" name=\"customerId\" value=\""+resident.getCustomerID()+"\">\n"
+                        + "                                                        <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
                         + "                                                        <input type=\"hidden\" name=\"action\" value=\"remove\">\n"
                         + "                                                    </form>\n"
                         + "                                                    <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleRemove()\">\n"

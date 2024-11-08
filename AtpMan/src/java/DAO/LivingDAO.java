@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -146,15 +147,6 @@ public class LivingDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        LivingDAO dao = new LivingDAO();
-        List<Integer> list = dao.getAmountOfResidentOfApartment(2);
-        for (Integer amount : list) {
-            System.out.println("" + amount.toString());
-        }
-
-    }
-
     //////////////////////////////////////QUAN////////////////////////////////////
     private static final Logger LOGGER = Logger.getLogger(LivingDAO.class.getName());
 
@@ -162,10 +154,11 @@ public class LivingDAO {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
-            String sql = "INSERT INTO Living (customerID, apartmentID) VALUES (?, ?)";
+            String sql = "INSERT INTO Living (customerID, apartmentID, [startDate]) VALUES (?, ?, ?)";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, customerID);
                 ps.setInt(2, apartmentID);
+                ps.setDate(3, Date.valueOf(LocalDate.now()));
                 ps.executeUpdate();
                 System.out.println("Inserted into Living: customerID = " + customerID + ", apartmentID = " + apartmentID); // In thông báo thành công
             }
@@ -200,5 +193,24 @@ public class LivingDAO {
         }
         return null;
     }
+    
+    // KhangPM
+    public void updateEndLiving (int customerId){
+        Connection connection = null;
+        String sql = "update Living set endDate = ? where customerID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(LocalDate.now()));
+            statement.setInt(2, customerId);
+            int i = statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+    }
 
+    public static void main(String[] args) {
+        LivingDAO dao = new LivingDAO();
+        dao.updateEndLiving(9);
+    }
 }

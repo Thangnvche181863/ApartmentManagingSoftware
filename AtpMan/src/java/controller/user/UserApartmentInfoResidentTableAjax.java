@@ -99,7 +99,6 @@ public class UserApartmentInfoResidentTableAjax extends HttpServlet {
             currentResidentPage = 1;
         }
         
-        Living living = livingDAO.getLivingInfoByUserId(customer.getCustomerID());
         List<Customer> customerList = customerDAO.getLivingInApartment(apartmentID, currentResidentPage, residentPerPage, userSearchTermList);
         
         Locale locale = Locale.US;
@@ -116,12 +115,13 @@ public class UserApartmentInfoResidentTableAjax extends HttpServlet {
                 + "                                            <th>Email</th>\n"
                 + "                                            <th>Số điện thoại</th>\n"
                 + "                                            <th>Ngày vào ở</th>\n"
+                + "                                            <th>Phân loại</th>\n"
                 + "                                        </tr>\n"
                 + "                                    </thead>\n"
                 + "                                    <tbody>\n");
         int count = 0;
         if (customerList.isEmpty()) {
-            out.println("<tr><td colspan=\"6\">Không có dữ liệu người ở</td></tr>");
+            out.println("<tr><td colspan=\"7\">Không có dữ liệu người ở</td></tr>");
         } else {
             for (Customer resident : customerList) {
                 count++;
@@ -131,7 +131,8 @@ public class UserApartmentInfoResidentTableAjax extends HttpServlet {
                         + "                                                <td>" + dateFormat.format(resident.getDob()) + "</td>\n"
                         + "                                                <td>" + resident.getEmail() + "</td>\n"
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
-                        + "                                                <td>" + dateFormat.format(living.getStartDate()) + "</td>\n"
+                        + "                                                <td>" + dateFormat.format(resident.getLivingDate()) + "</td>\n"
+                        + "                                                <td class='"+(resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "")+"' >" + (resident.getIsOwner() == 1 ? "Chủ sở hữu" : "Người ở") + "</td>\n"
                         + "                                            </tr>\n");
             }
         }

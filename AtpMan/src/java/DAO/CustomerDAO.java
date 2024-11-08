@@ -118,6 +118,7 @@ public class CustomerDAO {
                             customer.setDob(rs.getDate("dob"));
                             customer.setRegistrationDate(rs.getDate("registrationDate"));
                             customer.setIsOwner(rs.getInt("isOwner"));
+                            customer.setAvatar(rs.getString("cusImage"));
                             customer.setStatus(rs.getInt("status"));
                             return customer;
                         }
@@ -174,13 +175,13 @@ public class CustomerDAO {
 
     // QUAN
     public void createNewCustomer(String username, String password, String name, String email, String phoneNumber,
-            String isOwner) {
+            String isOwner, int status) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
                 String hashedInputPassword = UtilHashPass.EncodePassword(password);
-                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner, status) VALUES (?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
@@ -188,6 +189,7 @@ public class CustomerDAO {
                     ps.setString(4, email);
                     ps.setString(5, phoneNumber);
                     ps.setString(6, isOwner); // 1 for Resident, 0 for Owner
+                    ps.setInt(7, status); // 1 for active, 0 for inactive
                     ps.executeUpdate();
                 }
             }
@@ -386,7 +388,7 @@ public class CustomerDAO {
     public List<Customer> getLivingInApartment(int apartmentID, int currentPage, int rowsPerPage, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
-        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status from Customer c\n"
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status, l.startDate from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
                 + "where l.apartmentID = ? \n"
                 + "and endDate is null";
@@ -430,6 +432,7 @@ public class CustomerDAO {
                 customer.setDob(rs.getDate("dob"));
                 customer.setIsOwner(rs.getInt(6));
                 customer.setStatus(rs.getInt(7));
+                customer.setLivingDate(rs.getDate(8));
                 list.add(customer);
             }
             return list;
@@ -499,6 +502,7 @@ public class CustomerDAO {
      * @param searchTermList
      * @return
      */
+    // not using
     public List<Customer> getResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
@@ -963,7 +967,7 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = """
                      update Customer
-                     set username = NULL, password = NULLL
+                     set username = NULL, password = NULL
                      where customerID = ?
                      """;
         try {
@@ -976,7 +980,7 @@ public class CustomerDAO {
         }
     }
 
-    //KhangPM
+    //KhangPM - not use
     public int countResidentSearch(int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
         int count = 0;
         Connection connection = null;
@@ -1150,31 +1154,12 @@ public class CustomerDAO {
     }
 
     public static void main(String[] args) {
-        Customer testCustomer = new Customer();
-        testCustomer.setName("tester");
-        testCustomer.setEmail("asdasd");
-        testCustomer.setPhoneNumber("1234567890");
-        testCustomer.setDob(java.sql.Date.valueOf("1990-01-01"));
-        testCustomer.setRegistrationDate(new java.util.Date());
+        CustomerDAO dao = new CustomerDAO();
+        Customer testCustomer = dao.getAllInformationCustomer("khang123", "123");
+        System.out.println(testCustomer);
        
-
-        int apartmentID = 1;  // Replace with a valid apartment ID from your database
-        java.sql.Date startDate = java.sql.Date.valueOf("2023-01-01");
-        
-
-        // Create an instance of the class containing the addCustomerToApartment method
-        CustomerDAO customerDAO = new CustomerDAO();  // Assuming the method is in CustomerDAO
-
-        // Test addCustomerToApartment
-        boolean isAdded = customerDAO.addCustomerToApartment(testCustomer, apartmentID, startDate);
-
-        // Output the result
-        if (isAdded) {
-            System.out.println("Test Passed: Customer and living records added successfully.");
-            System.out.println("Customer ID: " + testCustomer.getCustomerID());
-        } else {
-            System.out.println("Test Failed: Could not add customer and living records.");
-        }
+        String pass = UtilHashPass.EncodePassword("bb588SXf");
+        System.out.println("pass hashed: " +pass);
 
     }
 }

@@ -309,7 +309,7 @@
     </servlet>
     <servlet>
         <servlet-name>ActiveResidentTableAjax</servlet-name>
-        <servlet-class>controller.user.ActiveResidentTableAjax</servlet-class>
+        <servlet-class>controller.staff.ActiveResidentTableAjax</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterResidentToApartment</servlet-name>
@@ -334,6 +334,10 @@
     <servlet>
         <servlet-name>TaskController</servlet-name>
         <servlet-class>controller.TaskController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisResidentManageServlet</servlet-name>
+        <servlet-class>controller.staff.RegisResidentManageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -610,6 +614,10 @@
     <servlet-mapping>
         <servlet-name>TaskController</servlet-name>
         <url-pattern>/task</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisResidentManageServlet</servlet-name>
+        <url-pattern>/regisresidentmanage</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
