@@ -34,7 +34,7 @@
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="/AtpMan/userDropdown">
-                <a class="dropdown-item" href="profile">
+                <a class="dropdown-item" href="/AtpMan/profile">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Trang cá nhân
                 </a>
@@ -61,7 +61,7 @@
                 <div class="modal-body">Bạn có chắc muốn đăng xuất không?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Không</button>
-                    <a class="btn btn-primary" href="logout">Đăng xuất</a>
+                    <a class="btn btn-primary" href="/AtpMan/logout">Đăng xuất</a>
                 </div>
             </div>
         </div>
