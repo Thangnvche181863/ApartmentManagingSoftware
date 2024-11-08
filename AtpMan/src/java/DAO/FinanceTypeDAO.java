@@ -91,16 +91,9 @@ public class FinanceTypeDAO {
 
     public static void main(String[] args) {
         FinanceTypeDAO fdao = new FinanceTypeDAO();
-//        fdao.insertFinanceType("thu tiền bảo trì căn hộ");
-        fdao.deleteFinanceType(31);
-        fdao.deleteFinanceType(32);
-        fdao.deleteFinanceType(33);
-        fdao.deleteFinanceType(34);
-        fdao.deleteFinanceType(35);
-        fdao.deleteFinanceType(36);
-        fdao.deleteFinanceType(37);
+        fdao.insertFinanceType("thu tiền bảo trì căn hộ");
+//        fdao.deleteFinanceType(31);
 
-
-        System.out.println(fdao.getAll());
+//        fda
     }
 }
