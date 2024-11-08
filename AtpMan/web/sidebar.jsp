@@ -79,7 +79,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Manager</h6>
                             <a class="collapse-item" href="#"></a>
-                            <a class="collapse-item" href="building">Building</a>
+                            <a class="collapse-item" href="building">Tòa nhà</a>
                             <a class="collapse-item" href="assignment">Assignment</a>
                             <a class="collapse-item" href="staff">Staff</a>
                         </div>

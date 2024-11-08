@@ -198,6 +198,14 @@
         <servlet-name>TaskController</servlet-name>
         <servlet-class>controller.TaskController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addResidentController</servlet-name>
+        <servlet-class>controller.addResidentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addApartment</servlet-name>
+        <servlet-class>controller.staff.addApartment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -365,6 +373,14 @@
     <servlet-mapping>
         <servlet-name>TaskController</servlet-name>
         <url-pattern>/task</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addResidentController</servlet-name>
+        <url-pattern>/addResident</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addApartment</servlet-name>
+        <url-pattern>/addApartment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

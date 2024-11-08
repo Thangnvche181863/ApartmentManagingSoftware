@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -77,9 +78,9 @@ public class LivingDAO {
         return list;
     }
 
-    public List<Integer> getAgeOfResident(int apartmentID) {
-        List<Integer> list = new ArrayList<>();
-        String sql = " SELECT c.age FROM Customer c\n"
+    public List<Date> getDobOfResident(int apartmentID) {
+        List<Date> list = new ArrayList<>();
+        String sql = "SELECT c.dob FROM Customer c\n"
                 + "JOIN Living l ON c.customerID = l.customerID\n"
                 + "JOIN Apartment a ON l.apartmentID = a.apartmentID\n"
                 + "WHERE a.apartmentID = ?";
@@ -90,11 +91,18 @@ public class LivingDAO {
             pre.setInt(1, apartmentID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-
-                list.add(rs.getInt(1));
+                list.add(rs.getDate(1)); // Lấy dữ liệu kiểu Date
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return list;
     }
@@ -146,15 +154,6 @@ public class LivingDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        LivingDAO dao = new LivingDAO();
-        List<Integer> list = dao.getAmountOfResidentOfApartment(2);
-        for (Integer amount : list) {
-            System.out.println("" + amount.toString());
-        }
-
-    }
-
     //////////////////////////////////////QUAN////////////////////////////////////
     private static final Logger LOGGER = Logger.getLogger(LivingDAO.class.getName());
 
@@ -177,4 +176,34 @@ public class LivingDAO {
         }
     }
 
+    public int insertLiving(int customerID, int apartmentID, LocalDate startDate) {
+        String sql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
+        Connection conn = null;
+        int isInserted = 0;
+
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, customerID);
+            pre.setInt(2, apartmentID);
+            pre.setDate(3, java.sql.Date.valueOf(startDate)); // Chuyển LocalDate thành java.sql.Date
+
+            isInserted = pre.executeUpdate();
+            LOGGER.info("Dữ liệu đã được chèn thành công vào bảng Living.");
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error inserting data", ex);
+            ex.printStackTrace();
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return isInserted;
+    }
+
+    public static void main(String[] args) {
+        LivingDAO dao = new LivingDAO();
+        LocalDate startDate = LocalDate.now(); // Lấy ngày hiện tại
+
+        int n = dao.insertLiving(17, 11, startDate);
+        System.out.println("Kết quả: " + n);
+    }
 }

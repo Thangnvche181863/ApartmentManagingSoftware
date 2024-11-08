@@ -21,7 +21,7 @@ public class Customer {
     private Date registrationDate;
     private int isOwner;
     private int status;
-    
+    private String avatar;
     public Customer() {
 
     }
@@ -35,6 +35,19 @@ public class Customer {
         this.dob = dob;
         this.registrationDate = registrationDate;
         this.isOwner = isOwner;
+    }
+
+    public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner, int status, String avatar) {
+        this.customerID = customerID;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.registrationDate = registrationDate;
+        this.isOwner = isOwner;
+        this.status = status;
+        this.avatar = avatar;
     }
 
     public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner, int status) {
@@ -52,6 +65,14 @@ public class Customer {
 
     public int getCustomerID() {
         return customerID;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setCustomerID(int customerID) {
@@ -126,9 +147,8 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + ", status=" + status + '}';
+        return "Customer{" + "customerID=" + customerID + ", username=" + username + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", dob=" + dob + ", registrationDate=" + registrationDate + ", isOwner=" + isOwner + ", status=" + status + ", avatar=" + avatar + '}';
     }
 
     
-
 }

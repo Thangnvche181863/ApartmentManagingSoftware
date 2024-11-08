@@ -53,8 +53,6 @@ public class BuildingDAO {
         Vector<Building> vector = dao.getAllBuilding();
         return vector.size();
     }
-    
-    
 
     public Vector<Integer> getApartmentAvailable() {
         Vector<Integer> vector = new Vector<>();
@@ -172,7 +170,6 @@ public class BuildingDAO {
         return list;
     }
 
-
     private static final Logger LOGGER = Logger.getLogger(BuildingDAO.class.getName());
 
     public List<Building> getAllBuildings() {
@@ -232,6 +229,25 @@ public class BuildingDAO {
             ex.printStackTrace();
         }
         return name;
+    }
+
+    // Phương thức chèn dữ liệu mới vào bảng Building
+    public boolean insertNewBuilding(String name, int numFloor, int numApartment, String address)  {
+        String sql = "INSERT INTO Building (name, numFloor, numApartment, address) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, name);
+            stmt.setInt(2, numFloor);
+            stmt.setInt(3, numApartment);
+            stmt.setString(4, address);
+
+            int rowsInserted = stmt.executeUpdate();
+            return rowsInserted > 0;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void main(String[] args) {

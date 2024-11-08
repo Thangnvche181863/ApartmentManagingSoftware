@@ -32,7 +32,7 @@ public class ApartmentDAO {
         try {
             conn = DBContext.getConnection();
             PreparedStatement pre = conn.prepareStatement(sql);
-            
+
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
                 int apartmentID = rs.getInt(1);
@@ -45,7 +45,7 @@ public class ApartmentDAO {
                 int area = rs.getInt(8);
                 Apartment apartment = new Apartment(apartmentID, buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area);
                 vector.add(apartment);
-                
+
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -138,9 +138,7 @@ public class ApartmentDAO {
     // System.out.println(vector.size());
     //
     // }
-    
     //////////////////////////////// QUAN///////////////////////////////////////
-
     public List<Apartment> getApartmentsByBuilding(int buildingId) {
         System.out.println("-------------");
         Connection conn = null;
@@ -169,12 +167,13 @@ public class ApartmentDAO {
                         }
                     }
                 }
-                }
+            }
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println(e);
         }
         return null;
     }
+
     public Apartment getApartmentByCustomerId(int customerId) {
         Connection connection = null;
         String sql = "select a.* from Apartment a\n"
@@ -363,7 +362,7 @@ public class ApartmentDAO {
                 apartment.setMaintenanceFee(rs.getBigDecimal(6));
                 apartment.setFloor(rs.getInt(7));
                 apartment.setArea(rs.getInt(8));
-                
+
                 list.add(apartment);
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -372,6 +371,55 @@ public class ApartmentDAO {
         return list;
     }
 
+    public boolean insertNewApartment(int buildingID, String apartmentNumber, String apartmentType,
+            BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
+        String sql = "INSERT INTO Apartment (buildingID, apartmentNumber, departmentType, price, maintenanceFee, floor, area) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBContext.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, buildingID);
+            ps.setString(2, apartmentNumber);
+            ps.setString(3, apartmentType);
+            ps.setBigDecimal(4, price);
+            ps.setBigDecimal(5, maintenanceFee);
+            ps.setInt(6, floor);
+            ps.setInt(7, area);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean editApartment(int apartmentID, String apartmentNumber, String apartmentType, 
+                                  BigDecimal price, BigDecimal maintenanceFee, int floor, int area)   {
+        Connection conn = null;
+        String sql = "UPDATE Apartment SET apartmentNumber = ?, departmentType = ?, price = ?, maintenanceFee = ?, floor = ?, area = ? WHERE apartmentID = ?";
+
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            // Set các tham số vào câu lệnh PreparedStatement
+            statement.setString(1, apartmentNumber);
+            statement.setString(2, apartmentType);
+            statement.setBigDecimal(3, price);
+            statement.setBigDecimal(4, maintenanceFee);
+            statement.setInt(5, floor);
+            statement.setInt(6, area);
+            statement.setInt(7, apartmentID);  // ID của căn hộ cần chỉnh sửa
+
+            // Thực thi câu lệnh
+            int rowsUpdated = statement.executeUpdate();
+
+            // Kiểm tra nếu có bản ghi bị cập nhật
+            return rowsUpdated > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static void main(String[] args) {
         ApartmentDAO apartmentDAO = new ApartmentDAO();
         int buildingId = 1;

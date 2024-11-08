@@ -146,7 +146,7 @@
                     <div class="container rounded bg-white mt-5 mb-5">
                         <div class="row">
                             <div class="col-md-4 border-right">
-                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="${user.staffImg}" id="imgPreview" width="150px" height="150px" >
+                                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" src="${user.avatar}" id="imgPreview" width="150px" height="150px" >
                                     <span class="font-weight-bold">${user.name}</span><span class="text-black-50">${user.email}</span><span> </span></div>
                             </div>
                             <div class="col-md-6 border-right">
@@ -191,7 +191,7 @@
                                     <label for="img" class="form-label">Đổi ảnh đại diện:</label>
                                     <input type="file" accept="image/*" class="form-control w-100" name="img" id="img"  onchange="previewImg(event)">
 
-                                    <input type="hidden" name="imgPath" value="${user.staffImg}">
+                                    <input type="hidden" name="imgPath" value="${user.avatar}">
 
                                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Lưu thay đổi </button></div>
 

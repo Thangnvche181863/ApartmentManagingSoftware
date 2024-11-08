@@ -19,7 +19,7 @@ public class Staff {
     private String email;
     private String phoneNumber;
     private Date hireDate;
-    private String staffImg;
+    private String avatar;
     private int status;
     private String roleAuthority;
     
@@ -34,7 +34,7 @@ public class Staff {
         this.roleAuthority = roleAuthority;
     }
 
-    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String staffImg, int status) {
+    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String avatar, int status) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
@@ -43,7 +43,7 @@ public class Staff {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
-        this.staffImg = staffImg;
+        this.avatar = avatar;
         this.status = status;
     }
     
@@ -59,7 +59,7 @@ public class Staff {
         this.status = status;
     }
 
-    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String staffImg) {
+    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String avatar) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
@@ -68,7 +68,7 @@ public class Staff {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
-        this.staffImg = staffImg;
+        this.avatar = avatar;
     }
 
     public int getStaffID() {
@@ -77,6 +77,14 @@ public class Staff {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public void setStatus(int status) {
@@ -107,13 +115,7 @@ public class Staff {
         return password;
     }
 
-    public String getStaffImg() {
-        return staffImg;
-    }
-
-    public void setStaffImg(String staffImg) {
-        this.staffImg = staffImg;
-    }
+   
 
     public void setPassword(String password) {
         this.password = password;
@@ -153,9 +155,10 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", staffImg=" + staffImg + ", status=" + status + '}';
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", avatar=" + avatar + ", status=" + status + ", roleAuthority=" + roleAuthority + '}';
     }
 
+   
   
 
     

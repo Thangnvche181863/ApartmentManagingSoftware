@@ -47,8 +47,10 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Căn hộ</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <a href="addApartment?buildingID=${buildingID}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-plus-square fa-sm text-white-50"></i> Thêm căn hộ
+                        </a>
+
                     </div>
 
                     <!-- Content Row -->
@@ -57,8 +59,6 @@
                         <!-- Earnings (Monthly) Card Example -->
                         <c:set value="${requestScope.list}" var="countList"></c:set>
                         <c:set value="0" var="count"></c:set>
-                        <c:set value="${requestScope.listInvoice}" var="invoiceList"></c:set>
-                        <c:set value="0" var="invoice"></c:set>
                         <c:forEach items="${listApartment}" var="o">
                             <div class="col-xl-3 col-md-6 mb-4">
                                 <div class="card border-left-primary shadow h-100 py-2">
@@ -69,13 +69,25 @@
                                                     ID: ${o.apartmentID}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Loại: ${o.apartmentType}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Số: ${o.apartmentNumber}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Phí dịch vụ: <fmt:formatNumber value="${o.price}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Phí dịch vụ: <fmt:formatNumber value="${o.maintenanceFee}" minFractionDigits = "0" type="currency" currencySymbol="VND" /></div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Diện tích: ${o.area} m² </div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Tầng: ${o.floor}</div>
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Số cư dân: ${countList.get(pageScope.count)} </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Hóa đơn chưa trả: ${invoiceList.get(pageScope.invoice)} </div>
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="residentofapartment?apartmentID=${o.apartmentID}" class ="text-warning" style="text-decoration: none" >Xem tất cả người ở</a></div>
+                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="margin-top: 20px">
+                                                    <!-- Tạo một dòng cho 2 nút -->
+                                                    <div class="d-flex justify-content-between">
+                                                        <a href="residentofapartment?apartmentID=${o.apartmentID}" class="text-warning" style="text-decoration: none">
+                                                            Xem tất cả người ở
+                                                        </a>
+
+                                                        <!-- Nút chỉnh sửa -->
+                                                        <form action="apartment" method="POST" style="display:inline;">
+                                                            <input type="hidden" name="service" value="viewedit">
+                                                            <input type="hidden" name="apartmentID" value="${o.apartmentID}">
+                                                            <button type="submit" class="btn btn-primary btn-sm">Chỉnh sửa</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-home fa-2x text-gray-400"></i>
@@ -85,7 +97,6 @@
                                 </div>
                             </div>
                             <c:set value="${count + 1}" var="count"></c:set>
-                            <c:set value="${invoice + 1}" var="invoice"></c:set>
                         </c:forEach>
 
 

@@ -44,8 +44,8 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">CÁC TÒA NHÀ</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <a href="addBuilding.jsp" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-plus-circle fa-sm text-white-50"></i>Thêm tòa nhà</a>
                     </div>
 
                     <!-- Content Row -->
@@ -68,7 +68,7 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Địa chỉ: ${o.address}</div>
 
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
+                                                    <a href="apartment?buildingID=${o.buildingID}&numFloor=${o.numFloor}&numApartment=${o.numApartment}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-building fa-2x text-gray-400"></i>

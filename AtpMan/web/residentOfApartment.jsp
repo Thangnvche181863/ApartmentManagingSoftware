@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     <head>
 
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -65,11 +67,10 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     ID: ${o.livingID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Tên: ${nameList.get(pageScope.countName)} </div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Ngày sinh: ${ageList.get(pageScope.countAge)}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Căn hộ: ${o.apartmentID}</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Ngày thuê: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-user fa-2x text-gray-400"></i>
@@ -91,7 +92,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">�</span>
+                                        <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

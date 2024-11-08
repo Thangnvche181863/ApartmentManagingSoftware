@@ -4,6 +4,7 @@
  */
 package controller;
 
+import DAO.CustomerDAO;
 import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -89,39 +90,34 @@ public class ProfileController extends HttpServlet {
      */
     @Override
 
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // In thông tin người dùng từ session
-        Staff staff = (Staff) session.getAttribute("user");
+        // Lấy đối tượng user từ session và kiểm tra loại
+        Object user = session.getAttribute("user");
 
-        String name = (String) request.getParameter("name");
-        String phoneNumber = (String) request.getParameter("phoneNumber");
-        // pick file upload form
+        // Thuộc tính chung
+        String name = request.getParameter("name");
+        String phoneNumber = request.getParameter("phoneNumber");
         String imgPath = request.getParameter("imgPath"); // Đường dẫn ảnh cũ
-        Part filePart = request.getPart("img"); // "img" is name in input of form
+        Part filePart = request.getPart("img"); // "img" là tên của input trong form
         String fileName = filePart.getSubmittedFileName();
 
         String fileURL;
 
         // Kiểm tra xem người dùng có tải lên file ảnh mới không
-       if (fileName != null && !fileName.isEmpty()) {
-        // Kiểm tra loại file
-        String fileType = filePart.getContentType();
-        if (!fileType.equals("image/jpeg") && !fileType.equals("image/png") && !fileType.equals("image/gif")) {
-            // Không phải là file ảnh -> báo lỗi và quay lại trang profile
-            request.setAttribute("message", "Chỉ được upload file ảnh (JPG, PNG, GIF).");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
-            return;
-        }
-            
+        if (fileName != null && !fileName.isEmpty()) {
+            String fileType = filePart.getContentType();
+            if (!fileType.equals("image/jpeg") && !fileType.equals("image/png") && !fileType.equals("image/gif")) {
+                request.setAttribute("message", "Chỉ được upload file ảnh (JPG, PNG, GIF).");
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+                return;
+            }
 
-            // Lưu ảnh mới
             String applicationPath = request.getServletContext().getRealPath("");
             String uploadPath = applicationPath + File.separator + UPLOAD_DIR;
-
-            // Tạo thư mục nếu chưa tồn tại
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
@@ -131,34 +127,40 @@ public class ProfileController extends HttpServlet {
             filePart.write(filePath);
             fileURL = request.getContextPath() + "/" + UPLOAD_DIR + "/" + fileName;
         } else {
-            // Giữ lại đường dẫn ảnh cũ nếu không chọn ảnh mới
             fileURL = imgPath;
         }
 
-        // Xóa file tạm để giải phóng bộ nhớ
         filePart.delete();
 
-        // In thông tin được gửi từ form
-        StaffDAO dao = new StaffDAO();
+        // Cập nhật thông tin dựa trên loại user
+        if (user instanceof Staff) {
+            Staff staff = (Staff) user;
+            StaffDAO dao = new StaffDAO();
+            int n = dao.UpdateStaffInfo(name, phoneNumber, fileURL, staff.getStaffID());
 
-        // Thực hiện cập nhật và in kết quả trả về
-        int n = dao.UpdateStaffInfo(name, phoneNumber, fileURL, staff.getStaffID());
-        System.out.println("Rows affected: " + n);
-        request.setAttribute("userType", "staff");
+            if (n > 0) {
+                staff.setName(name);
+                staff.setAvatar(fileURL);
+                session.setAttribute("user", staff);
+                request.setAttribute("userType", "staff");
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+            } else {
+                request.setAttribute("message", "Profile update failed");
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+            }
+        } else if (user instanceof Customer) {
+            Customer customer = (Customer) user;
+             CustomerDAO dao = new CustomerDAO();
+             int n = dao.updateCustomerInfo(name, phoneNumber, fileURL, customer.getCustomerID());
 
-        if (n > 0) {
-            // Lấy lại thông tin người dùng mới và in ra
-            staff.setName(name);
-            staff.setStaffImg(fileURL);
-            
-            // Cập nhật session và điều hướng lại trang profile
-            session.setAttribute("user", staff);
-            System.out.println("oke");
+            // Cập nhật session và hiển thị lại thông tin cho Customer
+            customer.setName(name);
+            customer.setAvatar(fileURL);
+            session.setAttribute("user", customer);
+            request.setAttribute("userType", "customer");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         } else {
-            // In thông báo lỗi
-            System.out.println("Profile update failed");
-            request.setAttribute("message", "Profile update failed");
+            request.setAttribute("message", "User type not recognized");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
         }
     }

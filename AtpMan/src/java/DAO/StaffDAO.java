@@ -114,7 +114,7 @@ public class StaffDAO {
                             staff.setEmail(rs.getString("email"));
                             staff.setPhoneNumber(rs.getString("phoneNumber"));
                             staff.setHireDate(rs.getDate("hireDate"));
-                            staff.setStaffImg(rs.getString("staffImg"));
+                            staff.setAvatar(rs.getString("staffImg"));
                             return staff;
                         }
                     }
