@@ -85,7 +85,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-            <%@include file="sidebar.jsp" %>
+            <%@include file="../sidebar.jsp" %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -97,7 +97,7 @@
 
                     <!-- Topbar -->
 
-                    <%@include file = "topbar.jsp" %>
+                    <%@include file = "../topbar.jsp" %>
 
                     <!-- End of Topbar -->
 
