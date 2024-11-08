@@ -202,7 +202,7 @@
 
                                         <div class="form-group mb-4" style="width: 35%" >
                                             <label for="typeFee" class="form-label">Loại phí:</label>
-                                            <select class="form-select w-100" name="typeFee" id="typeFee" style="border-radius: 5px; outline: none;">
+                                            <select class="form-select w-100" name="typeFee" id="typeFee" style="border-radius: 5px; outline: none; " required="">
                                                 <c:forEach items="${financeTypes}" var="ls">
                                                     <option value="${ls.financeTypeId}" >${ls.name}</option>
                                                 </c:forEach>
