@@ -41,6 +41,8 @@
         <url-pattern>/CommentDelete</url-pattern>
         <url-pattern>/newscategoryadd.jsp</url-pattern>
         <url-pattern>/CommentDelete</url-pattern>
+        <url-pattern>/EditNewsCategory</url-pattern>
+        
     </filter-mapping>
     <filter-mapping>
         <filter-name>AjaxFilter</filter-name>
@@ -339,6 +341,10 @@
         <servlet-name>RegisResidentManageServlet</servlet-name>
         <servlet-class>controller.staff.RegisResidentManageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditNewsCategory</servlet-name>
+        <servlet-class>controller.staff.EditNewsCategory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -618,6 +624,10 @@
     <servlet-mapping>
         <servlet-name>RegisResidentManageServlet</servlet-name>
         <url-pattern>/regisresidentmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditNewsCategory</servlet-name>
+        <url-pattern>/EditNewsCategory</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

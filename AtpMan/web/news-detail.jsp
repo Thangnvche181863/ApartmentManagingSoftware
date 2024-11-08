@@ -98,23 +98,7 @@
 
         <jsp:include page="header.jsp"></jsp:include>
 
-            <!-- Modal Search Start -->
-            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body d-flex align-items-center bg-primary">
-                            <div class="input-group w-75 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- News Detail Section Start -->
             <div class="container my-5">
@@ -207,10 +191,16 @@
                                                             <!-- Buttons for the customer who made the comment -->
                                                             <button type="button" class="btn btn-cyan btn-sm">Edit</button>
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();">Report</a>
+                                                               onclick="return confirmReport();">Báo Cáo</a>
 
+                                                        </c:when>
+                                                        <c:when test="${userRole == 'customer'}">
+                                                            <!-- Resident can report comments made by others -->
+
+                                                            <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
                                                         </c:when>
 
                                                     </c:choose>
@@ -222,20 +212,20 @@
                                                 <c:if test="${not empty sessionStaff}"> <!-- Check if the user is logged in -->
                                                     <c:choose>
                                                         <c:when test="${sessionStaff.staffID != null && comment.staffID == sessionStaff.staffID}">
-                                                            <!-- Buttons for the customer who made the comment -->
-                                                            <button type="button" class="btn btn-cyan btn-sm">Edit</button>
+                                                            <!-- Buttons for the staff who made the comment -->
+                                                            <button type="button" class="btn btn-cyan btn-sm">Sửa</button>
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();"  >Report</a>
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
 
                                                         </c:when>
                                                         <c:when test="${userRole == 'staff'}">
                                                             <!-- Staff can delete comments made by others -->
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();"  >Report</a>
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:if>  
@@ -248,7 +238,7 @@
                             </c:forEach>
                         </c:if>
                         <c:if test="${empty comments}">
-                            <p class="text-center">No comments available for this news item.</p>
+                            <p class="text-center">Không có bình luận nào.</p>
                         </c:if>
                     </div>
                     <div class="card-body">
@@ -275,7 +265,7 @@
 
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Submit Comment</button>
+                                <button type="submit" class="btn btn-primary">Đăng</button>
                             </form>
                         </c:if>
                     </div>

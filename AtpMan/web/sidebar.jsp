@@ -123,7 +123,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Mục lục:</h6>
                     <a class="collapse-item" href="newsmanage">Quản lý tin</a>
-                    <a class="collapse-item" href="newscategorymanage">Quản lý tập tin</a>
+                    <a class="collapse-item" href="newscategorymanage">Quản lý mục tin</a>
                     <a class="collapse-item" href="newscommentmanage">Quản lý bình luận</a>
                     <h6 class="collapse-header">Trang Chủ:</h6>
                     <a class="collapse-item" href="News">Trang tin tức</a>

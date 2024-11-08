@@ -1,52 +1,26 @@
-
-
 <%-- 
-    Document   : newscategoryadd
-    Created on : Oct 23, 2024, 11:11:31 PM
+    Document   : editNewsCategory
+    Created on : Nov 8, 2024, 7:57:51 PM
     Author     : PC
 --%>
+
+
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page import="java.io.*" %>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Thêm Mục Tin</title>
+        <title>Sửa Mục Tin</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        <!-- Include TinyMCE -->
-        <script src="https://cdn.tiny.cloud/1/n0b2uh23r0ya9qhhy07odsf6v4qhzjpn6aoav7c4rzx6ocd4/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
-        <script>
-            tinymce.init({
-                selector: '#newsContent', // Target the textarea
-                plugins: 'image link media',
-                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image media',
-                height: 300
-            });
-
-            // Ensure the TinyMCE content is saved before form submission
-            $(document).ready(function () {
-                $('#newsForm').on('submit', function (e) {
-                    console.log("Form is being submitted...");
-
-                    tinymce.triggerSave(); // Update textarea with TinyMCE content
-
-                    // Debug: Check if the textarea now has content
-                    console.log("News content:", $('#newsContent').val());
-
-                    if ($('#newsContent').val() === '') {
-                        e.preventDefault();  // Prevent form submission if content is missing
-                        alert("News content is empty!");
-                    }
-                });
-            });
-        </script>
 
     </head>
 
@@ -56,7 +30,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thêm Tin</title>
+    <title>Sửa Mục Tin</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -88,39 +62,39 @@
 
                 <!-- Topbar -->
                 <%@include file = "topbar.jsp" %>
-                <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
+
                 <div class="container mt-5">
-                    <center><h2>Thêm Mục Tin</h2></center> 
-                        <% if (request.getAttribute("key") != null) { %>
-                    <div class="alert alert-danger text-center" role="alert">
-                        <%= request.getAttribute("key") %>
-                    </div>
-                    <% } %>
-                    <form id="newsForm" action="AddNewsCategory" method="post" >
+                    <center><h2>Sửa Mục Tin</h2></center> 
+                    <!-- Display success or error message -->
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger">${error}</div>
+                    </c:if>
+                    <c:if test="${not empty success}">
+                        <div class="alert alert-success">${success}</div>
+                    </c:if>
+                    <form id="newsForm" action="EditNewsCategory" method="POST" >
+                        <input type="hidden" name="categoryID" value="${requestScope.cat.newsCategoryID}" />  <!-- This should hold a valid ID -->
+
                         <div class="form-group">
-                            <label for="newsTitle">Tên Mục Tin:</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <label for="newsTitle">Tên:</label>
+                            <input type="text" class="form-control" id="name" name="name" value="${cat.name}" required>
                         </div>
 
-
-
                         <div class="form-group">
-                            <label for="newsTitle">Chú Thích:</label>
-                            <input type="text" class="form-control" id="description" name="description" >
+                            <label for="newsDescription">Chú Thích: </label>
+                            <input type="text" class="form-control" id="description" name="description" value="${cat.description}" >
                         </div>
 
 
                         <a class="btn btn-danger" href="newscategorymanage">Quay lại</a>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <input type="submit"  class="btn btn-primary" value="Update" />
                     </form>
-
                 </div>
+
+
+
             </div>
-
-
-
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -156,9 +130,9 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
     <script type="text/javascript">
-            function confirmDelete() {
-                return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
-            }
+        function confirmDelete() {
+            return confirm("Bạn có chắc chắn muốn xóa tin tức này?");
+        }
     </script>
     <script type="text/javascript">
 
@@ -166,7 +140,24 @@
             return confirm("Bạn có chắc chắn muốn bỏ qua báo cáo này?");
         }
     </script>
+    <script>
+        document.getElementById("newsForm").addEventListener("submit", function (event) {
+            const fileInput = document.getElementById("newsImg");
+            const filePath = fileInput.value;
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+            if (filePath) {
+                if (!allowedExtensions.exec(filePath)) {
+                    alert("Please upload a valid image file (jpg, jpeg, png, gif).");
+                    fileInput.value = ''; // Clear the input
+                    event.preventDefault(); // Prevent form submission
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+
+
 
 
