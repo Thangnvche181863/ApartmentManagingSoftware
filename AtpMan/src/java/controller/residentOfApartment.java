@@ -4,19 +4,24 @@
  */
 package controller;
 
-import DAO.ServiceDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Vector;
+import model.Living;
 
 /**
  *
- * @author thang
+ * @author Admin
  */
-public class DeleteServiceServlet extends HttpServlet {
+@WebServlet(name = "residentOfApartment", urlPatterns = {"/residentofapartment"})
+public class residentOfApartment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,15 +37,18 @@ public class DeleteServiceServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteServiceServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteServiceServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            LivingDAO dao = new LivingDAO();
+            
+            int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
+            List<Living> list = dao.getAllResidentByApartmentID(apartmentID);
+            List<String> listResidentName = dao.getNameOfResident(apartmentID);
+            List<Integer> listResidentAge = dao.getAgeOfResident(apartmentID);
+            
+            
+            request.setAttribute("listResidentAge", listResidentAge);
+            request.setAttribute("listResidentName", listResidentName);
+            request.setAttribute("listResident", list);
+            request.getRequestDispatcher("residentOfApartment.jsp").forward(request, response);
         }
     }
 
@@ -56,11 +64,7 @@ public class DeleteServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        ServiceDAO sdao = new ServiceDAO();
-        sdao.deleteService(Integer.parseInt(id));
-        request.setAttribute("listservice", sdao.getAll());
-        request.getRequestDispatcher("servicelist.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -9,9 +9,9 @@ package DAO;
  * @author WuanTun
  */
 import utils.DBContext;
-
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,6 +118,7 @@ public class CustomerDAO {
                             customer.setDob(rs.getDate("dob"));
                             customer.setRegistrationDate(rs.getDate("registrationDate"));
                             customer.setIsOwner(rs.getInt("isOwner"));
+                            customer.setAvatar(rs.getString("cusImage"));
                             customer.setStatus(rs.getInt("status"));
                             return customer;
                         }
@@ -126,8 +127,6 @@ public class CustomerDAO {
             }
         } catch (Exception e) {
             Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, "Error retrieving customer information", e);
-        } finally {
-            DBContext.closeConnection(conn);
         }
         return null; // Trả về null nếu không tìm thấy hoặc có lỗi xảy ra
     }
@@ -176,13 +175,13 @@ public class CustomerDAO {
 
     // QUAN
     public void createNewCustomer(String username, String password, String name, String email, String phoneNumber,
-            String isOwner) {
+            String isOwner, int status) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
             if (conn != null) {
                 String hashedInputPassword = UtilHashPass.EncodePassword(password);
-                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner, status) VALUES (?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
@@ -190,6 +189,7 @@ public class CustomerDAO {
                     ps.setString(4, email);
                     ps.setString(5, phoneNumber);
                     ps.setString(6, isOwner); // 1 for Resident, 0 for Owner
+                    ps.setInt(7, status); // 1 for active, 0 for inactive
                     ps.executeUpdate();
                 }
             }
@@ -320,6 +320,39 @@ public class CustomerDAO {
         return null;
     }
 
+    public Vector<Customer> getAllCustomer() {
+        Connection conn = null;
+        Vector<Customer> vector = new Vector<>();
+        String sql = "select * from Customer";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int customerID = rs.getInt(1);
+                String username = rs.getString(2);
+                String name = rs.getString(3);
+                String email = rs.getString(4);
+                String phoneNumber = rs.getString(5);
+                Date age = rs.getDate(6);
+                Date registrationDate = rs.getDate(7);
+                int isOwner = rs.getInt(8);
+                Customer customer = new Customer(customerID, username, name, email, phoneNumber, age, registrationDate, isOwner);
+                vector.add(customer);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return vector;
+    }
+
+    public int getAmountOfCustomer() {
+        CustomerDAO dao = new CustomerDAO();
+        Vector<Customer> vector = dao.getAllCustomer();
+        
+        return vector.size();
+    }
+
     // QUAN
     public Customer getCustomer(int id) {
         Connection conn = null;
@@ -355,7 +388,7 @@ public class CustomerDAO {
     public List<Customer> getLivingInApartment(int apartmentID, int currentPage, int rowsPerPage, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
-        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status from Customer c\n"
+        String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status, l.startDate from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
                 + "where l.apartmentID = ? \n"
                 + "and endDate is null";
@@ -399,6 +432,7 @@ public class CustomerDAO {
                 customer.setDob(rs.getDate("dob"));
                 customer.setIsOwner(rs.getInt(6));
                 customer.setStatus(rs.getInt(7));
+                customer.setLivingDate(rs.getDate(8));
                 list.add(customer);
             }
             return list;
@@ -468,6 +502,7 @@ public class CustomerDAO {
      * @param searchTermList
      * @return
      */
+    // not using
     public List<Customer> getResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
@@ -932,7 +967,7 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = """
                      update Customer
-                     set username = NULL, password = NULLL
+                     set username = NULL, password = NULL
                      where customerID = ?
                      """;
         try {
@@ -945,7 +980,7 @@ public class CustomerDAO {
         }
     }
 
-    //KhangPM
+    //KhangPM - not use
     public int countResidentSearch(int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
         int count = 0;
         Connection connection = null;
@@ -1117,6 +1152,9 @@ public class CustomerDAO {
 
         return isAdded;
     }
+
+
+    
 
     public static void main(String[] args) {
         Customer testCustomer = new Customer();

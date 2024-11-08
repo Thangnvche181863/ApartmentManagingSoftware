@@ -10,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Connection;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.DBContext;
@@ -48,10 +50,101 @@ public class LivingDAO {
         return list;
     }
 
-    public static void main(String[] args) {
+    public int getAmountOfResident() {
         LivingDAO dao = new LivingDAO();
         List<Living> list = dao.getAllResident();
-        System.out.println(list.size());
+        return list.size();
+    }
+
+    public List<String> getNameOfResident(int apartmentID) {
+        List<String> list = new ArrayList<>();
+        String sql = " SELECT c.name FROM Customer c\n"
+                + "JOIN Living l ON c.customerID = l.customerID\n"
+                + "JOIN Apartment a ON l.apartmentID = a.apartmentID\n"
+                + "WHERE a.apartmentID = ?";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, apartmentID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getString(1));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Integer> getAgeOfResident(int apartmentID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = " SELECT c.age FROM Customer c\n"
+                + "JOIN Living l ON c.customerID = l.customerID\n"
+                + "JOIN Apartment a ON l.apartmentID = a.apartmentID\n"
+                + "WHERE a.apartmentID = ?";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, apartmentID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getInt(1));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Living> getAllResidentByApartmentID(int apartmentid) {
+        List<Living> list = new ArrayList<>();
+        Connection conn = null;
+        String sql = "select * from Living where apartmentID = ?";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, apartmentid);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+                int livingID = rs.getInt(1);
+                int customerID = rs.getInt(2);
+                int apartmentID = rs.getInt(3);
+                Date startDate = rs.getDate(4),
+                        endDate = rs.getDate(5);
+                Living living = new Living(livingID, customerID, apartmentID, startDate, endDate);
+                list.add(living);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public List<Integer> getAmountOfResidentOfApartment(int buildingID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = " SELECT  A.apartmentID ,\n"
+                + "COUNT(L.livingID) AS numberOfPeople FROM  Apartment A LEFT JOIN   Living L ON A.apartmentID = L.apartmentID where buildingID = ?\n"
+                + "GROUP BY   A.apartmentID;";
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, buildingID);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                list.add(rs.getInt(2));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return list;
     }
 
     //////////////////////////////////////QUAN////////////////////////////////////
@@ -61,10 +154,11 @@ public class LivingDAO {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
-            String sql = "INSERT INTO Living (customerID, apartmentID) VALUES (?, ?)";
+            String sql = "INSERT INTO Living (customerID, apartmentID, [startDate]) VALUES (?, ?, ?)";
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setInt(1, customerID);
                 ps.setInt(2, apartmentID);
+                ps.setDate(3, Date.valueOf(LocalDate.now()));
                 ps.executeUpdate();
                 System.out.println("Inserted into Living: customerID = " + customerID + ", apartmentID = " + apartmentID); // In thông báo thành công
             }
@@ -99,5 +193,24 @@ public class LivingDAO {
         }
         return null;
     }
+    
+    // KhangPM
+    public void updateEndLiving (int customerId){
+        Connection connection = null;
+        String sql = "update Living set endDate = ? where customerID = ?";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setDate(1, Date.valueOf(LocalDate.now()));
+            statement.setInt(2, customerId);
+            int i = statement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+    }
 
+    public static void main(String[] args) {
+        LivingDAO dao = new LivingDAO();
+        dao.updateEndLiving(9);
+    }
 }

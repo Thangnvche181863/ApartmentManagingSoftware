@@ -5,6 +5,7 @@
 package model;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 /**
@@ -30,6 +31,20 @@ public class Apartment {
     }
 
     public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area, BigDecimal totalAmount, List<ServiceContract> list, String name) {
+        this.apartmentID = apartmentID;
+        this.buildingID = buildingID;
+        this.apartmentNumber = apartmentNumber;
+        this.apartmentType = apartmentType;
+        this.price = price;
+        this.maintenanceFee = maintenanceFee;
+        this.floor = floor;
+        this.area = area;
+        this.totalAmount = totalAmount;
+        this.list = list;
+        this.name = name;
+    }
+
+    public Apartment(int apartmentID, int buildingID, String apartmentNumber, String apartmentType, BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         this.apartmentID = apartmentID;
         this.buildingID = buildingID;
         this.apartmentNumber = apartmentNumber;
@@ -133,7 +148,7 @@ public class Apartment {
 
     @Override
     public String toString() {
-        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", apartmentType=" + apartmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + ", totalAmount=" + totalAmount + ", list=" + list + ", name=" + name + '}';
+        return "Apartment{" + "apartmentID=" + apartmentID + ", buildingID=" + buildingID + ", apartmentNumber=" + apartmentNumber + ", apartmentType=" + apartmentType + ", price=" + price + ", maintenanceFee=" + maintenanceFee + ", floor=" + floor + ", area=" + area + '}';
     }
 
 }

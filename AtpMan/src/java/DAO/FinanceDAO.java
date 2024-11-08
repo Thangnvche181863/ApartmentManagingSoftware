@@ -5,6 +5,8 @@
 package DAO;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import utils.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,9 +22,8 @@ import utils.DBContext;
  */
 public class FinanceDAO {
 
-    Connection connection = null;
-
     public List<Finance> getAll() {
+        Connection connection = null;
         List<Finance> list = new ArrayList<>();
         try {
             String sql = "select f.financeID, b.name, ft.name,f.amount,f.date,f.description\n"
@@ -50,6 +51,7 @@ public class FinanceDAO {
     }
 
     public List<Finance> getAllByTime(int year, int month, int buildingId) {
+        Connection connection = null;
         List<Finance> list = new ArrayList<>();
         String sql = "select f.financeID, b.name, ft.name,f.amount,f.date,f.description\n"
                 + "from finance f \n"
@@ -83,6 +85,7 @@ public class FinanceDAO {
     }
 
     public void insertFinance(int buildingId, int financeTypeId, BigDecimal amount, Date date, String description) {
+        Connection connection = null;
         try {
             String sql = "Insert into Finance(buildingId,financeTypeId,amount,date,description) values(?,?,?,?,?)";
             connection = DBContext.getConnection();
@@ -101,11 +104,12 @@ public class FinanceDAO {
     }
 
     public void deleteFinance(int financeId) {
+        Connection conn = null;
         try {
             String sql = "DELETE FROM [dbo].[Finance]\n"
                     + "      WHERE financeId = ?";
-            connection = DBContext.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, financeId);
 
             ps.executeUpdate();
@@ -115,6 +119,8 @@ public class FinanceDAO {
     }
 
     public void updateFinance(int financeId, int buildingId, int financeTypeId, BigDecimal amount, Date date, String description) {
+        
+        Connection conn = null;
         try {
             String sql = "UPDATE [dbo].[Finance]\n"
                     + "   SET [buildingID] = ?\n"
@@ -122,8 +128,8 @@ public class FinanceDAO {
                     + "      ,[amount] = ?\n"
                     + "      ,[month] = ?\n"
                     + " WHERE financeId = ?";
-            connection = DBContext.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql);
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, buildingId);
             ps.setInt(2, financeId);
             ps.setBigDecimal(3, amount);
@@ -137,6 +143,7 @@ public class FinanceDAO {
     }
 
     public Finance getFinanceById(int id) {
+        Connection connection = null;
         Finance f = new Finance();
         String sql = "select * from Finance where financeID = ?";
         try {

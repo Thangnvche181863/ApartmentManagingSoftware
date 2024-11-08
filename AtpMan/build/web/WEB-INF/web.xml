@@ -125,7 +125,19 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteServiceServlet</servlet-name>
-        <servlet-class>controller.staff.DeleteServiceServlet</servlet-class>
+        <servlet-class>controller.DeleteServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceAddServlet</servlet-name>
+        <servlet-class>controller.ServiceAddServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>controller.ProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>controller.Home</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserhomeNewsServlet</servlet-name>
@@ -162,6 +174,10 @@
     <servlet>
         <servlet-name>Verify</servlet-name>
         <servlet-class>controller.Verify</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AssignmentController</servlet-name>
+        <servlet-class>controller.AssignmentController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServiceUserDetailServlet</servlet-name>
@@ -293,7 +309,7 @@
     </servlet>
     <servlet>
         <servlet-name>ActiveResidentTableAjax</servlet-name>
-        <servlet-class>controller.user.ActiveResidentTableAjax</servlet-class>
+        <servlet-class>controller.staff.ActiveResidentTableAjax</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterResidentToApartment</servlet-name>
@@ -314,6 +330,14 @@
     <servlet>
         <servlet-name>NewsCommentManager</servlet-name>
         <servlet-class>controller.staff.NewsCommentManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaskController</servlet-name>
+        <servlet-class>controller.TaskController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisResidentManageServlet</servlet-name>
+        <servlet-class>controller.staff.RegisResidentManageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -372,6 +396,10 @@
         <url-pattern>/inforapartmentservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditService</servlet-name>
         <url-pattern>/serviceedit</url-pattern>
     </servlet-mapping>
@@ -426,6 +454,10 @@
     <servlet-mapping>
         <servlet-name>Verify</servlet-name>
         <url-pattern>/verify</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AssignmentController</servlet-name>
+        <url-pattern>/assignment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServiceUserDetailServlet</servlet-name>
@@ -578,6 +610,14 @@
     <servlet-mapping>
         <servlet-name>NewsCommentManager</servlet-name>
         <url-pattern>/newscommentmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaskController</servlet-name>
+        <url-pattern>/task</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisResidentManageServlet</servlet-name>
+        <url-pattern>/regisresidentmanage</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

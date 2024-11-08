@@ -8,6 +8,7 @@ package controller.staff;
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -77,7 +78,7 @@ public class ResidentManageServlet extends HttpServlet {
         int rowsPerPage = 5;
         
         List<Customer> customerList = customerDAO.getActiveResidentForManage(currentPage, rowsPerPage, 0, null, 2, 2, null);
-        int totalResidentSearch = customerDAO.countResidentSearch(0, null, 2, 2, null);
+        int totalResidentSearch = customerDAO.countActiveResidentForManage(0, null, 2, 2, null);
         
         int totalPage = (int) Math.ceil((double) totalResidentSearch/rowsPerPage);
         
@@ -86,7 +87,6 @@ public class ResidentManageServlet extends HttpServlet {
         int totalApartment = apartmentDAO.countApartment();
         int totalResidentWaitForRegis = customerDAO.countResidentByStatus(3);
         
-        List<Customer> registResidentList = customerDAO.getRegistResidentForManage(currentPage, rowsPerPage, 0, null, null);
         
         request.setAttribute("buildingList", buildingList);
         request.setAttribute("customerList", customerList);
@@ -97,7 +97,6 @@ public class ResidentManageServlet extends HttpServlet {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("rowsPerPage", rowsPerPage);
         request.setAttribute("totalPage", totalPage);
-        request.setAttribute("registResidentList", registResidentList);
         request.getRequestDispatcher("/staff/residentmanage.jsp").forward(request, response);
     } 
 
@@ -113,7 +112,8 @@ public class ResidentManageServlet extends HttpServlet {
     throws ServletException, IOException {
 //        processRequest(request, response);
         CustomerDAO customerDAO = new CustomerDAO();
-
+        LivingDAO livingDAO = new LivingDAO();
+        
         String action = request.getParameter("action");
         String customerId_raw = request.getParameter("customerId");
         
@@ -126,9 +126,7 @@ public class ResidentManageServlet extends HttpServlet {
         int status = 0;
         if(action.equals("accept")){
             status = 1;
-        }else if(action.equals("decline")){
-            status = 0;
-        }else if(action.equals("remove")){
+        }else if(action.equals("decline") || action.equals("remove")){
             status = 0;
             customerDAO.updateLivingResident(customerId);
             customerDAO.removeAccount(customerId);

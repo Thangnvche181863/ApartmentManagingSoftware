@@ -76,6 +76,7 @@ public class NewsDAO extends DBContext {
                 + "FROM News n "
                 + "JOIN NewsCategory nc ON n.newsCategoryID = nc.newsCategoryID "
                 + "JOIN Staff s ON n.staffID = s.staffID "
+                + "where n.newsCategoryID = 1"
                 + "ORDER BY n.postDate DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try {

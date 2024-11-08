@@ -61,16 +61,16 @@
                             <div class="card-body p-5 text-center">
 
                                 <div class="mb-md-5 mt-md-4">
-                                    <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+                                    <h2 class="fw-bold mb-2 text-uppercase">Đăng nhập</h2>
 
                                     <form action="userlogin" method="POST">
                                         <div class="row">
                                             <div class="col-12 mb-4">
-                                                <label class="form-label select-label" style="color : white">Login as</label>
+                                                <label class="form-label select-label" style="color : white">Vai trò</label>
                                                 <select class="select form-control-lg" name="userType">
-                                                    <option value="" selected>Choose option</option>
-                                                    <option value="2">Resident</option>
-                                                    <option value="3">Manage</option>
+                                                    <option value="" selected>Chọn quyền</option>
+                                                    <option value="2">Người dân</option>
+                                                    <option value="3">Quản lý</option>
                                                 </select>
 
                                             </div>
@@ -88,19 +88,19 @@
 
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
                                             <input type="text" id="typeNameX" class="form-control form-control-lg" name="username" />
-                                            <label class="form-label" for="typeNameX">Username</label>
+                                            <label class="form-label" for="typeNameX">Tài khoản</label>
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
                                             <input type="password" id="typePasswordX" class="form-control form-control-lg" name="password" />
-                                            <label class="form-label" for="typePasswordX">Password</label>
+                                            <label class="form-label" for="typePasswordX">Mật khẩu</label>
                                         </div>
 
                                         <p class="small mb-2 pb-lg-2">
-                                            <a class="text-white-50" href="#!">Forgot password?</a>
+                                            <a class="text-white-50" href="#!">Quên mật khẩu ?</a>
                                         </p>
 
-                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
+                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Đăng nhập</button>
                                     </form>
 
 
@@ -108,7 +108,7 @@
                                         <!--                                        <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>-->
                                         <button type="button" class="login-with-google-btn" id="googleLoginBtn">
                                             <img src="media/ggicon.png" alt="alt"/>
-                                            Sign in with Google
+                                            Đăng nhập Google
                                         </button>
                                     </div>
 
@@ -123,7 +123,7 @@
                                 </div>
 
                                 <div>
-                                    <p class="mb-0">Don't have an account? <a href="register.jsp" class="text-white-50 fw-bold">Sign Up</a></p>
+                                    <p class="mb-0">Chưa có tài khoản ? <a href="register.jsp" class="text-white-50 fw-bold">Đăng kí</a></p>
                                 </div>
 
                             </div>

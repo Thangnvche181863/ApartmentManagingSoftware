@@ -151,10 +151,10 @@
 
 
                             <!-- Back Button -->
-                            <a href="News" class="btn btn-primary">Back to News List</a>
+                            <a href="News" class="btn btn-primary">Danh sách tin tức</a>
                             <!-- Modal Trigger -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mediaModal">
-                                View Media
+                                Xem ảnh
                             </button>
                         </div>
                     </div>
