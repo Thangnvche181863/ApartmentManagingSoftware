@@ -474,8 +474,8 @@
                                 <form action="/AtpMan/payinvoice" method="POST">
                                     <input type="hidden" name="apartmentID" value="${apartmentID}">
                                     <input type="hidden" name="serviceID" value="${service.getServiceId()}">
-                                    <input type="hidden" id="amount" name="amount" value="${service.getFee()}"/>
-                                    <input type="hidden" id="paymentType" name="paymentType" value="payRegisInvoice"/>
+                                    <input type="hidden" name="amount" value="${service.getFee()}"/>
+                                    <input type="hidden" name="paymentType" value="payRegisInvoice"/>
 
                                     <!-- Fields for displaying user info -->
                                     <div class="form-group mb-3">
@@ -530,7 +530,7 @@
                                             <a href="registServiceTenant?apartmentID=${apartmentID}"><button class="btn-primary btn" style="height: 40px">Quay trở lại</button></a>
                                         </div>
                                         <p class="mb-4"><strong><span style="color: #015DC5">Loại dịch vụ:  </span></strong><span style="color: #4CA64C"> ${service.type}</span></p>
-                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber value="${service.getFee()}" type="number" maxFractionDigits="0"/> VND</p>
+                                        <p class="mb-4"  style="color: #D80000"><strong><span style="color: #015DC5">Giá:  </span></strong><fmt:formatNumber  value="${service.getFee()}" /> VND</p>
                                         <div class="feature-icon p-4 mb-4">
                                             <i class="${service.icon}" style="font-size: 3rem; color: #015DC5"></i>
                                         </div>
@@ -597,18 +597,15 @@
                 function initializeFee() {
                     // Lấy giá dịch vụ từ input fee (xóa phần " VND")
                     let baseFeeStr = document.getElementById('fee').value.replace(" VND/tháng", "");
-                    baseFee = parseFloat(baseFeeStr.replace(/\./g, "").replace(",", ".")); // Chuyển đổi sang số
+                    baseFee = parseFloat(baseFeeStr.replace(/\./g, "").replaceAll(",", "")); // Chuyển đổi sang số
 
                     // Lưu các giá trị giảm giá vào biến
                     discount1Month = 1 - (parseFloat('${discount1Month}') / 100);
                     discount2Month = 1 - (parseFloat('${discount2Month}') / 100);
                     discount3Month = 1 - (parseFloat('${discount3Month}') / 100);
-
-                    // Cập nhật giá ban đầu
-                    updateFee();
+                    updateFee(); // Cập nhật giá ban đầu
                 }
 
-                // Hàm cập nhật phí dịch vụ dựa trên gói dịch vụ đã chọn
                 function updateFee() {
                     // Kiểm tra nếu baseFee chưa được thiết lập
                     if (baseFee === undefined) {
@@ -622,17 +619,15 @@
 
                     // Tính toán giá dựa trên gói dịch vụ
                     if (subscriptionPlan === "1") {
-                        updatedFee = baseFee * discount1Month;
+                        updatedFee = baseFee * discount1Month; 
                     } else if (subscriptionPlan === "2") {
-                        updatedFee = baseFee * discount2Month;
+                        updatedFee = baseFee * discount2Month; 
                     } else if (subscriptionPlan === "3") {
-                        updatedFee = baseFee * discount3Month;
+                        updatedFee = baseFee * discount3Month; 
                     }
 
-                    // Định dạng số và cập nhật giá vào input fee
-                    document.getElementById('fee').value = new Intl.NumberFormat('vi-VN', {
-                        maximumFractionDigits: 0
-                    }).format(updatedFee);
+                    // Cập nhật giá vào input fee
+                    document.getElementById('fee').value = new Intl.NumberFormat().format(updatedFee) + " VND/tháng";
                 }
 
                 // Gọi hàm initializeFee khi trang được tải
