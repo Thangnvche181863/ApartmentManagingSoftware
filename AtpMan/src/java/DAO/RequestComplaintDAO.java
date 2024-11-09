@@ -47,8 +47,24 @@ public class RequestComplaintDAO {
                 list.add(requestComplaint);
             }
         } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
         }
         return list;
+    }
+    public int getTotalRequest() {
+        int count = 0;
+        String sql = "select count(*) from RequestComplaint";
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return count;
     }
 
     //QUAN
