@@ -62,7 +62,7 @@ public class UserLogin extends HttpServlet {
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);
                 if (customer == null) {
-                    request.setAttribute("loginerr", "Username or password is incorrect for Resident.");
+                    request.setAttribute("loginerr", "Tên đăng nhập hoặc mật khẩu khách hàng sai.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
@@ -77,7 +77,12 @@ public class UserLogin extends HttpServlet {
             } else if ("3".equals(userType)) { // Manage
                 Staff staff = staffDAO.getAllInformationstaff(username, password);
                 if (staff == null) {
-                    request.setAttribute("loginerr", "Username or password is incorrect for Manage.");
+                    request.setAttribute("loginerr", "Tên đăng nhập hoặc mật khẩu nhân viên sai ");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                }
+                if(staff.getStatus()!= 1){
+                    request.setAttribute("loginerr", "Tài khoản của bạn đã bị vô hiệu hóa.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
@@ -87,10 +92,16 @@ public class UserLogin extends HttpServlet {
                 //phan loai nguoi dung: staff
                 session.setAttribute("staff", staff);
                 request.getSession().setAttribute("userRole", "staff");
-                if(staff.getRoleID() == 2){
+                System.out.println("Role ID: " + staff.getRoleID());
+                if(staff.getRoleID() == 1){
                     response.sendRedirect("managerPage");
+                }else{
+                    response.sendRedirect("staffhome");
                 }
-                response.sendRedirect("managerPage");
+                
+                
+                
+//                response.sendRedirect("managerPage");
 
             } else {
 

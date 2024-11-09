@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import DAO.CustomerDAO;
@@ -14,6 +13,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import model.Customer;
 import model.GoogleAcc;
@@ -36,13 +36,16 @@ public class LoginGoogle extends HttpServlet {
 
         CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
         Customer customer = customerDAO.findCustomerByGmail(user.getEmail());
-        
+
         if (customer == null) {
             request.setAttribute("err", "Email not exist");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
-
-        request.getSession().setAttribute("user", customer);
+        HttpSession session = request.getSession();
+        session.setAttribute("user", customer);
+        
+        session.setAttribute("customer", customer);
+        request.getSession().setAttribute("userRole", "customer");
         //Logger.getLogger(LoginGoogle.class.getName()).log(Level.SEVERE, customer.toString());
         request.getSession().setAttribute("role", 1);
         response.sendRedirect("/AtpMan/user/userhome");

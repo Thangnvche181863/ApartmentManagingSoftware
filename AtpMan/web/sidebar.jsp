@@ -130,7 +130,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNews"
+            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseNews" 
                aria-expanded="true" aria-controls="collapseNews">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Quản lý Tin</span>
@@ -218,6 +218,11 @@
             <a class="nav-link" href="/AtpMan/registServiceTenant">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Đăng Kí Dịch Vụ</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/AtpMan/requestcomplaintservlet">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Yêu cầu</span></a>
         </li>
 
         <!-- Divider -->

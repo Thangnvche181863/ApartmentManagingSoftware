@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -108,12 +108,14 @@ public class StaffDAO {
                     try (ResultSet rs = ps.executeQuery()) {
                         if (rs.next()) {
                             Staff staff = new Staff();
+                            staff.setRoleID(rs.getInt("roleID"));
                             staff.setStaffID(rs.getInt("staffID"));
                             staff.setUsername(rs.getString("username"));
                             staff.setName(rs.getString("name"));
                             staff.setEmail(rs.getString("email"));
                             staff.setPhoneNumber(rs.getString("phoneNumber"));
                             staff.setHireDate(rs.getDate("hireDate"));
+                            staff.setStatus(rs.getInt("status"));
                             staff.setAvatar(rs.getString("staffImg"));
                             return staff;
                         }
@@ -125,6 +127,141 @@ public class StaffDAO {
             DBContext.closeConnection(conn);
         }
         return null;
+    }
+
+    public boolean existsByUsernameOrGmail(String username, String email) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Staff WHERE username = ? OR email = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, username);
+                    ps.setString(2, email);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        return rs.next();
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error checking existence by username or email", e);
+        }
+        return false;
+    }
+
+    public void createNewStaff(int roleID, String username, String password, String name, String email,
+            String phoneNumber, Date hireDate, int status) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String hashedInputPassword = UtilHashPass.EncodePassword(password);
+                String sql = "INSERT INTO Staff (roleID, username, password, name, email, phoneNumber, hireDate, status) VALUES (?, ?, ?, ?, ?, ?, ?, 1)";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, roleID);
+                    ps.setString(2, username);
+                    ps.setString(3, hashedInputPassword);
+                    ps.setString(4, name);
+                    ps.setString(5, email);
+                    ps.setString(6, phoneNumber);
+                    ps.setDate(7, new java.sql.Date(hireDate.getTime()));
+                    // ps.setInt(8, status);
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new staff", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+    }
+
+    public int getStaffIDByUsername(String username) {
+        Connection conn = null;
+        int staffID = -1;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT staffID FROM Staff WHERE username = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, username);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        staffID = rs.getInt("staffID");
+                        System.out.println("Retrieved staffID: " + staffID);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting staffID", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return staffID;
+    }
+
+    // QUAN
+    public boolean updatePassword(int staffID, String newPassword) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "UPDATE Staff SET password = ? WHERE staffID = ?";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    // In ra giá trị staffID để kiểm tra
+                    System.out.println("Updating password for Staff ID: " + staffID);
+
+                    String hashedPassword = UtilHashPass.EncodePassword(newPassword);
+                    ps.setString(1, hashedPassword);
+                    ps.setInt(2, staffID);
+
+                    int rowsUpdated = ps.executeUpdate();
+                    System.out.println("Rows Updated: " + rowsUpdated);
+
+                    return rowsUpdated > 0;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error updating password", ex);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return false;
+    }
+
+    public List<Staff> getAllStaffExist() {
+        Connection conn = null;
+        List<Staff> staffs = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "SELECT * FROM Staff";
+                try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Staff staff = new Staff();
+                        staff.setRoleID(rs.getInt("roleID"));
+                        staff.setUsername(rs.getString("username"));
+                        staff.setName(rs.getString("name"));
+                        staff.setEmail(rs.getString("email"));
+                        staff.setPhoneNumber(rs.getString("phoneNumber"));
+                        staff.setHireDate(rs.getDate("hireDate"));
+                        staffs.add(staff);
+                    }
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error retrieving staffs", ex);
+            ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error closing connection", ex);
+                }
+            }
+        }
+        return staffs;
     }
 
     public List<Staff> getAllStaff() {
@@ -146,7 +283,8 @@ public class StaffDAO {
                 Date hireDate = rs.getDate(8);
                 String staffImg = rs.getString(9);
                 int status = rs.getInt(10);
-                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate,
+                        staffImg, status);
                 list.add(staff);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -177,7 +315,8 @@ public class StaffDAO {
                 Date hireDate = rs.getDate(8);
                 String staffImg = rs.getString(9);
                 int status = rs.getInt(10);
-                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate,
+                        staffImg, status);
                 staff.setRoleAuthority(rs.getString("roleAuthority"));
                 list.add(staff);
             }
@@ -237,7 +376,8 @@ public class StaffDAO {
         int n = 0;
         String sql = "UPDATE Staff SET name = ?, phoneNumber = ?, staffImg = ? WHERE staffID = ?;";
 
-        // Sử dụng try-with-resources để đảm bảo kết nối và preparedStatement được đóng tự động
+        // Sử dụng try-with-resources để đảm bảo kết nối và preparedStatement được đóng
+        // tự động
         try (Connection conn = DBContext.getConnection(); PreparedStatement pre = conn.prepareStatement(sql)) {
 
             // Thiết lập các giá trị cho câu lệnh SQL
@@ -276,7 +416,8 @@ public class StaffDAO {
                 Date hireDate = rs.getDate(8);
                 String staffImg = rs.getString(9);
                 int status = rs.getInt(10);
-                staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg,
+                        status);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -390,8 +531,7 @@ public class StaffDAO {
                         rs.getString("name"),
                         rs.getString("email"),
                         rs.getString("phoneNumber"),
-                        rs.getDate("hireDate")
-                ));
+                        rs.getDate("hireDate")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -414,7 +554,8 @@ public class StaffDAO {
 
             // Nếu search không rỗng, thêm điều kiện lọc theo username hoặc name
             if (search != null && !search.isEmpty()) {
-                sql.append(" AND (username COLLATE Latin1_General_CI_AI LIKE ? OR name COLLATE Latin1_General_CI_AI LIKE ?)");
+                sql.append(
+                        " AND (username COLLATE Latin1_General_CI_AI LIKE ? OR name COLLATE Latin1_General_CI_AI LIKE ?)");
             }
 
             PreparedStatement ps = conn.prepareStatement(sql.toString());
@@ -471,7 +612,8 @@ public class StaffDAO {
                 Date hireDate = rs.getDate(8);
                 String staffImg = rs.getString(9);
                 int status = rs.getInt(10);
-                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate, staffImg, status);
+                Staff staff = new Staff(staffID, roleID, username, password, name, email, phoneNumber, hireDate,
+                        staffImg, status);
                 list.add(staff);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -501,9 +643,10 @@ public class StaffDAO {
                 + "JOIN Task t ON r.roleAuthority = t.taskType "
                 + "WHERE t.taskType = ?";
 
-        try (Connection connection = DBContext.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DBContext.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, taskType);  // Thiết lập giá trị cho taskType
+            statement.setString(1, taskType); // Thiết lập giá trị cho taskType
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -514,7 +657,8 @@ public class StaffDAO {
                 staff.setEmail(resultSet.getString("email"));
                 staff.setPhoneNumber(resultSet.getString("phoneNumber"));
                 staff.setHireDate(resultSet.getDate("hireDate"));
-                // Lưu ý: staffImg không được lấy từ truy vấn, nên bạn có thể bỏ qua hoặc lấy từ một nguồn khác nếu cần
+                // Lưu ý: staffImg không được lấy từ truy vấn, nên bạn có thể bỏ qua hoặc lấy từ
+                // một nguồn khác nếu cần
                 // staff.setStaffImg(resultSet.getString("staffImg")); // Dòng này có thể bỏ qua
 
                 // Nếu bạn cần thiết lập thêm các thuộc tính khác, bạn có thể thêm ở đây
@@ -527,6 +671,7 @@ public class StaffDAO {
         }
         return staffList;
     }
+
     public static void main(String[] args) {
 
         StaffDAO dao = new StaffDAO();

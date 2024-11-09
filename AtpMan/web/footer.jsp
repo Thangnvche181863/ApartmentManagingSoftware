@@ -193,11 +193,11 @@
             </div>
         </div>
         <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-            <df-messenger
-                intent="WELCOME"
-                chat-title="BotAPT"
-                agent-id="72c1271d-7664-46f4-9f3f-6076726f6b62"
-                language-code="vi"
-            ></df-messenger>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="APT MAN"
+        agent-id="6708e5b6-3bfa-416e-adc7-1fea6c2d914a"
+        language-code="en"
+        ></df-messenger>
 </body>
 </html>

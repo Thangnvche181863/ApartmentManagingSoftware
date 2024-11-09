@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import java.sql.*;
+
 import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,6 +59,24 @@ public class AssignmentDAO {
     }
 
     private static final Logger LOGGER = Logger.getLogger(AssignmentDAO.class.getName());
+
+    public void createAssignment(int taskID) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO Assignment ( taskID) VALUES ( ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                // ps.setInt(1, staffID);
+                ps.setInt(1, taskID);
+                ps.executeUpdate();
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new assignment", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+    }
 
     // Retrieve all assignments
     public List<Assignment> getAll() {
@@ -138,7 +158,7 @@ public class AssignmentDAO {
 
         return isAdded;
     }
-    //delete by staffID and taskID
+    // delete by staffID and taskID
 
     public boolean delete(int staffID, int taskID) {
         String sql = "DELETE FROM Assignment WHERE staffID = ? AND taskID = ?";
@@ -160,10 +180,12 @@ public class AssignmentDAO {
             int rowsAffected = pre.executeUpdate();
 
             if (rowsAffected > 0) {
-                LOGGER.log(Level.INFO, "Successfully deleted assignment with StaffID: {0} and TaskID: {1}", new Object[]{staffID, taskID});
+                LOGGER.log(Level.INFO, "Successfully deleted assignment with StaffID: {0} and TaskID: {1}",
+                        new Object[] { staffID, taskID });
                 isDeleted = true;
             } else {
-                LOGGER.log(Level.WARNING, "No assignment found to delete with StaffID: {0} and TaskID: {1}", new Object[]{staffID, taskID});
+                LOGGER.log(Level.WARNING, "No assignment found to delete with StaffID: {0} and TaskID: {1}",
+                        new Object[] { staffID, taskID });
             }
 
             // Close resources
@@ -176,7 +198,7 @@ public class AssignmentDAO {
         return isDeleted;
     }
 
-    //update 
+    // update
     public boolean update(Assignment assignment) {
         String sql = "UPDATE Assignment SET startTime = ?, endTime = ? WHERE staffID = ? AND taskID = ?";
         boolean isUpdated = false;
@@ -202,7 +224,8 @@ public class AssignmentDAO {
                 LOGGER.log(Level.INFO, "Successfully updated assignment.");
                 isUpdated = true;
             } else {
-                LOGGER.log(Level.WARNING, "No assignment found with StaffID: {0} and TaskID: {1}", new Object[]{assignment.getStaffID(), assignment.getTaskID()});
+                LOGGER.log(Level.WARNING, "No assignment found with StaffID: {0} and TaskID: {1}",
+                        new Object[] { assignment.getStaffID(), assignment.getTaskID() });
             }
 
             // Close resources
@@ -355,7 +378,8 @@ public class AssignmentDAO {
         return list;
     }
 
-    public List<Assignment> getAssignmentByType(String status, String search, String orderBy, int page, int recordsPerPage) {
+    public List<Assignment> getAssignmentByType(String status, String search, String orderBy, int page,
+            int recordsPerPage) {
         List<Assignment> listAssignment = new ArrayList<>();
         System.out.println(status);
         Connection conn = null;
@@ -402,7 +426,7 @@ public class AssignmentDAO {
             // Thiết lập giá trị cho các tham số
             int paramIndex = 1;
 
-            //Nếu có status, thiết lập tham số cho nó
+            // Nếu có status, thiết lập tham số cho nó
             if (status != null && !"0".equals(status)) {
                 ps.setString(paramIndex++, status);
                 System.out.println("Total parameters: " + paramIndex);
@@ -425,8 +449,7 @@ public class AssignmentDAO {
                         rs.getString("taskName"),
                         rs.getDate("startTime"),
                         rs.getDate("endTime"),
-                        rs.getString("status")
-                ));
+                        rs.getString("status")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -511,54 +534,63 @@ public class AssignmentDAO {
         AssignmentDAO dao = new AssignmentDAO();
         System.out.println("Húp" + dao.getNumberCompleteAssignment());
 
-        //test get all
-//         List<Assignment> assignments = dao.getAll();
-//        System.out.println("\nAll Assignments:");
-//        for (Assignment assignment : assignments) {
-//            System.out.println("StaffID: " + assignment.getStaffID() +
-//                               ", TaskID: " + assignment.getTaskID() +
-//                               ", StartTime: " + assignment.getStartTime() +
-//                               ", EndTime: " + assignment.getEndTime());
-//        }
-        //test add
-//        newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff table
-//        newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
-//        newAssignment.setStartTime(new Date()); // Current date and time
-//        // Set endTime to one hour later
-//        Date endTime = new Date(newAssignment.getStartTime().getTime() + 3600 * 1000);
-//        newAssignment.setEndTime(endTime);
-//
-//        boolean isAdded = dao.add(newAssignment);
-//        if (isAdded) {
-//            System.out.println("Added Assignment: StaffID=" + newAssignment.getStaffID() +
-//                               ", TaskID=" + newAssignment.getTaskID() +
-//                               ", StartTime=" + newAssignment.getStartTime() +
-//                               ", EndTime=" + newAssignment.getEndTime());
-//        } else {
-//            System.out.println("Failed to add Assignment.");
-//        }
-        //test delete by staffID and taskID
-//        newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff table
-//        newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
-//        boolean isDeleted = dao.delete(newAssignment.getStaffID(), newAssignment.getTaskID());
-//        if (isDeleted) {
-//            System.out.println("\nDeleted Assignment: StaffID=" + newAssignment.getStaffID()
-//                    + ", TaskID=" + newAssignment.getTaskID());
-//        } else {
-//            System.out.println("\nFailed to delete Assignment.");
-//        }
-        //test update EndTime
-//        newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff table
-//        newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
-//        newAssignment.setStartTime(new Date());
-//        newAssignment.setEndTime(new Date(newAssignment.getStartTime().getTime() + 7200 * 1000)); // Extend by another hour
-//        boolean isUpdated = dao.update(newAssignment);
-//        if (isUpdated) {
-//            System.out.println("\nUpdated Assignment: StaffID=" + newAssignment.getStaffID()
-//                    + ", TaskID=" + newAssignment.getTaskID()
-//                    + ", New EndTime=" + newAssignment.getEndTime());
-//        } else {
-//            System.out.println("\nFailed to update Assignment.");
-//        }
+        // test get all
+        // List<Assignment> assignments = dao.getAll();
+        // System.out.println("\nAll Assignments:");
+        // for (Assignment assignment : assignments) {
+        // System.out.println("StaffID: " + assignment.getStaffID() +
+        // ", TaskID: " + assignment.getTaskID() +
+        // ", StartTime: " + assignment.getStartTime() +
+        // ", EndTime: " + assignment.getEndTime());
+        // }
+        // test add
+        // newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff
+        // table
+        // newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
+        // newAssignment.setStartTime(new Date()); // Current date and time
+        // // Set endTime to one hour later
+        // Date endTime = new Date(newAssignment.getStartTime().getTime() + 3600 *
+        // 1000);
+        // newAssignment.setEndTime(endTime);
+        //
+        // boolean isAdded = dao.add(newAssignment);
+        // if (isAdded) {
+        // System.out.println("Added Assignment: StaffID=" + newAssignment.getStaffID()
+        // +
+        // ", TaskID=" + newAssignment.getTaskID() +
+        // ", StartTime=" + newAssignment.getStartTime() +
+        // ", EndTime=" + newAssignment.getEndTime());
+        // } else {
+        // System.out.println("Failed to add Assignment.");
+        // }
+        // test delete by staffID and taskID
+        // newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff
+        // table
+        // newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
+        // boolean isDeleted = dao.delete(newAssignment.getStaffID(),
+        // newAssignment.getTaskID());
+        // if (isDeleted) {
+        // System.out.println("\nDeleted Assignment: StaffID=" +
+        // newAssignment.getStaffID()
+        // + ", TaskID=" + newAssignment.getTaskID());
+        // } else {
+        // System.out.println("\nFailed to delete Assignment.");
+        // }
+        // test update EndTime
+        // newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff
+        // table
+        // newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table
+        // newAssignment.setStartTime(new Date());
+        // newAssignment.setEndTime(new Date(newAssignment.getStartTime().getTime() +
+        // 7200 * 1000)); // Extend by another hour
+        // boolean isUpdated = dao.update(newAssignment);
+        // if (isUpdated) {
+        // System.out.println("\nUpdated Assignment: StaffID=" +
+        // newAssignment.getStaffID()
+        // + ", TaskID=" + newAssignment.getTaskID()
+        // + ", New EndTime=" + newAssignment.getEndTime());
+        // } else {
+        // System.out.println("\nFailed to update Assignment.");
+        // }
     }
 }

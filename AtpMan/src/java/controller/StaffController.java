@@ -79,7 +79,7 @@ public class StaffController extends HttpServlet {
         request.setAttribute("totalPages", sdao.count(recordsPerPage));
         request.setAttribute("listStaff", sdao.staffPaging(page, recordsPerPage));
         request.setAttribute("listban", sdao.getALlBan());
-        request.setAttribute("staffType", rdao.getAllRole());
+        request.setAttribute("staffType", rdao.getRoles());
 
         request.getRequestDispatcher("staff.jsp").forward(request, response);
     }
@@ -103,7 +103,7 @@ public class StaffController extends HttpServlet {
             service = "filter";
         }
         if (service.equals("edit")) {
-            List<Role> roleTypes = rdao.getAllRole(); // Lấy danh sách vai trò
+            List<Role> roleTypes = rdao.getRoles(); // Lấy danh sách vai trò
             
             int staffID = Integer.parseInt(request.getParameter("id"));
             int roleID = Integer.parseInt(request.getParameter("roleID")); // Lấy roleID từ form
@@ -159,7 +159,7 @@ public class StaffController extends HttpServlet {
             request.setAttribute("totalStaff", dao.getAmountOfStaff());
             request.setAttribute("currentPage", page);
             request.setAttribute("totalPages", dao.countActive(roleID, search, recordsPerPage));
-            request.setAttribute("staffType", rdao.getAllRole());
+            request.setAttribute("staffType", rdao.getRoles());
             request.getRequestDispatcher("staff.jsp").forward(request, response);
         }
 

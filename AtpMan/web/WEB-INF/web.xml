@@ -90,11 +90,11 @@
     </servlet>
     <servlet>
         <servlet-name>ChangePassword</servlet-name>
-        <servlet-class>model.ChangePassword</servlet-class>
+        <servlet-class>controller.ChangePassword</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangeEmail</servlet-name>
-        <servlet-class>model.ChangeEmail</servlet-class>
+        <servlet-class>controller.ChangeEmail</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddNewsServlet</servlet-name>
@@ -296,6 +296,22 @@
         <servlet-name>StatisticDetailServlet</servlet-name>
         <servlet-class>controller.staff.StatisticDetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ComplaintList</servlet-name>
+        <servlet-class>controller.staff.ComplaintList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CustomerComplaintList</servlet-name>
+        <servlet-class>controller.CustomerComplaintList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestComplaintServlet</servlet-name>
+        <servlet-class>controller.RequestComplaintServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StaffHome</servlet-name>
+        <servlet-class>controller.StaffHome</servlet-class>
+        </servlet>
     <servlet>
         <servlet-name>ManagerPageController</servlet-name>
         <servlet-class>controller.staff.ManagerPageController</servlet-class>
@@ -612,6 +628,26 @@
         <servlet-name>StatisticDetailServlet</servlet-name>
         <url-pattern>/statisticdetail</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Home</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComplaintList</servlet-name>
+        <url-pattern>/complaintlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CustomerComplaintList</servlet-name>
+        <url-pattern>/customercomplaintlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestComplaintServlet</servlet-name>
+        <url-pattern>/requestcomplaintservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>StaffHome</servlet-name>
+        <url-pattern>/staffhome</url-pattern>
+        </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManagerPageController</servlet-name>
         <url-pattern>/managerPage</url-pattern>
