@@ -616,5 +616,12 @@
                                                             }
                                                         });
         </script>
+        <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+        intent="WELCOME"
+        chat-title="APT MAN"
+        agent-id="6708e5b6-3bfa-416e-adc7-1fea6c2d914a"
+        language-code="en"
+        ></df-messenger>
     </body>
 </html>
