@@ -14,7 +14,9 @@ public class Task {
     private String taskName;
     private String description;
     private String taskType;
-
+    private String status;
+    private String apartmentNumber;
+    private int customerID;
     public Task() {
     }
 
@@ -23,6 +25,7 @@ public class Task {
         this.taskName = taskName;
         this.description = description;
         this.taskType = taskType;
+//        this.status = status;
     }
 
     public Task(int taskID, String taskType) {
@@ -62,6 +65,31 @@ public class Task {
         this.taskType = taskType;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(String apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+    
+    
     @Override
     public String toString() {
         return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", description=" + description + ", taskType=" + taskType + '}';

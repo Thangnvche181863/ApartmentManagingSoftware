@@ -4,7 +4,6 @@
  */
 package DAO;
 
-
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -160,9 +159,7 @@ public class ApartmentDAO {
     // System.out.println(vector.size());
     //
     // }
-
     //////////////////////////////// QUAN///////////////////////////////////////
-
 //    public List<Apartment> getApartmentsByBuilding(int buildingId) {
 //        System.out.println("-------------");
 //        Connection conn = null;
@@ -197,7 +194,6 @@ public class ApartmentDAO {
 //        }
 //        return null;
 //    }
-
     public Apartment getApartmentByCustomerId(int customerId) {
         Connection connection = null;
         String sql = "select a.* from Apartment a\n"
@@ -451,8 +447,9 @@ public class ApartmentDAO {
             return false;
         }
     }
-    public boolean editApartment(int apartmentID, String apartmentNumber, String apartmentType, 
-                                  BigDecimal price, BigDecimal maintenanceFee, int floor, int area)   {
+
+    public boolean editApartment(int apartmentID, String apartmentNumber, String apartmentType,
+            BigDecimal price, BigDecimal maintenanceFee, int floor, int area) {
         Connection conn = null;
         String sql = "UPDATE Apartment SET apartmentNumber = ?, apartmentType = ?, price = ?, maintenanceFee = ?, floor = ?, area = ? WHERE apartmentID = ?";
 
@@ -525,6 +522,29 @@ public class ApartmentDAO {
 
         return apartments;
     }
+
+//    public String getApartmentNumberByID(int apartmentID) {
+//        Connection conn = null;
+//        try {
+//            conn = DBContext.getConnection();
+//            if (conn != null) {
+//                String sql = "SELECT apartmentNumber FROM Apartment WHERE apartmentID = ?";
+//                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//                    ps.setInt(1, apartmentID);
+//                    try (ResultSet rs = ps.executeQuery()) {
+//                        while (rs.next()) {
+//                            return rs.getString("apartmentNumber");
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            LOGGER.log(Level.SEVERE, "Error finding customer by gmail", e);
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//        return null;
+//    }
 
     public static void main(String[] args) {
         ApartmentDAO apartmentDAO = new ApartmentDAO();

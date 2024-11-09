@@ -4,7 +4,10 @@
  */
 package controller;
 
+import DAO.ApartmentDAO;
+import DAO.AssignmentDAO;
 import DAO.CustomerDAO;
+import DAO.LivingDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
 import java.io.IOException;
@@ -18,6 +21,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Assignment;
 import model.Customer;
 import model.Staff;
 import model.Task;
@@ -63,13 +67,18 @@ public class StaffHome extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final Logger LOGGER = Logger.getLogger(StaffHome.class.getName());
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-
             StaffDAO staffDAO = WebManager.getInstance().staffDAO;
             TaskDAO taskDAO = WebManager.getInstance().taskDAO;
+            AssignmentDAO assignmentDAO = WebManager.getInstance().assignmentDAO;
+            CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+            ApartmentDAO apartmentDAO = WebManager.getInstance().apartmentDAO;
+            LivingDAO livingDAO = WebManager.getInstance().livingDAO;
             HttpSession session = request.getSession(false);
             Staff loggedInStaff = (Staff) session.getAttribute("user");
 
@@ -80,18 +89,35 @@ public class StaffHome extends HttpServlet {
             }
 
             int staffID = loggedInStaff.getStaffID();
-            System.out.println("Customer ID from session: " + staffID);
+            System.out.println("Staff ID from session: " + staffID); // In thông tin staffID
 
             List<Task> tasks = taskDAO.getTaskByStaffID(staffID);
+            System.out.println("Number of tasks found: " + tasks.size()); // In số lượng tasks tìm được
+
+            // Gán trạng thái và customerID của từng task vào danh sách
+            for (Task task : tasks) {
+                String status = assignmentDAO.getStatus(staffID, task.getTaskID());
+                int customerID = task.getCustomerID();
+                System.out.println("Assigning status for taskID: " + task.getTaskID() + ", customerID: " + customerID);
+
+                // Sử dụng phương thức getApartmentNumberByCustomerID để lấy apartmentNumber từ customerID
+                String apartmentNumber = customerDAO.getApartmentNumberByCustomerID(customerID);
+                task.setApartmentNumber(apartmentNumber);  // Gán tên căn hộ vào task
+                task.setStatus(status);  // Gán trạng thái vào task
+
+                // In thông tin của từng task đã được gán
+                System.out.println("TaskID: " + task.getTaskID() + ", Apartment: " + task.getApartmentNumber() + ", Status: " + task.getStatus());
+            }
 
             request.setAttribute("tasks", tasks);
             request.getRequestDispatcher("listtask_staff.jsp").forward(request, response);
 
         } catch (SQLException ex) {
-            Logger.getLogger(CustomerComplaintList.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("SQLException occurred in doGet:");
+            ex.printStackTrace(); // In lỗi SQLException chi tiết
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CustomerComplaintList.class.getName()).log(Level.SEVERE, null, ex);
-
+            System.out.println("ClassNotFoundException occurred in doGet:");
+            ex.printStackTrace(); // In lỗi ClassNotFoundException chi tiết
         }
     }
 
@@ -106,7 +132,29 @@ public class StaffHome extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        Staff loggedInStaff = (Staff) session.getAttribute("user");
+
+        if (loggedInStaff == null) {
+            request.setAttribute("errSession", "Bạn cần đăng nhập để thay đổi trạng thái.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        int staffID = loggedInStaff.getStaffID();
+        int taskID = Integer.parseInt(request.getParameter("taskID"));
+        String status = request.getParameter("status");
+
+        try {
+            AssignmentDAO assignmentDAO = WebManager.getInstance().assignmentDAO;
+            assignmentDAO.updateStatus(staffID, taskID, status);
+            response.sendRedirect("/AtpMan/staffhome");
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffHome.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StaffHome.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

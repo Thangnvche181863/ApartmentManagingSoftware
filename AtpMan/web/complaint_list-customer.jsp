@@ -116,14 +116,12 @@
     </head>
     <body>
         <div id="wrapper">
-            <!-- Sidebar -->
-            <jsp:include page="./sidebar.jsp"/>
-            <!-- End of Sidebar -->
+            <%@include file="sidebar.jsp" %>
             <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
                 <div id="content">
-                    <!-- Topbar -->
-                    <jsp:include page="./topbar.jsp"/>
-                    <!-- End of Topbar -->
+                    <%@include file = "topbar.jsp" %>
                     <div class="container">
                         <h1>Danh sách yêu cầu của bạn</h1>
                         <table>
@@ -164,18 +162,18 @@
                                     <%-- Page numbers --%>
                                     <c:forEach begin="1" end="${totalPages}" var="pageNum">
                                         <li>
-                                        <c:choose>
-                                            <c:when test="${pageNum == currentPage}">
-                                                <strong style="padding: 5px 10px; background-color: #007bff; color: white; border-radius: 3px;">
-                                                    ${pageNum}
-                                                </strong>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="?page=${pageNum}" style="text-decoration: none; color: #007bff; padding: 5px 10px;">
-                                                    ${pageNum}
-                                                </a>
-                                            </c:otherwise>
-                                        </c:choose>
+                                            <c:choose>
+                                                <c:when test="${pageNum == currentPage}">
+                                                    <strong style="padding: 5px 10px; background-color: #007bff; color: white; border-radius: 3px;">
+                                                        ${pageNum}
+                                                    </strong>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="?page=${pageNum}" style="text-decoration: none; color: #007bff; padding: 5px 10px;">
+                                                        ${pageNum}
+                                                    </a>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </li>
                                     </c:forEach>
 
@@ -194,10 +192,7 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
-
 
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
