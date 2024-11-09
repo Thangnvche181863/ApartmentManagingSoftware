@@ -20,10 +20,25 @@ public class Customer {
     private Date dob;
     private Date registrationDate;
     private int isOwner;
+    private String avatar;
     private int status;
+    
+    private String apartmentNumber;
+    private Date livingDate;
     
     public Customer() {
 
+    }
+
+    public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner) {
+        this.customerID = customerID;
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.dob = dob;
+        this.registrationDate = registrationDate;
+        this.isOwner = isOwner;
     }
 
     public Customer(int customerID, String username, String name, String email, String phoneNumber, Date dob, Date registrationDate, int isOwner, int status) {
@@ -112,6 +127,32 @@ public class Customer {
     public void setIsOwner(int isOwner) {
         this.isOwner = isOwner;
     }
+
+    public String getApartmentNumber() {
+        return apartmentNumber;
+    }
+
+    public void setApartmentNumber(String apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Date getLivingDate() {
+        return livingDate;
+    }
+
+    public void setLivingDate(Date livingDate) {
+        this.livingDate = livingDate;
+    }
+    
+    
 
     @Override
     public String toString() {

@@ -10,16 +10,14 @@ import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import controller.WebManager;
 import DAO.LivingDAO;
+import DAO.OwnershipDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Apartment;
 import model.Building;
 import utils.EmailHandle;
@@ -112,7 +110,8 @@ public class CreateAccount extends HttpServlet {
         try {
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
             LivingDAO livingDAO = WebManager.getInstance().livingDAO;
-
+            OwnershipDAO ownershipDAO = new OwnershipDAO();
+            
             String username = request.getParameter("username");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
@@ -136,7 +135,7 @@ public class CreateAccount extends HttpServlet {
                 return;
             }
             String password = GeneratePassword.generatePass();
-            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, isOwner);
+            customerDAO.createNewCustomer(username, password, name, email, phoneNumber, isOwner, 1);
             int customerID = customerDAO.getCustomerIDByUsername(username);
 
             System.out.println("Customer ID: " + customerID);
@@ -144,6 +143,9 @@ public class CreateAccount extends HttpServlet {
             if (customerID > 0) {
                 int apartmentID = Integer.parseInt(apartmentId);
                 livingDAO.insertResident(customerID, apartmentID);
+                if(isOwner.equals("1")){
+                    ownershipDAO.insertResident(customerID, apartmentID);
+                }
             }
 
             String subject = "Thong tin tai khoan va mat khau cua ban";

@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author PC
+ * @author Admin
  */
 public class Task {
 
@@ -22,6 +22,11 @@ public class Task {
         this.taskID = taskID;
         this.taskName = taskName;
         this.description = description;
+        this.taskType = taskType;
+    }
+
+    public Task(int taskID, String taskType) {
+        this.taskID = taskID;
         this.taskType = taskType;
     }
 
@@ -56,6 +61,10 @@ public class Task {
     public void setTaskType(String taskType) {
         this.taskType = taskType;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", description=" + description + ", taskType=" + taskType + '}';
+    }
     
 }

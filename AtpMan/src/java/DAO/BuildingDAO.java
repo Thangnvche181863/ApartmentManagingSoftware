@@ -53,6 +53,50 @@ public class BuildingDAO {
         Vector<Building> vector = dao.getAllBuilding();
         return vector.size();
     }
+    
+    
+
+    public Vector<Integer> getApartmentAvailable() {
+        Vector<Integer> vector = new Vector<>();
+        String sql = "SELECT \n"
+                + "    b.buildingID,\n"
+                + "    COUNT(a.apartmentID) AS totalApartments,\n"
+                + "    COUNT(l.apartmentID) AS totalLivingApartments,\n"
+                + "    COUNT(a.apartmentID) - COUNT(l.apartmentID) AS availableApartments\n"
+                + "FROM \n"
+                + "    Building b\n"
+                + "LEFT JOIN \n"
+                + "    Apartment a ON b.buildingID = a.buildingID\n"
+                + "LEFT JOIN \n"
+                + "    Living l ON a.apartmentID = l.apartmentID\n"
+                + "GROUP BY \n"
+                + "    b.buildingID;";
+
+        Connection conn = null;
+
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+
+                vector.add(rs.getInt(4));
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return vector;
+    }
 
     public Building getBuildingByApartmentID(int apartmentID) {
         Connection connection = null;
@@ -188,6 +232,26 @@ public class BuildingDAO {
             ex.printStackTrace();
         }
         return name;
+    }
+    
+    public int countBuilding() {
+        int count = 0;
+        Connection connection = null;
+        String sql = "select count(*) from Building";
+
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        } finally {
+            DBContext.closeConnection(connection);
+        }
+        return count;
     }
 
     public static void main(String[] args) {

@@ -34,9 +34,7 @@ import utils.UserHomeUtil;
  *
  * @author ADMIN
  */
-public class UserHomeTableAjax extends HttpServlet {
-
-    private static final int RECORDS_PER_PAGE = 5;
+public class InvoiceStatisticTableAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,6 +57,7 @@ public class UserHomeTableAjax extends HttpServlet {
         String apartmentID_raw = request.getParameter("apartmentID");
         String searchTerm = request.getParameter("searchTerm");
         String currentPage_raw = request.getParameter("currentPage");
+        String servicePerPage_raw = request.getParameter("servicePerPage");
 
         // get session resident account
         HttpSession session = request.getSession();
@@ -80,6 +79,13 @@ public class UserHomeTableAjax extends HttpServlet {
             }
         }
 
+        int servicePerPage = 5;
+        try {
+            servicePerPage = Integer.parseInt(servicePerPage_raw);
+        } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
+        }
+
         if (year_raw != null) {
             try {
                 year = Integer.parseInt(year_raw);
@@ -96,28 +102,8 @@ public class UserHomeTableAjax extends HttpServlet {
 
         // create dao
         InvoiceDAO invoiceDAO = new InvoiceDAO();
-        ApartmentDAO apartmentDAO = new ApartmentDAO();
 
-        // get apartment user is living
-        Apartment apartment = apartmentDAO.getApartmentByCustomerId(customer.getCustomerID());
-
-        // if user is owner
-        if (customer.getIsOwner() == 1) {
-            List<Apartment> apartmentList = apartmentDAO.getAllApartmentByOwner(customer.getCustomerID());
-            if (apartmentID != 0) {
-                for (Apartment apartment1 : apartmentList) {
-                    if (apartment1.getApartmentID() == apartmentID) {
-                        apartment = apartment1;
-                    }
-                }
-            } // if owner not living
-            else if (apartment == null) {
-                apartment = apartmentList.get(0);
-            }
-            request.setAttribute("apartmentList", apartmentList);
-        }
-
-        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartment.getApartmentID());
+        List<Date> dList = invoiceDAO.getAllApartmentInvoiceDate(apartmentID);
         LinkedHashSet<Date> listOfMonth = userHomeUtil.listOfMonth(dList, year);
 
         if (month_raw != null) {
@@ -145,17 +131,16 @@ public class UserHomeTableAjax extends HttpServlet {
         if (searchTerm != null && !searchTerm.trim().isEmpty() && !searchTerm.trim().equalsIgnoreCase("")) {
             String[] searchTermArray = searchTerm.trim().split("\\s+");
             searchTermList = Arrays.asList(searchTermArray);
-            out.print(searchTermList.get(0));
         }
 
-        int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, searchTermList);
-        int totalPages = (int) Math.ceil((double) totalServiceRows / RECORDS_PER_PAGE);
+        int totalServiceRows = invoiceDAO.countInvoiceByApartmentIDandMonth(apartmentID, month, year);
+        int totalPages = (int) Math.ceil((double) totalServiceRows / servicePerPage);
 
         if (currentPage > totalPages) {
             currentPage = 1;
         }
 
-        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartment.getApartmentID(), month, year, currentPage, RECORDS_PER_PAGE, searchTermList);
+        Invoice invoiceCurrent = invoiceDAO.getInvoiceByApartmentIDandMonth(apartmentID, month, year, currentPage, servicePerPage, searchTermList);
         List<ServiceContract> serviceList = invoiceCurrent.getServiceContractList();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -178,7 +163,7 @@ public class UserHomeTableAjax extends HttpServlet {
                 + "                                                        </tr>\n"
                 + "                                                    </thead>\n"
                 + "                                                    <tbody>\n");
-        int countServiceTable = (currentPage - 1) * RECORDS_PER_PAGE;
+        int countServiceTable = (currentPage - 1) * servicePerPage;
         if (serviceList != null) {
             for (ServiceContract serviceContract : serviceList) {
                 out.println("                                                            <tr>\n"
@@ -188,7 +173,7 @@ public class UserHomeTableAjax extends HttpServlet {
                         + "                                                                <td>" + dateFormat.format(serviceContract.getStartDate()) + "</td>\n"
                         + "                                                                <td>" + dateFormat.format(serviceContract.getEndDate()) + "</td>\n"
                         + "                                                                <td>" + format.format(serviceContract.getAmount()) + " VNĐ</td>\n"
-//                        + "                                                                <td>" + format2.format((serviceContract.getAmount() / invoiceCurrent.getAmount()) * 100) + "%</td>\n"
+                        + "                                                                <td>" + format2.format((serviceContract.getAmount().doubleValue() / invoiceCurrent.getAmount()) * 100) + "%</td>\n"
                         + "                                                                </tr>\n");
             }
         } else {
@@ -197,6 +182,13 @@ public class UserHomeTableAjax extends HttpServlet {
                     + "                                                              </tr>\n");
         }
         out.println("                                                    </tbody>\n"
+                + "                                        <tfoot style=\"background-color: #4e73df; color: white\" class=\"h5\">\n"
+                + "                                            <tr>\n"
+                + "                                                <th colspan=\"7\">\n"
+                + "                                                    Tổng tiền dịch vụ: "+ format.format(invoiceCurrent.getAmount()) +" VNĐ\n"
+                + "                                                </th>\n"
+                + "                                            </tr>\n"
+                + "                                        </tfoot>"
                 + "                                                </table>\n");
         out.println("<div class=\"d-flex flex-row-reverse\">\n"
                 + "                                                <nav aria-label=\"Page navigation\">\n"
@@ -223,7 +215,7 @@ public class UserHomeTableAjax extends HttpServlet {
 
         if (currentPage < totalPages) {
             out.println("<li class=\"page-item\">\n"
-                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Previous</button>\n"
+                    + "   <button class=\"page-link\" value=\"" + (currentPage + 1) + "\" onclick=\"handleSearch(this.value)\">Next</button>\n"
                     + "   </li>");
 
         }

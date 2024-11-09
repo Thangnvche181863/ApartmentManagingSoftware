@@ -4,6 +4,7 @@
  */
 package model;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -17,17 +18,19 @@ public class Invoice {
     private Date issueDate;
     private Date dueDate;
     private int status;
-    private Date transactionDate;
+    private Timestamp transactionDate;
     private String invoiceCode;
     private String transactionNo;
     private String bankCode;
     private String orderInfo;
+    
+    private String apartmentName;
     private List<ServiceContract> serviceContractList;
 
     public Invoice() {
     }
 
-    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Date transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo, List<ServiceContract> serviceContractList) {
+    public Invoice(int invoiceId, int apartmentId, double amount, Date issueDate, Date dueDate, int status, Timestamp transactionDate, String invoiceCode, String transactionNo, String bankCode, String orderInfo, List<ServiceContract> serviceContractList) {
         this.invoiceId = invoiceId;
         this.apartmentId = apartmentId;
         this.amount = amount;
@@ -41,40 +44,6 @@ public class Invoice {
         this.orderInfo = orderInfo;
         this.serviceContractList = serviceContractList;
     }
-
-    public String getInvoiceCode() {
-        return invoiceCode;
-    }
-
-    public void setInvoiceCode(String invoiceCode) {
-        this.invoiceCode = invoiceCode;
-    }
-
-    public String getTransactionNo() {
-        return transactionNo;
-    }
-
-    public void setTransactionNo(String transactionNo) {
-        this.transactionNo = transactionNo;
-    }
-
-    public String getBankCode() {
-        return bankCode;
-    }
-
-    public void setBankCode(String bankCode) {
-        this.bankCode = bankCode;
-    }
-
-    public String getOrderInfo() {
-        return orderInfo;
-    }
-
-    public void setOrderInfo(String orderInfo) {
-        this.orderInfo = orderInfo;
-    }
-
-
 
     public int getInvoiceId() {
         return invoiceId;
@@ -124,12 +93,52 @@ public class Invoice {
         this.status = status;
     }
 
-    public Date getTransactionDate() {
+    public Timestamp getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(Timestamp transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    public String getInvoiceCode() {
+        return invoiceCode;
+    }
+
+    public void setInvoiceCode(String invoiceCode) {
+        this.invoiceCode = invoiceCode;
+    }
+
+    public String getTransactionNo() {
+        return transactionNo;
+    }
+
+    public void setTransactionNo(String transactionNo) {
+        this.transactionNo = transactionNo;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getOrderInfo() {
+        return orderInfo;
+    }
+
+    public void setOrderInfo(String orderInfo) {
+        this.orderInfo = orderInfo;
+    }
+
+    public String getApartmentName() {
+        return apartmentName;
+    }
+
+    public void setApartmentName(String apartmentName) {
+        this.apartmentName = apartmentName;
     }
 
     public List<ServiceContract> getServiceContractList() {
@@ -142,8 +151,7 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice{" + "invoiceID=" + invoiceId + ", apartmentID=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", serviceContractList=" + serviceContractList + '}';
-
+        return "Invoice{" + "invoiceId=" + invoiceId + ", apartmentId=" + apartmentId + ", amount=" + amount + ", issueDate=" + issueDate + ", dueDate=" + dueDate + ", status=" + status + ", transactionDate=" + transactionDate + ", invoiceCode=" + invoiceCode + ", transactionNo=" + transactionNo + ", bankCode=" + bankCode + ", orderInfo=" + orderInfo + ", serviceContractList=" + serviceContractList + '}';
     }
     
 }

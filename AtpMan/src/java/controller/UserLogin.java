@@ -49,14 +49,15 @@ public class UserLogin extends HttpServlet {
 
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);
-
                 if (customer == null) {
                     request.setAttribute("loginerr", "Tên đăng nhập hoặc mật khẩu khách hàng sai.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
-
+                
+                String userName = customer.getName();
                 session.setAttribute("user", customer);
+                session.setAttribute("name", userName);
                 session.setAttribute("customer", customer);
                 request.getSession().setAttribute("userRole", "customer");
                 response.sendRedirect("user/userhome");
@@ -73,8 +74,10 @@ public class UserLogin extends HttpServlet {
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
-
+                String staffName = staff.getName();
                 session.setAttribute("user", staff);
+                session.setAttribute("name", staffName);
+                //phan loai nguoi dung: staff
                 session.setAttribute("staff", staff);
                 request.getSession().setAttribute("userRole", "staff");
                 System.out.println("Role ID: " + staff.getRoleID());

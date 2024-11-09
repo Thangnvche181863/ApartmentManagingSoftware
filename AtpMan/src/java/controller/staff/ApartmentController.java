@@ -5,6 +5,8 @@
 package controller.staff;
 
 import DAO.ApartmentDAO;
+import DAO.InvoiceDAO;
+import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -41,8 +43,16 @@ public class ApartmentController extends HttpServlet {
            ApartmentDAO dao = new ApartmentDAO();
            Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
            
+           //get list amount Of unpaid Invoice
+           InvoiceDAO invoicedao = new InvoiceDAO();
+           List<Integer> listInvoice = invoicedao.getNumOfUnpaidInvoice(buildingID);
+           
+           LivingDAO livingdao = new LivingDAO();
+           List<Integer> list = livingdao.getAmountOfResidentOfApartment(buildingID);
            
            
+           request.setAttribute("listInvoice", listInvoice);
+           request.setAttribute("list", list);
            request.setAttribute("listApartment", vector);
            request.getRequestDispatcher("apartment.jsp").forward(request, response);
         }
@@ -57,11 +67,11 @@ public class ApartmentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     private static final long serialVersionUID = 1L;
+     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           
+           processRequest(request, response);
     }
 
     /**

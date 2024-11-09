@@ -61,11 +61,11 @@
                                     <form action="userlogin" method="post">
                                         <div class="row">
                                             <div class="col-12 mb-4">
-                                                <label class="form-label select-label" style="color : white">Đăng nhập với vai trò</label>
+                                                <label class="form-label select-label" style="color : white">Vai trò</label>
                                                 <select class="select form-control-lg" name="userType">
-<!--                                                    <option value="" selected>Lựa chọn</option>-->
-                                                    <option value="2">Cư dân</option>
-                                                    <option value="3">Nhân viên</option>
+                                                    <option value="" selected>Chọn quyền</option>
+                                                    <option value="2">Người dân</option>
+                                                    <option value="3">Quản lý</option>
                                                 </select>
 
                                             </div>
@@ -83,7 +83,7 @@
 
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
                                             <input type="text" id="typeNameX" class="form-control form-control-lg" name="username" />
-                                            <label class="form-label" for="typeNameX">Tên đăng nhập</label>
+                                            <label class="form-label" for="typeNameX">Tài khoản</label>
                                         </div>
 
                                         <div data-mdb-input-init class="form-outline form-white mb-4">
@@ -92,7 +92,7 @@
                                         </div>
 
                                         <p class="small mb-2 pb-lg-2">
-                                            <a class="text-white-50" href="#!">Forgot password?</a>
+                                            <a class="text-white-50" href="#!">Quên mật khẩu ?</a>
                                         </p>
 
                                         <button class="btn btn-outline-light btn-lg px-5" type="submit">Đăng nhập</button>
@@ -103,7 +103,7 @@
                                         <!--                                        <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>-->
                                         <button type="button" class="login-with-google-btn" id="googleLoginBtn">
                                             <img src="media/ggicon.png" alt="alt"/>
-                                            Đăng nhập với Google
+                                            Đăng nhập Google
                                         </button>
                                     </div>
 

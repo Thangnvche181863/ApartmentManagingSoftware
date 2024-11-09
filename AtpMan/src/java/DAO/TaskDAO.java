@@ -4,23 +4,29 @@
  */
 package DAO;
 
-import utils.DBContext;
-import model.Task;
+import java.sql.Date;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.SQLException;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
+import model.Apartment;
+import model.Building;
+import model.Task;
+import utils.DBContext;
+
 /**
  *
- * @author PC
+ * @author Admin
  */
-public class TaskDAO extends DBContext {
+public class TaskDAO {
 
-    private static final Logger LOGGER = Logger.getLogger(TaskDAO.class.getName());
+    Connection conn = null;
 
     public int createTask(String taskName, String taskType, String description) {
         Connection conn = null;
@@ -80,247 +86,230 @@ public class TaskDAO extends DBContext {
 
     public List<Task> getAll() {
         List<Task> list = new ArrayList<>();
-        String sql = "SELECT * FROM Task";
 
+        String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
+                + "FROM Task t\n"
+                + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
+                + "WHERE a.staffID IS NULL;";
         try {
-            // Initialize the connection
-            DBContext.getConnection();
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
 
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return list;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
-
             while (rs.next()) {
-                int taskID = rs.getInt("taskID");
-                String taskName = rs.getString("taskName");
-                String description = rs.getString("description");
-                String taskType = rs.getString("taskType");
-
+                int taskID = rs.getInt(1);
+                String taskName = rs.getString(2);
+                String description = rs.getString(3);
+                String taskType = rs.getString(4);
                 Task task = new Task(taskID, taskName, description, taskType);
                 list.add(task);
             }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
 
-            // Close resources
-            rs.close();
-            pre.close();
+    // public int createTask(String taskName, String description, String taskType) {
+    // int n = 0;
+    // String sql = "INSERT INTO Task (taskName, description, taskType)\n"
+    // + "VALUES \n"
+    // + " (?,?,?)";
+    // try {
+    // conn = DBContext.getConnection();
+    // PreparedStatement pre = conn.prepareStatement(sql);
+    // pre.setString(1, taskName);
+    // pre.setString(2, description);
+    // pre.setString(3, taskType);
+    // n = pre.executeUpdate();
+    // } catch (SQLException | ClassNotFoundException ex) {
+    // ex.printStackTrace();
+    // }
+    // return n;
+    // }
 
-            LOGGER.log(Level.INFO, "Successfully retrieved {0} task records.", list.size());
+    public List<String> getAllTaskType() {
+        List<String> list = new ArrayList<>();
+        String sql = "SELECT DISTINCT taskType FROM Task; ";
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
 
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching task records.", e);
+            ResultSet rs = pre.executeQuery();
+            while (rs.next()) {
+
+                String taskType = rs.getString(1);
+
+                list.add(taskType);
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
         }
 
         return list;
     }
 
-    public boolean addTask(Task task) {
-        String sql = "INSERT INTO Task (taskName, description, taskType) VALUES (?, ?, ?)";
-        boolean isAdded = false;
-
+    public List<Task> taskPaging(int page, int recordsPerPage) {
+        List<Task> list = new ArrayList<>();
+        Connection conn = null;
         try {
-            // Initialize the connection
-            DBContext.getConnection();
+            int offset = (page - 1) * recordsPerPage;
+            String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
+                    + "FROM Task t\n"
+                    + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
+                    + "WHERE a.staffID IS NULL order by taskID offset ? rows fetch next ? rows only";
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, offset);
+            ps.setInt(2, recordsPerPage);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return isAdded;
+                int taskID = rs.getInt(1);
+                String taskName = rs.getString(2);
+                String description = rs.getString(3);
+                String taskType = rs.getString(4);
+
+                Task task = new Task(taskID, taskName, description, taskType);
+                list.add(task);
             }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            pre.setString(1, task.getTaskName());
-            pre.setString(2, task.getDescription());
-            pre.setString(3, task.getTaskType());
-
-            int rowsAffected = pre.executeUpdate();
-
-            if (rowsAffected > 0) {
-                try (ResultSet generatedKeys = pre.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        task.setTaskID(generatedKeys.getInt(1));
-                        LOGGER.log(Level.INFO, "Added Task with ID: {0}", task.getTaskID());
-                        isAdded = true;
-                    } else {
-                        throw new SQLException("Adding task failed, no ID obtained.");
-                    }
-                }
-            } else {
-                LOGGER.log(Level.WARNING, "No task was added.");
-            }
-
-            // Close resources
-            pre.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error adding task.", e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
-        return isAdded;
+        return list;
     }
 
-    public boolean updateTask(Task task) {
-        String sql = "UPDATE Task SET taskName = ?, description = ?, taskType = ? WHERE taskID = ?";
-        boolean isUpdated = false;
-
+    public int count(int recordsPerPage) {
+        int totalPages = 0;
+        Connection conn = null;
         try {
-            // Initialize the connection
-            DBContext.getConnection();
-
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return isUpdated;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            pre.setString(1, task.getTaskName());
-            pre.setString(2, task.getDescription());
-            pre.setString(3, task.getTaskType());
-            pre.setInt(4, task.getTaskID());
-
-            int rowsAffected = pre.executeUpdate();
-
-            if (rowsAffected > 0) {
-                LOGGER.log(Level.INFO, "Updated Task with ID: {0}", task.getTaskID());
-                isUpdated = true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Task found with ID: {0}", task.getTaskID());
-            }
-
-            // Close resources
-            pre.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error updating task.", e);
+            String sql = "select count(*) from task  ";
+            conn = DBContext.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            int totalRecords = rs.getInt(1);
+            totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
-        return isUpdated;
+        return totalPages;
     }
 
-    public boolean deleteTask(int taskID) {
-        String sql = "DELETE FROM Task WHERE taskID = ?";
-        boolean isDeleted = false;
-
-        try {
-            // Initialize the connection
-            DBContext.getConnection();
-
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return isDeleted;
-            }
-
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            pre.setInt(1, taskID);
-
-            int rowsAffected = pre.executeUpdate();
-
-            if (rowsAffected > 0) {
-                LOGGER.log(Level.INFO, "Deleted Task with ID: {0}", taskID);
-                isDeleted = true;
-            } else {
-                LOGGER.log(Level.WARNING, "No Task found to delete with ID: {0}", taskID);
-            }
-
-            // Close resources
-            pre.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error deleting task.", e);
-        }
-
-        return isDeleted;
+    public int getAmountOfTask() {
+        TaskDAO dao = new TaskDAO();
+        List<Task> list = dao.getAllTask();
+        return list.size();
     }
 
-    public Task getTaskById(int taskID) {
-        Task task = null;
-        String sql = "SELECT * FROM Task WHERE taskID = ?";
-
+    public List<Task> getTaskByType(String taskType, String search, String orderBy, int page, int recordsPerPage) {
+        List<Task> listTask = new ArrayList<>();
+        Connection conn = null;
         try {
-            // Initialize the connection
-            DBContext.getConnection();
+            conn = DBContext.getConnection();
+            int offset = (page - 1) * recordsPerPage;
+            StringBuilder sql = new StringBuilder("SELECT * FROM Task WHERE 1 = 1 ");
 
-            if (DBContext.connection == null || DBContext.connection.isClosed()) {
-                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
-                return task;
+            // Nếu roleID không phải là 0, thêm điều kiện lọc theo roleID
+            if (taskType != null && !"0".equals(taskType)) {
+                sql.append("AND taskType = ? ");
             }
 
-            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
-            pre.setInt(1, taskID);
-            ResultSet rs = pre.executeQuery();
+            // Kiểm tra nếu có từ khóa tìm kiếm
+            if (search != null && !search.isEmpty()) {
+                sql.append("AND taskName COLLATE Latin1_General_CI_AI LIKE ? ");
+            }
 
+            // Thêm điều kiện sắp xếp
+            if ("asc".equalsIgnoreCase(orderBy)) {
+                sql.append("ORDER BY taskName ASC ");
+            } else if ("desc".equalsIgnoreCase(orderBy)) {
+                sql.append("ORDER BY taskName DESC ");
+            } else {
+                sql.append("ORDER BY taskID ");
+            }
+
+            // Thêm giới hạn phân trang
+            sql.append("OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+
+            PreparedStatement ps = conn.prepareStatement(sql.toString());
+
+            // Thiết lập giá trị cho các tham số
+            int paramIndex = 1;
+
+            // Nếu có type, thiết lập tham số cho nó
+            if (taskType != null && !"0".equals(taskType)) {
+                ps.setString(paramIndex++, taskType);
+                System.out.println("Total parameters: " + paramIndex);
+            }
+
+            // Nếu có từ khóa tìm kiếm, thiết lập tham số cho nó
+            if (search != null && !search.isEmpty()) {
+                ps.setString(paramIndex++, "%" + search + "%");
+                System.out.println("SQL Query: " + sql.toString());
+
+            }
+
+            ps.setInt(paramIndex++, offset);
+            ps.setInt(paramIndex, recordsPerPage);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                listTask.add(new Task(
+                        rs.getInt("taskID"),
+                        rs.getString("taskName"),
+                        rs.getString("description"),
+                        rs.getString("taskType")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listTask;
+    }
+
+    public int countActive(String taskType, String search, int recordsPerPage) {
+        Connection conn = null;
+        int totalPages = 0;
+        try {
+            conn = DBContext.getConnection();
+            // Xây dựng câu lệnh SQL động tùy thuộc vào roleID và name
+            StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM Task WHERE 1=1");
+
+            // Nếu roleID không bằng 0, thêm điều kiện lọc theo roleID
+            if (taskType != null) {
+                sql.append(" AND taskType = ?");
+            }
+
+            // Nếu search không rỗng, thêm điều kiện lọc theo username hoặc name
+            if (search != null && !search.isEmpty()) {
+                sql.append(" AND taskName COLLATE Latin1_General_CI_AI LIKE ? ");
+            }
+
+            PreparedStatement ps = conn.prepareStatement(sql.toString());
+
+            int paramIndex = 1;
+            if (taskType != null) {
+                ps.setString(paramIndex++, taskType);
+            }
+            if (search != null && !search.isEmpty()) {
+                ps.setString(paramIndex++, "%" + search + "%");
+                ps.setString(paramIndex, "%" + search + "%");
+            }
+
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                String taskName = rs.getString("taskName");
-                String description = rs.getString("description");
-                String taskType = rs.getString("taskType");
-
-                task = new Task(taskID, taskName, description, taskType);
-                LOGGER.log(Level.INFO, "Retrieved Task with ID: {0}", taskID);
-            } else {
-                LOGGER.log(Level.WARNING, "No Task found with ID: {0}", taskID);
+                int totalRecords = rs.getInt(1);
+                totalPages = (int) Math.ceil((double) totalRecords / recordsPerPage);
             }
-
-            // Close resources
-            rs.close();
-            pre.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "Error fetching task by ID.", e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
-
-        return task;
+        return totalPages;
     }
 
     public static void main(String[] args) {
         TaskDAO dao = new TaskDAO();
-        Task newTask = new Task();
-
-        //test get all
-//        List<Task> tasks = dao.getAll();
-//        System.out.println("\nAll Tasks:");
-//        for (Task task : tasks) {
-//            System.out.println("TaskID: " + task.getTaskID()
-//                    + ", TaskName: " + task.getTaskName()
-//                    + ", Description: " + task.getDescription()
-//                    + ", TaskType: " + task.getTaskType());
-//        }
-        //test add
-//        newTask.setTaskName("Test");
-//        newTask.setDescription("This is a test desc.");
-//        newTask.setTaskType("Test");
-//        boolean isAdded = dao.addTask(newTask);
-//        if (isAdded) {
-//            System.out.println("Added Task: TaskID=" + newTask.getTaskID() +
-//                               ", TaskName=" + newTask.getTaskName() +
-//                               ", Description=" + newTask.getDescription() +
-//                               ", TaskType=" + newTask.getTaskType());
-//        } else {
-//            System.out.println("Failed to add Task.");
-//        }
-        //test update by id
-//        newTask.setTaskName("Updated Test");
-//        newTask.setDescription("This is an updated test desc.");
-//        newTask.setTaskType("Test");
-//        newTask.setTaskID(11);
-//        boolean isUpdated = dao.updateTask(newTask);
-//        if (isUpdated) {
-//            System.out.println("\nUpdated Task: TaskID=" + newTask.getTaskID() +
-//                               ", TaskName=" + newTask.getTaskName() +
-//                               ", Description=" + newTask.getDescription() +
-//                               ", TaskType=" + newTask.getTaskType());
-//        } else {
-//            System.out.println("\nFailed to update Task.");
-//        }
-        //delete 
-//          newTask.setTaskID(12);
-//          boolean isDeleted = dao.deleteTask(newTask.getTaskID());
-//           if (isDeleted) {
-//            System.out.println("\nDeleted Task: TaskID=" + newTask.getTaskID());
-//        } else {
-//            System.out.println("\nFailed to delete Task.");
-//        }
-//         
+        int n = dao.createTask("aaaa", "aaaa", "Bảo trì");
+        System.out.println("Húp" + n);
     }
 }

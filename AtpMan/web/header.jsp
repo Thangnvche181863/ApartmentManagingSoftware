@@ -13,7 +13,7 @@
     }
 
     .search-dropdown {
-        left: calc(69%); /* Shifted ?px to the right */
+        left: calc(64%); /* Shifted ?px to the right */
         transform: translateX(-50%);
         top: calc(100% + 5px);
         z-index: 1000;
@@ -105,7 +105,6 @@
                         <a href="homepageGuest" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang Chủ</a>
                         <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
                         <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro") ? "active" : "" %>">Dịch Vụ</a>
-                        <a href="feedback.jsp" class="nav-item nav-link <%= request.getRequestURI().contains("feedback.jsp") ? "active" : "" %>">Phản hồi</a>
                  <!--   dont touch-->
                         <button id="searchBtn" class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0">
                             <i class="fas fa-search"></i>

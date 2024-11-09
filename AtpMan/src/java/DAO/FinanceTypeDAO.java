@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import java.sql.Connection;
+import utils.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class FinanceTypeDAO {
 
     public List<FinanceType> getAll() {
         List<FinanceType> list = new ArrayList<>();
-
+        Connection conn = null;
         try {
             String sql = "Select * from FinanceType";
             connection = DBContext.getConnection();
@@ -58,6 +60,7 @@ public class FinanceTypeDAO {
     }
 
     public void deleteFinanceType(int financeTypeId) {
+        Connection conn = null;
         try {
             String sql = "DELETE FROM [dbo].[FinanceType]\n"
                     + "      WHERE financeTypeId = ?";
@@ -88,16 +91,9 @@ public class FinanceTypeDAO {
 
     public static void main(String[] args) {
         FinanceTypeDAO fdao = new FinanceTypeDAO();
-//        fdao.insertFinanceType("thu tiền bảo trì căn hộ");
-        fdao.deleteFinanceType(31);
-        fdao.deleteFinanceType(32);
-        fdao.deleteFinanceType(33);
-        fdao.deleteFinanceType(34);
-        fdao.deleteFinanceType(35);
-        fdao.deleteFinanceType(36);
-        fdao.deleteFinanceType(37);
+        fdao.insertFinanceType("thu tiền bảo trì căn hộ");
+//        fdao.deleteFinanceType(31);
 
-
-        System.out.println(fdao.getAll());
+//        fda
     }
 }
