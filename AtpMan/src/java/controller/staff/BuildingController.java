@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Vector;
 import model.Building;
@@ -38,12 +39,12 @@ public class BuildingController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+
             BuildingDAO dao = new BuildingDAO();
             List<Building> list = dao.getAllBuildings();
-            
+
             Vector<Integer> vector1 = dao.getApartmentAvailable();
-            
+
             request.setAttribute("availableApartment", vector1);
             request.setAttribute("listBuilding", list);
             System.out.println("++++++++");
@@ -65,7 +66,6 @@ public class BuildingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -79,7 +79,55 @@ public class BuildingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String service = request.getParameter("service");
+        String message = ""; // Biến để lưu mọi thông báo
+
+        if ("add".equals(service)) {
+            // Lấy dữ liệu từ form
+            String name = request.getParameter("name");
+            String numFloorStr = request.getParameter("numFloor");
+            String numApartmentStr = request.getParameter("numApartment");
+            String address = request.getParameter("address");
+
+            // Kiểm tra hợp lệ dữ liệu
+            int numFloor = 0;
+            int numApartment = 0;
+            boolean isValid = true;
+
+            try {
+                numFloor = Integer.parseInt(numFloorStr);
+                numApartment = Integer.parseInt(numApartmentStr);
+
+                if (numFloor <= 0 || numApartment <= 0) {
+                    isValid = false;
+                    message = "Số tầng và số phòng phải là số tự nhiên lớn hơn 0.";
+                }
+            } catch (NumberFormatException e) {
+                isValid = false;
+                message = "Số tầng và số phòng phải là số tự nhiên.";
+            }
+
+            if (isValid) {
+                // Thêm tòa nhà mới vào cơ sở dữ liệu
+                BuildingDAO dao = new BuildingDAO();
+                boolean isInserted = dao.insertNewBuilding(name, numFloor, numApartment, address);
+
+                if (isInserted) {
+                    message = "Thêm tòa nhà thành công!";
+                } else {
+                    message = "Đã xảy ra lỗi khi thêm tòa nhà.";
+                }
+            }
+
+            // Load lại danh sách tòa nhà
+            BuildingDAO dao = new BuildingDAO();
+            List<Building> list = dao.getAllBuildings();
+            request.setAttribute("listBuilding", list);
+        }
+
+        // Set message để hiển thị lên JSP
+        // Trả về trang building.jsp với thông báo
+        response.sendRedirect("addBuilding.jsp?message=" + URLEncoder.encode(message, "UTF-8"));
     }
 
     /**

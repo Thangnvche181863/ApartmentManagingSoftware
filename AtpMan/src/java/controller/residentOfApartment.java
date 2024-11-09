@@ -4,6 +4,7 @@
  */
 package controller;
 
+import DAO.CustomerDAO;
 import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Date;
 import java.util.List;
 import java.util.Vector;
 import model.Living;
@@ -20,7 +22,6 @@ import model.Living;
  *
  * @author Admin
  */
-@WebServlet(name = "residentOfApartment", urlPatterns = {"/residentofapartment"})
 public class residentOfApartment extends HttpServlet {
 
     /**
@@ -38,14 +39,14 @@ public class residentOfApartment extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             LivingDAO dao = new LivingDAO();
-            
+            CustomerDAO cdao = new CustomerDAO();
             int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
             List<Living> list = dao.getAllResidentByApartmentID(apartmentID);
             List<String> listResidentName = dao.getNameOfResident(apartmentID);
-            List<Integer> listResidentAge = dao.getAgeOfResident(apartmentID);
+            List<Date> listResidentDob = dao.getDobOfResident(apartmentID);
             
             
-            request.setAttribute("listResidentAge", listResidentAge);
+            request.setAttribute("listResidentAge", listResidentDob);
             request.setAttribute("listResidentName", listResidentName);
             request.setAttribute("listResident", list);
             request.getRequestDispatcher("residentOfApartment.jsp").forward(request, response);

@@ -72,7 +72,8 @@
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- Topbar -->
-                    <%@include file = "../topbar.jsp" %>
+                    <jsp:include page="../topbar.jsp"/>
+                    
                     <!--End of Topbar--> 
                     <div class="container py-5 ">
                         <div class="row justify-content-center align-items-center h-100">

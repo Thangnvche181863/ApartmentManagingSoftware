@@ -61,13 +61,6 @@ public class ResidentManageServlet extends HttpServlet {
     throws ServletException, IOException {
 //        processRequest(request, response);
         
-        String selectBuilding = request.getParameter("selectBuilding");
-        String apartmentNumber = request.getParameter("apartmentNumber");
-        String residentName = request.getParameter("residentName");
-        String status = request.getParameter("status");
-        String owner = request.getParameter("owner");
-        String tenant = request.getParameter("tenant");
-        
         BuildingDAO buildingDAO = new BuildingDAO();
         CustomerDAO customerDAO = new CustomerDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
@@ -122,18 +115,24 @@ public class ResidentManageServlet extends HttpServlet {
             customerId = Integer.parseInt(customerId_raw);
         } catch (NumberFormatException e) {
         }
-        
+        String url = "/AtpMan/residentmanage";
         int status = 0;
         if(action.equals("accept")){
             status = 1;
-        }else if(action.equals("decline") || action.equals("remove")){
+            url = "/AtpMan/regisresidentmanage";
+        }else if(action.equals("decline")){
+            status = 0;
+            customerDAO.updateLivingResident(customerId);
+            customerDAO.removeAccount(customerId);
+            url = "/AtpMan/regisresidentmanage";
+        }else if(action.equals("remove")){
             status = 0;
             customerDAO.updateLivingResident(customerId);
             customerDAO.removeAccount(customerId);
         }
         
         customerDAO.updateStatusResident(status, customerId);
-        response.sendRedirect("/AtpMan/residentmanage");
+        response.sendRedirect(url);
     }
 
     /** 

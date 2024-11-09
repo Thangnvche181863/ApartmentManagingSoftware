@@ -61,9 +61,9 @@
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 class="h1 mb-0 text-gray-800"><b>Danh sách cư dân chờ duyệt</b></h1>
                             <a href="/AtpMan/residentmanage" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                                Danh sách cư dân chờ duyệt       
+                                Danh sách cư dân     
                             </a>
-                            <a href="/AtpMan/regisresidentmanage" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <a href="/AtpMan/inactiveresidentmanage" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 Danh sách cư dân không hoạt động       
                             </a>
                         </div>
@@ -177,7 +177,7 @@
                                         <label for="selectBuilding" class="col-sm-4 col-form-label font-weight-bold">Tòa nhà</label>
                                         <div class="col-sm-8">
                                             <!--bootstrap 4 -->
-                                            <select id="selectBuilding" name="selectBuilding" class="form-control" onchange="handleSearch($('#activeResidentTable .pagination .page-item.active button.page-link').val())"> 
+                                            <select id="selectBuilding" name="selectBuilding" class="form-control" onchange="handleSearch($('#registResidentTable .pagination .page-item.active button.page-link').val())"> 
                                                 <option selected value="all">Tất cả</option>
                                                 <c:forEach items="${requestScope.buildingList}" var="building">
                                                     <option value="${building.buildingID}">${building.name}</option>
@@ -191,7 +191,7 @@
                                     <div class="col-12 row">
                                         <label for="apartmentNumber" class="col-sm-4 col-form-label font-weight-bold">Căn hộ</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber" placeholder="Nhập số căn hộ" oninput="handleSearch($('#activeResidentTable .pagination .page-item.active button.page-link').val())">
+                                            <input type="text" class="form-control" id="apartmentNumber" name="apartmentNumber" placeholder="Nhập số căn hộ" oninput="handleSearch($('#registResidentTable .pagination .page-item.active button.page-link').val())">
                                         </div>
                                     </div>
                                 </div>
@@ -199,17 +199,17 @@
                                     <div class="col-12 row">
                                         <label for="residentName" class="col-sm-4 col-form-label font-weight-bold">Tên cư dân</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="residentName" name="residentName" placeholder="Nhập tên cư dân" oninput="handleSearch($('#activeResidentTable .pagination .page-item.active button.page-link').val())">
+                                            <input type="text" class="form-control" id="residentName" name="residentName" placeholder="Nhập tên cư dân" oninput="handleSearch($('#registResidentTable .pagination .page-item.active button.page-link').val())">
                                         </div>
                                     </div>
                                 </div>
 
-                                
-<!--                                <div class="col-md-6 row">
-                                    <div class="col-12 row d-flex">
-                                        <input class="btn btn-primary" type="submit" value="Tìm kiếm" onclick="handleSearch($('#activeResidentTable .pagination .page-item.active button.page-link').val())">
-                                    </div>
-                                </div>-->
+
+                                <!--                                <div class="col-md-6 row">
+                                                                    <div class="col-12 row d-flex">
+                                                                        <input class="btn btn-primary" type="submit" value="Tìm kiếm" onclick="handleSearch($('#registResidentTable .pagination .page-item.active button.page-link').val())">
+                                                                    </div>
+                                                                </div>-->
                             </div>
                         </div>
                         <!-- Content Row -->
@@ -217,9 +217,9 @@
                         <!-- table here -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h5 class="m-0 font-weight-bold text-primary text-gray-800 col-md-9">Danh sách cư dân đang hoạt động</h5>
+                                <h5 class="m-0 font-weight-bold text-primary text-gray-800 col-md-9">Danh sách cư dân đang chờ duyệt</h5>
                                 <div class="col-md-2">
-                                    <select id="residentPerPage" name="residentPerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleSearch($('#activeResidentTable .pagination .page-item.active button.page-link').val())">
+                                    <select id="residentPerPage" name="residentPerPage" class="form-select font-weight-bold text-primary text-uppercase" aria-label="Default select example" onchange="handleSearch($('#registResidentTable .pagination .page-item.active button.page-link').val())">
                                         <option value="5">Số lượng hiển thị: 5</option>
                                         <option value="10">Số lượng hiển thị: 10</option>
                                         <option value="25">Số lượng hiển thị: 25</option>
@@ -273,7 +273,29 @@
                                         </tbody>
                                     </table>
                                     <div class="d-flex flex-row-reverse">
+                                        <div class="d-flex flex-row-reverse">
+                                            <nav aria-label="Page navigation">
+                                                <ul class="pagination justify-content-start">
+                                                    <c:if test="${1 > 1}">
+                                                        <li class="page-item">
+                                                            <button class="page-link" value="${requestScope.currentPage - 1}" onclick="handleSearch(this.value)">Previous</button>
+                                                        </li>
+                                                    </c:if>
 
+                                                    <c:forEach var="i" begin="1" end="${requestScope.totalPage}">
+                                                        <li class="page-item ${i == 1 ? 'active' : ''}">
+                                                            <button class="page-link" value="${i}" onclick="handleSearch(this.value)">${i}</button>
+                                                        </li>
+                                                    </c:forEach>
+
+                                                    <c:if test="${1 < requestScope.totalPage}">
+                                                        <li class="page-item">
+                                                            <button class="page-link" value="${1 + 1}" onclick="handleSearch(this.value)">Next</button>
+                                                        </li>
+                                                    </c:if>
+                                                </ul>
+                                            </nav>
+                                        </div>
                                     </div>
                                 </div>
                             </div>   
@@ -305,105 +327,45 @@
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
             <script>
-                                                        function handleSearch(page) {
-                                                            let selectBuilding = $("#selectBuilding").val();
-                                                            let apartmentNumber = $("#apartmentNumber").val();
-                                                            let residentName = $("#residentName").val();
-                                                            let owner = $("#owner").is(":checked") ? $("#owner").val() : null;
-                                                            let tenant = $("#tenant").is(":checked") ? $("#tenant").val() : null;
-                                                            let currentPage = page;
-                                                            let residentPerPage = $("#residentPerPage").val();
+                                                                function handleSearch(page) {
+                                                                    let selectBuilding = $("#selectBuilding").val();
+                                                                    let apartmentNumber = $("#apartmentNumber").val();
+                                                                    let residentName = $("#residentName").val();
+                                                                    let currentPage = page;
+                                                                    let residentPerPage = $("#residentPerPage").val();
 
-                                                            console.log("selectBuilding ", selectBuilding);
-                                                            console.log("apartmentNumber ", apartmentNumber);
-                                                            console.log("residentName ", residentName);
-                                                            console.log("owner ", owner);
-                                                            console.log("tenant ", tenant);
-                                                            console.log("currentPage ", currentPage);
-                                                            console.log("residentPerPage ", residentPerPage);
-                                                            $.ajax({
-                                                                url: "/AtpMan/activeresidenttableajax",
-                                                                type: "get", //send it through post method
-                                                                data: {
-                                                                    selectBuilding: selectBuilding,
-                                                                    apartmentNumber: apartmentNumber,
-                                                                    residentName: residentName,
-                                                                    owner: owner,
-                                                                    tenant: tenant,
-                                                                    currentPage: currentPage,
-                                                                    residentPerPage: residentPerPage
-                                                                },
-                                                                success: function (data) {
-                                                                    $("#activeResidentTable").html(data);
-                                                                },
-                                                                error: function (xhr) {
-                                                                    //Do Something to handle error
+                                                                    console.log("selectBuilding ", selectBuilding);
+                                                                    console.log("apartmentNumber ", apartmentNumber);
+                                                                    console.log("residentName ", residentName);
+                                                                    console.log("currentPage ", currentPage);
+                                                                    console.log("residentPerPage ", residentPerPage);
+                                                                    $.ajax({
+                                                                        url: "/AtpMan/regisresidenttableajax",
+                                                                        type: "get", //send it through post method
+                                                                        data: {
+                                                                            selectBuilding: selectBuilding,
+                                                                            apartmentNumber: apartmentNumber,
+                                                                            residentName: residentName,
+                                                                            currentPage: currentPage,
+                                                                            residentPerPage: residentPerPage
+                                                                        },
+                                                                        success: function (data) {
+                                                                            $("#registResidentTable").html(data);
+                                                                        },
+                                                                        error: function (xhr) {
+                                                                            //Do Something to handle error
+                                                                        }
+                                                                    });
                                                                 }
-                                                            });
-                                                        }
 
-                                                        function handleDetails(invoiceID) {
-                                                            let invoiceId = invoiceID;
-
-                                                            console.log("invoiceId ", invoiceId);
-                                                            $.ajax({
-                                                                url: "/AtpMan/invoicestatservicetableajax",
-                                                                type: "get", //send it through post method
-                                                                data: {
-                                                                    invoiceId: invoiceId
-                                                                },
-                                                                success: function (data) {
-                                                                    $("#serviceCard").html(data);
-                                                                },
-                                                                error: function (xhr) {
-                                                                    //Do Something to handle error
+                                                                function handleDecline(customerId) {
+                                                                    if (window.confirm('Bạn có muốn từ chối cư dân này?')) {
+                                                                        document.getElementById('declineForm-' + customerId).submit();
+                                                                    }
                                                                 }
-                                                            });
-                                                        }
-                                                        function handleSearchDetails(page) {
-                                                            let invoiceId = $("#invoiceID").val();
-                                                            let currentPage = page;
-                                                            let searchTerm = $("#searchService").val();
-                                                            let servicePerPage = $("#servicePerPage").val();
-                                                            console.log("invoiceId ", invoiceId);
-                                                            console.log("currentPage ", currentPage);
-                                                            console.log("searchTerm ", searchTerm);
-                                                            console.log("invoicePerPage ", invoicePerPage);
-                                                            $.ajax({
-                                                                url: "/AtpMan/invoicestatservicesearchajax",
-                                                                type: "get", //send it through post method
-                                                                data: {
-                                                                    invoiceId: invoiceId,
-                                                                    currentPage: currentPage,
-                                                                    searchTerm: searchTerm,
-                                                                    servicePerPage: servicePerPage
-                                                                },
-                                                                success: function (data) {
-                                                                    $("#serviceTable").html(data);
-                                                                },
-                                                                error: function (xhr) {
-                                                                    //Do Something to handle error
+                                                                function handleAccept(customerId) {
+                                                                    document.getElementById('acceptForm-' + customerId).submit();
                                                                 }
-                                                            });
-                                                        }
-
-                                                        function submitMonth() {
-                                                            document.getElementById('chooseMonthYear').submit();
-                                                        }
-
-                                                        function handleRemove(customerId) {
-                                                            if (window.confirm('Bạn có muốn loại bỏ cư dân này?')) {
-                                                                document.getElementById('removeForm-' + customerId).submit();
-                                                            }
-                                                        }
-                                                        function handleDecline(customerId) {
-                                                            if (window.confirm('Bạn có muốn từ chối cư dân này?')) {
-                                                                document.getElementById('declineForm-' + customerId).submit();
-                                                            }
-                                                        }
-                                                        function handleAccept(customerId) {
-                                                            document.getElementById('acceptForm-' + customerId).submit();
-                                                        }
 
             </script>
     </body>

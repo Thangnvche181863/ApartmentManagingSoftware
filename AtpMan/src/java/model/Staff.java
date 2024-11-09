@@ -79,6 +79,14 @@ public class Staff {
         return status;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public void setStatus(int status) {
         this.status = status;
     }
@@ -105,14 +113,6 @@ public class Staff {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public void setPassword(String password) {
@@ -153,9 +153,10 @@ public class Staff {
 
     @Override
     public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", avatar=" + avatar + ", status=" + status + '}';
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", avatar=" + avatar + ", status=" + status + ", roleAuthority=" + roleAuthority + '}';
     }
 
+   
   
 
     

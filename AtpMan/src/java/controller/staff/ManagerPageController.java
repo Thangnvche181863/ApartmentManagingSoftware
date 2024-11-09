@@ -9,6 +9,7 @@ import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import DAO.InvoiceDAO;
 import DAO.LivingDAO;
+import DAO.ServiceDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
 import java.io.IOException;
@@ -66,6 +67,10 @@ public class ManagerPageController extends HttpServlet {
             InvoiceDAO invoiceDAO = new InvoiceDAO();
             int totalInvoice = invoiceDAO.totalInvoiceByStatus(1);
             request.setAttribute("totalInvoice", totalInvoice);
+            
+            ServiceDAO serviceDAO = new ServiceDAO();
+            int totalService = serviceDAO.countAllService();
+            request.setAttribute("totalService", totalService);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }

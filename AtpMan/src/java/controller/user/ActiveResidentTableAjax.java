@@ -126,11 +126,12 @@ public class ActiveResidentTableAjax extends HttpServlet {
                         + "                                                <td class=\"" + (resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "") + "\">" + (resident.getIsOwner() == 1 ? "Chủ căn hộ" : "Người ở") + "</td>\n"
                         + "                                                <td>" + (resident.getApartmentNumber() != null ? "Đang cư trú" : "Không cư trú") + "</td>\n"
                         + "                                                <td>\n"
-                        + "                                                    <form id=\"removeForm\" action=\"residentmanage\" method=\"post\">\n"
+                        + "                                                    <form id=\"removeForm-" + resident.getCustomerID() + "\" action=\"residentmanage\" method=\"post\">\n"
                         + "                                                        <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
                         + "                                                        <input type=\"hidden\" name=\"action\" value=\"remove\">\n"
                         + "                                                    </form>\n"
-                        + "                                                    <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleRemove()\">\n"
+                        + "                                                    <input class=\"btn btn-primary\" type=\"submit\" value=\"Thông tin\" onclick=\"handleResidentDetails(" + resident.getCustomerID() + ")\">"
+                        + "                                                    <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleRemove(" + resident.getCustomerID() + ")\">\n"
                         + "                                                </td>\n"
                         + "                                            </tr>\n");
             }

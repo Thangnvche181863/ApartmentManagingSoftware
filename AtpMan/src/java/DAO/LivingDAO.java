@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,9 +79,9 @@ public class LivingDAO {
         return list;
     }
 
-    public List<Integer> getAgeOfResident(int apartmentID) {
-        List<Integer> list = new ArrayList<>();
-        String sql = " SELECT c.age FROM Customer c\n"
+    public List<Date> getDobOfResident(int apartmentID) {
+        List<Date> list = new ArrayList<>();
+        String sql = "SELECT c.dob FROM Customer c\n"
                 + "JOIN Living l ON c.customerID = l.customerID\n"
                 + "JOIN Apartment a ON l.apartmentID = a.apartmentID\n"
                 + "WHERE a.apartmentID = ?";
@@ -91,11 +92,18 @@ public class LivingDAO {
             pre.setInt(1, apartmentID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-
-                list.add(rs.getInt(1));
+                list.add(rs.getDate(1)); // Lấy dữ liệu kiểu Date
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return list;
     }
@@ -180,7 +188,7 @@ public class LivingDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, customerId);
             ResultSet rs = statement.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 Living living = new Living();
                 living.setLivingID(rs.getInt("livingID"));
                 living.setCustomerID(rs.getInt("customerID"));
@@ -193,9 +201,9 @@ public class LivingDAO {
         }
         return null;
     }
-    
+
     // KhangPM
-    public void updateEndLiving (int customerId){
+    public void updateEndLiving(int customerId) {
         Connection connection = null;
         String sql = "update Living set endDate = ? where customerID = ?";
         try {
@@ -209,8 +217,61 @@ public class LivingDAO {
         }
     }
 
+    // KhangPM
+    public List<String> getAllResidentApartmentLiving(int customerId) {
+        Connection connection = null;
+        List<String> aptList = new ArrayList<>();
+        String sql = """
+                     select lv.*, a.apartmentNumber, b.name from Living lv
+                     inner join Customer c on c.customerID = lv.customerID
+                     inner join Apartment a on a.apartmentID = lv.apartmentID
+                     inner join Building b on b.buildingID = a.buildingID
+                     where c.customerID = ?
+                     order by endDate desc
+                     """;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet rs = statement.executeQuery();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            while (rs.next()) {
+                String apt = rs.getString("apartmentNumber") + "-" + rs.getString("name") + ", thời gian: "
+                        + (rs.getDate("startDate") != null ? dateFormat.format(rs.getDate("startDate")) : "") + "-"
+                        + (rs.getDate("endDate") != null ? dateFormat.format(rs.getDate("endDate")) : "nay");
+                aptList.add(apt);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return aptList;
+    }
+    public int insertLiving(int customerID, int apartmentID, LocalDate startDate) {
+        String sql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
+        Connection conn = null;
+        int isInserted = 0;
+
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, customerID);
+            pre.setInt(2, apartmentID);
+            pre.setDate(3, java.sql.Date.valueOf(startDate)); // Chuyển LocalDate thành java.sql.Date
+
+            isInserted = pre.executeUpdate();
+            LOGGER.info("Dữ liệu đã được chèn thành công vào bảng Living.");
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error inserting data", ex);
+            ex.printStackTrace();
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return isInserted;
+    }
+
     public static void main(String[] args) {
         LivingDAO dao = new LivingDAO();
-        dao.updateEndLiving(9);
+         List<String> slist = dao.getAllResidentApartmentLiving(1);
+        System.out.println(slist);
     }
 }

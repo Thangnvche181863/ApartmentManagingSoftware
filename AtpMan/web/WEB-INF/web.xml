@@ -341,12 +341,40 @@
         <servlet-class>controller.staff.RegisResidentManageServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RegisResidentTableAjax</servlet-name>
+        <servlet-class>controller.staff.RegisResidentTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InActiveResidentManageServlet</servlet-name>
+        <servlet-class>controller.staff.InActiveResidentManageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InActiveResidentTableAjax</servlet-name>
+        <servlet-class>controller.staff.InActiveResidentTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResidentInfoAjax</servlet-name>
+        <servlet-class>controller.staff.ResidentInfoAjax</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditNewsCategory</servlet-name>
         <servlet-class>controller.staff.EditNewsCategory</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditComment</servlet-name>
         <servlet-class>controller.EditComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addResidentController</servlet-name>
+        <servlet-class>controller.addResidentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addApartment</servlet-name>
+        <servlet-class>controller.staff.addApartment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResidentOfApartment</servlet-name>
+        <servlet-class>controller.residentOfApartment</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -629,12 +657,40 @@
         <url-pattern>/regisresidentmanage</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>RegisResidentTableAjax</servlet-name>
+        <url-pattern>/regisresidenttableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InActiveResidentManageServlet</servlet-name>
+        <url-pattern>/inactiveresidentmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InActiveResidentTableAjax</servlet-name>
+        <url-pattern>/inactiveresidenttableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResidentInfoAjax</servlet-name>
+        <url-pattern>/residentinfoajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditNewsCategory</servlet-name>
         <url-pattern>/EditNewsCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditComment</servlet-name>
         <url-pattern>/EditComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addResidentController</servlet-name>
+        <url-pattern>/addResident</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addApartment</servlet-name>
+        <url-pattern>/addApartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResidentOfApartment</servlet-name>
+        <url-pattern>/residentofapartment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
