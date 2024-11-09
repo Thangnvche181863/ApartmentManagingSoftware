@@ -75,18 +75,21 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Số cư dân: ${countList.get(pageScope.count)} </div>
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="margin-top: 20px">
                                                     <!-- Tạo một dòng cho 2 nút -->
-                                                    <div class="d-flex justify-content-between">
-                                                        <a href="residentofapartment?apartmentID=${o.apartmentID}" class="text-warning" style="text-decoration: none">
-                                                            Xem tất cả người ở
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <a href="residentofapartment?apartmentID=${o.apartmentID}" class="text-warning" style="text-decoration: none;">
+                                                            <button class="btn btn-warning btn-sm px-2 py-1">Xem người ở</button>
                                                         </a>
 
                                                         <!-- Nút chỉnh sửa -->
-                                                        <form action="apartment" method="POST" style="display:inline;">
+                                                        <form action="apartment" method="POST" class="ms-auto" style="display:inline;">
                                                             <input type="hidden" name="service" value="viewedit">
                                                             <input type="hidden" name="apartmentID" value="${o.apartmentID}">
-                                                            <button type="submit" class="btn btn-primary btn-sm">Chỉnh sửa</button>
+                                                            <input type="hidden" name="buildingID" value="${requestScope.buildingID}">
+                                                            <button type="submit" class="btn btn-primary btn-sm px-2 py-1">Chỉnh sửa</button>
                                                         </form>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                             <div class="col-auto">
@@ -100,25 +103,7 @@
                         </c:forEach>
 
 
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-primary" href="login.html">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <!-- Bootstrap core JavaScript-->
                         <script src="vendor/jquery/jquery.min.js"></script>

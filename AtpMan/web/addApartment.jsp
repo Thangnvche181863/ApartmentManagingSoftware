@@ -70,7 +70,7 @@
                                             // Sử dụng buildingID trong trang JSP
                                         %>
 
-                                        <a href="building">Quay lại</a>
+                                        <a href="apartment?buildingID=<%=buildingID%>">Quay lại</a>
                                         <% 
                                         String message = request.getParameter("message"); 
                                         if (message != null && !message.isEmpty()) {

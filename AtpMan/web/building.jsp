@@ -68,7 +68,7 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">Địa chỉ: ${o.address}</div>
 
                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style =" margin-top: 20px ">
-                                                    <a href="apartment?buildingID=${o.buildingID}&numFloor=${o.numFloor}&numApartment=${o.numApartment}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
+                                                    <a href="apartment?buildingID=${o.buildingID}" class ="text-warning" style="text-decoration: none" >Xem tất cả căn hộ</a></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-building fa-2x text-gray-400"></i>

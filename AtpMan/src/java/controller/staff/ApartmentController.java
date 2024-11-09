@@ -42,9 +42,7 @@ public class ApartmentController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             int buildingID = Integer.parseInt(request.getParameter("buildingID"));
-            int numFloor = Integer.parseInt(request.getParameter("numFloor"));
-            int numApartment = Integer.parseInt(request.getParameter("numApartment"));
-
+            
             ApartmentDAO dao = new ApartmentDAO();
             Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
 
@@ -55,8 +53,7 @@ public class ApartmentController extends HttpServlet {
             LivingDAO livingdao = new LivingDAO();
             List<Integer> list = livingdao.getAmountOfResidentOfApartment(buildingID);
 
-            request.setAttribute("numFloor", numFloor);
-            request.setAttribute("numApartment", numApartment);
+            
             request.setAttribute("list", list);
             request.setAttribute("listApartment", vector);
             request.setAttribute("buildingID", buildingID);
@@ -95,7 +92,9 @@ public class ApartmentController extends HttpServlet {
             int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
             ApartmentDAO dao = new ApartmentDAO();
             Apartment apartment = dao.getApartmentByID(apartmentID);
-            
+            String buildingID =request.getParameter("buildingID");
+            request.setAttribute("buildingID", buildingID);
+
             request.setAttribute("apartmentID", apartmentID);
             request.setAttribute("apartment", apartment);  // Gửi thông tin căn hộ vào JSP
             request.getRequestDispatcher("editApartment.jsp").forward(request, response);
@@ -111,12 +110,15 @@ public class ApartmentController extends HttpServlet {
             int area = Integer.parseInt(request.getParameter("area"));
             ApartmentDAO dao = new ApartmentDAO();
             boolean success = dao.editApartment(apartmentID, apartmentNumber, apartmentType, price, maintenanceFee, floor, area);
-            if(success){
+            if (success) {
                 System.out.println("Bú");
-            }else{
+            } else {
                 System.out.println("Cúc");
             }
-            response.sendRedirect("building");
+        String buildingID = request.getParameter("buildingID");
+            request.setAttribute("buildingID", buildingID);
+
+            response.sendRedirect("apartment?buildingID=" + buildingID);
         }
 
     }

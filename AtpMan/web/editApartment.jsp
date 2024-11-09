@@ -23,7 +23,7 @@
                 <form action="apartment" method="POST" onsubmit="return validateForm()">
                     <input type="hidden" name="service" value="edit">
                     <input type="hidden" name="apartmentID" value="${apartment.apartmentID}">
-
+                    <input type="hidden" name="buildingID" value="${requestScope.buildingID}">
                     <div class="container rounded bg-white mt-5 mb-5">
                         <div class="row">
                             <div class="col-md-12 border-right">

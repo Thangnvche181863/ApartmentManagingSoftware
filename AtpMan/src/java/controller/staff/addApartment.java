@@ -34,9 +34,8 @@ public class addApartment extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             int buildingID = Integer.parseInt(request.getParameter("buildingID"));
-           
+
             request.setAttribute("buildingID", buildingID);
-           
 
             request.getRequestDispatcher("addApartment.jsp").forward(request, response);
         }
@@ -70,7 +69,8 @@ public class addApartment extends HttpServlet {
             throws ServletException, IOException {
         String service = request.getParameter("service");
         String message = ""; // Biến để lưu mọi thông báo
-        int buildingID = Integer.parseInt(request.getParameter("buildingID")); // ID tòa nhà
+        int buildingID = Integer.parseInt(request.getParameter("buildingID"));
+        System.out.println("" + buildingID);// ID tòa nhà
         if ("add".equals(service)) {
             // Xử lý thêm căn hộ mới từ form
             try {
@@ -100,7 +100,7 @@ public class addApartment extends HttpServlet {
             }
 
             // Chuyển hướng về trang addBuilding.jsp và gửi thông báo
-            response.sendRedirect("addApartment.jsp?message=" + URLEncoder.encode(message, "UTF-8") + "&buildingID=" + buildingID);
+            response.sendRedirect("addApartment.jsp?buildingID=" + buildingID + "&message=" + URLEncoder.encode(message, "UTF-8"));
             System.out.println("" + buildingID);
         } else {
             request.setAttribute("buildingID", buildingID);
