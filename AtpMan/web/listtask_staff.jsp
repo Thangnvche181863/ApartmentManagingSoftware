@@ -119,26 +119,35 @@
         </style>
     </head>
     <body>
+        <div id="wrapper">
+            <jsp:include page="./sidebar.jsp"/>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- Topbar -->
+                    <jsp:include page="./topbar.jsp"/>
+                    <!-- End of Topbar -->
+                    <div class="container-fluid">
 
-        <div class="container">
+                        <h2>Danh sách Task được giao</h2>
+                        <table>
+                            <tr>
+                                <th>Tên Task</th>
+                                <th>Loại</th>
+                                <th>Mô tả</th>
+                            </tr>
+                            <c:forEach var="task" items="${tasks}">
+                                <tr>
+                                    <td>${task.taskName}</td>
+                                    <td>${task.taskType}</td>
+                                    <td>${task.description}</td>
 
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
 
-            <h2>Danh sách Task được giao</h2>
-            <table>
-                <tr>
-                    <th>Tên Task</th>
-                    <th>Loại</th>
-                    <th>Mô tả</th>
-                </tr>
-                <c:forEach var="task" items="${tasks}">
-                    <tr>
-                        <td>${task.taskName}</td>
-                        <td>${task.taskType}</td>
-                        <td>${task.description}</td>
-
-                    </tr>
-                </c:forEach>
-            </table>
+                </div>
+            </div>
         </div>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

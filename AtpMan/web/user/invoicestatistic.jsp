@@ -54,7 +54,7 @@
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- Topbar -->
-                    <%@include file="../topbar.jsp" %>
+                    <%@include file = "../topbar.jsp" %>
                     <!-- End of Topbar -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
