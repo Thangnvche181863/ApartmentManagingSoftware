@@ -64,7 +64,8 @@ public class PayInvoiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        response.sendRedirect("/AtpMan/user/userhome");
     }
 
     /**
@@ -82,7 +83,7 @@ public class PayInvoiceServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         String paymentType = request.getParameter("paymentType");
-
+        
         request.setAttribute("paymentType", paymentType);
         if (paymentType.equals("payExistInvoice")) {
             String amount_raw = request.getParameter("amount");
@@ -92,23 +93,23 @@ public class PayInvoiceServlet extends HttpServlet {
                 amount = Double.parseDouble(amount_raw);
             } catch (NumberFormatException e) {
             }
-
+            
             int amt = (int) amount;
-
+            
             request.setAttribute("amount", amt);
             request.setAttribute("invoiceId", invoiceId);
-
+            
         } else if (paymentType.equals("payRegisInvoice")) {
             String apartmentID = request.getParameter("apartmentID");
             String serviceID = request.getParameter("serviceID");
             String amount_raw = request.getParameter("amount");
             String subscriptionPlan = request.getParameter("subscriptionPlan");
-
+            
             LocalDate startDate = LocalDate.now();
             LocalDate endDate = LocalDate.now();
-
+            
             DiscountDAO ddao = new DiscountDAO();
-
+            
             Discount discount = ddao.getDiscountById(Integer.parseInt(serviceID));
             double getdiscount = 1;
             int monthService = 1;
@@ -125,7 +126,7 @@ public class PayInvoiceServlet extends HttpServlet {
                 getdiscount = discount.getThreeMonth();
                 monthService = 3;
             }
-
+            
             double amount = Double.parseDouble(amount_raw.replaceAll(",", "").replace(" VND/tháng", ""));
 //            try {
 //                amount = Double.parseDouble(amount_raw);
@@ -135,23 +136,23 @@ public class PayInvoiceServlet extends HttpServlet {
             amount = amount * (1 - (getdiscount / 100.0)) * monthService;
             System.out.println(amount);
             int amt = (int) amount;
-
+            
             ServiceContract serviceContract = new ServiceContract();
             serviceContract.setApartmentId(Integer.parseInt(apartmentID));
             serviceContract.setServiceId(Integer.parseInt(serviceID));
             serviceContract.setStartDate(Date.valueOf(startDate));
             serviceContract.setEndDate(Date.valueOf(endDate));
             serviceContract.setAmount(BigDecimal.valueOf(amount));
-
+            
             session.setAttribute("serviceContractSession", serviceContract);
-
+            
             request.setAttribute("amount", amt);
             request.setAttribute("apartmentID", apartmentID);
             request.setAttribute("serviceID", serviceID);
         } else {
             request.setAttribute("message", "Có lỗi đã xảy ra");
         }
-
+        
         request.getRequestDispatcher("vnpay/payinvoice.jsp").forward(request, response);
     }
 

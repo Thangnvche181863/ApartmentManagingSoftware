@@ -97,16 +97,16 @@ public class StaffHome extends HttpServlet {
             // Gán trạng thái và customerID của từng task vào danh sách
             for (Task task : tasks) {
                 String status = assignmentDAO.getStatus(staffID, task.getTaskID());
-                int customerID = task.getCustomerID();
-                System.out.println("Assigning status for taskID: " + task.getTaskID() + ", customerID: " + customerID);
-
-                // Sử dụng phương thức getApartmentNumberByCustomerID để lấy apartmentNumber từ customerID
-                String apartmentNumber = customerDAO.getApartmentNumberByCustomerID(customerID);
-                task.setApartmentNumber(apartmentNumber);  // Gán tên căn hộ vào task
+//                int customerID = task.getCustomerID();
+//                System.out.println("Assigning status for taskID: " + task.getTaskID() + ", customerID: " + customerID);
+//
+//                // Sử dụng phương thức getApartmentNumberByCustomerID để lấy apartmentNumber từ customerID
+//                String apartmentNumber = customerDAO.getApartmentNumberByCustomerID(customerID);
+//                task.setApartmentNumber(apartmentNumber);  // Gán tên căn hộ vào task
                 task.setStatus(status);  // Gán trạng thái vào task
 
                 // In thông tin của từng task đã được gán
-                System.out.println("TaskID: " + task.getTaskID() + ", Apartment: " + task.getApartmentNumber() + ", Status: " + task.getStatus());
+//                System.out.println("TaskID: " + task.getTaskID() + ", Apartment: " + task.getApartmentNumber() + ", Status: " + task.getStatus());
             }
 
             request.setAttribute("tasks", tasks);

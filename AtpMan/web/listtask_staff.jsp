@@ -134,7 +134,7 @@
                                 <th>Tên Task</th>
                                 <th>Loại</th>
                                 <th>Mô tả</th>
-                                <th>Căn hộ</th><!--  -->
+                                <!--<th>Căn hộ</th>-->
                                 <th>Trạng thái</th>
                             </tr>
 
@@ -143,7 +143,7 @@
                                     <td>${task.taskName}</td>
                                     <td>${task.taskType}</td>
                                     <td>${task.description}</td>
-                                    <td>${task.apartmentNumber}</td> <!-- Hiển thị apartmentNumber -->
+                                    <!--<td></td>  Hiển thị apartmentNumber -->
                                     <td>
                                         <form action="staffhome" method="post">
                                             <input type="hidden" name="taskID" value="${task.taskID}" />

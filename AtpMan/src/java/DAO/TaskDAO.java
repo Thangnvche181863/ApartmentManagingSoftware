@@ -302,9 +302,10 @@ public class TaskDAO {
         return totalPages;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
         TaskDAO dao = new TaskDAO();
-        int n = dao.createTask("aaaa", "aaaa", "Bảo trì");
-        System.out.println("Húp" + n);
+        List<Task> taskList = dao.getTaskByStaffID(17);
+        
+        System.out.println(taskList);
     }
 }
