@@ -49,11 +49,7 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-<<<<<<< Updated upstream
             <%@include file="../sidebar.jsp" %>
-=======
-            <jsp:include page="../sidebar.jsp"/>
->>>>>>> Stashed changes
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -65,11 +61,7 @@
 
                     <!-- Topbar -->
 
-<<<<<<< Updated upstream
                     <%@include file = "../topbar.jsp" %>
-=======
-                    <jsp:include page="../topbar.jsp"/>
->>>>>>> Stashed changes
 
                     <!-- End of Topbar -->
 

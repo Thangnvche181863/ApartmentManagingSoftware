@@ -60,12 +60,7 @@
             <div id="content-wrapper" class="d-flex flex-column">
                 <div id="content">
                     <!-- Topbar -->
-<<<<<<< Updated upstream
                     <%@include file = "../topbar.jsp" %>
-=======
-                    
-                    <jsp:include page="../topbar.jsp"/>
->>>>>>> Stashed changes
                     <!-- End of Topbar -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
