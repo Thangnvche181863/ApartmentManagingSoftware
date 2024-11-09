@@ -42,7 +42,6 @@
         <url-pattern>/newscategoryadd.jsp</url-pattern>
         <url-pattern>/CommentDelete</url-pattern>
         <url-pattern>/EditNewsCategory</url-pattern>
-        
     </filter-mapping>
     <filter-mapping>
         <filter-name>AjaxFilter</filter-name>
@@ -345,6 +344,10 @@
         <servlet-name>EditNewsCategory</servlet-name>
         <servlet-class>controller.staff.EditNewsCategory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditComment</servlet-name>
+        <servlet-class>controller.EditComment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -628,6 +631,10 @@
     <servlet-mapping>
         <servlet-name>EditNewsCategory</servlet-name>
         <url-pattern>/EditNewsCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditComment</servlet-name>
+        <url-pattern>/EditComment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

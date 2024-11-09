@@ -193,7 +193,7 @@
                                     <p class="mb-4">${mana.description}</p>
                                 </div>
                                 <div class="mt-auto">
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${mana.newsID}">Learn More</a>
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${mana.newsID}">Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +216,7 @@
                                     <p class="mb-4">${res.description}</p>
                                 </div>
                                 <div class="mt-auto">
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${res.newsID}">Learn More</a>
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${res.newsID}">Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                                         </div>
                                         <a href="NewsDetail?id=${newsItem.newsID}" class="h4 d-inline-block mb-3">${newsItem.newsTitle}</a>
                                         <p class="mb-3">${newsItem.description}</p>
-                                        <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Read More <i class="fa fa-arrow-right"></i></a>
+                                        <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Đọc Thêm <i class="fa fa-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>

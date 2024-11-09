@@ -24,6 +24,44 @@ import java.util.Calendar;
 public class NewsCommentDAO extends DBContext {
 
     private static final Logger LOGGER = Logger.getLogger(NewsDAO.class.getName());
+    
+    public boolean updateComment(int commentID, String commentText) {
+    String sql = "UPDATE NewsComment SET commentText = ? WHERE commentID = ?";
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return false;
+        }
+
+        // Prepare the SQL statement
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, commentText); // Set the new comment text
+        pre.setInt(2, commentID); // Set the comment ID
+
+        // Execute the update
+        int rowsUpdated = pre.executeUpdate();
+
+        // Close resources
+        pre.close();
+
+        if (rowsUpdated > 0) {
+            LOGGER.log(Level.INFO, "Successfully updated comment with ID: {0}.", commentID);
+            return true;
+        } else {
+            LOGGER.log(Level.WARNING, "No comment found with ID: {0} to update.", commentID);
+            return false;
+        }
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error updating comment with ID: " + commentID, e);
+        return false;
+    }
+}
+
 
     public List<NewsComment> getAll() {
         List<NewsComment> list = new ArrayList<>();
