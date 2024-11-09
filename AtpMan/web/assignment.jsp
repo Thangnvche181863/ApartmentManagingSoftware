@@ -226,7 +226,7 @@
                                                                 <!-- Danh sách nhân viên -->
                                                                 <select name="staffID" class="form-control">
                                                                     <c:forEach items="${listStaff}" var="o">
-                                                                        <c:if test="${ls.taskType == o.roleAuthority}">
+                                                                        <c:if test="${o.roleAuthority.contains(ls.taskType)}">
                                                                             <option value="${o.staffID}">${o.name}</option>
                                                                         </c:if>
                                                                     </c:forEach>

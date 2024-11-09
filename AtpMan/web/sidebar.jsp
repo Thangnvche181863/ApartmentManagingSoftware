@@ -210,6 +210,11 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span>Yêu cầu</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/AtpMan/customercomplaintlist">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Danh sách yêu cầu</span></a>
+        </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
