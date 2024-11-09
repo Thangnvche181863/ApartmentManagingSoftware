@@ -74,8 +74,7 @@
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Chuyển tiếp</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
-                 data-parent="#accordionSidebar">
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Manager</h6>
                     <a class="collapse-item" href="#"></a>
@@ -96,22 +95,24 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        </li>
+
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse"
-               data-target="#collapseCreateAccount" aria-expanded="true"
-               aria-controls="collapseCreateAccount">
+            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseCreateAccount" 
+               aria-expanded="true" aria-controls="collapseCreateAccount">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Tạo tài khoản</span>
             </a>
-            <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount"
-                 data-parent="#accordionSidebar">
+
+            <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Tạo tài khoản</h6>
+                    <a class="collapse-item" href="#"></a>
                     <a class="collapse-item" href="createaccount">Người dùng</a>
-                    <a class="collapse-item" href="register.html">Nhân viên</a>
+                    <a class="collapse-item" href="createaccountstaff">Nhân viên</a>
                 </div>
+            </div>
         </li>
+
 
 
         <!-- Nav Item - Tables -->
@@ -188,6 +189,11 @@
             <a class="nav-link" href="/AtpMan/registServiceTenant">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Đăng Kí Dịch Vụ</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/AtpMan/requestcomplaintservlet">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Yêu cầu</span></a>
         </li>
 
         <!-- Divider -->

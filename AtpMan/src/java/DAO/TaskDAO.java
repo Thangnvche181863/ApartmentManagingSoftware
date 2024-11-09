@@ -4,28 +4,24 @@
  */
 package DAO;
 
-import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.*;
-import model.Apartment;
-import model.Building;
 import model.Task;
 import utils.DBContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Admin
  */
 public class TaskDAO {
-
+    private static final Logger LOGGER = Logger.getLogger(TaskDAO.class.getName());
     Connection conn = null;
 
     public int createTask(String taskName, String taskType, String description) {
@@ -84,7 +80,7 @@ public class TaskDAO {
         return taskList;
     }
 
-    public List<Task> getAll() {
+    public List<Task> getAllTask() {
         List<Task> list = new ArrayList<>();
 
         String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
@@ -127,7 +123,6 @@ public class TaskDAO {
     // }
     // return n;
     // }
-
     public List<String> getAllTaskType() {
         List<String> list = new ArrayList<>();
         String sql = "SELECT DISTINCT taskType FROM Task; ";

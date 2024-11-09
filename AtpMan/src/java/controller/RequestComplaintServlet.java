@@ -56,7 +56,7 @@ public class RequestComplaintServlet extends HttpServlet {
             String type = request.getParameter("type");
 
             requestcomplaintDAO.submitComplaint(customerID, title, description, type);
-            response.sendRedirect("userhome");
+            response.sendRedirect("requestcomplaintservlet");
 
         } catch (SQLException ex) {
             Logger.getLogger(RequestComplaintServlet.class.getName()).log(Level.SEVERE, null, ex);

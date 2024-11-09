@@ -610,8 +610,8 @@
     <servlet-mapping>
         <servlet-name>StaffHome</servlet-name>
         <url-pattern>/staffhome</url-pattern>
-        </servlet>
-    <servlet>
+        </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManagerPageController</servlet-name>
         <url-pattern>/managerPage</url-pattern>
     </servlet-mapping>

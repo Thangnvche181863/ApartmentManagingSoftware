@@ -58,7 +58,7 @@
                 padding: 10px;
                 text-align: left;
                 border-bottom: 1px solid #ddd;
-               
+
             }
             th{
                 font-weight: bold;
@@ -134,129 +134,199 @@
                 border: none;              /* Loại bỏ viền mặc định */
             }
 
-/*            .custom-approve-btn:hover {
-                background-color: #0D1EC4;  Màu đậm hơn khi hover 
-            }*/
+            /*            .custom-approve-btn:hover {
+                            background-color: #0D1EC4;  Màu đậm hơn khi hover 
+                        }*/
 
         </style>
 
     </head>
-    <body>
-        <%@include file="sidebar.jsp" %>
+    <body id="page-top">
 
-        <div class="container">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
 
-            <h1>Danh sách các yêu cầu</h1>
+            <!-- Sidebar -->
+            <%@include file="sidebar.jsp" %>
+            <!-- End of Sidebar -->
 
+            <!-- Content Wrapper -->
 
-            <form id="sortForm" action="complaintlist" method="get">
-                <input type="hidden" name="page" value="1">
-                <input type="hidden" name="search" value="${search}">
-                <input type="hidden" name="searchField" value="${searchField}">
-                <select name="sort" id="sortSelect">
-                    <option value="date" ${sort == 'date' ? 'selected' : ''}>Ngày</option>
-                    <option value="customerName" ${sort == 'customerName' ? 'selected' : ''}>Tên khách hàng</option>
-                    <option value="type" ${sort == 'type' ? 'selected' : ''}>Loại</option>
-                    <option value="status" ${sort == 'status' ? 'selected' : ''}>Trạng thái</option>
-                </select>
-                <button type="submit" class="btn btn-primary">Sắp xếp</button>
-            </form>
+            <div id="content-wrapper" class="d-flex flex-column">
+
+                <!-- Main Content -->
+                <div id="content">
 
 
+                    <!-- Topbar -->
 
-            <table>
-                <tr>
-                    <th>Tên khách hàng</th>
-                    <th>Tên yêu cầu</th>
-                    <th>Nội dung</th>
-                    <th>Trạng thái</th>
-                    <th>Loại</th>
-                    <th>Ngày yêu cầu</th>
-                    <th>Xác nhận</th>
-                </tr>
-                <c:forEach var="complaint" items="${complaints}">
-                    <tr>
-                        <td style="color : black">${complaint.customerName}</td>                  
-                        <td>${complaint.title}</td>
-                        <td>${complaint.description}</td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${complaint.status == 0}">Chưa hoàn thành</c:when>
-                                <c:otherwise>Đã hoàn thành</c:otherwise>
-                            </c:choose>
-                        </td>
-                        <td>${complaint.type}</td>
-                        <td><fmt:formatDate value="${complaint.dateResquested}" pattern="dd/MM/yyyy" /></td>
+                    <%@include file = "topbar.jsp" %>
 
-                        <td>
-                            <c:if test="${complaint.status == 0}">
-                                <form action="complaintlist" method="post">
-                                    <input type="hidden" name="requestID" value="${complaint.requestID}" />
-                                    <input type="hidden" name="action" value="accept" />
-                                    <button type="submit" name="status" value="1" class="btn btn-primary">
-                                        Chấp thuận
-                                    </button>
-                                </form>
-                            </c:if>                           
-                            <c:if test="${complaint.status == 1}">
-                                <button disabled class="btn custom-approve-btn rounded-pill">Đã xác nhận</button>
-                            </c:if>
-                        </td>
+                    <!-- End of Topbar -->
 
 
-                    </tr>
-                </c:forEach>
-            </table>
-            <div class="d-flex justify-content-center mt-4">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <!-- Previous page -->
-                        <c:if test="${currentPage > 1}">
-                            <li class="page-item">
-                                <a class="page-link" href="complaintlist?page=${currentPage-1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
 
-                        <!-- Page numbers -->
-                        <c:forEach begin="1" end="${totalPages}" var="i">
-                            <li class="page-item ${currentPage == i ? 'active' : ''}">
-                                <a class="page-link" href="complaintlist?page=${i}&search=${search}&searchField=${searchField}&sort=${sort}">
-                                    ${i}
-                                </a>
-                            </li>
-                        </c:forEach>
+                    <!-- Begin Page Content -->
+                    <div class="container">
 
-                        <!-- Next page -->
-                        <c:if test="${currentPage < totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="complaintlist?page=${currentPage+1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </nav>
+                        <h1>Danh sách các yêu cầu</h1>
+
+
+                        <form id="sortForm" action="complaintlist" method="get">
+                            <input type="hidden" name="page" value="1">
+                            <input type="hidden" name="search" value="${search}">
+                            <input type="hidden" name="searchField" value="${searchField}">
+                            <select name="sort" id="sortSelect">
+                                <option value="date" ${sort == 'date' ? 'selected' : ''}>Ngày</option>
+                                <option value="customerName" ${sort == 'customerName' ? 'selected' : ''}>Tên khách hàng</option>
+                                <option value="type" ${sort == 'type' ? 'selected' : ''}>Loại</option>
+                                <option value="status" ${sort == 'status' ? 'selected' : ''}>Trạng thái</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Sắp xếp</button>
+                        </form>
+
+
+
+                        <table>
+                            <tr>
+                                <th>Tên khách hàng</th>
+                                <th>Tên yêu cầu</th>
+                                <th>Nội dung</th>
+                                <th>Trạng thái</th>
+                                <th>Loại</th>
+                                <th>Ngày yêu cầu</th>
+                                <th>Xác nhận</th>
+                            </tr>
+                            <c:forEach var="complaint" items="${complaints}">
+                                <tr>
+                                    <td style="color : black">${complaint.customerName}</td>                  
+                                    <td>${complaint.title}</td>
+                                    <td>${complaint.description}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${complaint.status == 0}">Chưa hoàn thành</c:when>
+                                            <c:otherwise>Đã hoàn thành</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>${complaint.type}</td>
+                                    <td><fmt:formatDate value="${complaint.dateResquested}" pattern="dd/MM/yyyy" /></td>
+
+                                    <td>
+                                        <c:if test="${complaint.status == 0}">
+                                            <form action="complaintlist" method="post">
+                                                <input type="hidden" name="requestID" value="${complaint.requestID}" />
+                                                <input type="hidden" name="action" value="accept" />
+                                                <button type="submit" name="status" value="1" class="btn btn-primary">
+                                                    Chấp thuận
+                                                </button>
+                                            </form>
+                                        </c:if>                           
+                                        <c:if test="${complaint.status == 1}">
+                                            <button disabled class="btn custom-approve-btn rounded-pill">Đã xác nhận</button>
+                                        </c:if>
+                                    </td>
+
+
+                                </tr>
+                            </c:forEach>
+                        </table>
+                        <div class="d-flex justify-content-center mt-4">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <!-- Previous page -->
+                                    <c:if test="${currentPage > 1}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="complaintlist?page=${currentPage-1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+
+                                    <!-- Page numbers -->
+                                    <c:forEach begin="1" end="${totalPages}" var="i">
+                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                            <a class="page-link" href="complaintlist?page=${i}&search=${search}&searchField=${searchField}&sort=${sort}">
+                                                ${i}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+
+                                    <!-- Next page -->
+                                    <c:if test="${currentPage < totalPages}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="complaintlist?page=${currentPage+1}&search=${search}&searchField=${searchField}&sort=${sort}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 50px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
+                            <form id="rejectForm" action="rejectRequest" method="post">
+                                <input type="hidden" id="rejectRequestID" name="requestID" />
+                                <label for="reason">Lý do từ chối:</label>
+                                <textarea id="reason" name="reason" required></textarea>
+                                <br />
+                                <button type="submit">Xác nhận từ chối</button>
+                                <button type="button" onclick="closeRejectPopup()">Hủy</button>
+                            </form>
+                        </div>
+
+
+
+                        <div style="display: flex; justify-content: space-between;">
+
+                            <a href="managerPage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+
+
+                </div>
+                <!-- End of Main Content -->
+
+
+
             </div>
+            <!-- End of Content Wrapper -->
 
-            <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 50px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-                <form id="rejectForm" action="rejectRequest" method="post">
-                    <input type="hidden" id="rejectRequestID" name="requestID" />
-                    <label for="reason">Lý do từ chối:</label>
-                    <textarea id="reason" name="reason" required></textarea>
-                    <br />
-                    <button type="submit">Xác nhận từ chối</button>
-                    <button type="button" onclick="closeRejectPopup()">Hủy</button>
-                </form>
-            </div>
-
-
-
-            <button>
-                <a href="managerPage">Back to home</a>
-            </button>
         </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%-- Thông báo thành công --%>
+        <% if ("success".equals(request.getParameter("status"))) { %>
+        <script>
+            alert("Thêm thành công!");
+        </script>
+        <% } %>
+
         <script>
             // Gửi form tìm kiếm
             function submitSearchForm() {
@@ -281,14 +351,14 @@
                 document.getElementById('rejectPopup').style.display = 'none';
             }
 
-//                function showApprovePopup(requestID) {
-//                    document.getElementById('approveRequestID').value = requestID;
-//                    document.getElementById('approvePopup').style.display = 'block';
-//                }
-//
-//                function closeApprovePopup() {
-//                    document.getElementById('approvePopup').style.display = 'none';
-//                }
+            //                function showApprovePopup(requestID) {
+            //                    document.getElementById('approveRequestID').value = requestID;
+            //                    document.getElementById('approvePopup').style.display = 'block';
+            //                }
+            //
+            //                function closeApprovePopup() {
+            //                    document.getElementById('approvePopup').style.display = 'none';
+            //                }
 
         </script>
         <!-- Bootstrap core JavaScript-->
@@ -307,7 +377,14 @@
         <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
 
-
     </body>
 
 </html>
+
+
+
+
+
+
+
+

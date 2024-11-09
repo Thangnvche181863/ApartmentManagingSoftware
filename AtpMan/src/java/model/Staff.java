@@ -40,33 +40,33 @@ public class Staff {
         this.status = status;
     }
 
-    // public Staff(int staffID, int roleID, String username, String password,
-    // String name, String email,
-    // String phoneNumber, Date hireDate) {
-    // this.staffID = staffID;
-    // this.roleID = roleID;
-    // this.username = username;
-    // this.password = password;
-    // this.name = name;
-    // this.email = email;
-    // this.phoneNumber = phoneNumber;
-    // this.hireDate = hireDate;
-    // this.status = status;
-    // }
+     public Staff(int staffID, int roleID, String username, String password,
+     String name, String email,
+     String phoneNumber, Date hireDate) {
+    this.staffID = staffID;
+     this.roleID = roleID;
+     this.username = username;
+     this.password = password;
+     this.name = name;
+     this.email = email;
+     this.phoneNumber = phoneNumber;
+     this.hireDate = hireDate;
+     this.status = status;
+     }
 
-    // public Staff(int staffID, int roleID, String username, String password,
-    // String name, String email,
-    // String phoneNumber, Date hireDate, String avatar) {
-    // this.staffID = staffID;
-    // this.roleID = roleID;
-    // this.username = username;
-    // this.password = password;
-    // this.name = name;
-    // this.email = email;
-    // this.phoneNumber = phoneNumber;
-    // this.hireDate = hireDate;
-    // this.avatar = avatar;
-    // }
+     public Staff(int staffID, int roleID, String username, String password,
+     String name, String email,
+     String phoneNumber, Date hireDate, String avatar) {
+     this.staffID = staffID;
+     this.roleID = roleID;
+     this.username = username;
+     this.password = password;
+     this.name = name;
+     this.email = email;
+     this.phoneNumber = phoneNumber;
+     this.hireDate = hireDate;
+     this.avatar = avatar;
+     }
 
     public int getStaffID() {
         return staffID;
