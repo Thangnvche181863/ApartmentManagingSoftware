@@ -6,6 +6,7 @@ package DAO;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.*;
@@ -290,7 +291,7 @@ public class ServiceContractDAO {
         // System.out.println(list);
 //        List<ServiceContract> list = sdao.getAll();
 //        System.out.println(sdao.totalBuildingFinance(10, 2024));
-        System.out.println(sdao.totalBuildingFinance(10, 2024));
+//        System.out.println(sdao.totalBuildingFinance(10, 2024));
 //sdao.deleteServiceContract(1, 1);
 //        for (ServiceContract sc : list) {
 //            if (sc.getServiceId() == 1 && sc.getApartmentId() == 1) {
@@ -300,6 +301,6 @@ public class ServiceContractDAO {
         //
 ////        System.out.println(sdao.serviceContractById(1));
 //        System.out.println(sdao.statisticContract(1).getTotalAmount());
-//        System.out.println(sdao.unregisteredService(1,Date.valueOf(LocalDate.now())));
+        System.out.println(sdao.unregisteredService(1,Date.valueOf(LocalDate.now())));
     }
 }

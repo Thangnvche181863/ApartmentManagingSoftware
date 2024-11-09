@@ -18,7 +18,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>News Manager</title>
+        <title>Quản Lý Tin</title>
 
         <!-- Custom fonts for this template-->
         <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -84,24 +84,7 @@
                     </div>
                 </li>
 
-                <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                       aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-wrench"></i>
-                        <span>Utilities</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Custom Utilities:</h6>
-                            <a class="collapse-item" href="utilities-color.html">Colors</a>
-                            <a class="collapse-item" href="utilities-border.html">Borders</a>
-                            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                            <a class="collapse-item" href="utilities-other.html">Other</a>
-                        </div>
-                    </div>
-                </li>
+
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -111,27 +94,7 @@
                     Addons
                 </div>
 
-                <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-                       aria-controls="collapsePages">
-                        <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
-                    </a>
-                    <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
-                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                            <div class="collapse-divider"></div>
-                            <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item active" href="blank.html">Blank Page</a>
-                        </div>
-                    </div>
-                </li>
+
 
                 <!-- Nav Item - Charts -->
                 <li class="nav-item">
@@ -145,6 +108,25 @@
                     <a class="nav-link" href="tables.html">
                         <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
+                </li>
+                <!-- DuyAnh News -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                       aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>Mục Tin</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Mục lục:</h6>
+                            <a class="collapse-item" href="newsmanage">Quản lý tin</a>
+                            <a class="collapse-item" href="newscategorymanage">Quản lý tập tin</a>
+                            <a class="collapse-item" href="newscommentmanage">Quản lý bình luận</a>
+                            <a class="collapse-item" href="News">Trang tin tức</a>
+                            <a class="collapse-item" href="homepageGuest">Trang chủ cho khách</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Divider -->
@@ -372,7 +354,7 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading -->
-                        <center><h1 class="h3 mb-4 text-gray-800">News Manager</h1></center>  
+                        <center><h1 class="h3 mb-4 text-gray-800">Quản Lý Tin</h1></center>  
                         <center>
                             <c:if test="${not empty message}">
                                 <c:choose>
@@ -407,8 +389,8 @@
                                 </div>
                             </form>
                             <div>
-                                <a href="newscategorymanage" class="btn btn-outline-primary mr-2">NewsCategory Manage</a>
-                                <a href="AddNews" class="btn btn-outline-primary">Add News</a>
+                                <a href="newscategorymanage" class="btn btn-outline-primary mr-2">Quản Lý Mục Tin</a>
+                                <a href="AddNews" class="btn btn-outline-primary">Thêm Tin</a>
                             </div>
 
                         </div>
@@ -416,20 +398,20 @@
                     <!-- /.container-fluid -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">News Table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Bảng Tin</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                       
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Author</th>
-                                            <th>Category</th>
-                                            <th>Post Date</th>
-                                            <th>Actions</th>
+
+                                            <th>Tên</th>
+                                            <th>Mô Tả</th>
+                                            <th>Tác Giả</th>
+                                            <th>Mục Tin</th>
+                                            <th>Thời Gian Đăng</th>
+                                            <th>Tương Tác</th>
 
                                         </tr>
                                     </thead>
@@ -437,17 +419,17 @@
                                     <tbody>
                                         <c:forEach items="${news}" var="newsItem">
                                             <tr>
-                                              
-                                                <td>${newsItem.newsTitle}</td>
-                                                <td>${newsItem.description}</td>
+
+                                                <td width="250">${newsItem.newsTitle}</td>
+                                                <td width="500">${newsItem.description}</td>
                                                 <td>${newsItem.staffName}</td>
                                                 <td><a href="newsmanage?category=${newsItem.newsCategoryID}">${newsItem.newsCategoryName}</a></td>
                                                 <td><fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" /></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a class="btn btn-sm btn-primary" href="NewsDetail?id=${newsItem.newsID}">View</a>
-                                                        <a class="btn btn-sm btn-warning" href="EditNews?id=${newsItem.newsID}">Edit</a>
-                                                        <a class="btn btn-sm btn-danger" href="newsdelete?id=${newsItem.newsID}" onclick="return confirmDelete();">Delete</a>
+                                                        <a class="btn btn-sm btn-primary" href="NewsDetail?id=${newsItem.newsID}">Xem</a>
+                                                        <a class="btn btn-sm btn-warning" href="EditNews?id=${newsItem.newsID}">Sửa</a>
+                                                        <a class="btn btn-sm btn-danger" href="newsdelete?id=${newsItem.newsID}" onclick="return confirmDelete();">Xóa</a>
                                                     </div>
                                                 </td>
                                             </tr>

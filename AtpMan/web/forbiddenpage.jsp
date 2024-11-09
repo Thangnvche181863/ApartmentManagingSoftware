@@ -70,6 +70,11 @@
             <h4>If you believe this is an error, please contact support.</h4>
             <br>
             <a href="${requestScope.goback}" class="button">${requestScope.buttonText}</a>
+            <% if (request.getAttribute("key") != null) { %>
+            <div class="alert alert-danger text-center" role="alert">
+                <%= request.getAttribute("key") %>
+            </div>
+            <% } %>
         </div>
     </body>
 </html>
