@@ -352,7 +352,7 @@
                                                                     ${newsItem.newsTitle}
                                                                 </a></h4>
                                                             <p>${newsItem.description}</p>
-                                                            
+
                                                             <small class="firstsmall"><a class="bg-orange" href="#" title="">${newsItem.newsCategoryName} - </a></small>
                                                             <small>
                                                                 <fmt:formatDate value="${newsItem.postDate}" pattern="EEEE dd/MM/yyyy HH:mm" />
@@ -467,7 +467,13 @@
                                                                         document.getElementById("paysubmit").submit();
                                                                     }
             </script>
-
+            <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+            <df-messenger
+                intent="WELCOME"
+                chat-title="APT MAN"
+                agent-id="6708e5b6-3bfa-416e-adc7-1fea6c2d914a"
+                language-code="en"
+                ></df-messenger>
         </div>
     </body>
 </html>

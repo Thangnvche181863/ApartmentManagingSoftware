@@ -182,7 +182,7 @@ public class CustomerDAO {
             conn = DBContext.getConnection();
             if (conn != null) {
                 String hashedInputPassword = UtilHashPass.EncodePassword(password);
-                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner, status) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO Customer (username, password, name, email, phoneNumber, isOwner, status) VALUES (?, ?, ?, ?, ?, ?,1)";
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
                     ps.setString(1, username);
                     ps.setString(2, hashedInputPassword); // Save plain password, or hash it if needed
@@ -190,7 +190,7 @@ public class CustomerDAO {
                     ps.setString(4, email);
                     ps.setString(5, phoneNumber);
                     ps.setString(6, isOwner); // 1 for Resident, 0 for Owner
-                    ps.setInt(7, status); // 1 for active, 0 for inactive
+//                    ps.setInt(7, status); // 1 for active, 0 for inactive
                     ps.executeUpdate();
                 }
             }
