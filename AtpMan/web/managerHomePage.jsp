@@ -73,7 +73,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Quản lý tòa nhà</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountBuilding}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountBuilding} tòa nhà</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-building fa-2x text-gray-300"></i>
@@ -115,7 +115,7 @@
                                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                         Quản lý dịch vụ
                                                     </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalService}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalService} dịch vụ</div>
                                                 </div>
                                                 <div class="col-auto">
                                                 <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -136,7 +136,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                         Quản lý công việc</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountOfTask}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountOfTask} công việc</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fas fa-tasks fa-2x text-gray-300"></i>
@@ -155,7 +155,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Quản lý nhân viên</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountStaff}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${amountStaff} nhân viên</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -173,7 +173,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                     Quản lý tin tức</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">Ấn đây</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalNews} tin tức</div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-newspaper fa-2x text-gray-300"></i>
@@ -191,7 +191,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Dịch vụ được yêu cầu</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalRequest} yêu cầu</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-question-circle fa-2x text-gray-300"></i>
@@ -202,20 +202,22 @@
                                 </a><!-- comment -->
                             </div>
                             <div class="col-xl-3 col-md-6 mb-4">
-                                <div class="card border-left-dark shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Phản hồi</div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-comment-dots fa-2x text-gray-300"></i>
+                                <a href="/AtpMan/residentmanage" style="text-decoration: none">
+                                    <div class="card border-left-dark shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                        Thông tin cư dân</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${requestScope.totalResident} cư dân</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-question-circle fa-2x text-gray-300"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a><!-- comment -->
                             </div>
                         </div>
 

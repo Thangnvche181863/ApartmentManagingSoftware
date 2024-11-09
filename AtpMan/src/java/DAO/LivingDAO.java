@@ -246,6 +246,7 @@ public class LivingDAO {
         }
         return aptList;
     }
+
     public int insertLiving(int customerID, int apartmentID, LocalDate startDate) {
         String sql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
         Connection conn = null;
@@ -269,9 +270,35 @@ public class LivingDAO {
         return isInserted;
     }
 
+    
+
+//    //QUAN
+//    public int getApartmentIDByLivingID(int livingID) {
+//        Connection conn = null;
+//        try {
+//            conn = DBContext.getConnection();
+//            if (conn != null) {
+//                String sql = "SELECT apartmentID FROM Living WHERE livingID = ?";
+//                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//                    ps.setInt(1, livingID);
+//                    try (ResultSet rs = ps.executeQuery()) {
+//                        if (rs.next()) {
+//                            return rs.getInt("apartmentID");
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            LOGGER.log(Level.SEVERE, "Error finding customer by gmail", e);
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//        return 0;
+//    }
+
     public static void main(String[] args) {
         LivingDAO dao = new LivingDAO();
-         List<String> slist = dao.getAllResidentApartmentLiving(1);
+        List<String> slist = dao.getAllResidentApartmentLiving(1);
         System.out.println(slist);
     }
 }

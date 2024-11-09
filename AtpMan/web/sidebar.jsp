@@ -44,7 +44,7 @@
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="home.jsp">
+            <a class="nav-link" href="/AtpMan/homepageGuest">
                 <i class="fas fa-house-user fa-table"></i>
                 <span>Giao diện khách</span></a>
         </li>
@@ -181,7 +181,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
         <li class="nav-item">
-            <a class="nav-link" href="/AtpMan/home.jsp">
+            <a class="nav-link" href="/AtpMan/homepageGuest">
                 <i class="fas fa-house-user fa-table"></i>
                 <span>Giao diện khách</span></a>
         </li>
@@ -215,7 +215,6 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span>Danh sách yêu cầu</span></a>
         </li>
-
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 

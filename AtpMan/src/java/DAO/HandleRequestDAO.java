@@ -17,7 +17,25 @@ public class HandleRequestDAO {
 
     private static final Logger LOGGER = Logger.getLogger(HandleRequestDAO.class.getName());
 
-    public void createHandleRequest(int requestID, int taskID) {
+    public int createHandleRequest1( int staffID) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO HandleRequest (staffID) VALUES (?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, staffID);
+                ps.executeUpdate();
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new handlerequest", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return -1;
+    }
+
+    public void createHandleRequest2(int requestID, int taskID) {
         Connection conn = null;
         try {
             conn = DBContext.getConnection();
@@ -34,23 +52,4 @@ public class HandleRequestDAO {
             DBContext.closeConnection(conn);
         }
     }
-
-//    public void createHandleRequest(int requestID, int staffID, int taskID) {
-//        Connection conn = null;
-//        try {
-//            conn = DBContext.getConnection();
-//            String sql = "INSERT INTO HandleRequest (requestID, staffID, taskID) VALUES (?, ?, ?)";
-//            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-//                ps.setInt(1, requestID);
-//                ps.setInt(2, staffID);
-//                ps.setInt(3, taskID);
-//                ps.executeUpdate();
-//
-//            }
-//        } catch (SQLException | ClassNotFoundException e) {
-//            LOGGER.log(Level.SEVERE, "Error creating new handlerequest", e);
-//        } finally {
-//            DBContext.closeConnection(conn);
-//        }
-//    }
 }

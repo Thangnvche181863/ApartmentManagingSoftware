@@ -9,6 +9,8 @@ import DAO.BuildingDAO;
 import DAO.CustomerDAO;
 import DAO.InvoiceDAO;
 import DAO.LivingDAO;
+import DAO.NewsDAO;
+import DAO.RequestComplaintDAO;
 import DAO.ServiceDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
@@ -71,6 +73,18 @@ public class ManagerPageController extends HttpServlet {
             ServiceDAO serviceDAO = new ServiceDAO();
             int totalService = serviceDAO.countAllService();
             request.setAttribute("totalService", totalService);
+            
+            NewsDAO newsDAO = new NewsDAO();
+            int totalNews = newsDAO.getTotalNews();
+            request.setAttribute("totalNews", totalNews);
+            
+            RequestComplaintDAO requestComplaintDAO = new RequestComplaintDAO();
+            int totalRequest = requestComplaintDAO.getTotalRequest();
+            request.setAttribute("totalRequest", totalRequest);
+            
+            CustomerDAO customerDAO = new CustomerDAO();
+            int totalResident = customerDAO.countResident();
+            request.setAttribute("totalResident", totalResident);
             
             request.getRequestDispatcher("managerHomePage.jsp").forward(request, response);
         }
