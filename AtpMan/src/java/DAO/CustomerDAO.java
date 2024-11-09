@@ -334,6 +334,79 @@ public class CustomerDAO {
         return null;
     }
 
+    public String getApartmentNumberByCustomerID(int customerID) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                // Sửa lại truy vấn SQL để lấy apartmentNumber theo customerID
+                String sql = """
+                         SELECT a.apartmentNumber
+                         FROM Customer cus
+                         INNER JOIN Living lv ON lv.customerID = cus.customerID
+                         INNER JOIN Apartment a ON a.apartmentID = lv.apartmentID
+                         WHERE cus.customerID = ? AND lv.endDate IS NULL""";
+
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setInt(1, customerID); // Sử dụng customerID làm tham số
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            String apartmentNumber = rs.getString("apartmentNumber");
+                            System.out.println("Query result: Apartment number for customerID " + customerID + " is " + apartmentNumber);
+                            return apartmentNumber;
+                        } else {
+                            System.out.println("No apartment found for customerID " + customerID);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Error getting apartment number for customerID " + customerID);
+            e.printStackTrace(); // In ra thông báo lỗi chi tiết
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return null;
+    }
+
+//    public int getCustomerIDByApartmentNumber(String apartmentNumber) throws SQLException, ClassNotFoundException {
+//        Connection conn = null;
+//        try {
+//            conn = DBContext.getConnection();
+//            if (conn != null) {
+//                String sql = """
+//                         SELECT cus.customerID, a.apartmentNumber
+//                         FROM Task t
+//                         INNER JOIN HandleRequest hr ON hr.taskID = t.taskID
+//                         INNER JOIN RequestComplaint rc ON rc.requestID = hr.requestID
+//                         INNER JOIN Customer cus ON cus.customerID = rc.customerID
+//                         INNER JOIN Living lv ON lv.customerID = cus.customerID
+//                         INNER JOIN Apartment a ON a.apartmentID = lv.apartmentID
+//                         WHERE lv.endDate IS NULL
+//                         AND a.apartmentNumber = ?""";
+//                System.out.println("Executing query: " + sql); // In câu truy vấn
+//
+//                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//                    ps.setString(1, apartmentNumber);
+//                    try (ResultSet rs = ps.executeQuery()) {
+//                        if (rs.next()) {
+//                            int customerID = rs.getInt("customerID");
+//                            System.out.println("Query result: CustomerID for apartment " + apartmentNumber + " is " + customerID);
+//                            return customerID; // Trả về customerID
+//                        } else {
+//                            System.out.println("No customer found for apartment " + apartmentNumber);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SQLException | ClassNotFoundException e) {
+//            System.out.println("Error getting customerID for apartment " + apartmentNumber);
+//            e.printStackTrace(); // In lỗi chi tiết
+//        } finally {
+//            DBContext.closeConnection(conn);
+//        }
+//        return -1; // Trả về -1 nếu không tìm thấy customerID
+//    }
     public Vector<Customer> getAllCustomer() {
         Connection conn = null;
         Vector<Customer> vector = new Vector<>();
@@ -555,14 +628,14 @@ public class CustomerDAO {
     // KhangPM
     /**
      *
-     * @param currentPage     current page for paging
-     * @param rowsPerPage     rows per page
-     * @param buildingId      id of building
+     * @param currentPage current page for paging
+     * @param rowsPerPage rows per page
+     * @param buildingId id of building
      * @param apartmentNumber
-     * @param statusLiving    status in living table. 1 for living (endDate not
-     *                        null) 0 for not living (endDate = null), 2 for both
-     * @param isOwner         1 for owner, 0 for tenant, 2 for both
-     * @param status          1 for active, 0 for inactive
+     * @param statusLiving status in living table. 1 for living (endDate not
+     * null) 0 for not living (endDate = null), 2 for both
+     * @param isOwner 1 for owner, 0 for tenant, 2 for both
+     * @param status 1 for active, 0 for inactive
      * @param searchTermList
      * @return
      */
@@ -1180,8 +1253,8 @@ public class CustomerDAO {
                         customer.getDob() != null ? new java.sql.Date(customer.getDob().getTime()) : null);
                 customerStmt.setDate(5,
                         customer.getRegistrationDate() != null
-                                ? new java.sql.Date(customer.getRegistrationDate().getTime())
-                                : null);
+                        ? new java.sql.Date(customer.getRegistrationDate().getTime())
+                        : null);
 
                 int customerRows = customerStmt.executeUpdate();
                 if (customerRows > 0) {
@@ -1227,9 +1300,6 @@ public class CustomerDAO {
 
         return isAdded;
     }
-
-
-    
 
     public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();

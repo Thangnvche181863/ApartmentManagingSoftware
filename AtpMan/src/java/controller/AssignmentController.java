@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.AssignmentDAO;
+import DAO.HandleRequestDAO;
 import DAO.RoleDAO;
 import DAO.StaffDAO;
 import DAO.TaskDAO;
@@ -121,8 +122,11 @@ public class AssignmentController extends HttpServlet {
 
         if (service.equals("assign")) {
             AssignmentDAO adao = new AssignmentDAO();
+            HandleRequestDAO hrdao = new HandleRequestDAO();
             int staffID = Integer.parseInt(request.getParameter("staffID"));
             int taskID = Integer.parseInt(request.getParameter("taskID"));
+//            int requestID2 = Integer.parseInt(request.getParameter("requestID1"));
+            
             java.sql.Date startTime = new java.sql.Date(System.currentTimeMillis());
 
             // Lấy số ngày từ form (người dùng nhập vào)
@@ -131,7 +135,8 @@ public class AssignmentController extends HttpServlet {
             long endMillis = startTime.getTime() + (long) endDays * 24 * 60 * 60 * 1000;
             java.sql.Date endTime = new java.sql.Date(endMillis);
             String status = "Chua hoan thanh";
-            int n = adao.creatAssignment(staffID, taskID, startTime, endTime,status);
+            int n = adao.creatAssignment(staffID, taskID, startTime, endTime, status);
+            int m = hrdao.createHandleRequest1(staffID);
             String mess = (n > 0) ? "Công việc đã được giao" : "Đã xảy ra lỗi, hãy thử lại!";
             request.getSession().setAttribute("mess", mess);
             response.sendRedirect("assignment");

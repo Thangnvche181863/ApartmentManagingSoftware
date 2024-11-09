@@ -143,34 +143,19 @@
     </head>
     <body id="page-top">
 
-        <!-- Page Wrapper -->
         <div id="wrapper">
 
-            <!-- Sidebar -->
             <%@include file="sidebar.jsp" %>
-            <!-- End of Sidebar -->
-
-            <!-- Content Wrapper -->
 
             <div id="content-wrapper" class="d-flex flex-column">
 
-                <!-- Main Content -->
                 <div id="content">
-
-
-                    <!-- Topbar -->
 
                     <%@include file = "topbar.jsp" %>
 
-                    <!-- End of Topbar -->
-
-
-
-                    <!-- Begin Page Content -->
                     <div class="container">
 
                         <h1>Danh sách các yêu cầu</h1>
-
 
                         <form id="sortForm" action="complaintlist" method="get">
                             <input type="hidden" name="page" value="1">
@@ -184,9 +169,6 @@
                             </select>
                             <button type="submit" class="btn btn-primary">Sắp xếp</button>
                         </form>
-
-
-
                         <table>
                             <tr>
                                 <th>Tên khách hàng</th>
@@ -263,69 +245,21 @@
                             </nav>
                         </div>
 
-                        <div id="rejectPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 50px; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-                            <form id="rejectForm" action="rejectRequest" method="post">
-                                <input type="hidden" id="rejectRequestID" name="requestID" />
-                                <label for="reason">Lý do từ chối:</label>
-                                <textarea id="reason" name="reason" required></textarea>
-                                <br />
-                                <button type="submit">Xác nhận từ chối</button>
-                                <button type="button" onclick="closeRejectPopup()">Hủy</button>
-                            </form>
-                        </div>
-
-
-
                         <div style="display: flex; justify-content: space-between;">
-
-                            <a href="managerPage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
+                            <a href="managerPage" data-mdb-ripple-init class="btn btn-primary btn-user">Trở về</a>
                         </div>
                     </div>
-                    <!-- /.container-fluid -->
-
-
                 </div>
-                <!-- End of Main Content -->
-
-
-
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
-
-        <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
-        <%-- Thông báo thành công --%>
-        <% if ("success".equals(request.getParameter("status"))) { %>
-        <script>
-            alert("Thêm thành công!");
-        </script>
-        <% } %>
+
 
         <script>
             // Gửi form tìm kiếm
@@ -339,26 +273,6 @@
                 document.getElementById('searchInput').name = '';  // Để không gửi giá trị search khi sắp xếp
                 document.getElementById('sortForm').submit();
             }
-
-            // Hiển thị popup từ chối
-            function showRejectPopup(requestID) {
-                document.getElementById('rejectRequestID').value = requestID;
-                document.getElementById('rejectPopup').style.display = 'block';
-            }
-
-            // Đóng popup từ chối
-            function closeRejectPopup() {
-                document.getElementById('rejectPopup').style.display = 'none';
-            }
-
-            //                function showApprovePopup(requestID) {
-            //                    document.getElementById('approveRequestID').value = requestID;
-            //                    document.getElementById('approvePopup').style.display = 'block';
-            //                }
-            //
-            //                function closeApprovePopup() {
-            //                    document.getElementById('approvePopup').style.display = 'none';
-            //                }
 
         </script>
         <!-- Bootstrap core JavaScript-->

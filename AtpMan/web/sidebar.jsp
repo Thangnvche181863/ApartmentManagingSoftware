@@ -120,7 +120,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Tạo tài khoản</h6>
                             <a class="collapse-item" href="createaccount">Người dùng</a>
-                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                            <a class="collapse-item" href="createaccountstaff">Nhân viên</a>
                         </div>
                     </div>
                 </li>
@@ -224,7 +224,11 @@
                 <i class="fas fa-fw fa-table"></i>
                 <span>Yêu cầu</span></a>
         </li>
-
+        <li class="nav-item">
+            <a class="nav-link" href="/AtpMan/customercomplaintlist">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Danh sách yêu cầu</span></a>
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 

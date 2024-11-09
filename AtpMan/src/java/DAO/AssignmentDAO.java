@@ -4,14 +4,8 @@
  */
 package DAO;
 
-import java.sql.*;
-
 import java.sql.Date;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import utils.DBContext;
 import model.Assignment;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,7 +72,51 @@ public class AssignmentDAO {
         }
     }
 
+    public boolean updateStatus(int staffID, int taskID, String status) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "UPDATE Assignment SET status = ? WHERE staffID = ? AND taskID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, status);
+                ps.setInt(2, staffID);
+                ps.setInt(3, taskID);
+                return ps.executeUpdate() > 0;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new assignment", e);
+        } finally {
+            DBContext.closeConnection(conn);
+
+        }
+        return false;
+    }
     // Retrieve all assignments
+
+    public String getStatus(int staffID, int taskID) {
+        Connection conn = null;
+        String status = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT status FROM Assignment WHERE staffID = ? AND taskID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, staffID);
+                ps.setInt(2, taskID);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        status = rs.getString("status");
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new assignment", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return status;
+    }
+    
+
     public List<Assignment> getAll() {
         List<Assignment> list = new ArrayList<>();
         String sql = "SELECT * FROM Assignment";
@@ -181,11 +219,11 @@ public class AssignmentDAO {
 
             if (rowsAffected > 0) {
                 LOGGER.log(Level.INFO, "Successfully deleted assignment with StaffID: {0} and TaskID: {1}",
-                        new Object[] { staffID, taskID });
+                        new Object[]{staffID, taskID});
                 isDeleted = true;
             } else {
                 LOGGER.log(Level.WARNING, "No assignment found to delete with StaffID: {0} and TaskID: {1}",
-                        new Object[] { staffID, taskID });
+                        new Object[]{staffID, taskID});
             }
 
             // Close resources
@@ -225,7 +263,7 @@ public class AssignmentDAO {
                 isUpdated = true;
             } else {
                 LOGGER.log(Level.WARNING, "No assignment found with StaffID: {0} and TaskID: {1}",
-                        new Object[] { assignment.getStaffID(), assignment.getTaskID() });
+                        new Object[]{assignment.getStaffID(), assignment.getTaskID()});
             }
 
             // Close resources

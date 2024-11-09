@@ -129,15 +129,29 @@
                     <th>Tên Task</th>
                     <th>Loại</th>
                     <th>Mô tả</th>
+                    <th>Căn hộ</th><!--  -->
+                    <th>Trạng thái</th>
                 </tr>
+
                 <c:forEach var="task" items="${tasks}">
                     <tr>
                         <td>${task.taskName}</td>
                         <td>${task.taskType}</td>
                         <td>${task.description}</td>
-
+                        <td>${task.apartmentNumber}</td> <!-- Hiển thị apartmentNumber -->
+                        <td>
+                            <form action="staffhome" method="post">
+                                <input type="hidden" name="taskID" value="${task.taskID}" />
+                                <button type="submit" name="status" value="${task.status == 'hoàn thành' ? 'chưa hoàn thành' : 'hoàn thành'}"
+                                        class="btn btn-${task.status == 'hoàn thành' ? 'success' : 'warning'}">
+                                    ${task.status == 'hoàn thành' ? 'Hoàn thành' : 'Xác nhận hoàn thành'}
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
+
+
             </table>
         </div>
         <script src="vendor/jquery/jquery.min.js"></script>
