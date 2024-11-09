@@ -128,7 +128,7 @@
                     <!-- End of Topbar -->
                     <div class="container-fluid">
 
-                        <h2>Danh sách Task được giao</h2>
+                        <h2>Danh sách công việc được giao</h2>
                         <table>
                             <tr>
                                 <th>Tên Task</th>

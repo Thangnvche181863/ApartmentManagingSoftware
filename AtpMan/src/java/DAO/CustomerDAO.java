@@ -587,7 +587,7 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = "select count(*) from Customer c\n"
                 + "inner join Living l on l.customerID = c.customerID\n"
-                + "where l.apartmentID = ?\n";
+                + "where l.apartmentID = ? and l.endDate is null\n";
 
         int count = 0;
         if (searchTermList != null && !searchTermList.isEmpty()) {

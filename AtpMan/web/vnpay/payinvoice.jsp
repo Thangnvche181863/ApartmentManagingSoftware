@@ -132,6 +132,7 @@
                                             </div>
                                             <div class="mt-4 pt-2">
                                                 <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Thanh toán" />
+                                                <a href="/AtpMan/registServiceTenant" style="text-decoration: none;"><button type="button" class="btn btn-warning btn-lg">Quay lại</button></a>
                                             </div>
                                         </form>
                                     </div>
