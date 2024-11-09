@@ -190,7 +190,7 @@
 
 
                                         <div>
-                                            <div class="form-group mb-4" style="width: 15%">
+                                            <div class="form-group mb-4" style="width: 25%">
                                                 <label for="typeBuilding" class="form-label">Tòa nhà:</label>
                                                 <select class="form-select w-100" name="typeBuilding" id="typeBuilding">
                                                     <c:forEach items="${buildings}" var="ls">
