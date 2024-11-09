@@ -70,207 +70,212 @@
     <body>
         <div id="wrapper">
             <%@include file="sidebar.jsp" %>
-            <div class="container py-5 h-100">
-                <div class="row justify-content-center align-items-center h-100">
-                    <div class="col-12 col-lg-9 col-xl-7">
-                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                            <div class="card-body p-4 p-md-5">
-                                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Tạo tài khoản nhân viên</h3>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
+                    <div class=" py-5 h-100">
+                        <div class="row justify-content-center align-items-center h-100">
+                            <div class="col-12 col-lg-9 col-xl-7">
+                                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                                    <div class="card-body p-4 p-md-5">
+                                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Tạo tài khoản nhân viên</h3>
 
-                                <c:if test="${not empty messExist}">
-                                    <div class="alert alert-danger" role="alert">
-                                        ${messExist}
+                                        <c:if test="${not empty messExist}">
+                                            <div class="alert alert-danger" role="alert">
+                                                ${messExist}
+                                            </div>
+                                        </c:if>
+
+                                        <!-- Display success message if account is created successfully -->
+                                        <c:if test="${not empty successCreate}">
+                                            <div class="alert alert-success" role="alert">
+                                                ${successCreate}
+                                            </div>
+                                        </c:if>
+                                        <form action="createaccount" method="post">
+
+                                            <!-- Username và Name -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label" for="username">Tên đăng nhập</label>
+                                                    <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
+                                                    <small class="text-danger" id="usernameError"></small>
+                                                </div>
+
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label" for="name">Họ tên</label>
+                                                    <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
+                                                </div>
+                                            </div>
+
+                                            <!-- Phone Number và Email -->
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                                                    <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
+                                                    <small class="text-danger" id="phoneNumberError"></small>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label" for="email">Email</label>
+                                                    <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
+                                                    <small class="text-danger" id="emailError"></small>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label" for="hireDate">Hire Date</label>
+                                                    <input type="text" id="hireDate" class="form-control form-control-lg" name="hireDate" readonly />
+                                                </div>
+
+                                                <div class="col-md-6 mb-4">
+                                                    <label class="form-label select-label">Role</label>
+                                                    <select class="select form-control-lg" id="roleStaff" name="roleStaff" required>
+                                                        <option value="" disabled selected>Choose a role</option>
+                                                        <c:forEach var="role" items="${roleList}">
+                                                            <option value="${role.roleID}">${role.role_name}</option>
+                                                        </c:forEach>
+                                                    </select>
+
+                                                    <small class="text-danger" id="roleError"></small>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="mt-4 pt-2">
+                                                <div style="display: flex; justify-content: space-between;">
+                                                    <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Tạo tài khoản" />
+                                                    <a href="managePage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
+                                                </div>
+
+                                            </div>
+
+                                        </form>
                                     </div>
-                                </c:if>
-
-                                <!-- Display success message if account is created successfully -->
-                                <c:if test="${not empty successCreate}">
-                                    <div class="alert alert-success" role="alert">
-                                        ${successCreate}
-                                    </div>
-                                </c:if>
-                                <form action="createaccount" method="post">
-
-                                    <!-- Username và Name -->
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="username">Tên đăng nhập</label>
-                                            <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
-                                            <small class="text-danger" id="usernameError"></small>
-                                        </div>
-
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="name">Họ tên</label>
-                                            <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
-                                        </div>
-                                    </div>
-
-                                    <!-- Phone Number và Email -->
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="phoneNumber">Số điện thoại</label>
-                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
-                                            <small class="text-danger" id="phoneNumberError"></small>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="email">Email</label>
-                                            <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
-                                            <small class="text-danger" id="emailError"></small>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="hireDate">Hire Date</label>
-                                            <input type="text" id="hireDate" class="form-control form-control-lg" name="hireDate" readonly />
-                                        </div>
-
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label select-label">Role</label>
-                                            <select class="select form-control-lg" id="roleStaff" name="roleStaff" required>
-                                                <option value="" disabled selected>Choose a role</option>
-                                                <c:forEach var="role" items="${roleList}">
-                                                    <option value="${role.roleID}">${role.role_name}</option>
-                                                </c:forEach>
-                                            </select>
-
-                                            <small class="text-danger" id="roleError"></small>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="mt-4 pt-2">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Tạo tài khoản" />
-                                            <a href="managePage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
-                                        </div>
-
-                                    </div>
-
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <script>
 
-            <script>
+            function formatDate(date) {
+                const day = String(date.getDate()).padStart(2, '0'); // Lấy ngày
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // Lấy tháng
+                const year = date.getFullYear(); // Lấy năm
 
-                function formatDate(date) {
-                    const day = String(date.getDate()).padStart(2, '0'); // Lấy ngày
-                    const month = String(date.getMonth() + 1).padStart(2, '0'); // Lấy tháng
-                    const year = date.getFullYear(); // Lấy năm
+                return `${day}-${month}-${year}`; // Trả về định dạng "Ngày-Tháng-Năm"
+                    }
 
-                    return `${day}-${month}-${year}`; // Trả về định dạng "Ngày-Tháng-Năm"
+                    // Cập nhật giá trị cho input hireDate
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const hireDateInput = document.getElementById('hireDate');
+                        const today = new Date(); // Lấy ngày hiện tại
+                        hireDateInput.value = formatDate(today); // Định dạng và hiển thị
+                    });
+
+                    function validateUsername() {
+                        const username = document.getElementById("username").value;
+                        const usernamePattern = /^[a-zA-Z0-9]{6,16}$/;
+                        const usernameError = document.getElementById('usernameError');
+
+                        if (!usernamePattern.test(username)) {
+                            usernameError.textContent = "Username must be 6-16 characters and only contain letters and numbers.";
+                            usernameError.classList.add('text-danger');
+                            usernameError.classList.remove('text-success');
+                        } else {
+                            usernameError.textContent = "Valid username!";
+                            usernameError.classList.remove('text-danger');
+                            usernameError.classList.add('text-success');
                         }
+                    }
 
-                        // Cập nhật giá trị cho input hireDate
-                        document.addEventListener('DOMContentLoaded', function () {
-                            const hireDateInput = document.getElementById('hireDate');
-                            const today = new Date(); // Lấy ngày hiện tại
-                            hireDateInput.value = formatDate(today); // Định dạng và hiển thị
-                        });
 
-                        function validateUsername() {
-                            const username = document.getElementById("username").value;
-                            const usernamePattern = /^[a-zA-Z0-9]{6,16}$/;
-                            const usernameError = document.getElementById('usernameError');
 
-                            if (!usernamePattern.test(username)) {
-                                usernameError.textContent = "Username must be 6-16 characters and only contain letters and numbers.";
-                                usernameError.classList.add('text-danger');
-                                usernameError.classList.remove('text-success');
-                            } else {
-                                usernameError.textContent = "Valid username!";
-                                usernameError.classList.remove('text-danger');
-                                usernameError.classList.add('text-success');
-                            }
+                    function validateEmail() {
+                        const email = document.getElementById("email").value;
+                        // Updated email pattern to allow general emails (like gmail.com) and .edu.vn
+                        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu)(\.vn)?$/;
+                        const emailError = document.getElementById('emailError');
+
+                        if (!emailPattern.test(email)) {
+                            emailError.textContent = "Please enter a valid email address.";
+                            emailError.classList.add('text-danger');
+                            emailError.classList.remove('text-success');
+                        } else {
+                            emailError.textContent = "Valid email!";
+                            emailError.classList.remove('text-danger');
+                            emailError.classList.add('text-success');
                         }
+                    }
 
 
+                    function validatePhone() {
+                        const phone = document.getElementById("phoneNumber").value;
+                        const phonePattern = /^\d{10}$/;
+                        const phoneError = document.getElementById('phoneNumberError');
 
-                        function validateEmail() {
-                            const email = document.getElementById("email").value;
-                            // Updated email pattern to allow general emails (like gmail.com) and .edu.vn
-                            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|edu)(\.vn)?$/;
-                            const emailError = document.getElementById('emailError');
-
-                            if (!emailPattern.test(email)) {
-                                emailError.textContent = "Please enter a valid email address.";
-                                emailError.classList.add('text-danger');
-                                emailError.classList.remove('text-success');
-                            } else {
-                                emailError.textContent = "Valid email!";
-                                emailError.classList.remove('text-danger');
-                                emailError.classList.add('text-success');
-                            }
+                        if (!phonePattern.test(phone)) {
+                            phoneError.textContent = "Phone number must be exactly 10 digits.";
+                            phoneError.classList.add('text-danger');
+                            phoneError.classList.remove('text-success');
+                        } else {
+                            phoneError.textContent = "Valid phone number!";
+                            phoneError.classList.remove('text-danger');
+                            phoneError.classList.add('text-success');
                         }
+                    }
+                    // Attach the validate functions to the input fields
+                    document.getElementById("username").addEventListener("input", validateUsername);
+                    //            document.getElementById("password").addEventListener("input", validatePassword);
+                    document.getElementById("email").addEventListener("input", validateEmail);
+                    document.getElementById("phoneNumber").addEventListener("input", validatePhone);
+                    //            document.getElementById("age").addEventListener("input", validateAge);
 
 
-                        function validatePhone() {
-                            const phone = document.getElementById("phoneNumber").value;
-                            const phonePattern = /^\d{10}$/;
-                            const phoneError = document.getElementById('phoneNumberError');
+                    function setTodayDate() {
+                        const hireDateInput = document.getElementById("hireDate");
+                        const today = new Date().toISOString().split('T')[0];
+                        hireDateInput.value = today;
+                    }
 
-                            if (!phonePattern.test(phone)) {
-                                phoneError.textContent = "Phone number must be exactly 10 digits.";
-                                phoneError.classList.add('text-danger');
-                                phoneError.classList.remove('text-success');
-                            } else {
-                                phoneError.textContent = "Valid phone number!";
-                                phoneError.classList.remove('text-danger');
-                                phoneError.classList.add('text-success');
-                            }
+                    // Call this function when the page loads
+                    window.onload = setTodayDate;
+
+                    function loadApartments() {
+                        var buildingId = document.getElementById("building").value;
+
+                        if (buildingId !== "") {
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState === 4 && xhr.status === 200) { //404, 400, 500
+                                    // Replace apartment select box options with the response from the server
+                                    document.getElementById("apartment").innerHTML = xhr.responseText;
+                                }
+                            };
+                            xhr.send();
                         }
-                        // Attach the validate functions to the input fields
-                        document.getElementById("username").addEventListener("input", validateUsername);
-                        //            document.getElementById("password").addEventListener("input", validatePassword);
-                        document.getElementById("email").addEventListener("input", validateEmail);
-                        document.getElementById("phoneNumber").addEventListener("input", validatePhone);
-                        //            document.getElementById("age").addEventListener("input", validateAge);
+                    }
 
 
-                        function setTodayDate() {
-                            const hireDateInput = document.getElementById("hireDate");
-                            const today = new Date().toISOString().split('T')[0];
-                            hireDateInput.value = today;
-                        }
+        </script>
 
-                        // Call this function when the page loads
-                        window.onload = setTodayDate;
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                        function loadApartments() {
-                            var buildingId = document.getElementById("building").value;
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                            if (buildingId !== "") {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("GET", "createaccount?buildingId=" + buildingId, true);
-                                xhr.onreadystatechange = function () {
-                                    if (xhr.readyState === 4 && xhr.status === 200) { //404, 400, 500
-                                        // Replace apartment select box options with the response from the server
-                                        document.getElementById("apartment").innerHTML = xhr.responseText;
-                                    }
-                                };
-                                xhr.send();
-                            }
-                        }
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
+        <!-- Page level plugins -->
+        <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-
-            </script>
-
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
-            <!-- Page level plugins -->
-            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-            <!-- Page level custom scripts -->
-            <script src="js/demo/datatables-demo.js"></script>
+        <!-- Page level custom scripts -->
+        <script src="js/demo/datatables-demo.js"></script>
     </body>
 </html>

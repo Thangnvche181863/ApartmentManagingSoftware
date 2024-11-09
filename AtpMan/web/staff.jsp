@@ -119,7 +119,7 @@
                     <!-- Page heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Danh Sách Nhân viên</h1>
-                        <a class="btn btn-primary" href="#">Thêm Nhân viên</a>
+                        <a class="btn btn-primary" href="createaccountstaff">Thêm Nhân viên</a>
                         <button class="btn btn-danger" data-toggle="modal" data-target="#bannedStaffModal">Danh Sách Bị Ban</button>
                     </div>
 
