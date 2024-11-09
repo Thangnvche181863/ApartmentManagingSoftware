@@ -23,6 +23,79 @@ import model.News;
 public class NewsCategoryDAO extends DBContext {
 
     private static final Logger LOGGER = Logger.getLogger(NewsCategoryDAO.class.getName());
+    
+    public boolean updateCategory(int newsCategoryID, String name, String description) {
+    String sql = "UPDATE NewsCategory SET name = ?, description = ? WHERE newsCategoryID = ?";
+    boolean isUpdated = false;
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return false;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setString(1, name);
+        pre.setString(2, description);
+        pre.setInt(3, newsCategoryID);
+
+        int rowsAffected = pre.executeUpdate();
+        if (rowsAffected > 0) {
+            isUpdated = true;
+        }
+
+        // Close resources
+        pre.close();
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error updating news category.", e);
+    }
+
+    return isUpdated;
+}
+
+    
+    public NewsCategory getByID(int id) {
+    NewsCategory category = null;
+    String sql = "SELECT * FROM NewsCategory WHERE newsCategoryID = ?";
+
+    try {
+        // Initialize the connection
+        DBContext.getConnection();
+
+        if (DBContext.connection == null || DBContext.connection.isClosed()) {
+            LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+            return category;
+        }
+
+        PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+        pre.setInt(1, id);
+        ResultSet rs = pre.executeQuery();
+
+        if (rs.next()) {
+            int newsCategoryId = rs.getInt("newsCategoryID");
+            String newsCategoryName = rs.getString("name");
+            String newsCategoryDescription = rs.getString("description");
+
+            category = new NewsCategory(newsCategoryId, newsCategoryName, newsCategoryDescription);
+        }
+
+        // Close resources
+        rs.close();
+        pre.close();
+
+    } catch (SQLException | ClassNotFoundException e) {
+        LOGGER.log(Level.SEVERE, "Error fetching news category by ID.", e);
+    }
+
+    return category;
+}
+
+    
+    
 //get All
 
     public List<NewsCategory> getAll() {

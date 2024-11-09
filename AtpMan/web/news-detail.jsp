@@ -98,23 +98,7 @@
 
         <jsp:include page="header.jsp"></jsp:include>
 
-            <!-- Modal Search Start -->
-            <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-fullscreen">
-                    <div class="modal-content rounded-0">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body d-flex align-items-center bg-primary">
-                            <div class="input-group w-75 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- News Detail Section Start -->
             <div class="container my-5">
@@ -174,6 +158,34 @@
                     <div class="comment-widgets">
                         <c:if test="${not empty comments}">
                             <c:forEach var="comment" items="${comments}">
+                                <!-- Edit Comment Modal -->
+                                <div class="modal fade" id="editCommentModal-${comment.commentID}" tabindex="-1" aria-labelledby="editCommentModalLabel-${comment.commentID}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editCommentModalLabel-${comment.commentID}">Chỉnh sửa bình luận</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="EditComment" method="post">
+                                                <input type="hidden" name="commentID" value="${comment.commentID}">
+                                              
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="editCommentText-${comment.commentID}">Nội dung bình luận:</label>
+
+                                                        <textarea id="commentText" name="commentText" class="form-control" rows="10" >${comment.commentText}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End of Edit Comment Modal -->
+
                                 <div class="d-flex flex-row comment-row m-t-0 mt-3">
                                     <div class="p-2">
                                         <img src="data:image/png;base64,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" alt="user" width="50" class="rounded-circle"> 
@@ -205,15 +217,25 @@
                                                     <c:choose>
                                                         <c:when test="${ comment.customerID == sessionCustomer.customerID}">
                                                             <!-- Buttons for the customer who made the comment -->
-                                                            <button type="button" class="btn btn-cyan btn-sm">Edit</button>
+                                                            <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editCommentModal-${comment.commentID}">Sửa</a>
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();">Report</a>
+                                                               onclick="return confirmReport();">Báo Cáo</a>
 
+                                                        </c:when>
+                                                        <c:when test="${userRole == 'customer'}">
+                                                            <!-- Resident can report comments made by others -->
+
+                                                            <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
                                                         </c:when>
 
                                                     </c:choose>
+
+
+
+
                                                 </c:if>
                                             </c:if>
 
@@ -222,20 +244,20 @@
                                                 <c:if test="${not empty sessionStaff}"> <!-- Check if the user is logged in -->
                                                     <c:choose>
                                                         <c:when test="${sessionStaff.staffID != null && comment.staffID == sessionStaff.staffID}">
-                                                            <!-- Buttons for the customer who made the comment -->
-                                                            <button type="button" class="btn btn-cyan btn-sm">Edit</button>
+                                                            <!-- Buttons for the staff who made the comment -->
+                                                            <a href="#" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editCommentModal-${comment.commentID}">Sửa</a>
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();"  >Report</a>
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
 
                                                         </c:when>
                                                         <c:when test="${userRole == 'staff'}">
                                                             <!-- Staff can delete comments made by others -->
                                                             <a href="CommentDelete?id=${comment.commentID}" class="btn btn-danger btn-sm" 
-                                                               onclick="return confirmDelete();">Delete</a>
+                                                               onclick="return confirmDelete();">Xóa</a>
                                                             <a href="ReportComment?id=${comment.commentID}" class="btn btn-outline-danger btn-sm" 
-                                                               onclick="return confirmReport();"  >Report</a>
+                                                               onclick="return confirmReport();"  >Báo Cáo</a>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:if>  
@@ -248,7 +270,7 @@
                             </c:forEach>
                         </c:if>
                         <c:if test="${empty comments}">
-                            <p class="text-center">No comments available for this news item.</p>
+                            <p class="text-center">Không có bình luận nào.</p>
                         </c:if>
                     </div>
                     <div class="card-body">
@@ -270,12 +292,12 @@
                                 </c:if>
 
                                 <div class="form-group">
-                                    <label for="commentText">Comment Text:</label>
+                                    <label for="commentText">Bình Luận:</label>
                                     <textarea id="commentText" name="commentText" class="form-control" rows="10" ></textarea>
 
                                 </div>
 
-                                <button type="submit" class="btn btn-primary">Submit Comment</button>
+                                <button type="submit" class="btn btn-primary">Đăng</button>
                             </form>
                         </c:if>
                     </div>

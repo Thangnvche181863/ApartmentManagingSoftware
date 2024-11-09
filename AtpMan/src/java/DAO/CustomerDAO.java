@@ -1153,13 +1153,35 @@ public class CustomerDAO {
         return isAdded;
     }
 
+
+    
+
     public static void main(String[] args) {
-        CustomerDAO dao = new CustomerDAO();
-        Customer testCustomer = dao.getAllInformationCustomer("khang123", "123");
-        System.out.println(testCustomer);
+        Customer testCustomer = new Customer();
+        testCustomer.setName("tester");
+        testCustomer.setEmail("asdasd");
+        testCustomer.setPhoneNumber("1234567890");
+        testCustomer.setDob(java.sql.Date.valueOf("1990-01-01"));
+        testCustomer.setRegistrationDate(new java.util.Date());
        
-        String pass = UtilHashPass.EncodePassword("bb588SXf");
-        System.out.println("pass hashed: " +pass);
+
+        int apartmentID = 1;  // Replace with a valid apartment ID from your database
+        java.sql.Date startDate = java.sql.Date.valueOf("2023-01-01");
+        
+
+        // Create an instance of the class containing the addCustomerToApartment method
+        CustomerDAO customerDAO = new CustomerDAO();  // Assuming the method is in CustomerDAO
+
+        // Test addCustomerToApartment
+        boolean isAdded = customerDAO.addCustomerToApartment(testCustomer, apartmentID, startDate);
+
+        // Output the result
+        if (isAdded) {
+            System.out.println("Test Passed: Customer and living records added successfully.");
+            System.out.println("Customer ID: " + testCustomer.getCustomerID());
+        } else {
+            System.out.println("Test Failed: Could not add customer and living records.");
+        }
 
     }
 }

@@ -63,9 +63,7 @@ public class Logout extends HttpServlet {
         
         response.sendRedirect("homepageGuest");
 
-//        HttpSession session = request.getSession();
-//        session.removeAttribute("user");
-//        response.sendRedirect("home");
+
     }
 
     /**
