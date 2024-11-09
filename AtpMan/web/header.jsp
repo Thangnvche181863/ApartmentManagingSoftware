@@ -8,73 +8,73 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <body>
     <style>
-    .search-container {
-        display: inline-block;
-    }
-
-    .search-dropdown {
-        left: calc(64%); /* Shifted ?px to the right */
-        transform: translateX(-50%);
-        top: calc(100% + 5px);
-        z-index: 1000;
-        animation: fadeIn 0.2s ease-in-out;
-        white-space: nowrap;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translate(-50%, -10px);
+        .search-container {
+            display: inline-block;
         }
-        to {
-            opacity: 1;
-            transform: translate(-50%, 0);
+
+        .search-dropdown {
+            left: calc(64%); /* Shifted ?px to the right */
+            transform: translateX(-50%);
+            top: calc(100% + 5px);
+            z-index: 1000;
+            animation: fadeIn 0.2s ease-in-out;
+            white-space: nowrap;
         }
-    }
 
-    /* Adjusted arrow position */
-    .search-dropdown::before {
-        content: '';
-        position: absolute;
-        top: -8px;
-        left: calc(45%); /* Adjusted arrow position to align with button */
-        transform: translateX(-50%);
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        border-bottom: 8px solid white;
-    }
-</style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -10px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
 
-<!-- Add this JavaScript before the closing body tag -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchBtn = document.getElementById('searchBtn');
-        const searchDropdown = document.getElementById('searchDropdown');
-        
-        // Toggle dropdown when clicking search button
-        searchBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            searchDropdown.style.display = searchDropdown.style.display === 'none' ? 'block' : 'none';
-            
-            // Focus the input when opening dropdown
-            if (searchDropdown.style.display === 'block') {
-                searchDropdown.querySelector('input').focus();
-            }
+        /* Adjusted arrow position */
+        .search-dropdown::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: calc(45%); /* Adjusted arrow position to align with button */
+            transform: translateX(-50%);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid white;
+        }
+    </style>
+
+    <!-- Add this JavaScript before the closing body tag -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchBtn = document.getElementById('searchBtn');
+            const searchDropdown = document.getElementById('searchDropdown');
+
+            // Toggle dropdown when clicking search button
+            searchBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                searchDropdown.style.display = searchDropdown.style.display === 'none' ? 'block' : 'none';
+
+                // Focus the input when opening dropdown
+                if (searchDropdown.style.display === 'block') {
+                    searchDropdown.querySelector('input').focus();
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (!searchDropdown.contains(e.target) && e.target !== searchBtn) {
+                    searchDropdown.style.display = 'none';
+                }
+            });
+
+            // Prevent dropdown from closing when clicking inside it
+            searchDropdown.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
         });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchDropdown.contains(e.target) && e.target !== searchBtn) {
-                searchDropdown.style.display = 'none';
-            }
-        });
-        
-        // Prevent dropdown from closing when clicking inside it
-        searchDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    });
-</script>
+    </script>
     <!-- Spinner Start -->
     <div
         id="spinner"
@@ -105,7 +105,7 @@
                         <a href="homepageGuest" class="nav-item nav-link <%= request.getRequestURI().contains("home.jsp") ? "active" : "" %>">Trang Chủ</a>
                         <a href="News" class="nav-item nav-link <%= request.getRequestURI().endsWith("/News") || request.getRequestURI().contains("/News") ? "active" : "" %>">Tin Tức</a>
                         <a href="serviceintro" class="nav-item nav-link <%= request.getRequestURI().contains("serviceintro") ? "active" : "" %>">Dịch Vụ</a>
-                 <!--   dont touch-->
+                        <!--   dont touch-->
                         <button id="searchBtn" class="btn-search btn btn-primary btn-md-square rounded-circle flex-shrink-0">
                             <i class="fas fa-search"></i>
                         </button>
@@ -119,7 +119,7 @@
                                 </div>
                             </form>
                         </div>
-                   <!--    dont touch-->
+                        <!--    dont touch-->
                     </div>
                 </div>
                 <div class="d-none d-xl-flex flex-shrink-0 ps-4">
@@ -142,6 +142,26 @@
                                 <i class="fa-solid fa-user"></i> ${sessionScope.user.name}
                             </a>    
                         </c:if>
+                        <c:if test="${sessionScope.user != null}">
+                            <c:if test="${sessionScope.userRole == 'customer'}">
+                                <a href="/AtpMan/user/userhome" class="btn btn-primary">
+                                    <i class="fa-solid fa-user"></i> Quay lại
+                                </a>
+                            </c:if>
+                            <c:if test="${sessionScope.userRole == 'staff'}">
+                                <c:if test="${sessionScope.user.roleID == 1}">
+                                    <a href="/AtpMan/managerPage" class="btn btn-primary">
+                                        <i class="fa-solid fa-user"></i> Quay lại
+                                    </a>
+                                </c:if>
+                                <c:if test="${sessionScope.user.roleID != 1}">
+                                    <a href="/AtpMan/staffhome" class="btn btn-primary">
+                                        <i class="fa-solid fa-user"></i> Quay lại
+                                    </a>
+                                </c:if>
+                            </c:if>
+
+                        </c:if>
 
                         <c:if test="${sessionScope.user ==null}">
 
@@ -153,7 +173,7 @@
                         <c:if test="${sessionScope.user !=null}">
 
                             <a href="logout" class="btn btn-primary">
-                                <i class="fab fa-slack me-2"></i> Logout
+                                <i class="fab fa-slack me-2"></i> Đăng xuất
                             </a>
                         </c:if>
                     </div>
@@ -163,6 +183,6 @@
                 </div>
             </nav>
         </div>
-        
+
     </div>
     <!-- Navbar & Hero End -->

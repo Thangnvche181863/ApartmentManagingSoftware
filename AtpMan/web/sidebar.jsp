@@ -107,7 +107,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Tạo tài khoản</h6>
                         <a class="collapse-item" href="createaccount">Người dùng</a>
-                        <a class="collapse-item" href="register.html">Nhân viên</a>
+                        <a class="collapse-item" href="createaccountstaff">Nhân viên</a>
                     </div>
                 </div>
             </li>
