@@ -129,10 +129,6 @@
         <servlet-class>controller.DeleteServiceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServiceAddServlet</servlet-name>
-        <servlet-class>controller.ServiceAddServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>controller.ProfileController</servlet-class>
     </servlet>
