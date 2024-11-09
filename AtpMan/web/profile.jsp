@@ -155,13 +155,13 @@
                                             <div class="col-md-12"><label class="labels">Số điện thoại</label><input type="text" name="phoneNumber" class="form-control" placeholder="enter phone number" value="${user.phoneNumber}"></div>
                                             <div class="col-md-12"><label class="labels">Tên đăng nhập</label><input type="text" class="form-control" placeholder="username" value="${user.username}" readonly></div>
                                             <div class="col-md-12"><label class="labels">Mật khẩu</label><input type="text" class="form-control" placeholder="password" value="********" readonly>
-                                                <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> </div>
+                                                <a href="/AtpMan/changepassword" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> </div>
                                             Đổi mật khẩu
                                             </a>
 
 
                                             <div class="col-md-12"><label class="labels">Email </label><input type="text" name="email" class="form-control" placeholder="enter email " value="${user.email}" readonly></div>
-                                            <a href="#" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
+                                            <a href="/AtpMan/changeemail" class="btn btn-link text-primary justify-content-end" style="font-size: 12px; text-decoration: underline;"> 
                                                 Đổi Email
                                             </a>
                                             <div class="col-md-12">
