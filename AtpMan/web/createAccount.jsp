@@ -179,7 +179,7 @@
                                             <div class="mt-4 pt-2">
                                                 <div style="display: flex; justify-content: space-between;">
                                                     <input class="btn btn-primary btn-xs" type="submit" value="Tạo tài khoản" />
-                                                    <a href="managePage" class="btn btn-primary btn-sm" > Trở về</a>
+                                                    <a href="/AtpMan/staff" class="btn btn-primary btn-sm" > Trở về</a>
                                                 </div>
                                             </div>
                                         </form>
