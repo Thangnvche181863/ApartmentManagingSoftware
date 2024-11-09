@@ -145,7 +145,7 @@
                                             <div class="mt-4 pt-2">
                                                 <div style="display: flex; justify-content: space-between;">
                                                     <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Tạo tài khoản" />
-                                                    <a href="managePage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
+                                                    <a href="/AtpMan/staff" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
                                                 </div>
 
                                             </div>
