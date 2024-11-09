@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +64,40 @@ public class OwnershipDAO {
         }
     }
     
+    public List<String> getAllResidentApartmentOwner(int customerId) {
+        Connection connection = null;
+        List<String> aptList = new ArrayList<>();
+        String sql = """
+                     select os.*, a.apartmentNumber, b.name from Ownership os
+                     inner join Customer c on c.customerID = os.customerID
+                     inner join Apartment a on a.apartmentID = os.apartmentID
+                     inner join Building b on b.buildingID = a.buildingID
+                     where c.customerID = ?
+                     order by endDate desc
+                     """;
+        try {
+            connection = DBContext.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, customerId);
+            ResultSet rs = statement.executeQuery();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            while(rs.next()){
+                String apt = rs.getString("apartmentNumber") + "-" + rs.getString("name") + ", thời gian: " 
+                        + (rs.getDate("contractDate") != null ? dateFormat.format(rs.getDate("contractDate")) : "") + "-"
+                        + (rs.getDate("endDate") != null ? dateFormat.format(rs.getDate("endDate")) : "nay");
+                aptList.add(apt);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return aptList;
+    }
+    
     public static void main(String[] args) {
         OwnershipDAO dao = new OwnershipDAO();
         List<Ownership> list = dao.getAllOwner();
-        System.out.println(list.size());
+        
+        List<String> slist = dao.getAllResidentApartmentOwner(1);
+        System.out.println(slist);
     }
 }

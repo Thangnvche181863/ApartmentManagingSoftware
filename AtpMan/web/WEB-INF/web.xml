@@ -339,6 +339,22 @@
         <servlet-name>RegisResidentManageServlet</servlet-name>
         <servlet-class>controller.staff.RegisResidentManageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RegisResidentTableAjax</servlet-name>
+        <servlet-class>controller.staff.RegisResidentTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InActiveResidentManageServlet</servlet-name>
+        <servlet-class>controller.staff.InActiveResidentManageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InActiveResidentTableAjax</servlet-name>
+        <servlet-class>controller.staff.InActiveResidentTableAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResidentInfoAjax</servlet-name>
+        <servlet-class>controller.staff.ResidentInfoAjax</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -618,6 +634,22 @@
     <servlet-mapping>
         <servlet-name>RegisResidentManageServlet</servlet-name>
         <url-pattern>/regisresidentmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisResidentTableAjax</servlet-name>
+        <url-pattern>/regisresidenttableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InActiveResidentManageServlet</servlet-name>
+        <url-pattern>/inactiveresidentmanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InActiveResidentTableAjax</servlet-name>
+        <url-pattern>/inactiveresidenttableajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResidentInfoAjax</servlet-name>
+        <url-pattern>/residentinfoajax</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

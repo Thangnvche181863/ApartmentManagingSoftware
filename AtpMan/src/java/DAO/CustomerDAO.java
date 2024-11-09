@@ -823,7 +823,7 @@ public class CustomerDAO {
                      left join Living lv on lv.customerID = c.customerID
                      left join Apartment a on a.apartmentID = lv.apartmentID
                      left join Building b on b.buildingID = a.buildingID
-                     where c.status = 3""";
+                     where c.status = 0""";
 
         if (buildingId != 0) {
             sql += " and b.buildingID = ? \n";
@@ -888,7 +888,7 @@ public class CustomerDAO {
                      left join Living lv on lv.customerID = c.customerID
                      left join Apartment a on a.apartmentID = lv.apartmentID
                      left join Building b on b.buildingID = a.buildingID
-                     where c.status = 3""";
+                     where c.status = 0""";
 
         if (buildingId != 0) {
             sql += " and b.buildingID = ? \n";
@@ -967,7 +967,7 @@ public class CustomerDAO {
         Connection connection = null;
         String sql = """
                      update Customer
-                     set username = NULL, password = NULL
+                     set username = NULL, password = NULL, email = NULL
                      where customerID = ?
                      """;
         try {

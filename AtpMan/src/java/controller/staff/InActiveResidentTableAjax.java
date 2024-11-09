@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller.staff;
 
 import DAO.CustomerDAO;
@@ -23,19 +24,17 @@ import utils.UserHomeUtil;
  *
  * @author ADMIN
  */
-public class ActiveResidentTableAjax extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class InActiveResidentTableAjax extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -46,8 +45,6 @@ public class ActiveResidentTableAjax extends HttpServlet {
         String buildingId_raw = request.getParameter("selectBuilding");
         String apartmentNumber = request.getParameter("apartmentNumber");
         String residentName = request.getParameter("residentName");
-        String owner = request.getParameter("owner");
-        String tenant = request.getParameter("tenant");
         String currentPage_raw = request.getParameter("currentPage");
         String residentPerPage_raw = request.getParameter("residentPerPage");
 
@@ -69,27 +66,16 @@ public class ActiveResidentTableAjax extends HttpServlet {
         } catch (NumberFormatException e) {
         }
 
-        // set isOwner = 2 in default: get both owner and tenant
-        int isOwner = 2;
-        if ((owner != null && !owner.isBlank() && tenant != null && !tenant.isBlank())
-                || ((owner == null && tenant == null) || (owner.isBlank() && tenant.isBlank()))) {
-            isOwner = 2;
-        } else if ((owner != null || !owner.isBlank()) && (tenant == null || tenant.isBlank())) {
-            isOwner = 1;
-        } else {
-            isOwner = 0;
-        }
-
         List<String> residentNameList = userUtil.stringToList(residentName);
 
-        int totalResident = customerDAO.countActiveResidentForManage(buildingId, apartmentNumber, isOwner, 1, residentNameList);
+        int totalResident = customerDAO.countInActiveResidentForManage(0, apartmentNumber, residentNameList);
         int totalPage = (int) Math.ceil((double) totalResident / residentPerPage);
 
         if (currentPage > totalPage) {
             currentPage = 1;
         }
 
-        List<Customer> customerList = customerDAO.getActiveResidentForManage(currentPage, residentPerPage, buildingId, apartmentNumber, isOwner, 1, residentNameList);
+        List<Customer> customerList = customerDAO.getInActiveResidentForManage(currentPage, residentPerPage, buildingId, apartmentNumber, residentNameList);
 
         Locale locale = Locale.US;
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
@@ -108,7 +94,6 @@ public class ActiveResidentTableAjax extends HttpServlet {
                 + "                                            <th>Căn hộ</th>\n"
                 + "                                            <th>Loại cư dân</th>\n"
                 + "                                            <th>Trạng thái</th>\n"
-                + "                                            <th>Hành động</th>\n"
                 + "                                        </tr>\n"
                 + "                                    </thead>\n"
                 + "                                    <tbody>\n");
@@ -124,19 +109,12 @@ public class ActiveResidentTableAjax extends HttpServlet {
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
                         + "                                                <td>" + (resident.getApartmentNumber() != null ? resident.getApartmentNumber() : "") + "</td>\n"
                         + "                                                <td class=\"" + (resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "") + "\">" + (resident.getIsOwner() == 1 ? "Chủ căn hộ" : "Người ở") + "</td>\n"
-                        + "                                                <td>" + (resident.getApartmentNumber() != null ? "Đang cư trú" : "Không cư trú") + "</td>\n"
-                        + "                                                <td>\n"
-                        + "                                                    <form id=\"removeForm-" + resident.getCustomerID() + "\" action=\"residentmanage\" method=\"post\">\n"
-                        + "                                                        <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
-                        + "                                                        <input type=\"hidden\" name=\"action\" value=\"remove\">\n"
-                        + "                                                    </form>\n"
-                        + "                                                    <input class=\"btn btn-primary\" type=\"submit\" value=\"Thông tin\" onclick=\"handleResidentDetails(" + resident.getCustomerID() + ")\">"
-                        + "                                                    <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleRemove(" + resident.getCustomerID() + ")\">\n"
-                        + "                                                </td>\n"
+                        + "                                                <td>Dừng hoạt động</td>\n"
+                        + "                                                "
                         + "                                            </tr>\n");
             }
         } else {
-            out.println("<tr><td colspan=\"9\">Không có dữ liệu cư dân</td></tr>");
+            out.println("<tr><td colspan=\"8\">Không có dữ liệu cư dân</td></tr>");
         }
         out.println("                                    </table>\n"
                 + "                                    <div class=\"d-flex flex-row-reverse\">\n"
@@ -173,12 +151,11 @@ public class ActiveResidentTableAjax extends HttpServlet {
                 + "                                </div>\n"
                 + "                            </div>"
         );
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -186,13 +163,12 @@ public class ActiveResidentTableAjax extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -200,13 +176,12 @@ public class ActiveResidentTableAjax extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

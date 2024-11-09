@@ -111,6 +111,7 @@ public class PayInvoiceServlet extends HttpServlet {
 
             Discount discount = ddao.getDiscountById(Integer.parseInt(serviceID));
             double getdiscount = 1;
+            int monthService = 1;
             // Kiểm tra giá trị của subscriptionPlan
             if ("1".equals(subscriptionPlan)) {
                 endDate = startDate.plus(1, ChronoUnit.MONTHS);; // Nếu là gói 1 tháng,
@@ -118,9 +119,11 @@ public class PayInvoiceServlet extends HttpServlet {
             } else if ("2".equals(subscriptionPlan)) {
                 endDate = startDate.plus(2, ChronoUnit.MONTHS); // Gói 2 tháng
                 getdiscount = discount.getTwoMonth();
+                monthService = 2;
             } else if ("3".equals(subscriptionPlan)) {
                 endDate = startDate.plus(3, ChronoUnit.MONTHS); // Gói 3 tháng
                 getdiscount = discount.getThreeMonth();
+                monthService = 3;
             }
 
             double amount = Double.parseDouble(amount_raw.replaceAll(",", "").replace(" VND/tháng", ""));
@@ -128,7 +131,8 @@ public class PayInvoiceServlet extends HttpServlet {
 //                amount = Double.parseDouble(amount_raw);
 //            } catch (NumberFormatException e) {
 //            }
-            amount = amount * (1 - (getdiscount / 100.0));
+            
+            amount = amount * (1 - (getdiscount / 100.0)) * monthService;
             System.out.println(amount);
             int amt = (int) amount;
 

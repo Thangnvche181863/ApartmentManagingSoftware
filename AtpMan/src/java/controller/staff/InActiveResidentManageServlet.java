@@ -8,7 +8,6 @@ package controller.staff;
 import DAO.ApartmentDAO;
 import DAO.BuildingDAO;
 import DAO.CustomerDAO;
-import DAO.LivingDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,13 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.*;
+import model.Building;
+import model.Customer;
 
 /**
  *
  * @author ADMIN
  */
-public class ResidentManageServlet extends HttpServlet {
+public class InActiveResidentManageServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class ResidentManageServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ResidentManageServlet</title>");  
+            out.println("<title>Servlet InActiveResidentManageServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ResidentManageServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet InActiveResidentManageServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,27 +60,25 @@ public class ResidentManageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 //        processRequest(request, response);
-        
-        BuildingDAO buildingDAO = new BuildingDAO();
+BuildingDAO buildingDAO = new BuildingDAO();
         CustomerDAO customerDAO = new CustomerDAO();
         ApartmentDAO apartmentDAO = new ApartmentDAO();
-        
+
         List<Building> buildingList = buildingDAO.getAllBuilding();
-        
+
         int currentPage = 1;
         int rowsPerPage = 5;
-        
-        List<Customer> customerList = customerDAO.getActiveResidentForManage(currentPage, rowsPerPage, 0, null, 2, 2, null);
-        int totalResidentSearch = customerDAO.countActiveResidentForManage(0, null, 2, 2, null);
-        
-        int totalPage = (int) Math.ceil((double) totalResidentSearch/rowsPerPage);
-        
+
+        List<Customer> customerList = customerDAO.getInActiveResidentForManage(currentPage, rowsPerPage, 0, null, null);
+        int totalResidentSearch = customerDAO.countInActiveResidentForManage(0, null, null);
+
+        int totalPage = (int) Math.ceil((double) totalResidentSearch / rowsPerPage);
+
         int totalResident = customerDAO.countResident();
         int totalBuilding = buildingDAO.countBuilding();
         int totalApartment = apartmentDAO.countApartment();
         int totalResidentWaitForRegis = customerDAO.countResidentByStatus(3);
-        
-        
+
         request.setAttribute("buildingList", buildingList);
         request.setAttribute("customerList", customerList);
         request.setAttribute("totalResident", totalResident);
@@ -90,7 +88,7 @@ public class ResidentManageServlet extends HttpServlet {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("rowsPerPage", rowsPerPage);
         request.setAttribute("totalPage", totalPage);
-        request.getRequestDispatcher("/staff/residentmanage.jsp").forward(request, response);
+        request.getRequestDispatcher("/staff/inactiveresidentmanage.jsp").forward(request, response);
     } 
 
     /** 
@@ -103,36 +101,7 @@ public class ResidentManageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        processRequest(request, response);
-        CustomerDAO customerDAO = new CustomerDAO();
-        LivingDAO livingDAO = new LivingDAO();
-        
-        String action = request.getParameter("action");
-        String customerId_raw = request.getParameter("customerId");
-        
-        int customerId = 0;
-        try {
-            customerId = Integer.parseInt(customerId_raw);
-        } catch (NumberFormatException e) {
-        }
-        String url = "/AtpMan/residentmanage";
-        int status = 0;
-        if(action.equals("accept")){
-            status = 1;
-            url = "/AtpMan/regisresidentmanage";
-        }else if(action.equals("decline")){
-            status = 0;
-            customerDAO.updateLivingResident(customerId);
-            customerDAO.removeAccount(customerId);
-            url = "/AtpMan/regisresidentmanage";
-        }else if(action.equals("remove")){
-            status = 0;
-            customerDAO.updateLivingResident(customerId);
-            customerDAO.removeAccount(customerId);
-        }
-        
-        customerDAO.updateStatusResident(status, customerId);
-        response.sendRedirect(url);
+        processRequest(request, response);
     }
 
     /** 

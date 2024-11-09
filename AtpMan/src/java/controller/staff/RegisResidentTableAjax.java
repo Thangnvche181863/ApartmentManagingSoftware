@@ -23,7 +23,7 @@ import utils.UserHomeUtil;
  *
  * @author ADMIN
  */
-public class ActiveResidentTableAjax extends HttpServlet {
+public class RegisResidentTableAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,8 +46,6 @@ public class ActiveResidentTableAjax extends HttpServlet {
         String buildingId_raw = request.getParameter("selectBuilding");
         String apartmentNumber = request.getParameter("apartmentNumber");
         String residentName = request.getParameter("residentName");
-        String owner = request.getParameter("owner");
-        String tenant = request.getParameter("tenant");
         String currentPage_raw = request.getParameter("currentPage");
         String residentPerPage_raw = request.getParameter("residentPerPage");
 
@@ -69,27 +67,16 @@ public class ActiveResidentTableAjax extends HttpServlet {
         } catch (NumberFormatException e) {
         }
 
-        // set isOwner = 2 in default: get both owner and tenant
-        int isOwner = 2;
-        if ((owner != null && !owner.isBlank() && tenant != null && !tenant.isBlank())
-                || ((owner == null && tenant == null) || (owner.isBlank() && tenant.isBlank()))) {
-            isOwner = 2;
-        } else if ((owner != null || !owner.isBlank()) && (tenant == null || tenant.isBlank())) {
-            isOwner = 1;
-        } else {
-            isOwner = 0;
-        }
-
         List<String> residentNameList = userUtil.stringToList(residentName);
 
-        int totalResident = customerDAO.countActiveResidentForManage(buildingId, apartmentNumber, isOwner, 1, residentNameList);
-        int totalPage = (int) Math.ceil((double) totalResident / residentPerPage);
+        int totalResidentSearch = customerDAO.countRegistResidentForManage(buildingId, apartmentNumber, residentNameList);
+        int totalPage = (int) Math.ceil((double) totalResidentSearch / residentPerPage);
 
         if (currentPage > totalPage) {
             currentPage = 1;
         }
 
-        List<Customer> customerList = customerDAO.getActiveResidentForManage(currentPage, residentPerPage, buildingId, apartmentNumber, isOwner, 1, residentNameList);
+        List<Customer> customerList = customerDAO.getRegistResidentForManage(currentPage, residentPerPage, buildingId, apartmentNumber, residentNameList);
 
         Locale locale = Locale.US;
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
@@ -124,14 +111,18 @@ public class ActiveResidentTableAjax extends HttpServlet {
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
                         + "                                                <td>" + (resident.getApartmentNumber() != null ? resident.getApartmentNumber() : "") + "</td>\n"
                         + "                                                <td class=\"" + (resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "") + "\">" + (resident.getIsOwner() == 1 ? "Chủ căn hộ" : "Người ở") + "</td>\n"
-                        + "                                                <td>" + (resident.getApartmentNumber() != null ? "Đang cư trú" : "Không cư trú") + "</td>\n"
+                        + "                                                <td>Đang chờ duyệt</td>\n"
                         + "                                                <td>\n"
-                        + "                                                    <form id=\"removeForm-" + resident.getCustomerID() + "\" action=\"residentmanage\" method=\"post\">\n"
-                        + "                                                        <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
-                        + "                                                        <input type=\"hidden\" name=\"action\" value=\"remove\">\n"
-                        + "                                                    </form>\n"
-                        + "                                                    <input class=\"btn btn-primary\" type=\"submit\" value=\"Thông tin\" onclick=\"handleResidentDetails(" + resident.getCustomerID() + ")\">"
-                        + "                                                    <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleRemove(" + resident.getCustomerID() + ")\">\n"
+                        + "                                                    <form id=\"acceptForm-" + resident.getCustomerID() + "\" action=\"residentmanage\" method=\"post\">\n"
+                        + "                                                            <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
+                        + "                                                            <input type=\"hidden\" name=\"action\" value=\"accept\">\n"
+                        + "                                                        </form>\n"
+                        + "                                                        <form id=\"declineForm-" + resident.getCustomerID() + "\" action=\"residentmanage\" method=\"post\">\n"
+                        + "                                                            <input type=\"hidden\" name=\"customerId\" value=\"" + resident.getCustomerID() + "\">\n"
+                        + "                                                            <input type=\"hidden\" name=\"action\" value=\"decline\">\n"
+                        + "                                                        </form>\n"
+                        + "                                                        <input class=\"btn btn-success\" type=\"submit\" value=\"Duyệt\" onclick=\"handleAccept(" + resident.getCustomerID() + ")\">\n"
+                        + "                                                        <input class=\"btn btn-danger\" type=\"submit\" value=\"Xóa\" onclick=\"handleDecline(" + resident.getCustomerID() + ")\">"
                         + "                                                </td>\n"
                         + "                                            </tr>\n");
             }
