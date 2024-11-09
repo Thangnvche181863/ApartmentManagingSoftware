@@ -57,7 +57,6 @@ public class UserLogin extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-          
 
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);

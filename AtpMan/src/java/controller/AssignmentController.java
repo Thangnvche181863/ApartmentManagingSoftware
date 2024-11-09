@@ -113,7 +113,7 @@ public class AssignmentController extends HttpServlet {
             String taskName = request.getParameter("taskName");
             String description = request.getParameter("description");
             String taskType = request.getParameter("taskType");
-            int n = tdao.createTask(taskName, description, taskType);
+            int n = tdao.createTask(taskName, taskType, description);
             String mess = (n > 0) ? "Tạo mới công việc thành công" : "Đã xảy ra lỗi, hãy thử lại!";
             request.getSession().setAttribute("mess", mess); // Sử dụng session
             response.sendRedirect("assignment");

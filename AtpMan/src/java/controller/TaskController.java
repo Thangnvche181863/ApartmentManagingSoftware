@@ -72,13 +72,12 @@ public class TaskController extends HttpServlet {
         List<Assignment> listAssignments = adao.AssignmentPaging(page, recordsPerPage);
         int totalAssignments = adao.count(recordsPerPage);
         int numberCompleteAssignment = adao.getNumberCompleteAssignment();
-        
+
         request.setAttribute("numberCompleteAssignment", numberCompleteAssignment);
-        request.setAttribute("numberUncompleteAssignment", amountOfAssignment-numberCompleteAssignment);
+        request.setAttribute("numberUncompleteAssignment", amountOfAssignment - numberCompleteAssignment);
         // Thiết lập thuộc tính cho request để hiển thị trên JSP
         request.setAttribute("amountOfAssignment", amountOfAssignment);
         request.setAttribute("listAssignments", adao.AssignmentPaging(page, recordsPerPage));
-        System.out.println("++++++" + adao.AssignmentPaging(page, recordsPerPage).toString());
         request.setAttribute("currentPage", page);
         request.setAttribute("recordsPerPage", recordsPerPage);
         request.setAttribute("totalPages", totalAssignments);
@@ -99,7 +98,7 @@ public class TaskController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        AssignmentDAO adao = new AssignmentDAO();
         int page = 1;
         int recordsPerPage = 10;
         //get Staff by taskType
@@ -111,7 +110,7 @@ public class TaskController extends HttpServlet {
         System.out.println("" + search);
         String orderBy = request.getParameter("orderBy");
         String status = (request.getParameter("status") != null) ? (request.getParameter("status")) : "0";
-        
+
         request.setAttribute("selectedStatus", status);
         // Lấy tham số phân trang
         if (request.getParameter("recordsPerPage") != null) {
@@ -130,6 +129,10 @@ public class TaskController extends HttpServlet {
             request.setAttribute("listAssignments", dao.getAssignmentByType(status, search, orderBy, page, recordsPerPage));
         }
 
+        int amountOfAssignment = adao.getAmountOfAssignment();
+        int numberCompleteAssignment = adao.getNumberCompleteAssignment();
+        request.setAttribute("numberCompleteAssignment", numberCompleteAssignment);
+        request.setAttribute("numberUncompleteAssignment", amountOfAssignment - numberCompleteAssignment);
         // Thiết lập thuộc tính cho JSP
         request.setAttribute("search", search);
         request.setAttribute("orderBy", orderBy);
