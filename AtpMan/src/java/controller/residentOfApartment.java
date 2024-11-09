@@ -22,7 +22,6 @@ import model.Living;
  *
  * @author Admin
  */
-@WebServlet(name = "residentOfApartment", urlPatterns = {"/residentofapartment"})
 public class residentOfApartment extends HttpServlet {
 
     /**

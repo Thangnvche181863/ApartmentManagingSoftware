@@ -16,60 +16,61 @@
     </head>
 
     <body id="page-top">
-        <%@include file="sidebar.jsp" %>
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <%@include file="topbar.jsp" %>
-                <form action="building" method="POST" onsubmit="return validateForm()">
-                    <input type="hidden" name="service" value="add">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Thêm tòa nhà bạn quản lý</h4>
-                                        <a href="building">Quay lại</a>
-                                        <% 
-                                        String message = request.getParameter("message"); 
-                                        if (message != null && !message.isEmpty()) {
-                                        %>
-                                        <div class="alert alert-info"><%= message %></div>
-                                        <% 
-                                            } 
-                                        %>
-                                    </div>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
+                    <form action="building" method="POST" onsubmit="return validateForm()">
+                        <input type="hidden" name="service" value="add">
+                        <div class="container rounded bg-white mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-md-12 border-right">
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="text-right">Thêm tòa nhà bạn quản lý</h4>
+                                            <a href="building">Quay lại</a>
+                                            <% 
+                                            String message = request.getParameter("message"); 
+                                            if (message != null && !message.isEmpty()) {
+                                            %>
+                                            <div class="alert alert-info"><%= message %></div>
+                                            <% 
+                                                } 
+                                            %>
+                                        </div>
 
-                                    <div class="row mt-3">
-                                        <div class="col-md-12">
-                                            <label class="labels">Tên tòa</label>
-                                            <input type="text" name="name" class="form-control" placeholder="Tên tòa nhà" required>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label class="labels">Tên tòa</label>
+                                                <input type="text" name="name" class="form-control" placeholder="Tên tòa nhà" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Số tầng</label>
+                                                <input type="number" id="numFloor" name="numFloor" class="form-control" placeholder="Số tầng" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Số phòng</label>
+                                                <input type="number" id="numApartment" name="numApartment" class="form-control" placeholder="Số phòng" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Địa chỉ</label>
+                                                <input type="text" name="address" class="form-control" placeholder="Địa chỉ" required>
+                                            </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Số tầng</label>
-                                            <input type="number" id="numFloor" name="numFloor" class="form-control" placeholder="Số tầng" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Số phòng</label>
-                                            <input type="number" id="numApartment" name="numApartment" class="form-control" placeholder="Số phòng" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Địa chỉ</label>
-                                            <input type="text" name="address" class="form-control" placeholder="Địa chỉ" required>
-                                        </div>
-                                    </div>
 
-                                    <div class="mt-5 text-center">
-                                        <button class="btn btn-primary profile-button" type="submit">Tạo</button>
+                                        <div class="mt-5 text-center">
+                                            <button class="btn btn-primary profile-button" type="submit">Tạo</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div> 
-
+                    </form>
+                </div>
+            </div> 
+        </div>
         <!-- JavaScript validation -->
         <script>
             function validateForm() {

@@ -76,89 +76,90 @@
     </head>
 
     <body id="page-top">
-        <%@include file="sidebar.jsp" %>
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <%@include file="topbar.jsp" %>
-                <form action="addResident" method="POST">
-                    <input type="hidden" name="service" value="create">
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <div class="mb-3">
-                                        <a href="managerPage" class="btn btn-primary">Trở về Trang chủ</a>
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
+                    <form action="addResident" method="POST">
+                        <input type="hidden" name="service" value="create">
+                        <div class="container rounded bg-white mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-md-12 border-right">
+                                    <div class="p-3 py-5">
+                                        <div class="mb-3">
+                                            <a href="managerPage" class="btn btn-primary">Trở về Trang chủ</a>
+                                        </div>
+                                        <h4 class="text-left">Thêm người dân</h4>
+
+                                        <!-- Hiển thị thông báo nếu có -->
+                                        <c:if test="${not empty param.message}">
+                                            <div class="alert alert-info">
+                                                ${param.message}
+                                            </div>
+                                        </c:if>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label>Họ và tên</label>
+                                                <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label>Email</label>
+                                                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label>Số điện thoại</label>
+                                                <input type="tel" name="phoneNumber" class="form-control" placeholder="Số điện thoại" required>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label>Năm sinh</label>
+                                                <input type="date" name="dob" class="form-control" required>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <label>Vai trò</label>
+                                                <select name="isOwner" class="form-control" required>
+                                                    <option value="0">Người ở</option>
+                                                    <option value="1">Người cho thuê</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Dropdown danh sách căn hộ -->
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 mb-4">
+                                                <label for="building" class="col-md-12">Building</label>
+                                                <select class="form-control" name="building" id="building" required onchange="loadApartments()">
+                                                    <option value="" selected>Chọn tòa nhà</option>
+                                                    <c:forEach items="${listBuildings}" var="b">
+                                                        <option value="${b.buildingID}">${b.name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                                <small class="text-danger" id="buildingError"></small>
+                                            </div>
+
+                                            <div class="col-md-6 mb-4">
+                                                <label for="apartment" class="col-md-12">Apartment</label>
+                                                <select class="form-control" name="apartment" id="apartment" required>
+                                                    <option value="" selected>Chọn căn hộ</option>
+                                                </select>
+                                                <small class="text-danger" id="apartmentError"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Tạo</button></div>
                                     </div>
-                                    <h4 class="text-left">Thêm người dân</h4>
-
-                                    <!-- Hiển thị thông báo nếu có -->
-                                    <c:if test="${not empty param.message}">
-                                        <div class="alert alert-info">
-                                            ${param.message}
-                                        </div>
-                                    </c:if>
-
-                                    <div class="row mt-3">
-                                        <div class="col-md-12">
-                                            <label>Họ và tên</label>
-                                            <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <label>Email</label>
-                                            <input type="email" name="email" class="form-control" placeholder="Email" required>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <label>Số điện thoại</label>
-                                            <input type="tel" name="phoneNumber" class="form-control" placeholder="Số điện thoại" required>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <label>Năm sinh</label>
-                                            <input type="date" name="dob" class="form-control" required>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            <label>Vai trò</label>
-                                            <select name="isOwner" class="form-control" required>
-                                                <option value="1">Người ở</option>
-                                                <option value="2">Người cho thuê</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <!-- Dropdown danh sách căn hộ -->
-                                    <div class="row mt-3">
-                                        <div class="col-md-6 mb-4">
-                                            <label for="building" class="col-md-12">Building</label>
-                                            <select class="form-control" name="building" id="building" required onchange="loadApartments()">
-                                                <option value="" selected>Chọn tòa nhà</option>
-                                                <c:forEach items="${listBuildings}" var="b">
-                                                    <option value="${b.buildingID}">${b.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <small class="text-danger" id="buildingError"></small>
-                                        </div>
-
-                                        <div class="col-md-6 mb-4">
-                                            <label for="apartment" class="col-md-12">Apartment</label>
-                                            <select class="form-control" name="apartment" id="apartment" required>
-                                                <option value="" selected>Chọn căn hộ</option>
-                                            </select>
-                                            <small class="text-danger" id="apartmentError"></small>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Tạo</button></div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-
         <!-- Scripts -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

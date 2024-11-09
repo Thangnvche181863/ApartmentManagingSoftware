@@ -118,7 +118,6 @@ public class addResidentController extends HttpServlet {
         String isOwner = request.getParameter("isOwner");
 
         int apartmentID = Integer.parseInt(request.getParameter("apartment"));
-        System.out.println("++++++++" + apartmentID);
         String message;
         try {
             // Thêm người ở

@@ -50,75 +50,76 @@
     </script>
 
     <body id="page-top">
-        <%@include file="sidebar.jsp" %>
+        <div id="wrapper">
+            <%@include file="sidebar.jsp" %>
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <%@include file="topbar.jsp" %>
-                <form action="addApartment" method="POST" onsubmit="return validateForm()">
-                    <input type="hidden" name="service" value="add">
-                    <input type="hidden" name="buildingID" value="${buildingID}">
-                    
-                    <div class="container rounded bg-white mt-5 mb-5">
-                        <div class="row">
-                            <div class="col-md-12 border-right">
-                                <div class="p-3 py-5">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h4 class="text-right">Thêm căn hộ mới</h4>
-                                        <% 
-                                            String buildingID = request.getParameter("buildingID");
-                                            // Sử dụng buildingID trong trang JSP
-                                        %>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <%@include file="topbar.jsp" %>
+                    <form action="addApartment" method="POST" onsubmit="return validateForm()">
+                        <input type="hidden" name="service" value="add">
+                        <input type="hidden" name="buildingID" value="${buildingID}">
 
-                                        <a href="apartment?buildingID=<%=buildingID%>">Quay lại</a>
-                                        <% 
-                                        String message = request.getParameter("message"); 
-                                        if (message != null && !message.isEmpty()) {
-                                        %>
-                                        <div class="alert alert-info"><%= message %></div>
-                                        <% 
-                                            } 
-                                        %>
-                                    </div>
+                        <div class="container rounded bg-white mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-md-12 border-right">
+                                    <div class="p-3 py-5">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h4 class="text-right">Thêm căn hộ mới</h4>
+                                            <% 
+                                                String buildingID = request.getParameter("buildingID");
+                                                // Sử dụng buildingID trong trang JSP
+                                            %>
 
-                                    <div class="row mt-3">
-                                        <div class="col-md-12">
-                                            <label class="labels">Số căn hộ</label>
-                                            <input type="text" name="apartmentNumber" class="form-control" placeholder="Số căn hộ" required>
+                                            <a href="apartment?buildingID=<%=buildingID%>">Quay lại</a>
+                                            <% 
+                                            String message = request.getParameter("message"); 
+                                            if (message != null && !message.isEmpty()) {
+                                            %>
+                                            <div class="alert alert-info"><%= message %></div>
+                                            <% 
+                                                } 
+                                            %>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Loại căn hộ</label>
-                                            <input type="text" name="apartmentType" class="form-control" placeholder="Loại căn hộ" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Giá</label>
-                                            <input type="number" name="price" step="0.01" class="form-control" placeholder="Giá căn hộ" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Phí bảo trì</label>
-                                            <input type="number" name="maintenanceFee" step="0.01" class="form-control" placeholder="Phí bảo trì" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Tầng</label>
-                                            <input type="number" id="floor" name="floor" class="form-control" placeholder="Tầng" required>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="labels">Diện tích</label>
-                                            <input type="number" id="area" name="area" class="form-control" placeholder="Diện tích (m²)" required>
-                                        </div>
-                                    </div>
 
-                                    <div class="mt-5 text-center">
-                                        <button class="btn btn-primary profile-button" type="submit">Thêm căn hộ</button>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label class="labels">Số căn hộ</label>
+                                                <input type="text" name="apartmentNumber" class="form-control" placeholder="Số căn hộ" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Loại căn hộ</label>
+                                                <input type="text" name="apartmentType" class="form-control" placeholder="Loại căn hộ" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Giá</label>
+                                                <input type="number" name="price" step="0.01" class="form-control" placeholder="Giá căn hộ" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Phí bảo trì</label>
+                                                <input type="number" name="maintenanceFee" step="0.01" class="form-control" placeholder="Phí bảo trì" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Tầng</label>
+                                                <input type="number" id="floor" name="floor" class="form-control" placeholder="Tầng" required>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Diện tích</label>
+                                                <input type="number" id="area" name="area" class="form-control" placeholder="Diện tích (m²)" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-5 text-center">
+                                            <button class="btn btn-primary profile-button" type="submit">Thêm căn hộ</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div> 
-
+                    </form>
+                </div>
+            </div> 
+        </div>
         <!-- JavaScript validation -->
         <script>
             function validateForm() {

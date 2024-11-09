@@ -57,6 +57,22 @@ public class ServiceDAO {
         }
         return list;
     }
+    public int  countAllService() {
+        int count = 0;
+        try {
+
+            String sql = "Select count(*) from Service";
+            connection = DBContext.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return count;
+    }
 
     public Service findById(int id) {
         List<Service> list = getAll();
