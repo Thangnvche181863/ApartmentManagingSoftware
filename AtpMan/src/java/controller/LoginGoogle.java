@@ -45,7 +45,7 @@ public class LoginGoogle extends HttpServlet {
         request.getSession().setAttribute("user", customer);
         //Logger.getLogger(LoginGoogle.class.getName()).log(Level.SEVERE, customer.toString());
         request.getSession().setAttribute("role", 1);
-        response.sendRedirect("home");
+        response.sendRedirect("/AtpMan/user/userhome");
     }
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
