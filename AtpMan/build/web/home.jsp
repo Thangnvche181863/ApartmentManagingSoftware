@@ -172,14 +172,14 @@
         <div class="container-fluid feature bg-light py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Our Features</h4>
-                    <h1 class="display-8 mb-4">Providing comprehensive solutions</h1>
-                    <p class="mb-0">Free for residents. No complicated installation required. Optimized to be user-friendly for all users. Fast, superior information transmission capabilities, Easy community connection.
+                    <h4 class="text-primary">Tính năng của chúng tôi</h4>
+                    <h1 class="display-8 mb-4">Cung cấp những giải pháp toàn diện</h1>
+                    <p class="mb-0">Hoàn toàn miễn phí cho cư dân. Không cần phải tải bất cứ thứ gì. Được tối ưu để thân thiện nhất với người dùng. Nhanh, cung cấp thông tin quan trọng, dễ dàng kết nối.
                     </p>
                 </div>
                 <!-- feature for management -->
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h1 class="display-8 mb-4">For management</h1>
+                    <h1 class="display-8 mb-4">Tính Năng Của Quản Lý</h1>
                 </div>
                 <div class="row g-4">
                     <c:forEach var="mana" items="${management}" varStatus="status">
@@ -193,7 +193,7 @@
                                     <p class="mb-4">${mana.description}</p>
                                 </div>
                                 <div class="mt-auto">
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${mana.newsID}">Learn More</a>
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${mana.newsID}">Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                 <br>
                 <!-- feature for residents -->
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h1 class="display-8 mb-4">For residents</h1>
+                    <h1 class="display-8 mb-4">Tính Năng Của Cư Dân</h1>
                 </div>
                 <div class="row g-4">
                     <c:forEach var="res" items="${resident}" varStatus="status">
@@ -216,7 +216,7 @@
                                     <p class="mb-4">${res.description}</p>
                                 </div>
                                 <div class="mt-auto">
-                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${res.newsID}">Learn More</a>
+                                    <a class="btn btn-primary rounded-pill py-2 px-4" href="NewsDetail?id=${res.newsID}">Thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -236,8 +236,8 @@
         <div class="container-fluid team pb-5">
             <div class="container pb-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Our Team</h4>
-                    <h1 class="display-4 mb-4">Meet Our Expert Team Members</h1>
+                    <h4 class="text-primary">Nhóm của chúng tôi</h4>
+                    <h1 class="display-4 mb-4">Những thành viên chuyên nghiệp của nhóm.</h1>
                     <p class="mb-0"></p>
                 </div>
                 <div class="row g-4">
@@ -291,7 +291,7 @@
                                         </div>
                                         <a href="NewsDetail?id=${newsItem.newsID}" class="h4 d-inline-block mb-3">${newsItem.newsTitle}</a>
                                         <p class="mb-3">${newsItem.description}</p>
-                                        <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Read More <i class="fa fa-arrow-right"></i></a>
+                                        <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Đọc Thêm <i class="fa fa-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>

@@ -37,6 +37,11 @@
         <url-pattern>/newscategorymanage</url-pattern>
         <url-pattern>/NewsCategoryDelete</url-pattern>
         <url-pattern>/AddNewsCategory</url-pattern>
+        <url-pattern>/newscommentmanage</url-pattern>
+        <url-pattern>/CommentDelete</url-pattern>
+        <url-pattern>/newscategoryadd.jsp</url-pattern>
+        <url-pattern>/CommentDelete</url-pattern>
+        <url-pattern>/EditNewsCategory</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AjaxFilter</filter-name>
@@ -139,10 +144,6 @@
         <servlet-name>UserhomeNewsServlet</servlet-name>
         <servlet-class>controller.user.UserhomeNewsServlet</servlet-class>
     </servlet>
-    <!--    <servlet>
-        <servlet-name>Home</servlet-name>
-        <servlet-class>controller.guest.Home</servlet-class>
-    </servlet>-->
     <servlet>
         <servlet-name>UserApartmentInfoServlet</servlet-name>
         <servlet-class>controller.user.UserApartmentInfoServlet</servlet-class>
@@ -354,6 +355,14 @@
     <servlet>
         <servlet-name>ResidentInfoAjax</servlet-name>
         <servlet-class>controller.staff.ResidentInfoAjax</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditNewsCategory</servlet-name>
+        <servlet-class>controller.staff.EditNewsCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditComment</servlet-name>
+        <servlet-class>controller.EditComment</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
@@ -650,6 +659,14 @@
     <servlet-mapping>
         <servlet-name>ResidentInfoAjax</servlet-name>
         <url-pattern>/residentinfoajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditNewsCategory</servlet-name>
+        <url-pattern>/EditNewsCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditComment</servlet-name>
+        <url-pattern>/EditComment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

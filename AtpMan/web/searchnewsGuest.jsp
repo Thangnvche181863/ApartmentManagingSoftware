@@ -125,7 +125,7 @@
             <div class="container-fluid blog py-5">
                 <div class="container py-5">
                     <div class="row g-4 justify-content-center">
-                        <h1>Search Results</h1>
+                        <h1>Kết Quả Tìm Kiếm</h1>
                     <c:if test="${not empty message}">
                         <p>${message}</p> 
                     </c:if>
@@ -145,7 +145,7 @@
                                     </div>
                                     <a href="NewsDetail?id=${newsItem.newsID}" class="h4 d-inline-block mb-3">${newsItem.newsTitle}</a>
                                     <p class="mb-3">${newsItem.description}</p>
-                                    <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Read More <i class="fa fa-arrow-right"></i></a>
+                                    <a href="NewsDetail?id=${newsItem.newsID}" class="btn p-0 mt-auto">Đọc Thêm <i class="fa fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>

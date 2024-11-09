@@ -27,12 +27,24 @@ public class UserLogin extends HttpServlet {
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false); // Get existing session, if any
+        if (session != null) {
+            session.invalidate(); // Clear the session
+        }
+        
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+             HttpSession session = request.getSession(false);
+            if (session != null) {
+                session.invalidate();
+            }
+            
+            session = request.getSession(true);
+            
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
             StaffDAO staffDAO = WebManager.getInstance().staffDAO;
 
@@ -45,7 +57,7 @@ public class UserLogin extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            HttpSession session = request.getSession();
+          
 
             if ("2".equals(userType)) { // Resident
                 Customer customer = customerDAO.getAllInformationCustomer(username, password);
