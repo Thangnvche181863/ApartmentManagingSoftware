@@ -9,6 +9,7 @@ package DAO;
  * @author WuanTun
  */
 import utils.DBContext;
+import java.sql.Date;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Vector;
@@ -224,6 +225,19 @@ public class CustomerDAO {
         return customerID;
     }
 
+    public int getLatestCustomerID() throws SQLException, ClassNotFoundException {
+        int latestCustomerID = -1;  // Mặc định là -1 nếu không tìm thấy
+        String sql = "SELECT TOP 1 customerID FROM Customer ORDER BY customerID DESC";  // Lấy customerID mới nhất (sắp xếp giảm dần)
+
+        try (Connection conn = DBContext.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                latestCustomerID = rs.getInt("customerID");
+            }
+        }
+        return latestCustomerID;
+    }
+
     // QUAN
     public String getPasswordByID(int customerID) {
         Connection conn = null;
@@ -349,7 +363,7 @@ public class CustomerDAO {
     public int getAmountOfCustomer() {
         CustomerDAO dao = new CustomerDAO();
         Vector<Customer> vector = dao.getAllCustomer();
-        
+
         return vector.size();
     }
 
@@ -442,6 +456,54 @@ public class CustomerDAO {
             DBContext.closeConnection(connection);
         }
         return list;
+    }
+//Nghia
+
+    public void addResident(String name, String email, String phoneNumber, String dob, Date registrationDate, String isOwner) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                String sql = "INSERT INTO Customer (name, email, phoneNumber, dob, registrationDate, isOwner, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, name);
+                    ps.setString(2, email); // Save plain password, or hash it if needed
+                    ps.setString(3, phoneNumber);
+                    ps.setString(4, dob);
+                    ps.setDate(5, registrationDate);
+                    ps.setString(6, isOwner); // 1 for Resident, 0 for Owner
+                    ps.setInt(7, 1); // 1 for Resident, 0 for Owner
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new customer", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+    }
+
+    public int updateCustomerInfo(String name, String phoneNumber, String cusImg, int customerID) {
+        int n = 0;
+        String sql = "UPDATE Customer SET name = ?, phoneNumber = ?, cusImg = ? WHERE customerID = ?;";
+
+        // Sử dụng try-with-resources để đảm bảo kết nối và preparedStatement được đóng tự động
+        try (Connection conn = DBContext.getConnection(); PreparedStatement pre = conn.prepareStatement(sql)) {
+
+            // Thiết lập các giá trị cho câu lệnh SQL
+            pre.setString(1, name);
+            pre.setString(2, phoneNumber);
+            pre.setString(3, cusImg);
+            pre.setInt(4, customerID);
+
+            // Thực thi câu lệnh SQL và trả về số dòng được cập nhật
+            n = pre.executeUpdate();
+
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        return n; // Trả về số dòng được cập nhật (0 nếu không có dòng nào)
     }
 
     // KhangPM

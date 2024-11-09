@@ -14,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Vector;
 import model.Apartment;
@@ -39,22 +41,23 @@ public class ApartmentController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           int buildingID = Integer.parseInt(request.getParameter("buildingID"));
-           ApartmentDAO dao = new ApartmentDAO();
-           Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
-           
-           //get list amount Of unpaid Invoice
-           InvoiceDAO invoicedao = new InvoiceDAO();
-           List<Integer> listInvoice = invoicedao.getNumOfUnpaidInvoice(buildingID);
-           
-           LivingDAO livingdao = new LivingDAO();
-           List<Integer> list = livingdao.getAmountOfResidentOfApartment(buildingID);
-           
-           
-           request.setAttribute("listInvoice", listInvoice);
-           request.setAttribute("list", list);
-           request.setAttribute("listApartment", vector);
-           request.getRequestDispatcher("apartment.jsp").forward(request, response);
+            int buildingID = Integer.parseInt(request.getParameter("buildingID"));
+            
+            ApartmentDAO dao = new ApartmentDAO();
+            Vector<Apartment> vector = dao.getAllApartmentByID(buildingID);
+
+            //get list amount Of unpaid Invoice
+            InvoiceDAO invoicedao = new InvoiceDAO();
+            List<Integer> listInvoice = invoicedao.getNumOfUnpaidInvoice(buildingID);
+
+            LivingDAO livingdao = new LivingDAO();
+            List<Integer> list = livingdao.getAmountOfResidentOfApartment(buildingID);
+
+            
+            request.setAttribute("list", list);
+            request.setAttribute("listApartment", vector);
+            request.setAttribute("buildingID", buildingID);
+            request.getRequestDispatcher("apartment.jsp").forward(request, response);
         }
     }
 
@@ -67,11 +70,10 @@ public class ApartmentController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -85,7 +87,40 @@ public class ApartmentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String service = request.getParameter("service");
+        if (service.equals("viewedit")) {
+            int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
+            ApartmentDAO dao = new ApartmentDAO();
+            Apartment apartment = dao.getApartmentByID(apartmentID);
+            String buildingID =request.getParameter("buildingID");
+            request.setAttribute("buildingID", buildingID);
+
+            request.setAttribute("apartmentID", apartmentID);
+            request.setAttribute("apartment", apartment);  // Gửi thông tin căn hộ vào JSP
+            request.getRequestDispatcher("editApartment.jsp").forward(request, response);
+        }
+        if (service.equals("edit")) {
+            int apartmentID = Integer.parseInt(request.getParameter("apartmentID"));
+            System.out.println("+++" + apartmentID);
+            String apartmentNumber = request.getParameter("apartmentNumber");
+            String apartmentType = request.getParameter("apartmentType");
+            BigDecimal price = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
+            BigDecimal maintenanceFee = BigDecimal.valueOf(Double.parseDouble(request.getParameter("maintenanceFee")));
+            int floor = Integer.parseInt(request.getParameter("floor"));
+            int area = Integer.parseInt(request.getParameter("area"));
+            ApartmentDAO dao = new ApartmentDAO();
+            boolean success = dao.editApartment(apartmentID, apartmentNumber, apartmentType, price, maintenanceFee, floor, area);
+            if (success) {
+                System.out.println("Bú");
+            } else {
+                System.out.println("Cúc");
+            }
+        String buildingID = request.getParameter("buildingID");
+            request.setAttribute("buildingID", buildingID);
+
+            response.sendRedirect("apartment?buildingID=" + buildingID);
+        }
+
     }
 
     /**

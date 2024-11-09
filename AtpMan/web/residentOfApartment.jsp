@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+    <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
     <head>
 
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
@@ -42,9 +44,7 @@
 
                         <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <h1 class="h3 mb-0 text-gray-800">Trang chủ</h1>
                         </div>
 
                         <!-- Content Row -->
@@ -65,65 +65,44 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         ID: ${o.livingID}</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Name: ${nameList.get(pageScope.countName)} </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Age: ${ageList.get(pageScope.countAge)}</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Apartment: ${o.apartmentID}</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Start: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">End: ${o.endDate}</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-user fa-2x text-gray-400"></i>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Tên: ${nameList.get(pageScope.countName)} </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Ngày sinh: ${ageList.get(pageScope.countAge)}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Căn hộ: ${o.apartmentID}</div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Ngày thuê: <fmt:formatDate value="${o.startDate}" pattern="dd/MM/YYYY"></fmt:formatDate> </div>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <i class="fas fa-user fa-2x text-gray-400"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 <c:set value="${countName + 1}" var="countName"></c:set>
                                 <c:set value="${countAge + 1}" var="countAge"></c:set>
                             </c:forEach>
-                        </div>
-
-                        <!-- Logout Modal-->
-                        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">�</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-primary" href="login.html">Logout</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="js/sb-admin-2.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="js/demo/chart-area-demo.js"></script>
-        <script src="js/demo/chart-pie-demo.js"></script>
-
-    </body>
+</body>
 
 </html>

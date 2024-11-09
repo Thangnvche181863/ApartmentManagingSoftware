@@ -12,11 +12,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/AtpMan/managerPage">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <i class="fas fa-building"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">WELCOME <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">APT MAN</div>
         </a>
 
         <!-- Divider -->
@@ -88,30 +88,46 @@
         </li>
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="servicelist">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Danh Sách Dịch Vụ</span></a>
         </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
+                       aria-expanded="true" aria-controls="collapsePages">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Chuyển tiếp</span>
+                    </a>
+                    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Quản lý</h6>
+                            <a class="collapse-item" href="#"></a>
+                            <a class="collapse-item" href="building">Tòa nhà</a>
+                            <a class="collapse-item" href="assignment">Công việc</a>
+                            <a class="collapse-item" href="staff">Nhân viên</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCreateAccount"
+                       aria-expanded="true" aria-controls="collapseCreateAccount">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Tạo tài khoản</span>
+                    </a>
+                    <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Tạo tài khoản</h6>
+                            <a class="collapse-item" href="createaccount">Người dùng</a>
+                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                        </div>
+                    </div>
+                </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCreateAccount"
-               aria-expanded="true" aria-controls="collapseCreateAccount">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Tạo tài khoản</span>
-            </a>
-            <div id="collapseCreateAccount" class="collapse" aria-labelledby="headingCreateAccount" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Tạo tài khoản</h6>
-                    <a class="collapse-item" href="createaccount">Người dùng</a>
-                    <a class="collapse-item" href="register.html">Nhân viên</a>
-                </div>
-            </div>
-        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNews"
@@ -137,12 +153,10 @@
                 <i class="fas fa-fw fa-users"></i>
                 <span>Quản lý cư dân</span></a>
         </li>
-
-        <!-- Nav Item - Tables -->
         <li class="nav-item">
-            <a class="nav-link" href="managerPage">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Tables</span></a>
+            <a class="nav-link" href="/AtpMan/addResident">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Thêm cư dân</span></a>
         </li>
 
         <!-- Divider -->

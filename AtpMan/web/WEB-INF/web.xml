@@ -364,6 +364,18 @@
         <servlet-name>EditComment</servlet-name>
         <servlet-class>controller.EditComment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addResidentController</servlet-name>
+        <servlet-class>controller.addResidentController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addApartment</servlet-name>
+        <servlet-class>controller.staff.addApartment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResidentOfApartment</servlet-name>
+        <servlet-class>controller.residentOfApartment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserLogin</servlet-name>
         <url-pattern>/userlogin</url-pattern>
@@ -667,6 +679,18 @@
     <servlet-mapping>
         <servlet-name>EditComment</servlet-name>
         <url-pattern>/EditComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addResidentController</servlet-name>
+        <url-pattern>/addResident</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addApartment</servlet-name>
+        <url-pattern>/addApartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResidentOfApartment</servlet-name>
+        <url-pattern>/residentofapartment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

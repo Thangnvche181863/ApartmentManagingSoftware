@@ -79,9 +79,9 @@ public class LivingDAO {
         return list;
     }
 
-    public List<Integer> getAgeOfResident(int apartmentID) {
-        List<Integer> list = new ArrayList<>();
-        String sql = " SELECT c.age FROM Customer c\n"
+    public List<Date> getDobOfResident(int apartmentID) {
+        List<Date> list = new ArrayList<>();
+        String sql = "SELECT c.dob FROM Customer c\n"
                 + "JOIN Living l ON c.customerID = l.customerID\n"
                 + "JOIN Apartment a ON l.apartmentID = a.apartmentID\n"
                 + "WHERE a.apartmentID = ?";
@@ -92,11 +92,18 @@ public class LivingDAO {
             pre.setInt(1, apartmentID);
             ResultSet rs = pre.executeQuery();
             while (rs.next()) {
-
-                list.add(rs.getInt(1));
+                list.add(rs.getDate(1)); // Lấy dữ liệu kiểu Date
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return list;
     }
@@ -238,6 +245,28 @@ public class LivingDAO {
             System.out.println(e);
         }
         return aptList;
+    }
+    public int insertLiving(int customerID, int apartmentID, LocalDate startDate) {
+        String sql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
+        Connection conn = null;
+        int isInserted = 0;
+
+        try {
+            conn = DBContext.getConnection();
+            PreparedStatement pre = conn.prepareStatement(sql);
+            pre.setInt(1, customerID);
+            pre.setInt(2, apartmentID);
+            pre.setDate(3, java.sql.Date.valueOf(startDate)); // Chuyển LocalDate thành java.sql.Date
+
+            isInserted = pre.executeUpdate();
+            LOGGER.info("Dữ liệu đã được chèn thành công vào bảng Living.");
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error inserting data", ex);
+            ex.printStackTrace();
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return isInserted;
     }
 
     public static void main(String[] args) {
