@@ -113,9 +113,9 @@ public class ChangeEmail extends HttpServlet {
             response.sendRedirect("verify");
 
         } catch (SQLException ex) {
-            Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangeEmail.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ChangeEmail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

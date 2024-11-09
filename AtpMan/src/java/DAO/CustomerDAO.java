@@ -117,7 +117,7 @@ public class CustomerDAO {
                             customer.setDob(rs.getDate("dob"));
                             customer.setRegistrationDate(rs.getDate("registrationDate"));
                             customer.setIsOwner(rs.getInt("isOwner"));
-                            customer.setStatus(rs.getInt("status"));
+//                            customer.setStatus(rs.getInt("status"));
                             return customer;
                         }
                     }

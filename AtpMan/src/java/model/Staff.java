@@ -91,9 +91,19 @@ public class Staff {
         this.hireDate = hireDate;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + '}';
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", email=" + email + ", phoneNumber=" + phoneNumber + ", name=" + name + ", hireDate=" + hireDate + ", status=" + status + '}';
     }
+    
+    
 
 }

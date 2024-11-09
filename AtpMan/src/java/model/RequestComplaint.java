@@ -16,11 +16,12 @@ public class RequestComplaint {
     private int status;
     private Date dateResquested;
     private String type;
+    private String customerName;
 
     public RequestComplaint() {
     }
 
-    public RequestComplaint(int requestID, int customerID, String title, String description, int status, Date dateResquested, String type) {
+    public RequestComplaint(int requestID, int customerID, String title, String description, int status, Date dateResquested, String type, String customerName) {
         this.requestID = requestID;
         this.customerID = customerID;
         this.title = title;
@@ -28,6 +29,7 @@ public class RequestComplaint {
         this.status = status;
         this.dateResquested = dateResquested;
         this.type = type;
+        this.customerName = customerName;
     }
 
     public int getRequestID() {
@@ -86,9 +88,17 @@ public class RequestComplaint {
         this.type = type;
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     @Override
     public String toString() {
-        return "RequestComplaint{" + "requestID=" + requestID + ", customerID=" + customerID + ", title=" + title + ", description=" + description + ", status=" + status + ", dateResquested=" + dateResquested + ", type=" + type + '}';
+        return "RequestComplaint{" + "requestID=" + requestID + ", customerID=" + customerID + ", title=" + title + ", description=" + description + ", status=" + status + ", dateResquested=" + dateResquested + ", type=" + type + ", customerName=" + customerName + '}';
     }
     
     

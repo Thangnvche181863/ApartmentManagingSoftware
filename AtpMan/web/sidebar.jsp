@@ -98,18 +98,18 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
                        aria-expanded="true" aria-controls="collapsePages">
                         <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
+                        <span>Trang chức năng</span>
                     </a>
                     <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Login Screens:</h6>
                             <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <a class="collapse-item" href="changeemail">Đổi email</a>
+                            <a class="collapse-item" href="changepassword">Đổi mật khẩu</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
                             <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item" href="blank.html">Blank Page</a>
+                            <a class="collapse-item" href="complaintlist">Danh sách yêu cầu</a>
                         </div>
                     </div>
                 </li>
@@ -123,7 +123,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Tạo tài khoản</h6>
                             <a class="collapse-item" href="createaccount">Người dùng</a>
-                            <a class="collapse-item" href="register.html">Nhân viên</a>
+                            <a class="collapse-item" href="createaccountstaff">Nhân viên</a>
                         </div>
                     </div>
                 </li>

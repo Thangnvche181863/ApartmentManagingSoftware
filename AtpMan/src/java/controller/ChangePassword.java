@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.CustomerDAO;
+import DAO.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Customer;
+import model.Staff;
 
 /**
  *
@@ -23,45 +25,14 @@ import model.Customer;
  */
 public class ChangePassword extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ChangePassword</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ChangePassword at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+//        response.getWriter().print("a");
     }
 
     @Override
@@ -70,24 +41,30 @@ public class ChangePassword extends HttpServlet {
 
         try {
             CustomerDAO customerDAO = WebManager.getInstance().customerDAO;
+            StaffDAO staffDAO = WebManager.getInstance().staffDAO;
 
             HttpSession session = request.getSession(false);
-            Customer loggedInCustomer = (Customer) session.getAttribute("user");
+            Object user = session.getAttribute("user");
 
-            if (loggedInCustomer == null) {
+            Customer loggedInCustomer = null;
+            Staff loggedInStaff = null;
+
+            if (user instanceof Customer) {
+                loggedInCustomer = (Customer) user;
+            } else if (user instanceof Staff) {
+                loggedInStaff = (Staff) user;
+            }
+
+            if (loggedInCustomer == null && loggedInStaff == null) {
                 request.setAttribute("errSession", "Bạn cần đăng nhập để thay đổi mật khẩu.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
 
-            int customerID = loggedInCustomer.getCustomerID();
-            System.out.println("Customer ID from session: " + customerID);
-
             String email = request.getParameter("email");
             String newPassword = request.getParameter("newPassword");
             String cfPassword = request.getParameter("cfPassword");
 
-           
             if (newPassword == null || newPassword.isEmpty()) {
                 request.setAttribute("errNewpass", "Mật khẩu mới không được để trống.");
                 request.getRequestDispatcher("changepassword.jsp").forward(request, response);
@@ -99,13 +76,27 @@ public class ChangePassword extends HttpServlet {
                 request.getRequestDispatcher("changepassword.jsp").forward(request, response);
                 return;
             }
-            
-            boolean passwordChange = customerDAO.updatePassword(customerID, newPassword);
-            if (passwordChange) {               
-                request.setAttribute("changepwdsuccess", "Đổi mật khẩu thành công.");
-            } else {              
-                request.setAttribute("changepwderr", "Đổi mật khẩu không thành công.");
-            }          
+
+            if (loggedInCustomer != null) {
+
+                int customerID = loggedInCustomer.getCustomerID();
+                boolean passwordChange = customerDAO.updatePassword(customerID, newPassword);
+                if (passwordChange) {
+                    request.setAttribute("changepwdsuccess", "Đổi mật khẩu thành công cho khách hàng.");
+                } else {
+                    request.setAttribute("changepwderr", "Đổi mật khẩu không thành công cho khách hàng.");
+                }
+            } else if (loggedInStaff != null) {
+
+                int staffID = loggedInStaff.getStaffID();
+                boolean passwordChange = staffDAO.updatePassword(staffID, newPassword);
+                if (passwordChange) {
+                    request.setAttribute("changepwdsuccess", "Đổi mật khẩu thành công cho nhân viên.");
+                } else {
+                    request.setAttribute("changepwderr", "Đổi mật khẩu không thành công cho nhân viên.");
+                }
+            }
+
             request.getRequestDispatcher("changepassword.jsp").forward(request, response);
 
         } catch (SQLException ex) {
@@ -125,5 +116,4 @@ public class ChangePassword extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-   
 }

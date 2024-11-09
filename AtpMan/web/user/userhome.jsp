@@ -131,8 +131,8 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Login Screens:</h6>
                             <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="changeemail">Change Email</a>
-                            <a class="collapse-item" href="changepassword">Change Password</a>
+                            <a class="collapse-item" href="/AtpMan/changeemail">Change Email</a>
+                            <a class="collapse-item" href="/AtpMan/changepassword">Change Password</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
                             <a class="collapse-item" href="404.html">404 Page</a>

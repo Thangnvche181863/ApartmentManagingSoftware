@@ -51,7 +51,7 @@
                     <div class="d-flex justify-content-start align-items-center ms-3 gap-3">
                         <c:if test="${sessionScope.user == null}">
                             <a href="userlogin" class="btn btn-primary">
-                                <i class="bi bi-box-arrow-in-right"></i>Login
+                                <i class="bi bi-box-arrow-in-right"></i>Đăng nhập
                             </a>
                         </c:if>
 

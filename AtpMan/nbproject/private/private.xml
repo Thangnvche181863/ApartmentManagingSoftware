@@ -12,13 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/web/charts.jsp</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/StatisticServlet.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/model/Finance.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/model/Building.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/DAO/FinanceDAO.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/controller/staff/CostStatisticServlet.java</file>
-            <file>file:/C:/Users/thang/OneDrive/Máy%20tính/semester5/SWP391/MyProject6/ApartmentManagingSoftware/AtpMan/src/java/DAO/ServiceContractDAO.java</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/createAccount.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/sidebar.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/createAccountStaff.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/login.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/user/userhome.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/complaint_list-admin.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/home.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/header.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/footer.jsp</file>
+            <file>file:/F:/FPT/Se5-Sum24/SWP_FA24/Clone3/ApartmentManagingSoftware/AtpMan/web/topbar.jsp</file>
         </group>
     </open-files>
 </project-private>

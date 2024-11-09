@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-
+import java.sql.*;
 import utils.DBContext;
 import model.Assignment;
 import java.sql.PreparedStatement;
@@ -22,6 +22,24 @@ import java.util.Date;
 public class AssignmentDAO extends DBContext {
 
     private static final Logger LOGGER = Logger.getLogger(AssignmentDAO.class.getName());
+
+    public void createAssignment(int taskID) {
+        Connection conn = null;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO Assignment ( taskID) VALUES ( ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//                ps.setInt(1, staffID);
+                ps.setInt(1, taskID);
+                ps.executeUpdate();
+
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating new assignment", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+    }
 
     // Retrieve all assignments
     public List<Assignment> getAll() {
@@ -222,9 +240,6 @@ public class AssignmentDAO extends DBContext {
 //        } else {
 //            System.out.println("\nFailed to delete Assignment.");
 //        }
-
-
-
         //test update EndTime
 //        newAssignment.setStaffID(1); // Ensure this staffID exists in your Staff table
 //        newAssignment.setTaskID(1); // Ensure this taskID exists in your Task table

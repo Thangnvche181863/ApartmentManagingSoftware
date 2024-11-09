@@ -22,8 +22,8 @@ public class EmailHandle {
 
     public static void sendEmail(String toEmail, String subject, String body) {
         // Sender's email and password
-        String fromEmail = "managingsystemapartment@gmail.com";//replace mail
-        String password = "fxco mubm qupg foed";//replace password
+        String fromEmail = "managingsystemapartment@gmail.com"; // Replace mail
+        String password = "fxco mubm qupg foed"; // Replace password
 
         // SMTP server properties
         Properties properties = new Properties();
@@ -51,12 +51,9 @@ public class EmailHandle {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 
             // Set Subject: header field
-            message.setSubject(subject);
+            message.setSubject(subject); // Subject will use the default UTF-8 encoding
 
-            // Set the actual message
-            message.setText(body);
-
-            // Set content type to HTML
+            // Set the actual message content with UTF-8 encoding for Vietnamese support
             message.setContent(body, "text/html; charset=UTF-8");
 
             // Send the message
@@ -68,6 +65,7 @@ public class EmailHandle {
             e.printStackTrace();
         }
     }
+
 //        public static void main(String[] args) {
 //        // Sample usage
 //        String toEmail = "Mebongda22@gmail.com";
@@ -75,5 +73,4 @@ public class EmailHandle {
 //        String body = "123.";
 //        sendEmail(toEmail, subject, body);
 //    }
-
 }

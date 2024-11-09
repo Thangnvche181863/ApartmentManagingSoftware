@@ -47,112 +47,118 @@
         .card-registration .select-arrow {
             top: 13px;
         }
+
     </style>
 
     <body>
-        <section class="gradient-custom">
-            <div class="container py-5 h-100">
-                <div class="row justify-content-center align-items-center h-100">
-                    <div class="col-12 col-lg-9 col-xl-7">
-                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                            <div class="card-body p-4 p-md-5">
-                                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Account</h3>
 
-                                <c:if test="${not empty messExist}">
-                                    <div class="alert alert-danger" role="alert">
-                                        ${messExist}
-                                    </div>
-                                </c:if>
+        <!--        <section class="gradient-custom">-->
+        <%@include file="sidebar.jsp" %>
+        
+        <div class="container py-5 h-100">
 
-                                <!-- Display success message if account is created successfully -->
-                                <c:if test="${not empty successCreate}">
-                                    <div class="alert alert-success" role="alert">
-                                        ${successCreate}
-                                    </div>
-                                </c:if>
-                                <form action="createaccount" method="post">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-12 col-lg-9 col-xl-7">
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Tạo tài khoản cư dân</h3>
+
+                            <c:if test="${not empty messExist}">
+                                <div class="alert alert-danger" role="alert">
+                                    ${messExist}
+                                </div>
+                            </c:if>
+
+                            <!-- Display success message if account is created successfully -->
+                            <c:if test="${not empty successCreate}">
+                                <div class="alert alert-success" role="alert">
+                                    ${successCreate}
+                                </div>
+                            </c:if>
+                            <form action="createaccount" method="post">
 
 
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="username">Username</label>
-                                            <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
-                                            <small class="text-danger" id="usernameError"></small>
-                                        </div>
-
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="name">Name</label>
-                                            <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label" for="username">Tên đăng nhập</label>
+                                        <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
+                                        <small class="text-danger" id="usernameError"></small>
                                     </div>
 
-
-                                    <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="phoneNumber">Phone Number</label>
-                                            <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
-                                            <small class="text-danger" id="phoneNumberError"></small>
-                                        </div>
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label" for="email">Email</label>
-                                            <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
-                                            <small class="text-danger" id="emailError"></small>
-                                        </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label" for="name">Họ tên</label>
+                                        <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
                                     </div>
+                                </div>
 
 
-                                    <div class="row">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label" for="phoneNumber">Số điện thoại</label>
+                                        <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
+                                        <small class="text-danger" id="phoneNumberError"></small>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label" for="email">Email</label>
+                                        <input type="text" id="email" class="form-control form-control-lg" name="email" required/>
+                                        <small class="text-danger" id="emailError"></small>
+                                    </div>
+                                </div>
 
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label select-label">Building</label>
-                                            <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
-                                                <option value="" selected>Choose building</option>
-                                                <c:forEach items="${listBuildings}" var="b">
-                                                    <option value="${b.buildingID}">${b.name}</option>
-                                                </c:forEach>
-                                            </select>
-                                            <small class="text-danger" id="buildingError"></small>
-                                        </div>
 
+                                <div class="row">
 
-                                        <div class="col-md-6 mb-4">
-                                            <label class="form-label select-label">Apartment</label>
-                                            <select class="select form-control-lg" name="apartment" id="apartment" required>
-                                                <option value="" selected>Choose apartment</option>
-                                            </select>
-                                            <small class="text-danger" id="apartmentError"></small>
-                                        </div>
-                                        
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label select-label">Tòa nhà</label>
+                                        <select class="select form-control-lg" name="building" id="building" required onchange="loadApartments()">
+                                            <option value="" selected>Chọn tòa</option>
+                                            <c:forEach items="${listBuildings}" var="b">
+                                                <option value="${b.buildingID}">${b.name}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <small class="text-danger" id="buildingError"></small>
                                     </div>
 
 
-                                    <div class="row">
-                                        <div class="col-12 mb-4">
-                                            <label class="form-label select-label">Type</label>
-                                            <select class="select form-control-lg" name="userType" required>
-                                                <option value="" selected>Choose option</option>
-                                                <option value="2">Resident</option>
-                                                <option value="3">Owner</option>
-                                            </select>
-                                            <small class="text-danger" id="userTypeError"></small>
-                                        </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label select-label">Căn hộ</label>
+                                        <select class="select form-control-lg" name="apartment" id="apartment" required>
+                                            <option value="" selected>Chọn căn hộ</option>
+                                        </select>
+                                        <small class="text-danger" id="apartmentError"></small>
                                     </div>
 
+                                </div>
 
-                                    <div class="mt-4 pt-2">
-                                        <div>
-                                            <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
-                                        </div>
-                                        <a href="logout">Logout</a>
+
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <label class="form-label select-label">Vai trò</label>
+                                        <select class="select form-control-lg" name="userType" required>
+                                            <option value="" selected>Chọn vai trò</option>
+                                            <option value="2">Khách thuê</option>
+                                            <option value="3">Chủ sở hữu</option>
+                                        </select>
+                                        <small class="text-danger" id="userTypeError"></small>
+                                    </div>
+                                </div>
+
+
+                                <div class="mt-4 pt-2">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Tạo tài khoản" />
+                                        <a href="managePage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
                                     </div>
 
-                                </form>
-                            </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        <!--        </section>-->
 
         <script>
             function validateUsername() {

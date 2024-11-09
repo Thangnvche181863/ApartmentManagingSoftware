@@ -12,8 +12,9 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="sidebar.jsp" %>
         <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Create Account</h3>
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Tạo tài khoản nhân viên</h3>
 
             <c:if test="${not empty messExist}">
                 <div class="alert alert-danger" role="alert">
@@ -32,13 +33,13 @@
                 <!-- Username và Name -->
                 <div class="row">
                     <div class="col-md-6 mb-4">
-                        <label class="form-label" for="username">Username</label>
+                        <label class="form-label" for="username">Tên đăng nhập</label>
                         <input type="text" id="username" class="form-control form-control-lg" name="username" required/>
                         <small class="text-danger" id="usernameError"></small>
                     </div>
 
                     <div class="col-md-6 mb-4">
-                        <label class="form-label" for="name">Name</label>
+                        <label class="form-label" for="name">Họ tên</label>
                         <input type="text" id="name" class="form-control form-control-lg" name="name" required/>
                     </div>
                 </div>
@@ -46,7 +47,7 @@
                 <!-- Phone Number và Email -->
                 <div class="row">
                     <div class="col-md-6 mb-4">
-                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                        <label class="form-label" for="phoneNumber">Số điện thoại</label>
                         <input type="text" id="phoneNumber" class="form-control form-control-lg" name="phoneNumber" required/>
                         <small class="text-danger" id="phoneNumberError"></small>
                     </div>
@@ -57,15 +58,15 @@
                     </div>
                 </div>
 
-               
-                
 
-                <!-- Nút tạo tài khoản -->
+
+
                 <div class="mt-4 pt-2">
-                    <div>
-                        <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Create" />
+                    <div style="display: flex; justify-content: space-between;">
+                        <input data-mdb-ripple-init class="btn btn-primary btn-lg" type="submit" value="Tạo tài khoản" />
+                        <a href="managePage" data-mdb-ripple-init class="btn btn-primary btn-lg">Trở về</a>
                     </div>
-                    <a href="logout">Logout</a>
+
                 </div>
 
             </form>
