@@ -351,7 +351,8 @@ public class CustomerDAO {
                 Date age = rs.getDate(6);
                 Date registrationDate = rs.getDate(7);
                 int isOwner = rs.getInt(8);
-                Customer customer = new Customer(customerID, username, name, email, phoneNumber, age, registrationDate, isOwner);
+                Customer customer = new Customer(customerID, username, name, email, phoneNumber, age, registrationDate,
+                        isOwner);
                 vector.add(customer);
             }
         } catch (SQLException | ClassNotFoundException ex) {
@@ -399,7 +400,8 @@ public class CustomerDAO {
     }
 
     // KhangPM
-    public List<Customer> getLivingInApartment(int apartmentID, int currentPage, int rowsPerPage, List<String> searchTermList) {
+    public List<Customer> getLivingInApartment(int apartmentID, int currentPage, int rowsPerPage,
+            List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
         String sql = "select c.customerID, c.name, c.email, c.phoneNumber, c.dob, c.isOwner, c.status, l.startDate from Customer c\n"
@@ -550,22 +552,23 @@ public class CustomerDAO {
         return result;
     }
 
-    //KhangPM
+    // KhangPM
     /**
      *
-     * @param currentPage current page for paging
-     * @param rowsPerPage rows per page
-     * @param buildingId id of building
+     * @param currentPage     current page for paging
+     * @param rowsPerPage     rows per page
+     * @param buildingId      id of building
      * @param apartmentNumber
-     * @param statusLiving status in living table. 1 for living (endDate not
-     * null) 0 for not living (endDate = null), 2 for both
-     * @param isOwner 1 for owner, 0 for tenant, 2 for both
-     * @param status 1 for active, 0 for inactive
+     * @param statusLiving    status in living table. 1 for living (endDate not
+     *                        null) 0 for not living (endDate = null), 2 for both
+     * @param isOwner         1 for owner, 0 for tenant, 2 for both
+     * @param status          1 for active, 0 for inactive
      * @param searchTermList
      * @return
      */
     // not using
-    public List<Customer> getResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
+    public List<Customer> getResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber,
+            int statusLiving, int isOwner, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
         String sql = "select distinct c.* from Customer c\n"
@@ -640,16 +643,17 @@ public class CustomerDAO {
     }
 
     // KhangPM
-    public List<Customer> getActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, int isOwner, int status, List<String> searchTermList) {
+    public List<Customer> getActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId,
+            String apartmentNumber, int isOwner, int status, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
         String sql = """
-                     select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
-                     left join Living lv on lv.customerID = c.customerID
-                     left join Apartment a on a.apartmentID = lv.apartmentID
-                     left join Building b on b.buildingID = a.buildingID
-                     where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
-                     and c.status = 1""";
+                select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
+                left join Living lv on lv.customerID = c.customerID
+                left join Apartment a on a.apartmentID = lv.apartmentID
+                left join Building b on b.buildingID = a.buildingID
+                where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
+                and c.status = 1""";
 
         if (isOwner == 1) {
             sql += " and c.isOwner = 1\n";
@@ -711,16 +715,17 @@ public class CustomerDAO {
     }
 
     // KhangPM
-    public int countActiveResidentForManage(int buildingId, String apartmentNumber, int isOwner, int status, List<String> searchTermList) {
+    public int countActiveResidentForManage(int buildingId, String apartmentNumber, int isOwner, int status,
+            List<String> searchTermList) {
         int count = 0;
         Connection connection = null;
         String sql = """
-                     select distinct count(*) from Customer c
-                     left join Living lv on lv.customerID = c.customerID
-                     left join Apartment a on a.apartmentID = lv.apartmentID
-                     left join Building b on b.buildingID = a.buildingID
-                     where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
-                     and c.status = 1""";
+                select distinct count(*) from Customer c
+                left join Living lv on lv.customerID = c.customerID
+                left join Apartment a on a.apartmentID = lv.apartmentID
+                left join Building b on b.buildingID = a.buildingID
+                where (c.isOwner = 0 and (NOT EXISTS (SELECT 1 FROM Living l2 WHERE l2.customerID = c.customerID AND l2.endDate IS NOT NULL) or lv.endDate is null ) or (c.isOwner = 1 ))
+                and c.status = 1""";
 
         if (isOwner == 1) {
             sql += " and c.isOwner = 1\n";
@@ -764,15 +769,16 @@ public class CustomerDAO {
     }
 
     // KhangPM
-    public List<Customer> getRegistResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, List<String> searchTermList) {
+    public List<Customer> getRegistResidentForManage(int currentPage, int rowsPerPage, int buildingId,
+            String apartmentNumber, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
         String sql = """
-                     select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
-                     left join Living lv on lv.customerID = c.customerID
-                     left join Apartment a on a.apartmentID = lv.apartmentID
-                     left join Building b on b.buildingID = a.buildingID
-                     where c.status = 3""";
+                select distinct c.*, a.apartmentNumber, lv.startDate, lv.endDate from Customer c
+                left join Living lv on lv.customerID = c.customerID
+                left join Apartment a on a.apartmentID = lv.apartmentID
+                left join Building b on b.buildingID = a.buildingID
+                where c.status = 3""";
 
         if (buildingId != 0) {
             sql += " and b.buildingID = ? \n";
@@ -833,11 +839,11 @@ public class CustomerDAO {
         int count = 0;
         Connection connection = null;
         String sql = """
-                     select distinct count(*) from Customer c
-                     left join Living lv on lv.customerID = c.customerID
-                     left join Apartment a on a.apartmentID = lv.apartmentID
-                     left join Building b on b.buildingID = a.buildingID
-                     where c.status = 3""";
+                select distinct count(*) from Customer c
+                left join Living lv on lv.customerID = c.customerID
+                left join Apartment a on a.apartmentID = lv.apartmentID
+                left join Building b on b.buildingID = a.buildingID
+                where c.status = 3""";
 
         if (buildingId != 0) {
             sql += " and b.buildingID = ? \n";
@@ -875,9 +881,10 @@ public class CustomerDAO {
         }
         return count;
     }
-    
+
     // KhangPM
-    public List<Customer> getInActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId, String apartmentNumber, List<String> searchTermList) {
+    public List<Customer> getInActiveResidentForManage(int currentPage, int rowsPerPage, int buildingId,
+            String apartmentNumber, List<String> searchTermList) {
         List<Customer> list = new ArrayList<>();
         Connection connection = null;
         String sql = """
@@ -992,10 +999,10 @@ public class CustomerDAO {
     public void updateStatusResident(int status, int customerId) {
         Connection connection = null;
         String sql = """
-                     update Customer
-                     set status = ?
-                     where customerID = ?
-                     """;
+                update Customer
+                set status = ?
+                where customerID = ?
+                """;
         try {
             connection = DBContext.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -1006,13 +1013,14 @@ public class CustomerDAO {
             System.out.println("err: " + e.getMessage());
         }
     }
+
     public void updateLivingResident(int customerId) {
         Connection connection = null;
         String sql = """
-                     update Living
-                     set endDate = ?
-                     where customerID = ? and endDate is null
-                     """;
+                update Living
+                set endDate = ?
+                where customerID = ? and endDate is null
+                """;
         try {
             LocalDate currentDate = LocalDate.now();
             connection = DBContext.getConnection();
@@ -1024,8 +1032,8 @@ public class CustomerDAO {
             System.out.println("err: " + e.getMessage());
         }
     }
-    
-    public void removeAccount(int customerId){
+
+    public void removeAccount(int customerId) {
         Connection connection = null;
         String sql = """
                      update Customer
@@ -1042,8 +1050,9 @@ public class CustomerDAO {
         }
     }
 
-    //KhangPM - not use
-    public int countResidentSearch(int buildingId, String apartmentNumber, int statusLiving, int isOwner, List<String> searchTermList) {
+    // KhangPM - not use
+    public int countResidentSearch(int buildingId, String apartmentNumber, int statusLiving, int isOwner,
+            List<String> searchTermList) {
         int count = 0;
         Connection connection = null;
         String sql = "select count(*) from Customer c\n"
@@ -1102,7 +1111,7 @@ public class CustomerDAO {
         return count;
     }
 
-    //KhangPM
+    // KhangPM
     public int countResident() {
         int count = 0;
         Connection connection = null;
@@ -1123,7 +1132,7 @@ public class CustomerDAO {
         return count;
     }
 
-    //KhangPM
+    // KhangPM
     public int countResidentByStatus(int status) {
         int count = 0;
         Connection connection = null;
@@ -1145,7 +1154,6 @@ public class CustomerDAO {
         return count;
     }
 
-    
     public boolean addCustomerToApartment(Customer customer, int apartmentID, Date startDate) {
         String customerSql = "INSERT INTO Customer (name, email, phoneNumber, dob, registrationDate, isOwner, status) VALUES (?, ?, ?, ?, ?, 0, 3)";
         String livingSql = "INSERT INTO Living (customerID, apartmentID, startDate) VALUES (?, ?, ?)";
@@ -1163,13 +1171,17 @@ public class CustomerDAO {
             conn.setAutoCommit(false);
 
             // Insert customer into Customer table
-            try (PreparedStatement customerStmt = conn.prepareStatement(customerSql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement customerStmt = conn.prepareStatement(customerSql,
+                    PreparedStatement.RETURN_GENERATED_KEYS)) {
                 customerStmt.setString(1, customer.getName());
                 customerStmt.setString(2, customer.getEmail());
                 customerStmt.setString(3, customer.getPhoneNumber());
-                customerStmt.setDate(4, customer.getDob() != null ? new java.sql.Date(customer.getDob().getTime()) : null);
-                customerStmt.setDate(5, customer.getRegistrationDate() != null ? new java.sql.Date(customer.getRegistrationDate().getTime()) : null);
-               
+                customerStmt.setDate(4,
+                        customer.getDob() != null ? new java.sql.Date(customer.getDob().getTime()) : null);
+                customerStmt.setDate(5,
+                        customer.getRegistrationDate() != null
+                                ? new java.sql.Date(customer.getRegistrationDate().getTime())
+                                : null);
 
                 int customerRows = customerStmt.executeUpdate();
                 if (customerRows > 0) {
@@ -1183,7 +1195,8 @@ public class CustomerDAO {
                             try (PreparedStatement livingStmt = conn.prepareStatement(livingSql)) {
                                 livingStmt.setInt(1, newCustomerID);
                                 livingStmt.setInt(2, apartmentID);
-                                livingStmt.setDate(3, startDate != null ? new java.sql.Date(startDate.getTime()) : null);
+                                livingStmt.setDate(3,
+                                        startDate != null ? new java.sql.Date(startDate.getTime()) : null);
 
                                 int livingRows = livingStmt.executeUpdate();
                                 if (livingRows > 0) {
@@ -1219,31 +1232,12 @@ public class CustomerDAO {
     
 
     public static void main(String[] args) {
-        Customer testCustomer = new Customer();
-        testCustomer.setName("tester");
-        testCustomer.setEmail("asdasd");
-        testCustomer.setPhoneNumber("1234567890");
-        testCustomer.setDob(java.sql.Date.valueOf("1990-01-01"));
-        testCustomer.setRegistrationDate(new java.util.Date());
-       
+        CustomerDAO dao = new CustomerDAO();
+        Customer testCustomer = dao.getAllInformationCustomer("khang123", "123");
+        System.out.println(testCustomer);
 
-        int apartmentID = 1;  // Replace with a valid apartment ID from your database
-        java.sql.Date startDate = java.sql.Date.valueOf("2023-01-01");
-        
-
-        // Create an instance of the class containing the addCustomerToApartment method
-        CustomerDAO customerDAO = new CustomerDAO();  // Assuming the method is in CustomerDAO
-
-        // Test addCustomerToApartment
-        boolean isAdded = customerDAO.addCustomerToApartment(testCustomer, apartmentID, startDate);
-
-        // Output the result
-        if (isAdded) {
-            System.out.println("Test Passed: Customer and living records added successfully.");
-            System.out.println("Customer ID: " + testCustomer.getCustomerID());
-        } else {
-            System.out.println("Test Failed: Could not add customer and living records.");
-        }
+        String pass = UtilHashPass.EncodePassword("bb588SXf");
+        System.out.println("pass hashed: " + pass);
 
     }
 }

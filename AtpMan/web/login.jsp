@@ -53,6 +53,7 @@
     </head>
 
     <body>
+        
         <section class="gradient-custom py-5 ">
             <div class="container h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -122,9 +123,9 @@
                                     </div>
                                 </div>
 
-                                <div>
-                                    <p class="mb-0">Chưa có tài khoản ? <a href="register.jsp" class="text-white-50 fw-bold">Đăng kí</a></p>
-                                </div>
+<!--                                <div>
+                                    <p class="mb-0">Don't have an account? <a href="register.jsp" class="text-white-50 fw-bold">Sign Up</a></p>
+                                </div>-->
 
                             </div>
                         </div>
@@ -160,7 +161,7 @@
             border: none;
             border-radius: 30px;
             height: 40px;
-            width: 50%;
+            width: 60%;
             margin-top: 10px; /* Khoảng cách từ nút đăng ký */
             margin-left: 2px;
             cursor: pointer;

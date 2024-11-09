@@ -4,6 +4,15 @@
  */
 package DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Role;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,34 +24,47 @@ import utils.DBContext;
 
 /**
  *
- * @author Admin
+ * @author WuanTun
  */
 public class RoleDAO {
 
-    Connection connection = null;
+    private static final Logger LOGGER = Logger.getLogger(RoleDAO.class.getName());
 
-    public List<Role> getAllRole()  {
-        List<Role> list = new ArrayList<>();
-        String sql = "select * from Role";
+    public List<Role> getRoles() {
+        Connection conn = null;
+        List<Role> roles = new ArrayList<>();
         try {
-            connection = DBContext.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-
-                int roleID = rs.getInt(1);
-                String role_name = rs.getString(2);
-                String roleAuthority = rs.getString(3);
-                Role role = new Role(roleID, role_name, roleAuthority);
-                list.add(role);
+            conn = DBContext.getConnection();
+            if (conn != null) {
+                System.out.println("Connection successful!");
+            } else {
+                System.out.println("Failed to connect to the database.");
             }
-        } catch (SQLException |ClassNotFoundException e) {
+
+            if (conn != null) {
+                String sql = "SELECT * FROM Role";
+                try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Role role = new Role();
+                        role.setRoleID(rs.getInt("roleID"));
+                        role.setRole_name(rs.getString("role_name"));
+                        role.setRoleAuthority(rs.getString("roleAuthority"));
+                        roles.add(role);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            LOGGER.log(Level.SEVERE, "Error retrieving roles", ex);
+            ex.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    LOGGER.log(Level.SEVERE, "Error closing connection", ex);
+                }
+            }
         }
-        return list;
-    }
-    public static void main(String[] args) throws ClassNotFoundException {
-        RoleDAO dao = new RoleDAO();
-        List<Role> list = dao.getAllRole();
-        System.out.println("" + list.toString());
+        return roles;
     }
 }

@@ -4,28 +4,81 @@
  */
 package DAO;
 
-import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Apartment;
-import model.Building;
 import model.Task;
 import utils.DBContext;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Admin
  */
 public class TaskDAO {
-
+    private static final Logger LOGGER = Logger.getLogger(TaskDAO.class.getName());
     Connection conn = null;
+
+    public int createTask(String taskName, String taskType, String description) {
+        Connection conn = null;
+        int generatedID = -1;
+        try {
+            conn = DBContext.getConnection();
+            String sql = "INSERT INTO Task (taskName, description, taskType) VALUES (?, ?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setString(1, taskName);
+                ps.setString(2, description);
+                ps.setString(3, taskType);
+                ps.executeUpdate();
+
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        generatedID = rs.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error creating task", e);
+        } finally {
+            DBContext.closeConnection(conn);
+        }
+        return generatedID;
+    }
+
+    public List<Task> getTaskByStaffID(int staffID) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        List<Task> taskList = new ArrayList<>();
+        try {
+            conn = DBContext.getConnection();
+            String sql = "SELECT t.taskID, t.taskName, t.taskType, t.description "
+                    + "FROM Assignment a "
+                    + "JOIN Task t ON a.taskID = t.taskID "
+                    + "WHERE a.staffID = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, staffID);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        Task task = new Task();
+                        task.setTaskID(rs.getInt("taskID"));
+                        task.setTaskName(rs.getString("taskName"));
+                        task.setTaskType(rs.getString("taskType"));
+                        task.setDescription(rs.getString("description"));
+
+                        taskList.add(task);
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error checking password", e);
+        }
+        return taskList;
+    }
 
     public List<Task> getAllTask() {
         List<Task> list = new ArrayList<>();
@@ -53,24 +106,23 @@ public class TaskDAO {
         return list;
     }
 
-    public int createTask(String taskName, String description, String taskType) {
-        int n = 0;
-        String sql = "INSERT INTO Task (taskName, description, taskType)\n"
-                + "VALUES \n"
-                + "    (?,?,?)";
-        try {
-            conn = DBContext.getConnection();
-            PreparedStatement pre = conn.prepareStatement(sql);
-            pre.setString(1, taskName);
-            pre.setString(2, description);
-            pre.setString(3, taskType);
-            n = pre.executeUpdate();
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return n;
-    }
-
+    // public int createTask(String taskName, String description, String taskType) {
+    // int n = 0;
+    // String sql = "INSERT INTO Task (taskName, description, taskType)\n"
+    // + "VALUES \n"
+    // + " (?,?,?)";
+    // try {
+    // conn = DBContext.getConnection();
+    // PreparedStatement pre = conn.prepareStatement(sql);
+    // pre.setString(1, taskName);
+    // pre.setString(2, description);
+    // pre.setString(3, taskType);
+    // n = pre.executeUpdate();
+    // } catch (SQLException | ClassNotFoundException ex) {
+    // ex.printStackTrace();
+    // }
+    // return n;
+    // }
     public List<String> getAllTaskType() {
         List<String> list = new ArrayList<>();
         String sql = "SELECT DISTINCT taskType FROM Task; ";
@@ -98,9 +150,9 @@ public class TaskDAO {
         try {
             int offset = (page - 1) * recordsPerPage;
             String sql = "SELECT t.taskID, t.taskName, t.description, t.taskType\n"
-                + "FROM Task t\n"
-                + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
-                + "WHERE a.staffID IS NULL order by taskID offset ? rows fetch next ? rows only";
+                    + "FROM Task t\n"
+                    + "LEFT JOIN Assignment a ON t.taskID = a.taskID\n"
+                    + "WHERE a.staffID IS NULL order by taskID offset ? rows fetch next ? rows only";
             conn = DBContext.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, offset);
@@ -202,8 +254,7 @@ public class TaskDAO {
                         rs.getInt("taskID"),
                         rs.getString("taskName"),
                         rs.getString("description"),
-                        rs.getString("taskType")
-                ));
+                        rs.getString("taskType")));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -250,9 +301,10 @@ public class TaskDAO {
         }
         return totalPages;
     }
+
     public static void main(String[] args) {
         TaskDAO dao = new TaskDAO();
         int n = dao.createTask("aaaa", "aaaa", "Bảo trì");
-        System.out.println("Húp" +n);
+        System.out.println("Húp" + n);
     }
 }

@@ -22,19 +22,12 @@ public class Staff {
     private String avatar;
     private int status;
     private String roleAuthority;
-    
+
     public Staff() {
     }
 
-    public String getRoleAuthority() {
-        return roleAuthority;
-    }
-
-    public void setRoleAuthority(String roleAuthority) {
-        this.roleAuthority = roleAuthority;
-    }
-
-    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String avatar, int status) {
+    public Staff(int staffID, int roleID, String username, String password, String name, String email,
+            String phoneNumber, Date hireDate, String avatar, int status) {
         this.staffID = staffID;
         this.roleID = roleID;
         this.username = username;
@@ -46,30 +39,34 @@ public class Staff {
         this.avatar = avatar;
         this.status = status;
     }
-    
-    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate) {
-        this.staffID = staffID;
-        this.roleID = roleID;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.hireDate = hireDate;
-        this.status = status;
-    }
 
-    public Staff(int staffID, int roleID, String username, String password, String name, String email, String phoneNumber, Date hireDate, String avatar) {
-        this.staffID = staffID;
-        this.roleID = roleID;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.hireDate = hireDate;
-        this.avatar = avatar;
-    }
+     public Staff(int staffID, int roleID, String username, String password,
+     String name, String email,
+     String phoneNumber, Date hireDate) {
+    this.staffID = staffID;
+     this.roleID = roleID;
+     this.username = username;
+     this.password = password;
+     this.name = name;
+     this.email = email;
+     this.phoneNumber = phoneNumber;
+     this.hireDate = hireDate;
+     this.status = status;
+     }
+
+     public Staff(int staffID, int roleID, String username, String password,
+     String name, String email,
+     String phoneNumber, Date hireDate, String avatar) {
+     this.staffID = staffID;
+     this.roleID = roleID;
+     this.username = username;
+     this.password = password;
+     this.name = name;
+     this.email = email;
+     this.phoneNumber = phoneNumber;
+     this.hireDate = hireDate;
+     this.avatar = avatar;
+     }
 
     public int getStaffID() {
         return staffID;
@@ -151,13 +148,19 @@ public class Staff {
         this.hireDate = hireDate;
     }
 
-    @Override
-    public String toString() {
-        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password=" + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", avatar=" + avatar + ", status=" + status + ", roleAuthority=" + roleAuthority + '}';
+    public String getRoleAuthority() {
+        return roleAuthority;
     }
 
-   
-  
+    public void setRoleAuthority(String roleAuthority) {
+        this.roleAuthority = roleAuthority;
+    }
 
-    
+    @Override
+    public String toString() {
+        return "Staff{" + "staffID=" + staffID + ", roleID=" + roleID + ", username=" + username + ", password="
+                + password + ", name=" + name + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate="
+                + hireDate + ", avatar=" + avatar + ", status=" + status + '}';
+    }
+
 }
