@@ -125,7 +125,7 @@
 
                         <div class="form-group">
                             <label for="newsImg">Ảnh Chính:</label>
-                            <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*">
+                            <input type="file" class="form-control-file" id="newsImg" name="newsImg" accept="image/*" required>
                         </div>
                         <a class="btn btn-danger" href="newsmanage">Quay lại</a>
                         <button type="submit" class="btn btn-primary">Submit</button>
