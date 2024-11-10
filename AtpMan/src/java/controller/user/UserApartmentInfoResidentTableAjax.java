@@ -128,10 +128,10 @@ public class UserApartmentInfoResidentTableAjax extends HttpServlet {
                 out.print("                                            <tr>\n"
                         + "                                                <td>" + count + "</td>\n"
                         + "                                                <td>" + resident.getName() + "</td>\n"
-                        + "                                                <td>" + dateFormat.format(resident.getDob()) + "</td>\n"
-                        + "                                                <td>" + resident.getEmail() + "</td>\n"
+                        + "                                                <td>" + (resident.getDob() != null ? dateFormat.format(resident.getDob()) : "") + "</td>\n"
+                        + "                                                <td>" + (resident.getEmail() != null ? resident.getEmail() : "") + "</td>\n"
                         + "                                                <td>" + resident.getPhoneNumber() + "</td>\n"
-                        + "                                                <td>" + dateFormat.format(resident.getLivingDate()) + "</td>\n"
+                        + "                                                <td>" + (resident.getLivingDate() != null ? dateFormat.format(resident.getLivingDate()) : "") + "</td>\n"
                         + "                                                <td class='"+(resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "")+"' >" + (resident.getIsOwner() == 1 ? "Chủ sở hữu" : "Người ở") + "</td>\n"
                         + "                                            </tr>\n");
             }

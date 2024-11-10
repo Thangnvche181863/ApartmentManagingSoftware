@@ -133,8 +133,8 @@ public class UserApartmentInfoServiceTableAjax extends HttpServlet {
                         + "                                                        <td>" + count + "</td>\n"
                         + "                                                        <td>" + serviceContract.getService().getName() + "</td>\n"
                         + "                                                        <td>" + serviceContract.getService().getType() + "</td>\n"
-                        + "                                                        <td>" + dateFormat.format(serviceContract.getStartDate()) + "</td>\n"
-                        + "                                                        <td>" + dateFormat.format(serviceContract.getEndDate()) + "</td>\n"
+                        + "                                                        <td>" + (serviceContract.getStartDate() != null ? dateFormat.format(serviceContract.getStartDate()) : "") + "</td>\n"
+                        + "                                                        <td>" + (serviceContract.getEndDate() != null ? dateFormat.format(serviceContract.getEndDate()) : "") + "</td>\n"
                         + "                                                        <td>" + decimalFormat.format(serviceContract.getAmount().intValue()) + " VNĐ</td>\n"
                         + "                                                        </tr>\n");
             }
