@@ -647,6 +647,45 @@ public class NewsDAO extends DBContext {
         return count;
     }
 
+    public int getTaskId(int staffId) {
+        String sql = "select top 1 * from Assignment, Staff\n"
+                + "where Assignment.staffID = Staff.staffID\n"
+                + "and Staff.staffID = ? order by Assignment.taskID desc";
+        int count = 0;
+
+        try {
+            // Initialize the connection
+            DBContext.getConnection();
+
+            if (DBContext.connection == null || DBContext.connection.isClosed()) {
+                LOGGER.log(Level.SEVERE, "Failed to establish a database connection.");
+                return count;
+            }
+
+            // Prepare the SQL statement
+            PreparedStatement pre = DBContext.connection.prepareStatement(sql);
+            pre.setInt(1, staffId);
+
+            // Execute the query
+            ResultSet rs = pre.executeQuery();
+
+            // Get the count of matching rows
+            if (rs.next()) {
+                count = rs.getInt(2);
+            }
+
+            // Close resources
+            rs.close();
+            pre.close();
+
+
+        } catch (SQLException | ClassNotFoundException e) {
+            LOGGER.log(Level.SEVERE, "Error getting the number of news records by title.", e);
+        }
+
+        return count;
+    }
+
     public News getNewsById(int newsID) {
         News news = null;
         String sql = "SELECT n.*, nc.name as newsCategoryName, s.name as staffName "

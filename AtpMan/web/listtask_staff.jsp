@@ -147,9 +147,9 @@
                                     <td>
                                         <form action="staffhome" method="post">
                                             <input type="hidden" name="taskID" value="${task.taskID}" />
-                                            <button type="submit" name="status" value="${task.status == 'hoàn thành' ? 'chưa hoàn thành' : 'hoàn thành'}"
-                                                    class="btn btn-${task.status == 'hoàn thành' ? 'success' : 'warning'}">
-                                                ${task.status == 'hoàn thành' ? 'Hoàn thành' : 'Xác nhận hoàn thành'}
+                                            <button type="submit" name="status" value="${task.status == 'Da hoan thanh' ? 'Chua hoan thanh' : 'Da hoan thanh'}"
+                                                    class="btn btn-${task.status == 'Da hoan thanh' ? 'success' : 'warning'}">
+                                                ${task.status == 'Da hoan thanh' ? 'Da hoan thanh' : 'Xác nhận hoàn thành'}
                                             </button>
                                         </form>
                                     </td>

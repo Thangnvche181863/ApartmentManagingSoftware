@@ -71,8 +71,9 @@ public class AddNews extends HttpServlet {
       
         int newsCategoryID = Integer.parseInt(request.getParameter("newsCategory"));
 
+        NewsDAO dao = new NewsDAO();
         // Hardcoded taskID (can be updated if needed)
-        int taskID = 1;
+        int taskID = dao.getTaskId(staffID);
 
         // Format the newsContent, no longer needed since i use tinymce
         String formattedContent = newsContent.replace("\n", "<br>");
@@ -84,7 +85,6 @@ public class AddNews extends HttpServlet {
 
         News news = new News(0, staffID, taskID, newsCategoryID, newsTitle, formattedContent, currentTime, "img/" + fileName,newsDescription);
 
-        NewsDAO dao = new NewsDAO();
         boolean isAdded = dao.addNews(news);
 
         if (isAdded) {
@@ -92,7 +92,7 @@ public class AddNews extends HttpServlet {
         } else {
             String result = "Failed to add News!";
             request.setAttribute("key", result);
-            request.getRequestDispatcher("addnews.jsp").forward(request, response);
+            request.getRequestDispatcher("newsadd.jsp").forward(request, response);
         }
     }
 
