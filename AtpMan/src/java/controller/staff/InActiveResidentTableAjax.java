@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.staff;
 
 import DAO.CustomerDAO;
@@ -25,16 +24,18 @@ import utils.UserHomeUtil;
  * @author ADMIN
  */
 public class InActiveResidentTableAjax extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -93,7 +94,8 @@ public class InActiveResidentTableAjax extends HttpServlet {
                 + "                                            <th>Số điện thoại</th>\n"
                 + "                                            <th>Căn hộ</th>\n"
                 + "                                            <th>Loại cư dân</th>\n"
-                + "                                            <th>Trạng thái</th>\n"
+                + "                                            <th>Trạng thái</th>\n\n"
+                + "                                            <th>Hành động</th>"
                 + "                                        </tr>\n"
                 + "                                    </thead>\n"
                 + "                                    <tbody>\n");
@@ -110,11 +112,14 @@ public class InActiveResidentTableAjax extends HttpServlet {
                         + "                                                <td>" + (resident.getApartmentNumber() != null ? resident.getApartmentNumber() : "") + "</td>\n"
                         + "                                                <td class=\"" + (resident.getIsOwner() == 1 ? "text-primary font-weight-bold" : "") + "\">" + (resident.getIsOwner() == 1 ? "Chủ căn hộ" : "Người ở") + "</td>\n"
                         + "                                                <td>Dừng hoạt động</td>\n"
+                        + "                                                <td>\n"
+                        + "                                                        <input class=\"btn btn-primary\" type=\"submit\" value=\"Thông tin\" onclick=\"handleResidentDetails(" + resident.getCustomerID() + ")\">\n"
+                        + "                                                    </td>"
                         + "                                                "
                         + "                                            </tr>\n");
             }
         } else {
-            out.println("<tr><td colspan=\"8\">Không có dữ liệu cư dân</td></tr>");
+            out.println("<tr><td colspan=\"9\">Không có dữ liệu cư dân</td></tr>");
         }
         out.println("                                    </table>\n"
                 + "                                    <div class=\"d-flex flex-row-reverse\">\n"
@@ -151,11 +156,12 @@ public class InActiveResidentTableAjax extends HttpServlet {
                 + "                                </div>\n"
                 + "                            </div>"
         );
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -163,12 +169,13 @@ public class InActiveResidentTableAjax extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -176,12 +183,13 @@ public class InActiveResidentTableAjax extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

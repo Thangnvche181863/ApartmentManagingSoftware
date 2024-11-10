@@ -233,6 +233,7 @@
                                                 <th>Căn hộ</th>
                                                 <th>Loại cư dân</th>
                                                 <th>Trạng thái</th>
+                                                <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -248,6 +249,9 @@
                                                     <td>${resident.apartmentNumber != null ? resident.apartmentNumber : ''}</td>
                                                     <td class="${resident.isOwner == 1 ? 'text-primary font-weight-bold': ''}">${resident.isOwner == 1 ? 'Chủ căn hộ': 'Người ở'}</td>
                                                     <td>Không cư trú</td>
+                                                    <td>
+                                                        <input class="btn btn-primary" type="submit" value="Thông tin" onclick="handleResidentDetails(${resident.customerID})">
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -278,7 +282,7 @@
                                 </div>
                             </div>   
                         </div>
-                        <div class="card shadow mb-4" id="serviceCard">
+                        <div class="card shadow mb-4" id="residentInfo">
                         </div>
                     </div>
                 </div>
@@ -337,50 +341,25 @@
                                                                 });
                                                             }
 
-                                                            function handleDetails(invoiceID) {
-                                                                let invoiceId = invoiceID;
+                                                            function handleResidentDetails(residentID) {
+                                                                let residentId = residentID;
 
-                                                                console.log("invoiceId ", invoiceId);
+                                                                console.log("residentId ", residentId);
                                                                 $.ajax({
-                                                                    url: "/AtpMan/invoicestatservicetableajax",
+                                                                    url: "/AtpMan/residentinfoajax",
                                                                     type: "get", //send it through post method
                                                                     data: {
-                                                                        invoiceId: invoiceId
+                                                                        residentId: residentId
                                                                     },
                                                                     success: function (data) {
-                                                                        $("#serviceCard").html(data);
+                                                                        $("#residentInfo").html(data);
                                                                     },
                                                                     error: function (xhr) {
                                                                         //Do Something to handle error
                                                                     }
                                                                 });
                                                             }
-                                                            function handleSearchDetails(page) {
-                                                                let invoiceId = $("#invoiceID").val();
-                                                                let currentPage = page;
-                                                                let searchTerm = $("#searchService").val();
-                                                                let servicePerPage = $("#servicePerPage").val();
-                                                                console.log("invoiceId ", invoiceId);
-                                                                console.log("currentPage ", currentPage);
-                                                                console.log("searchTerm ", searchTerm);
-                                                                console.log("invoicePerPage ", invoicePerPage);
-                                                                $.ajax({
-                                                                    url: "/AtpMan/invoicestatservicesearchajax",
-                                                                    type: "get", //send it through post method
-                                                                    data: {
-                                                                        invoiceId: invoiceId,
-                                                                        currentPage: currentPage,
-                                                                        searchTerm: searchTerm,
-                                                                        servicePerPage: servicePerPage
-                                                                    },
-                                                                    success: function (data) {
-                                                                        $("#serviceTable").html(data);
-                                                                    },
-                                                                    error: function (xhr) {
-                                                                        //Do Something to handle error
-                                                                    }
-                                                                });
-                                                            }
+
 
                                                             function submitMonth() {
                                                                 document.getElementById('chooseMonthYear').submit();
