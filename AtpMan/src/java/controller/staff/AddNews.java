@@ -92,7 +92,7 @@ public class AddNews extends HttpServlet {
         } else {
             String result = "Failed to add News!";
             request.setAttribute("key", result);
-            request.getRequestDispatcher("addnews.jsp").forward(request, response);
+            request.getRequestDispatcher("newsadd.jsp").forward(request, response);
         }
     }
 
